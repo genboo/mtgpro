@@ -17,9 +17,6 @@ import ru.spcm.apps.mtgpro.di.components.AppComponent
 
 abstract class BaseFragment : Fragment() {
 
-    var progressBar: View? = null
-    var content: View? = null
-
     var component: AppComponent? = null
 
     val args: Bundle by lazy { arguments ?: Bundle() }

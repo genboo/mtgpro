@@ -9,9 +9,9 @@ data class Set(@PrimaryKey var code : String){
 
     var name: String = ""
 
-    var border: String = ""
+    var border: String? = ""
 
     var releaseDate: String = ""
 
-    var block: String = ""
+    var block: String? = ""
 }

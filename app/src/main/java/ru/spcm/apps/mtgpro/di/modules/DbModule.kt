@@ -8,7 +8,9 @@ import javax.inject.Singleton
 
 import dagger.Module
 import dagger.Provides
-import ru.devsp.app.mtgcollections.model.db.MtgDatabase
+import ru.spcm.apps.mtgpro.model.db.MtgDatabase
+import ru.spcm.apps.mtgpro.model.db.dao.CacheDao
+import ru.spcm.apps.mtgpro.model.db.dao.SetsDao
 
 /**
  * Инициализация базы данных
@@ -29,6 +31,18 @@ class DbModule {
         return Room
                 .databaseBuilder(context, MtgDatabase::class.java, DB_NAME)
                 .build()
+    }
+
+    @Provides
+    @Singleton
+    internal fun provideSetsDao(db: MtgDatabase): SetsDao {
+        return db.setsDao()
+    }
+
+    @Provides
+    @Singleton
+    internal fun provideCacheDao(db: MtgDatabase): CacheDao {
+        return db.cacheDao()
     }
 
     companion object {
