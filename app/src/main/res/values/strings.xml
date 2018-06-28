@@ -1,0 +1,17 @@
+<resources>
+    <string name="app_name">MTG</string>
+
+
+    <string name="menu_steps">Шаги</string>
+    <string name="menu_game">Игра</string>
+    <string name="menu_search">Поиск</string>
+    <string name="menu_collection">Коллекция</string>
+    <string name="menu_libraries">Колоды</string>
+    <string name="menu_wish">Хочу!</string>
+    <string name="menu_spoilers">Спойлеры</string>
+    <string name="menu_gallery">Галлерея</string>
+    <string name="menu_filter">Фильтр</string>
+    <string name="menu_settings">Настройки</string>
+
+    <string name="action_cancel">Отменить</string>
+</resources>
