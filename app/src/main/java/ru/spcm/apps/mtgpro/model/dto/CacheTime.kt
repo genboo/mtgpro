@@ -6,6 +6,7 @@ import android.arch.persistence.room.Index
 import android.arch.persistence.room.PrimaryKey
 
 @Entity(indices = [Index("cache_type")])
-class CacheTime(@PrimaryKey
+data class CacheTime(@PrimaryKey
                 @ColumnInfo(name = "cache_type")
-                val cacheType: String, val time: Int)
+                val cacheType: String,
+                 val time: Int)

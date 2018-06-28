@@ -6,6 +6,7 @@ import android.arch.persistence.room.Index
 import android.arch.persistence.room.PrimaryKey
 
 @Entity(indices = [Index("cache_key")])
-class Cache(@PrimaryKey
+data class Cache(@PrimaryKey
             @ColumnInfo(name = "cache_key")
-            val cacheKey: String, val expire: Long)
+            val cacheKey: String,
+                 val expire: Long)
