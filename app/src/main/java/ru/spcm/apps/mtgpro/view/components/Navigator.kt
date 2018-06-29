@@ -15,8 +15,12 @@ class Navigator(private val activity: FragmentActivity, fragmentManager: Fragmen
 
     override fun createFragment(screenKey: String, data: Any?): Fragment {
         when (screenKey) {
-            SCREEN_SETS -> return SetsFragment()
-            SCREEN_SPOILERS -> return SpoilersFragment.getInstance((data as Array<String>)[0], data[1])
+            SCREEN_SETS ->
+                return SetsFragment()
+            SCREEN_SPOILERS ->
+                if (data is Array<*>) {
+                    return SpoilersFragment.getInstance(data[0] as String, data[1] as String)
+                }
         }
         return SetsFragment()
     }
@@ -33,11 +37,11 @@ class Navigator(private val activity: FragmentActivity, fragmentManager: Fragmen
         applyCommands(arrayOf(Replace(SCREEN_SETS, "")))
     }
 
-    fun goToSpoilers(set: String, name: String){
+    fun goToSpoilers(set: String, name: String) {
         applyCommand(Forward(SCREEN_SPOILERS, arrayOf(set, name)))
     }
 
-    fun backTo(){
+    fun backTo() {
         applyCommand(Back())
     }
 
