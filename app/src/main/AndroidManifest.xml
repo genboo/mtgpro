@@ -14,7 +14,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme.Main">
         <activity
-            android:name=".view.acivities.MainActivity"
+            android:name=".view.activities.MainActivity"
             android:label="@string/app_name"
             android:launchMode="singleTask"
             android:screenOrientation="portrait"

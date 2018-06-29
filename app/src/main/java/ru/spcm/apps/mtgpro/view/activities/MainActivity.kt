@@ -1,4 +1,4 @@
-package ru.spcm.apps.mtgpro.view.acivities
+package ru.spcm.apps.mtgpro.view.activities
 
 import android.os.Bundle
 import android.support.design.widget.BottomNavigationView

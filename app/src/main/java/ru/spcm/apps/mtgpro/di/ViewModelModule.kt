@@ -5,6 +5,7 @@ import android.arch.lifecycle.ViewModelProvider
 import dagger.Binds
 import dagger.Module
 import dagger.multibindings.IntoMap
+import ru.spcm.apps.mtgpro.viewmodel.CardViewModel
 import ru.spcm.apps.mtgpro.viewmodel.SetsViewModel
 import ru.spcm.apps.mtgpro.viewmodel.SpoilersViewModel
 
@@ -15,6 +16,11 @@ internal abstract class ViewModelModule {
     @IntoMap
     @ViewModelKey(SetsViewModel::class)
     internal abstract fun bindSetsViewModel(viewModel: SetsViewModel): ViewModel
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(CardViewModel::class)
+    internal abstract fun bindCardViewModel(viewModel: CardViewModel): ViewModel
 
     @Binds
     @IntoMap

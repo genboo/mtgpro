@@ -3,6 +3,7 @@ package ru.spcm.apps.mtgpro.view.components
 import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentActivity
 import android.support.v4.app.FragmentManager
+import ru.spcm.apps.mtgpro.view.fragments.CardFragment
 import ru.spcm.apps.mtgpro.view.fragments.SetsFragment
 import ru.spcm.apps.mtgpro.view.fragments.SpoilersFragment
 import ru.terrakok.cicerone.android.SupportFragmentNavigator
@@ -21,6 +22,8 @@ class Navigator(private val activity: FragmentActivity, fragmentManager: Fragmen
                 if (data is Array<*>) {
                     return SpoilersFragment.getInstance(data[0] as String, data[1] as String)
                 }
+            SCREEN_CARD ->
+                return CardFragment.getInstance(data as String)
         }
         return SetsFragment()
     }
@@ -41,6 +44,10 @@ class Navigator(private val activity: FragmentActivity, fragmentManager: Fragmen
         applyCommand(Forward(SCREEN_SPOILERS, arrayOf(set, name)))
     }
 
+    fun goToCard(id: String) {
+        applyCommand(Forward(SCREEN_CARD, id))
+    }
+
     fun backTo() {
         applyCommand(Back())
     }
@@ -48,6 +55,7 @@ class Navigator(private val activity: FragmentActivity, fragmentManager: Fragmen
     companion object {
         const val SCREEN_SETS = "screen_sets"
         const val SCREEN_SPOILERS = "screen_spoilers"
+        const val SCREEN_CARD = "screen_card"
     }
 
 }

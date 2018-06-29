@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <attr name="animation_speed" format="integer" />
+
+    <declare-styleable name="ExpandableTextView">
+        <attr name="animation_speed" />
+    </declare-styleable>
+
+</resources>

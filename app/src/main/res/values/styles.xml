@@ -35,4 +35,19 @@
         <item name="android:layout_marginBottom">2dp</item>
         <item name="android:layout_marginTop">2dp</item>
     </style>
+
+    <style name="TextView.Main.Title" parent="android:Widget.TextView">
+        <item name="android:textColor">@color/colorTextTitle</item>
+        <item name="android:textSize">18sp</item>
+        <item name="android:layout_marginBottom">2dp</item>
+        <item name="android:layout_marginTop">2dp</item>
+    </style>
+
+    <style name="TextView.Main" parent="android:Widget.TextView">
+        <item name="android:textColor">@color/colorTextMain</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:layout_marginBottom">2dp</item>
+        <item name="android:layout_marginTop">2dp</item>
+    </style>
+
 </resources>

@@ -10,7 +10,7 @@ import android.transition.TransitionInflater
 import android.view.View
 import kotlinx.android.synthetic.main.layout_app_bar_main.*
 import ru.spcm.apps.mtgpro.App
-import ru.spcm.apps.mtgpro.view.acivities.MainActivity
+import ru.spcm.apps.mtgpro.view.activities.MainActivity
 import ru.spcm.apps.mtgpro.R
 import ru.spcm.apps.mtgpro.di.components.AppComponent
 import ru.spcm.apps.mtgpro.view.components.Navigator

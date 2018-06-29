@@ -14,4 +14,8 @@
     <string name="menu_settings">Настройки</string>
 
     <string name="action_cancel">Отменить</string>
+    <string name="action_add_to_library">Добавить в библиотеку</string>
+
+    <string name="rules">Правила</string>
+    <string name="text">Текст</string>
 </resources>

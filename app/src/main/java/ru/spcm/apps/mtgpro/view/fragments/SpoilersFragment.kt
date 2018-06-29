@@ -15,7 +15,6 @@ import ru.spcm.apps.mtgpro.model.dto.Card
 import ru.spcm.apps.mtgpro.model.tools.Resource
 import ru.spcm.apps.mtgpro.model.tools.Status
 import ru.spcm.apps.mtgpro.repository.bounds.SpoilersBound
-import ru.spcm.apps.mtgpro.tools.Logger
 import ru.spcm.apps.mtgpro.view.adapter.RecyclerViewAdapter
 import ru.spcm.apps.mtgpro.view.adapter.RecyclerViewScrollListener
 import ru.spcm.apps.mtgpro.view.adapter.SpoilersListAdapter
@@ -70,7 +69,7 @@ class SpoilersFragment : BaseFragment() {
 
         adapter.setOnItemClickListener(object : RecyclerViewAdapter.OnItemClickListener<Card> {
             override fun click(position: Int, item: Card, view: View?) {
-                Logger.e(item.name)
+                navigator.goToCard(item.id)
             }
         })
     }
