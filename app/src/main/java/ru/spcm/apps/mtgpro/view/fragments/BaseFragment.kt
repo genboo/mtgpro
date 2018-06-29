@@ -1,4 +1,4 @@
-package ru.spcm.apps.mtgpro.view
+package ru.spcm.apps.mtgpro.view.fragments
 
 import android.arch.lifecycle.Lifecycle
 import android.arch.lifecycle.LifecycleRegistry
@@ -8,11 +8,12 @@ import android.support.design.widget.Snackbar
 import android.support.v4.app.Fragment
 import android.transition.TransitionInflater
 import android.view.View
-import android.widget.Toast
 import kotlinx.android.synthetic.main.layout_app_bar_main.*
 import ru.spcm.apps.mtgpro.App
+import ru.spcm.apps.mtgpro.view.acivities.MainActivity
 import ru.spcm.apps.mtgpro.R
 import ru.spcm.apps.mtgpro.di.components.AppComponent
+import ru.spcm.apps.mtgpro.view.components.Navigator
 
 
 abstract class BaseFragment : Fragment() {
@@ -20,6 +21,8 @@ abstract class BaseFragment : Fragment() {
     var component: AppComponent? = null
 
     val args: Bundle by lazy { arguments ?: Bundle() }
+
+    val navigator: Navigator by lazy { (activity as MainActivity).navigator }
 
     protected fun updateToolbar() {
         if (toolbar != null) {

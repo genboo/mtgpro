@@ -1,4 +1,4 @@
-package ru.spcm.apps.mtgpro.view
+package ru.spcm.apps.mtgpro.view.fragments
 
 import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProvider
@@ -13,7 +13,6 @@ import ru.spcm.apps.mtgpro.R
 import ru.spcm.apps.mtgpro.model.dto.Set
 import ru.spcm.apps.mtgpro.model.tools.Resource
 import ru.spcm.apps.mtgpro.model.tools.Status
-import ru.spcm.apps.mtgpro.tools.Logger
 import ru.spcm.apps.mtgpro.view.adapter.RecyclerViewAdapter
 import ru.spcm.apps.mtgpro.view.adapter.SetsListAdapter
 import ru.spcm.apps.mtgpro.viewmodel.SetsViewModel
@@ -23,6 +22,12 @@ class SetsFragment : BaseFragment() {
 
     @Inject
     lateinit var viewModelFactory: ViewModelProvider.Factory
+
+    private val setAdapterClickListener = object : RecyclerViewAdapter.OnItemClickListener<Set> {
+        override fun click(position: Int, item: Set, view: View?) {
+            navigator.goToSpoilers(item.code, item.name)
+        }
+    }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
@@ -34,18 +39,17 @@ class SetsFragment : BaseFragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         updateToolbar()
+
         val viewModel = ViewModelProviders.of(this, viewModelFactory).get(SetsViewModel::class.java)
+        viewModel.getSets().observe(this, Observer { observeSets(it) })
 
         val adapter = SetsListAdapter(null)
-        adapter.setOnItemClickListener(object : RecyclerViewAdapter.OnItemClickListener<Set> {
-            override fun click(position: Int, item: Set, view: View?) {
-                Logger.e(item.name)
-            }
-        })
+        adapter.setOnItemClickListener(setAdapterClickListener)
         list.layoutManager = LinearLayoutManager(context)
         list.adapter = adapter
-        viewModel.getSets().observe(this, Observer { observeSets(it) })
-        viewModel.loadSets()
+        list.postDelayed({ viewModel.loadSets() }, 200)
+
+        swipeRefresh.isRefreshing = true
         swipeRefresh.setOnRefreshListener { viewModel.loadSets() }
     }
 

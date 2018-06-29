@@ -10,11 +10,12 @@ import dagger.Module
 import dagger.Provides
 import ru.spcm.apps.mtgpro.model.db.MtgDatabase
 import ru.spcm.apps.mtgpro.model.db.dao.CacheDao
+import ru.spcm.apps.mtgpro.model.db.dao.CardDao
 import ru.spcm.apps.mtgpro.model.db.dao.SetsDao
 
 /**
  * Инициализация базы данных
- * Created by gen on 12.09.2017.
+ * Created by gen on 28.06.2018.
  */
 @Module
 class DbModule {
@@ -31,6 +32,12 @@ class DbModule {
         return Room
                 .databaseBuilder(context, MtgDatabase::class.java, DB_NAME)
                 .build()
+    }
+
+    @Provides
+    @Singleton
+    internal fun provideCardDao(db: MtgDatabase): CardDao {
+        return db.cardDao()
     }
 
     @Provides

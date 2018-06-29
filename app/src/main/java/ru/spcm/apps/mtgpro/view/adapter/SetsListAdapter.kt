@@ -9,7 +9,7 @@ import ru.spcm.apps.mtgpro.model.dto.Set
 
 /**
  * Адаптер для списка сетов
- * Created by gen on 22.12.2017.
+ * Created by gen on 28.06.2018.
  */
 
 class SetsListAdapter(items: List<Set>?) : RecyclerViewAdapter<Set, SetHolder>(items) {

@@ -17,7 +17,7 @@ constructor(private val appExecutors: AppExecutors,
             private val cacheDao: CacheDao) {
 
     fun getSets(): LiveData<Resource<List<Set>>> {
-        return SetsBound(appExecutors, setsDao, cacheDao, setsApi)
+        return SetsBound(appExecutors, setsApi, setsDao, cacheDao)
                 .create()
                 .asLiveData()
     }

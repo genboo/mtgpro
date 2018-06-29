@@ -14,6 +14,14 @@ object Icons {
 
     val list: MutableMap<String, Int> = HashMap()
 
+    val colors = mutableMapOf(
+            "Common" to R.color.rarityCommon,
+            "Uncommon" to R.color.rarityUncommon,
+            "Rare" to R.color.rarityRare,
+            "Mythic Rare" to R.color.rarityMythicRare,
+            "Special" to R.color.rarityMythicRare
+    )
+
     init {
 
         //Battlebond 2018
@@ -339,6 +347,10 @@ object Icons {
 
     fun getIcon(set: String): Int {
         return list[set] ?: R.drawable.ic_circle
+    }
+
+    fun getColor(rare: String): Int {
+        return colors[rare] ?: R.color.rarityCommon
     }
 
 }

@@ -18,7 +18,7 @@ import ru.spcm.apps.mtgpro.model.tools.ResultTypeAdapterFactory
 
 /**
  * Инициализация Retrofit
- * Created by gen on 12.09.2017.
+ * Created by gen on 28.06.2018.
  */
 
 @Module

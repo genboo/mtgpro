@@ -8,15 +8,16 @@ import javax.inject.Singleton
 import dagger.BindsInstance
 import dagger.Component
 import ru.spcm.apps.mtgpro.di.ViewModelModule
-import ru.spcm.apps.mtgpro.MainActivity
+import ru.spcm.apps.mtgpro.view.acivities.MainActivity
 import ru.spcm.apps.mtgpro.di.modules.DbModule
 import ru.spcm.apps.mtgpro.di.modules.NavigationModule
 import ru.spcm.apps.mtgpro.di.modules.RetrofitModule
-import ru.spcm.apps.mtgpro.view.SetsFragment
+import ru.spcm.apps.mtgpro.view.fragments.SetsFragment
+import ru.spcm.apps.mtgpro.view.fragments.SpoilersFragment
 
 /**
  * Компонент di
- * Created by gen on 27.09.2017.
+ * Created by gen on 28.06.2018.
  */
 @Component(modules = [ViewModelModule::class, RetrofitModule::class, DbModule::class, NavigationModule::class])
 @Singleton
@@ -33,5 +34,7 @@ interface AppComponent {
     fun inject(activity: MainActivity)
 
     fun inject(fragment: SetsFragment)
+
+    fun inject(fragment: SpoilersFragment)
 
 }

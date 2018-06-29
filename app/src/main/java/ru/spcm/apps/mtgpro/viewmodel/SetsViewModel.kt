@@ -14,16 +14,17 @@ import javax.inject.Inject
 
 /**
  * Список сетов
- * Created by gen on 22.12.2017.
+ * Created by gen on 28.06.2018.
  */
 
 class SetsViewModel @Inject
 internal constructor(private val setsRepo: SetsRepo) : ViewModel() {
 
     private val switcher: MutableLiveData<Boolean> = MutableLiveData()
+    private var sets: LiveData<Resource<List<Set>>>
 
-    fun getSets(): LiveData<Resource<List<Set>>> {
-        return Transformations.switchMap(switcher) {
+    init {
+        sets = Transformations.switchMap(switcher) {
             if (it) {
                 return@switchMap setsRepo.getSets()
             }
@@ -31,7 +32,11 @@ internal constructor(private val setsRepo: SetsRepo) : ViewModel() {
         }
     }
 
-    fun loadSets(){
+    fun getSets(): LiveData<Resource<List<Set>>> {
+        return sets
+    }
+
+    fun loadSets() {
         switcher.postValue(true)
     }
 

@@ -11,13 +11,11 @@ import ru.spcm.apps.mtgpro.tools.AppExecutors
 import java.util.*
 
 class SetsBound(appExecutors: AppExecutors,
+                private val setsApi: SetsApi,
                 private val setsDao: SetsDao,
-                private val cacheDao: CacheDao,
-                private val setsApi: SetsApi) : CachedNetworkBound<List<Set>, List<Set>>(appExecutors) {
+                private val cacheDao: CacheDao) : CachedNetworkBound<List<Set>, List<Set>>(appExecutors) {
 
-    private val type: String
-        get() = Set::class.java.simpleName + "::" + METHOD
-
+    private val type: String = Set::class.java.simpleName + "::" + METHOD
 
     override fun saveCallResult(data: List<Set>?) {
         if (data != null) {
@@ -25,7 +23,6 @@ class SetsBound(appExecutors: AppExecutors,
             data.forEach { it ->
                 setsDao.insert(it)
             }
-
             val cache = Cache(cacheKey,
                     Date().time + getCacheTime(cacheDao.getCacheType(type)))
             cacheDao.insert(cache)

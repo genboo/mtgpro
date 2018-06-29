@@ -9,7 +9,7 @@ import ru.spcm.apps.mtgpro.model.tools.ApiResponse
 
 /**
  *
- * Created by gen on 02.10.2017.
+ * Created by gen on 28.06.2018.
  */
 
 interface CardApi {

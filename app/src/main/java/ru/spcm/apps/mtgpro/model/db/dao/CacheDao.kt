@@ -6,6 +6,7 @@ import android.arch.persistence.room.Insert
 import android.arch.persistence.room.OnConflictStrategy
 import android.arch.persistence.room.Query
 import ru.spcm.apps.mtgpro.model.dto.Cache
+import ru.spcm.apps.mtgpro.model.dto.CacheCard
 import ru.spcm.apps.mtgpro.model.dto.CacheTime
 
 @Dao
@@ -22,5 +23,8 @@ interface CacheDao {
 
     @Query("SELECT * FROM CacheTime WHERE cache_type = :type")
     fun getCacheType(type: String): CacheTime
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    fun insert(cache: CacheCard)
 
 }

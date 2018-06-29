@@ -13,8 +13,6 @@ import com.google.gson.annotations.SerializedName
 @Entity(indices = [(Index("cache_key"))])
 data class CacheCard(@PrimaryKey
                      @SerializedName("multiverseid")
-                     @NonNull var id : String){
-
-    @ColumnInfo(name = "cache_key")
-    var cacheKey: String = ""
-}
+                     @NonNull var id: String,
+                     @ColumnInfo(name = "cache_key")
+                     var cacheKey: String = "")

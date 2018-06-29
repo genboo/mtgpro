@@ -1,0 +1,32 @@
+package ru.spcm.apps.mtgpro.view.adapter.holders
+
+import android.graphics.PorterDuff
+import android.support.v4.content.ContextCompat
+import android.support.v7.widget.RecyclerView
+import android.view.View
+import kotlinx.android.synthetic.main.list_item_loading.view.*
+import kotlinx.android.synthetic.main.list_item_spoiler.view.*
+import ru.spcm.apps.mtgpro.model.dto.Card
+import ru.spcm.apps.mtgpro.tools.ImageLoader
+
+class SpoilerHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+
+    fun bind(item: Card) = with(itemView) {
+        cardRarity.setColorFilter(ContextCompat.getColor(cardRarity.context, item.getSetIconColor()), PorterDuff.Mode.SRC_IN)
+        cardRarity.setImageDrawable(cardRarity.context.getDrawable(item.getSetIcon()))
+        cardNumber.text = String.format("%s %s", item.set, item.numberFormatted)
+
+        cardExists.text = ""
+        cardExists.visibility = View.INVISIBLE
+
+        ImageLoader.loadImageFromCache(cardImage, item.imageUrl)
+    }
+
+    fun setListener(listener: View.OnClickListener) {
+        itemView.itemBlock?.setOnClickListener(listener)
+    }
+
+    fun switchLoading(loading : Boolean) = with(itemView) {
+        loadingBlock.visibility = if(loading) View.VISIBLE else View.INVISIBLE
+    }
+}
