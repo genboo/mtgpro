@@ -1,13 +1,13 @@
 package ru.spcm.apps.mtgpro.view.adapter
 
+import android.support.v7.util.DiffUtil
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import ru.spcm.apps.mtgpro.R
 import ru.spcm.apps.mtgpro.model.dto.Card
+import ru.spcm.apps.mtgpro.view.adapter.diffs.SpoilersDiffCallback
 import ru.spcm.apps.mtgpro.view.adapter.holders.SpoilerHolder
-import java.util.HashMap
-
 
 /**
  * Адаптер для списка карт
@@ -47,6 +47,12 @@ class SpoilersListAdapter(items: List<Card>?) : RecyclerViewAdapter<Card, Spoile
 
     override fun getItemViewType(position: Int): Int {
         return if (position < getSize()) TYPE_MAIN else TYPE_LOADING
+    }
+
+    override fun setItems(items: List<Card>) {
+        val diffs = DiffUtil.calculateDiff(SpoilersDiffCallback(getItems(), items), !this.getItems().isEmpty())
+        super.setItems(items)
+        diffs.dispatchUpdatesTo(this)
     }
 
     companion object {

@@ -4,6 +4,7 @@ import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProvider
 import android.arch.lifecycle.ViewModelProviders
 import android.os.Bundle
+import android.support.v7.util.DiffUtil
 import android.support.v7.widget.LinearLayoutManager
 import android.view.LayoutInflater
 import android.view.View
@@ -15,6 +16,7 @@ import ru.spcm.apps.mtgpro.model.tools.Resource
 import ru.spcm.apps.mtgpro.model.tools.Status
 import ru.spcm.apps.mtgpro.view.adapter.RecyclerViewAdapter
 import ru.spcm.apps.mtgpro.view.adapter.SetsListAdapter
+import ru.spcm.apps.mtgpro.view.adapter.diffs.SetsDiffCallback
 import ru.spcm.apps.mtgpro.viewmodel.SetsViewModel
 import javax.inject.Inject
 
@@ -49,16 +51,17 @@ class SetsFragment : BaseFragment() {
         list.adapter = adapter
         list.postDelayed({ viewModel.loadSets() }, 200)
 
-        swipeRefresh.isRefreshing = true
         swipeRefresh.setOnRefreshListener { viewModel.loadSets() }
     }
 
     private fun observeSets(data: Resource<List<Set>>?) {
         if (data != null) {
-            swipeRefresh.isRefreshing = data.status == Status.LOADING
+            swipeRefresh.isRefreshing = data.status == Status.LOADING && data.data == null
             if (data.data != null) {
-                (list.adapter as SetsListAdapter).setItems(data.data)
-                (list.adapter as SetsListAdapter).notifyDataSetChanged()
+                val adapter = (list.adapter as SetsListAdapter)
+                val diffs = DiffUtil.calculateDiff(SetsDiffCallback(adapter.getItems(), data.data), !adapter.getItems().isEmpty())
+                adapter.setItems(data.data)
+                diffs.dispatchUpdatesTo(adapter)
             }
         }
     }

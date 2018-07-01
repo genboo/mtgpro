@@ -1,6 +1,13 @@
 package ru.spcm.apps.mtgpro.viewmodel
 
+import android.arch.lifecycle.LiveData
+import android.arch.lifecycle.MutableLiveData
+import android.arch.lifecycle.Transformations
 import android.arch.lifecycle.ViewModel
+import ru.spcm.apps.mtgpro.model.dto.Card
+import ru.spcm.apps.mtgpro.model.tools.Resource
+import ru.spcm.apps.mtgpro.repository.CardRepo
+import ru.spcm.apps.mtgpro.tools.AbsentLiveData
 
 import javax.inject.Inject
 
@@ -11,13 +18,26 @@ import javax.inject.Inject
  */
 
 class CardViewModel @Inject
-internal constructor() : ViewModel() {
+internal constructor(private val cardRepo: CardRepo) : ViewModel() {
 
+    private val switcher: MutableLiveData<String> = MutableLiveData()
+    private var card: LiveData<Resource<List<Card>>>
 
     init {
-
+        card = Transformations.switchMap(switcher) {
+            if (it == null) {
+                return@switchMap AbsentLiveData.create<Resource<List<Card>>>()
+            }
+            return@switchMap cardRepo.getCards(it)
+        }
     }
 
+    fun getCard(): LiveData<Resource<List<Card>>> {
+        return card
+    }
 
+    fun loadCard(mid: String) {
+        switcher.postValue(mid)
+    }
 
 }

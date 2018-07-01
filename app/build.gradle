@@ -61,6 +61,8 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             buildConfigField "Boolean", "DEBUG_MODE", "true"
             buildConfigField "String", "API_URL", "\"https://api.magicthegathering.io\""
+            applicationIdSuffix ".test"
+            versionNameSuffix "-d"
         }
     }
 }

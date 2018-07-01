@@ -28,10 +28,11 @@ class SpoilersBound(appExecutors: AppExecutors,
     override fun saveCallResult(data: List<Card>?) {
         if (data != null) {
             val cacheKey = getCacheKey()
+            val saveKey = getSaveKey()
             data.forEach { it ->
                 it.prepare()
                 cardDao.insert(it)
-                cacheDao.insert(CacheCard(it.id, cacheKey))
+                cacheDao.insert(CacheCard(it.id, saveKey))
             }
             val cache = Cache(cacheKey,
                     Date().time + getCacheTime(cacheDao.getCacheType(type)))
@@ -44,7 +45,7 @@ class SpoilersBound(appExecutors: AppExecutors,
     }
 
     override fun loadSaved(): LiveData<List<Card>> {
-        return cardDao.getCachedCards(getCacheKey())
+        return cardDao.getCachedCards(getSaveKey())
     }
 
     override fun createCall(): LiveData<ApiResponse<List<Card>>> {
@@ -53,6 +54,10 @@ class SpoilersBound(appExecutors: AppExecutors,
 
     private fun getCacheKey(): String {
         return type + set + page
+    }
+
+    private fun getSaveKey(): String {
+        return type + set
     }
 
     fun setParams(set: String, page: Int): SpoilersBound {

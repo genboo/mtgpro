@@ -22,7 +22,10 @@ interface CardDao {
     @Update
     fun update(item: Card)
 
-    @Query("SELECT c.* FROM CacheCard cc LEFT JOIN Card c ON c.id = cc.id WHERE cc.cache_key = :cacheKey")
+    @Query("SELECT c.* FROM CacheCard cc LEFT JOIN Card c ON c.id = cc.id WHERE cc.cache_key = :cacheKey ORDER BY c.numberFormatted")
     fun getCachedCards(cacheKey: String): LiveData<List<Card>>
+
+    @Query("SELECT c.* FROM Card c WHERE c.multiverseId = :mid")
+    fun getSavedCards(mid: String): LiveData<List<Card>>
 
 }

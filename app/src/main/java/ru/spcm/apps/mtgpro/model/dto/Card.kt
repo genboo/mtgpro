@@ -2,11 +2,12 @@ package ru.spcm.apps.mtgpro.model.dto
 
 import android.arch.persistence.room.Entity
 import android.arch.persistence.room.Ignore
+import android.arch.persistence.room.Index
 import android.arch.persistence.room.PrimaryKey
 import android.support.annotation.NonNull
 import com.google.gson.annotations.SerializedName
 
-@Entity
+@Entity(indices = [(Index("multiverseId"))])
 data class Card(@PrimaryKey @NonNull var id: String) {
 
     var name: String = ""

@@ -24,7 +24,6 @@ import ru.spcm.apps.mtgpro.view.components.fadeOut
 import ru.spcm.apps.mtgpro.viewmodel.SpoilersViewModel
 import javax.inject.Inject
 
-
 /**
  * Список спойлеров
  * Created by gen on 29.06.2018.
@@ -69,7 +68,7 @@ class SpoilersFragment : BaseFragment() {
 
         adapter.setOnItemClickListener(object : RecyclerViewAdapter.OnItemClickListener<Card> {
             override fun click(position: Int, item: Card, view: View?) {
-                navigator.goToCard(item.id)
+                navigator.goToCard(item.multiverseId)
             }
         })
     }
@@ -82,10 +81,7 @@ class SpoilersFragment : BaseFragment() {
                 if (adapter.getItems().isEmpty()) {
                     showContent()
                 }
-                val items = adapter.getItems().plus(data.data)
-                val diffs = DiffUtil.calculateDiff(SpoilersDiffCallback(adapter.getItems(), items), !adapter.getItems().isEmpty())
-                adapter.setItems(items)
-                diffs.dispatchUpdatesTo(adapter)
+                adapter.setItems(data.data)
                 if(data.data.isEmpty()){
                     adapter.notifyItemChanged(adapter.getSize())
                 }

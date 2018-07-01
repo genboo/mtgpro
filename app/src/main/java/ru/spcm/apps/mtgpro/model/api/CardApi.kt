@@ -15,15 +15,15 @@ import ru.spcm.apps.mtgpro.model.tools.ApiResponse
 interface CardApi {
 
     @GET("/v1/cards")
-    fun getCard(@Query("set") set: String, @Query("number") number: String): LiveData<ApiResponse<List<Card>>>
+    fun getCardsByNumber(@Query("set") set: String, @Query("number") number: String): LiveData<ApiResponse<List<Card>>>
 
     @GET("/v1/cards")
-    fun getCardByName(@Query("set") set: String, @Query("name") name: String): LiveData<ApiResponse<List<Card>>>
+    fun getCardsByName(@Query("set") set: String, @Query("name") name: String): LiveData<ApiResponse<List<Card>>>
 
     @GET("/v1/cards")
     fun getCardsBySet(@Query("set") set: String, @Query("page") page: Int, @Query("pageSize") pages: Int): LiveData<ApiResponse<List<Card>>>
 
     @GET("/v1/cards")
-    fun getCard(@Query("multiverseid") set: String): LiveData<ApiResponse<List<Card>>>
+    fun getCardsByMid(@Query("multiverseid") set: String): LiveData<ApiResponse<List<Card>>>
 
 }
