@@ -43,10 +43,10 @@ data class Card(@PrimaryKey @NonNull var id: String) {
     var count: Int = 0
 
     @Ignore
-    val foreignNames: List<ForeignName>? = null
+    private val foreignNames: List<ForeignName>? = null
 
     @Ignore
-    val rulings: List<Rule>? = null
+    private val rulings: List<Rule>? = null
 
     @Ignore
     val supertypes: List<String>? = null
@@ -64,7 +64,7 @@ data class Card(@PrimaryKey @NonNull var id: String) {
     val printings: List<String>? = null
 
     @Ignore
-    var nameOrigin: String? = null
+    private var nameOrigin: String? = null
 
     fun getSetIcon(): Int {
         return Icons.getIcon(set)

@@ -41,4 +41,7 @@ internal constructor(private val cardRepo: CardRepo) : ViewModel() {
         switcher.postValue(mid)
     }
 
+    fun updateCard(card: Card) {
+        cardRepo.updateCard(card)
+    }
 }

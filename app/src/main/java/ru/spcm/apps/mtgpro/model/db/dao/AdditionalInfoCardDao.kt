@@ -1,10 +1,7 @@
 package ru.spcm.apps.mtgpro.model.db.dao
 
 
-import android.arch.persistence.room.Dao
-import android.arch.persistence.room.Insert
-import android.arch.persistence.room.OnConflictStrategy
-import android.arch.persistence.room.Query
+import android.arch.persistence.room.*
 import ru.spcm.apps.mtgpro.model.dto.*
 
 
@@ -43,4 +40,33 @@ interface AdditionalInfoCardDao {
 
     @Query("DELETE FROM Reprint where card_id = :card")
     fun clearReprints(card: String)
+
+    @Transaction
+    fun updateAdditionInfo(card:Card){
+        clearColors(card.id)
+        card.colors?.forEach {
+            insert(Color(card.id, it))
+        }
+
+        clearTypes(card.id)
+        card.types?.forEach{
+            insert(Type(card.id, it))
+        }
+
+        clearSupertypes(card.id)
+        card.supertypes?.forEach{
+            insert(Supertype(card.id, it))
+        }
+
+        clearSubtypes(card.id)
+        card.subtypes?.forEach{
+            insert(Subtype(card.id, it))
+        }
+
+        clearReprints(card.id)
+        card.printings?.forEach{
+            insert(Reprint(card.id, it))
+        }
+    }
+
 }

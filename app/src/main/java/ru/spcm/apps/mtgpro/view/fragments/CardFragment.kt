@@ -5,13 +5,14 @@ import android.arch.lifecycle.ViewModelProvider
 import android.arch.lifecycle.ViewModelProviders
 import android.graphics.PorterDuff
 import android.os.Bundle
+import android.os.Handler
 import android.support.v4.content.ContextCompat
 import android.support.v7.widget.LinearLayoutManager
 import android.view.*
 import kotlinx.android.synthetic.main.fragment_card.*
 import ru.spcm.apps.mtgpro.R
+import ru.spcm.apps.mtgpro.model.dto.Card
 import ru.spcm.apps.mtgpro.model.dto.CardLocal
-import ru.spcm.apps.mtgpro.tools.Logger
 import ru.spcm.apps.mtgpro.tools.OracleReplacer
 import ru.spcm.apps.mtgpro.view.adapter.ReprintListAdapter
 import ru.spcm.apps.mtgpro.view.components.ExpandListener
@@ -26,9 +27,10 @@ import javax.inject.Inject
 
 class CardFragment : BaseFragment() {
 
+    lateinit var card: Card
+
     @Inject
     lateinit var viewModelFactory: ViewModelProvider.Factory
-
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
@@ -51,6 +53,14 @@ class CardFragment : BaseFragment() {
                 LinearLayoutManager.HORIZONTAL, false)
         reprints.adapter = adapter
         reprints.layoutManager = manager
+
+        val task = { viewModel.updateCard(card) }
+        val handler = Handler()
+        counterBlock.setOnChangeListener {
+            card.count = it
+            handler.removeCallbacksAndMessages(null)
+            handler.postDelayed(task, 1000)
+        }
     }
 
     private fun observeCard(data: List<CardLocal>?) {
@@ -67,18 +77,20 @@ class CardFragment : BaseFragment() {
                         OracleReplacer.getText(firstCard.card.manaCost ?: "", requireActivity())
 
                 cardText.setOnClickListener { cardOracle.toggle() }
-                cardOracle.text = OracleReplacer.getText(firstCard.card.text ?: "", requireActivity())
+                cardOracle.text = OracleReplacer.getText(firstCard.card.text
+                        ?: "", requireActivity())
                 cardOracle.setExpandListener(ExpandListener(cardOracleArrow))
 
                 cardRulesTitle.setOnClickListener { cardRules.toggle() }
-                cardRules.text = OracleReplacer.getText(firstCard.card.rulesText ?: "", requireActivity())
+                cardRules.text = OracleReplacer.getText(firstCard.card.rulesText
+                        ?: "", requireActivity())
                 cardRules.setExpandListener(ExpandListener(cardRulesArrow))
 
                 counterBlock.setCount(firstCard.card.count)
-                counterBlock.setOnChangeListener{
 
-                }
                 (reprints.adapter as ReprintListAdapter).setItems(firstCard.reprints)
+
+                card = firstCard.card
             }
         }
     }

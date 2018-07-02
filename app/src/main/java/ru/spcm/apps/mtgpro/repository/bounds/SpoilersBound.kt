@@ -32,7 +32,7 @@ class SpoilersBound(appExecutors: AppExecutors,
                 card.prepare()
                 cardDao.insert(card)
                 cacheDao.insert(CacheCard(card.id, saveKey))
-                SaveAdditionalInfo.save(additionalInfoCardDao, card)
+                additionalInfoCardDao.updateAdditionInfo(card)
             }
             val cache = Cache(cacheKey,
                     Date().time + getCacheTime(cacheDao.getCacheType(type)))
@@ -68,7 +68,7 @@ class SpoilersBound(appExecutors: AppExecutors,
 
     companion object {
         private const val METHOD = "spoilers"
-        const val PAGES_SIZE = 39
+        const val PAGES_SIZE = 18
     }
 
 }

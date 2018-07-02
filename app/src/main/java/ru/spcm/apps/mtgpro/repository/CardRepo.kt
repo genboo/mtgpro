@@ -6,8 +6,6 @@ import ru.spcm.apps.mtgpro.model.db.dao.CacheDao
 import ru.spcm.apps.mtgpro.model.db.dao.CardDao
 import ru.spcm.apps.mtgpro.model.dto.Card
 import ru.spcm.apps.mtgpro.model.dto.CardLocal
-import ru.spcm.apps.mtgpro.model.tools.Resource
-import ru.spcm.apps.mtgpro.repository.bounds.CardBound
 import ru.spcm.apps.mtgpro.tools.AppExecutors
 import javax.inject.Inject
 
@@ -21,4 +19,7 @@ constructor(private val appExecutors: AppExecutors,
         return cardDao.getSavedCards(mid)
     }
 
+    fun updateCard(card: Card) {
+        appExecutors.diskIO().execute { cardDao.update(card) }
+    }
 }
