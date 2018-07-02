@@ -5,6 +5,7 @@ import ru.spcm.apps.mtgpro.model.api.CardApi
 import ru.spcm.apps.mtgpro.model.db.dao.CacheDao
 import ru.spcm.apps.mtgpro.model.db.dao.CardDao
 import ru.spcm.apps.mtgpro.model.dto.Card
+import ru.spcm.apps.mtgpro.model.dto.CardLocal
 import ru.spcm.apps.mtgpro.model.tools.Resource
 import ru.spcm.apps.mtgpro.repository.bounds.CardBound
 import ru.spcm.apps.mtgpro.tools.AppExecutors
@@ -16,11 +17,8 @@ constructor(private val appExecutors: AppExecutors,
             private val cardDao: CardDao,
             private val cacheDao: CacheDao) {
 
-    fun getCards(mid: String): LiveData<Resource<List<Card>>> {
-        return CardBound(appExecutors, cardApi, cardDao, cacheDao)
-                .setParams(mid)
-                .create()
-                .asLiveData()
+    fun getCards(mid: String): LiveData<List<CardLocal>> {
+        return cardDao.getSavedCards(mid)
     }
 
 }

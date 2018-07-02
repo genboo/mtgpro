@@ -9,6 +9,7 @@ import javax.inject.Singleton
 import dagger.Module
 import dagger.Provides
 import ru.spcm.apps.mtgpro.model.db.MtgDatabase
+import ru.spcm.apps.mtgpro.model.db.dao.AdditionalInfoCardDao
 import ru.spcm.apps.mtgpro.model.db.dao.CacheDao
 import ru.spcm.apps.mtgpro.model.db.dao.CardDao
 import ru.spcm.apps.mtgpro.model.db.dao.SetsDao
@@ -38,6 +39,12 @@ class DbModule {
     @Singleton
     internal fun provideCardDao(db: MtgDatabase): CardDao {
         return db.cardDao()
+    }
+
+    @Provides
+    @Singleton
+    internal fun provideAdditionalInfoDao(db: MtgDatabase): AdditionalInfoCardDao{
+        return db.additionalInfoDao()
     }
 
     @Provides

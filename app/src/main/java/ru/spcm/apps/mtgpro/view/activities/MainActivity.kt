@@ -30,6 +30,7 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
             navigator.goToSets()
             bottomMenu.selectedItemId = R.id.nav_sets
         }
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
     }
 
     override fun onBackPressed() {

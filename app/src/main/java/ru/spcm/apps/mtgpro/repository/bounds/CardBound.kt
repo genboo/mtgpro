@@ -32,7 +32,7 @@ class CardBound(appExecutors: AppExecutors,
     }
 
     override fun loadSaved(): LiveData<List<Card>> {
-        return cardDao.getSavedCards(mid)
+        return cardDao.getCards(mid)
     }
 
     override fun createCall(): LiveData<ApiResponse<List<Card>>> {

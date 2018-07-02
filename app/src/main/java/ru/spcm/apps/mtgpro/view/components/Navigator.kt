@@ -3,11 +3,14 @@ package ru.spcm.apps.mtgpro.view.components
 import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentActivity
 import android.support.v4.app.FragmentManager
+import android.support.v4.app.FragmentTransaction
+import ru.spcm.apps.mtgpro.R
 import ru.spcm.apps.mtgpro.view.fragments.CardFragment
 import ru.spcm.apps.mtgpro.view.fragments.SetsFragment
 import ru.spcm.apps.mtgpro.view.fragments.SpoilersFragment
 import ru.terrakok.cicerone.android.SupportFragmentNavigator
 import ru.terrakok.cicerone.commands.Back
+import ru.terrakok.cicerone.commands.Command
 import ru.terrakok.cicerone.commands.Forward
 import ru.terrakok.cicerone.commands.Replace
 
@@ -34,6 +37,16 @@ class Navigator(private val activity: FragmentActivity, fragmentManager: Fragmen
 
     override fun exit() {
         activity.finish()
+    }
+
+    override fun setupFragmentTransactionAnimation(command: Command,
+                                                   currentFragment: Fragment?,
+                                                   nextFragment: Fragment?,
+                                                   fragmentTransaction: FragmentTransaction) {
+        fragmentTransaction.setCustomAnimations(R.anim.slide_in_right,
+                R.anim.slide_out_left,
+                R.anim.slide_in_left,
+                R.anim.slide_out_right_2)
     }
 
     fun goToSets() {

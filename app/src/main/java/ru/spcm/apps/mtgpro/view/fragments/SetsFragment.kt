@@ -13,7 +13,6 @@ import kotlinx.android.synthetic.main.fragment_sets.*
 import ru.spcm.apps.mtgpro.R
 import ru.spcm.apps.mtgpro.model.dto.Set
 import ru.spcm.apps.mtgpro.model.tools.Resource
-import ru.spcm.apps.mtgpro.model.tools.Status
 import ru.spcm.apps.mtgpro.view.adapter.RecyclerViewAdapter
 import ru.spcm.apps.mtgpro.view.adapter.SetsListAdapter
 import ru.spcm.apps.mtgpro.view.adapter.diffs.SetsDiffCallback
@@ -55,14 +54,12 @@ class SetsFragment : BaseFragment() {
     }
 
     private fun observeSets(data: Resource<List<Set>>?) {
-        if (data != null) {
-            swipeRefresh.isRefreshing = data.status == Status.LOADING && data.data == null
-            if (data.data != null) {
-                val adapter = (list.adapter as SetsListAdapter)
-                val diffs = DiffUtil.calculateDiff(SetsDiffCallback(adapter.getItems(), data.data), !adapter.getItems().isEmpty())
-                adapter.setItems(data.data)
-                diffs.dispatchUpdatesTo(adapter)
-            }
+        if (data?.data != null) {
+            val adapter = (list.adapter as SetsListAdapter)
+            val diffs = DiffUtil.calculateDiff(SetsDiffCallback(adapter.getItems(), data.data), !adapter.getItems().isEmpty())
+            adapter.setItems(data.data)
+            diffs.dispatchUpdatesTo(adapter)
+            swipeRefresh.isRefreshing = false
         }
     }
 

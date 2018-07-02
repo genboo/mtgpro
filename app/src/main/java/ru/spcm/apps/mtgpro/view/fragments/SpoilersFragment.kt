@@ -4,7 +4,6 @@ import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProvider
 import android.arch.lifecycle.ViewModelProviders
 import android.os.Bundle
-import android.support.v7.util.DiffUtil
 import android.support.v7.widget.GridLayoutManager
 import android.view.LayoutInflater
 import android.view.View
@@ -18,7 +17,6 @@ import ru.spcm.apps.mtgpro.repository.bounds.SpoilersBound
 import ru.spcm.apps.mtgpro.view.adapter.RecyclerViewAdapter
 import ru.spcm.apps.mtgpro.view.adapter.RecyclerViewScrollListener
 import ru.spcm.apps.mtgpro.view.adapter.SpoilersListAdapter
-import ru.spcm.apps.mtgpro.view.adapter.diffs.SpoilersDiffCallback
 import ru.spcm.apps.mtgpro.view.components.fadeIn
 import ru.spcm.apps.mtgpro.view.components.fadeOut
 import ru.spcm.apps.mtgpro.viewmodel.SpoilersViewModel
@@ -81,8 +79,9 @@ class SpoilersFragment : BaseFragment() {
                 if (adapter.getItems().isEmpty()) {
                     showContent()
                 }
+                val sameCount = data.data.size == adapter.getSize()
                 adapter.setItems(data.data)
-                if(data.data.isEmpty()){
+                if(sameCount){
                     adapter.notifyItemChanged(adapter.getSize())
                 }
             }
