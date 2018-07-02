@@ -14,7 +14,6 @@ import ru.spcm.apps.mtgpro.model.dto.Card
 import ru.spcm.apps.mtgpro.model.tools.Resource
 import ru.spcm.apps.mtgpro.model.tools.Status
 import ru.spcm.apps.mtgpro.repository.bounds.SpoilersBound
-import ru.spcm.apps.mtgpro.view.adapter.RecyclerViewAdapter
 import ru.spcm.apps.mtgpro.view.adapter.RecyclerViewScrollListener
 import ru.spcm.apps.mtgpro.view.adapter.SpoilersListAdapter
 import ru.spcm.apps.mtgpro.view.components.fadeIn
@@ -64,11 +63,7 @@ class SpoilersFragment : BaseFragment() {
             }
         }
 
-        adapter.setOnItemClickListener(object : RecyclerViewAdapter.OnItemClickListener<Card> {
-            override fun click(position: Int, item: Card, view: View?) {
-                navigator.goToCard(item.multiverseId)
-            }
-        })
+        adapter.setOnItemClickListener { _, item, _ -> navigator.goToCard(item.multiverseId) }
     }
 
     private fun observeSpoilers(data: Resource<List<Card>>?) {
@@ -81,7 +76,7 @@ class SpoilersFragment : BaseFragment() {
                 }
                 val sameCount = data.data.size == adapter.getSize()
                 adapter.setItems(data.data)
-                if(sameCount){
+                if (sameCount) {
                     adapter.notifyItemChanged(adapter.getSize())
                 }
             }

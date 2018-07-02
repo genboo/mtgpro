@@ -7,14 +7,11 @@ import java.util.ArrayList
 
 abstract class RecyclerViewAdapter<T, H : RecyclerView.ViewHolder> internal constructor(items: List<T>?) : RecyclerView.Adapter<H>() {
 
-    private var onItemClickListener: OnItemClickListener<T>? = null
     private var items: List<T>
 
-    private val loadedPage = SparseBooleanArray()
+    private var listener: (Int, T, View?) -> Unit = {_, _, _ -> }
 
-    interface OnItemClickListener<in T> {
-        fun click(position: Int, item: T, view: View? = null)
-    }
+    private val loadedPage = SparseBooleanArray()
 
     init {
         if (items == null) {
@@ -44,13 +41,13 @@ abstract class RecyclerViewAdapter<T, H : RecyclerView.ViewHolder> internal cons
         return items
     }
 
-    fun setOnItemClickListener(listener: OnItemClickListener<T>) {
-        onItemClickListener = listener
+    fun setOnItemClickListener(event: (Int, T, View?) -> Unit) {
+        listener = event
     }
 
     internal fun onItemClick(view: View, position: Int, imageView: View? = null) {
         if (position != RecyclerView.NO_POSITION) {
-            view.postDelayed({ onItemClickListener?.click(position, items[position], imageView) }, DEFAULT_CLICK_DELAY)
+            view.postDelayed({ listener(position, items[position], imageView) }, DEFAULT_CLICK_DELAY)
         }
     }
 

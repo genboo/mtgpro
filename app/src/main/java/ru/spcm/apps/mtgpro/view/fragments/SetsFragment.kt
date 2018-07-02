@@ -13,7 +13,6 @@ import kotlinx.android.synthetic.main.fragment_sets.*
 import ru.spcm.apps.mtgpro.R
 import ru.spcm.apps.mtgpro.model.dto.Set
 import ru.spcm.apps.mtgpro.model.tools.Resource
-import ru.spcm.apps.mtgpro.view.adapter.RecyclerViewAdapter
 import ru.spcm.apps.mtgpro.view.adapter.SetsListAdapter
 import ru.spcm.apps.mtgpro.view.adapter.diffs.SetsDiffCallback
 import ru.spcm.apps.mtgpro.viewmodel.SetsViewModel
@@ -23,12 +22,6 @@ class SetsFragment : BaseFragment() {
 
     @Inject
     lateinit var viewModelFactory: ViewModelProvider.Factory
-
-    private val setAdapterClickListener = object : RecyclerViewAdapter.OnItemClickListener<Set> {
-        override fun click(position: Int, item: Set, view: View?) {
-            navigator.goToSpoilers(item.code, item.name)
-        }
-    }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
@@ -45,7 +38,7 @@ class SetsFragment : BaseFragment() {
         viewModel.getSets().observe(this, Observer { observeSets(it) })
 
         val adapter = SetsListAdapter(null)
-        adapter.setOnItemClickListener(setAdapterClickListener)
+        adapter.setOnItemClickListener{_, item, _ -> navigator.goToSpoilers(item.code, item.name)}
         list.layoutManager = LinearLayoutManager(context)
         list.adapter = adapter
         list.postDelayed({ viewModel.loadSets() }, 200)

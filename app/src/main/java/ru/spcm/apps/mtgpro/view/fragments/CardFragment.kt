@@ -11,8 +11,10 @@ import android.view.*
 import kotlinx.android.synthetic.main.fragment_card.*
 import ru.spcm.apps.mtgpro.R
 import ru.spcm.apps.mtgpro.model.dto.CardLocal
+import ru.spcm.apps.mtgpro.tools.Logger
 import ru.spcm.apps.mtgpro.tools.OracleReplacer
 import ru.spcm.apps.mtgpro.view.adapter.ReprintListAdapter
+import ru.spcm.apps.mtgpro.view.components.ExpandListener
 import ru.spcm.apps.mtgpro.view.components.loadImageFromCache
 import ru.spcm.apps.mtgpro.viewmodel.CardViewModel
 import javax.inject.Inject
@@ -55,6 +57,7 @@ class CardFragment : BaseFragment() {
         if (data != null) {
             if (data.isNotEmpty()) {
                 val firstCard = data[0]
+                updateTitle(firstCard.card.name)
                 cardImage.loadImageFromCache(firstCard.card.imageUrl)
                 cardName.text = firstCard.card.name
                 cardRarity.setColorFilter(ContextCompat.getColor(requireContext(), firstCard.card.getSetIconColor()), PorterDuff.Mode.SRC_IN)
@@ -63,8 +66,18 @@ class CardFragment : BaseFragment() {
                 cardManaCost.text =
                         OracleReplacer.getText(firstCard.card.manaCost ?: "", requireActivity())
 
-                updateTitle(firstCard.card.name)
+                cardText.setOnClickListener { cardOracle.toggle() }
+                cardOracle.text = OracleReplacer.getText(firstCard.card.text ?: "", requireActivity())
+                cardOracle.setExpandListener(ExpandListener(cardOracleArrow))
 
+                cardRulesTitle.setOnClickListener { cardRules.toggle() }
+                cardRules.text = OracleReplacer.getText(firstCard.card.rulesText ?: "", requireActivity())
+                cardRules.setExpandListener(ExpandListener(cardRulesArrow))
+
+                counterBlock.setCount(firstCard.card.count)
+                counterBlock.setOnChangeListener{
+
+                }
                 (reprints.adapter as ReprintListAdapter).setItems(firstCard.reprints)
             }
         }
