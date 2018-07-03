@@ -29,7 +29,6 @@ class CardHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
     }
 
-
     fun setListener(listener: View.OnClickListener) {
         itemView.itemBlock?.setOnClickListener(listener)
     }

@@ -37,6 +37,7 @@ ext {
     archComponentsVersion = "1.1.1"
     ciceroneVersion = "3.0.0"
     roomVersion = "1.1.1"
+    pagingVersion = "1.0.1"
     daggerVersion = "2.11"
     retrofitVersion = "2.4.0"
     mockitoVersion = "2.7.19"

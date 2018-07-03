@@ -14,7 +14,7 @@ import ru.spcm.apps.mtgpro.model.dto.Card
 import ru.spcm.apps.mtgpro.model.tools.Resource
 import ru.spcm.apps.mtgpro.model.tools.Status
 import ru.spcm.apps.mtgpro.repository.bounds.SpoilersBound
-import ru.spcm.apps.mtgpro.view.adapter.RecyclerViewScrollListener
+import ru.spcm.apps.mtgpro.view.adapter.RecyclerViewLoaderScrollListener
 import ru.spcm.apps.mtgpro.view.adapter.SpoilersListAdapter
 import ru.spcm.apps.mtgpro.view.components.fadeIn
 import ru.spcm.apps.mtgpro.view.components.fadeOut
@@ -51,7 +51,7 @@ class SpoilersFragment : BaseFragment() {
         list.layoutManager = layoutManager
         list.adapter = adapter
         list.clearOnScrollListeners()
-        list.addOnScrollListener(RecyclerViewScrollListener({ viewModel.loadSpoilers(set, it) },
+        list.addOnScrollListener(RecyclerViewLoaderScrollListener({ viewModel.loadSpoilers(set, it) },
                 SpoilersBound.PAGES_SIZE))
 
         showProgressBar()

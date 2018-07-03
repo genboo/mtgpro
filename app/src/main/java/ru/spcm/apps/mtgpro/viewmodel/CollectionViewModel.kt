@@ -4,6 +4,8 @@ import android.arch.lifecycle.LiveData
 import android.arch.lifecycle.MutableLiveData
 import android.arch.lifecycle.Transformations
 import android.arch.lifecycle.ViewModel
+import android.arch.paging.LivePagedListBuilder
+import android.arch.paging.PagedList
 import ru.spcm.apps.mtgpro.model.dto.Card
 import ru.spcm.apps.mtgpro.repository.CollectionRepo
 import ru.spcm.apps.mtgpro.tools.AbsentLiveData
@@ -21,6 +23,10 @@ internal constructor(private val collectionRepo: CollectionRepo) : ViewModel() {
 
     private val switcher: MutableLiveData<Int> = MutableLiveData()
     private var cards: LiveData<List<Card>>
+
+    val allCards: LiveData<PagedList<Card>> = LivePagedListBuilder(
+            collectionRepo.getAllCards(), 20
+    ).build()
 
     init {
         cards = Transformations.switchMap(switcher) {

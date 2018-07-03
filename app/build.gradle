@@ -78,6 +78,7 @@ dependencies {
     implementation "com.android.support.constraint:constraint-layout:$constraintVersion"
     implementation "android.arch.lifecycle:extensions:$archComponentsVersion"
     implementation "android.arch.persistence.room:runtime:$roomVersion"
+    implementation "android.arch.paging:runtime:$pagingVersion"
     implementation "com.google.dagger:dagger:$daggerVersion"
     implementation "com.google.dagger:dagger-android:$daggerVersion"
     implementation "com.google.dagger:dagger-android-support:$daggerVersion"

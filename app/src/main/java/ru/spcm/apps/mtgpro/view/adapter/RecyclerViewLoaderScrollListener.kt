@@ -3,8 +3,8 @@ package ru.spcm.apps.mtgpro.view.adapter
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 
-class RecyclerViewScrollListener(private val load: (Int) -> Unit,
-                                 private val pageSize: Int) : RecyclerView.OnScrollListener() {
+class RecyclerViewLoaderScrollListener(private val load: (Int) -> Unit,
+                                       private val pageSize: Int) : RecyclerView.OnScrollListener() {
 
     private var loading = false
     private var previousTotal = 0
@@ -12,7 +12,7 @@ class RecyclerViewScrollListener(private val load: (Int) -> Unit,
     override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
         super.onScrolled(recyclerView, dx, dy)
         val visibleItemCount = recyclerView.layoutManager.childCount
-        val totalItemCount = recyclerView.layoutManager.itemCount
+        val totalItemCount = recyclerView.layoutManager.itemCount - 1
         val firstVisibleItem = (recyclerView.layoutManager as LinearLayoutManager).findFirstVisibleItemPosition()
 
         if (previousTotal == 0) {
@@ -27,7 +27,7 @@ class RecyclerViewScrollListener(private val load: (Int) -> Unit,
         if (!loading && totalItemCount - (visibleItemCount + firstVisibleItem) < DEFAULT_REACT) {
             loading = true
             if (totalItemCount % pageSize == 0) {
-                load(totalItemCount + 1)
+                load(totalItemCount / pageSize + 1)
             }
         }
     }

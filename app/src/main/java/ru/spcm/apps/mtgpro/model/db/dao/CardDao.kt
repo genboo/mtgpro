@@ -1,6 +1,7 @@
 package ru.spcm.apps.mtgpro.model.db.dao
 
 import android.arch.lifecycle.LiveData
+import android.arch.paging.DataSource
 import android.arch.persistence.room.*
 import ru.spcm.apps.mtgpro.model.dto.Card
 import ru.spcm.apps.mtgpro.model.dto.CardLocal
@@ -46,8 +47,11 @@ interface CardDao {
     @Query("SELECT c.* FROM Card c WHERE c.multiverseId = :mid")
     fun getCards(mid: String): LiveData<List<Card>>
 
-    @Query("SELECT c.*, sc.count FROM SavedCard sc LEFT JOIN Card c ON c.id = sc.id ORDER BY c.setCode, c.numberFormatted LIMIT 27 OFFSET :offset")
-    fun getAllCards(offset: Int): LiveData<List<Card>>
+    @Query("SELECT c.*, sc.count FROM SavedCard sc LEFT JOIN Card c ON c.id = sc.id ORDER BY c.setCode, c.numberFormatted LIMIT :limit OFFSET :offset")
+    fun getAllCards(offset: Int, limit: Int): LiveData<List<Card>>
+
+    @Query("SELECT c.*, sc.count FROM SavedCard sc LEFT JOIN Card c ON c.id = sc.id ORDER BY c.setCode, c.numberFormatted")
+    fun getAllCards(): DataSource.Factory<Int, Card>
 
     @Query("SELECT * FROM WishedCard c WHERE c.id = :id")
     fun getWish(id: String): LiveData<WishedCard>

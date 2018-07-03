@@ -10,10 +10,7 @@ import android.view.View
 import android.view.ViewGroup
 import kotlinx.android.synthetic.main.fragment_collection.*
 import ru.spcm.apps.mtgpro.R
-import ru.spcm.apps.mtgpro.model.dto.Card
-import ru.spcm.apps.mtgpro.repository.CollectionRepo
 import ru.spcm.apps.mtgpro.view.adapter.CardsListAdapter
-import ru.spcm.apps.mtgpro.view.adapter.RecyclerViewScrollListener
 import ru.spcm.apps.mtgpro.viewmodel.CollectionViewModel
 import javax.inject.Inject
 
@@ -33,25 +30,13 @@ class CollectionFragment : BaseFragment() {
         super.onActivityCreated(savedInstanceState)
         updateToolbar()
 
-        val viewModel = ViewModelProviders.of(this, viewModelFactory).get(CollectionViewModel::class.java)
-        viewModel.getCards().observe(this, Observer { observeCards(it) })
-
-        val adapter = CardsListAdapter(null)
+        val adapter = CardsListAdapter()
+        adapter.listener = { navigator.goToCard(it.id) }
         list.layoutManager = LinearLayoutManager(context)
-        list.clearOnScrollListeners()
-        list.addOnScrollListener(RecyclerViewScrollListener({ viewModel.loadCards(it) },
-                CollectionRepo.PAGES_SIZE, true))
         list.adapter = adapter
-        adapter.setOnItemClickListener { _, item, _ -> navigator.goToCard(item.id) }
 
-        list.postDelayed({ viewModel.loadCards(0) }, 200)
-    }
-
-    private fun observeCards(data: List<Card>?) {
-        if (data != null) {
-            val adapter = list.adapter as CardsListAdapter
-            adapter.setItems(data)
-        }
+        val viewModel = ViewModelProviders.of(this, viewModelFactory).get(CollectionViewModel::class.java)
+        viewModel.allCards.observe(this, Observer { adapter.submitList(it) })
     }
 
     override fun inject() {
