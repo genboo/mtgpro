@@ -7,10 +7,7 @@ import android.support.v4.app.FragmentTransaction
 import ru.spcm.apps.mtgpro.R
 import ru.spcm.apps.mtgpro.view.fragments.*
 import ru.terrakok.cicerone.android.SupportFragmentNavigator
-import ru.terrakok.cicerone.commands.Back
-import ru.terrakok.cicerone.commands.Command
-import ru.terrakok.cicerone.commands.Forward
-import ru.terrakok.cicerone.commands.Replace
+import ru.terrakok.cicerone.commands.*
 
 class Navigator(private val activity: FragmentActivity, fragmentManager: FragmentManager, containerId: Int)
     : SupportFragmentNavigator(fragmentManager, containerId) {
@@ -52,15 +49,15 @@ class Navigator(private val activity: FragmentActivity, fragmentManager: Fragmen
     }
 
     fun goToCollection(){
-        applyCommand(Replace(SCREEN_COLLECTION, ""))
+        applyCommands(arrayOf(BackTo(null), Replace(SCREEN_COLLECTION, "")))
     }
 
     fun goToWishList(){
-        applyCommand(Replace(SCREEN_WISH_LIST, ""))
+        applyCommands(arrayOf(BackTo(null), Replace(SCREEN_WISH_LIST, "")))
     }
 
     fun goToSets() {
-        applyCommands(arrayOf(Replace(SCREEN_SETS, "")))
+        applyCommands(arrayOf(BackTo(null), Replace(SCREEN_SETS, "")))
     }
 
     fun goToSpoilers(set: String, name: String) {
