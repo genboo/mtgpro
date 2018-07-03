@@ -16,6 +16,7 @@ import ru.spcm.apps.mtgpro.model.dto.Set
  */
 @Database(version = 1, exportSchema = false, entities = [
     Card::class,
+    SavedCard::class,
     Set::class,
     Reprint::class,
     Type::class,
@@ -31,6 +32,7 @@ abstract class MtgDatabase : RoomDatabase() {
     abstract fun setsDao(): SetsDao
 
     abstract fun cardDao(): CardDao
+
     abstract fun additionalInfoDao(): AdditionalInfoCardDao
 
     abstract fun cacheDao(): CacheDao

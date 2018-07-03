@@ -63,7 +63,7 @@ class SpoilersFragment : BaseFragment() {
             }
         }
 
-        adapter.setOnItemClickListener { _, item, _ -> navigator.goToCard(item.multiverseId) }
+        adapter.setOnItemClickListener { _, item, _ -> navigator.goToCard(item.id) }
     }
 
     private fun observeSpoilers(data: Resource<List<Card>>?) {

@@ -6,7 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import ru.spcm.apps.mtgpro.R
 import ru.spcm.apps.mtgpro.model.dto.Card
-import ru.spcm.apps.mtgpro.view.adapter.diffs.SpoilersDiffCallback
+import ru.spcm.apps.mtgpro.view.adapter.diffs.CardsDiffCallback
 import ru.spcm.apps.mtgpro.view.adapter.holders.SpoilerHolder
 
 /**
@@ -50,7 +50,7 @@ class SpoilersListAdapter(items: List<Card>?) : RecyclerViewAdapter<Card, Spoile
     }
 
     override fun setItems(items: List<Card>) {
-        val diffs = DiffUtil.calculateDiff(SpoilersDiffCallback(getItems(), items), !this.getItems().isEmpty())
+        val diffs = DiffUtil.calculateDiff(CardsDiffCallback(getItems(), items), !this.getItems().isEmpty())
         super.setItems(items)
         diffs.dispatchUpdatesTo(this)
     }

@@ -6,7 +6,6 @@ import android.arch.lifecycle.Transformations
 import android.arch.lifecycle.ViewModel
 import ru.spcm.apps.mtgpro.model.dto.Card
 import ru.spcm.apps.mtgpro.model.dto.CardLocal
-import ru.spcm.apps.mtgpro.model.tools.Resource
 import ru.spcm.apps.mtgpro.repository.CardRepo
 import ru.spcm.apps.mtgpro.tools.AbsentLiveData
 
@@ -22,10 +21,10 @@ class CardViewModel @Inject
 internal constructor(private val cardRepo: CardRepo) : ViewModel() {
 
     private val switcher: MutableLiveData<String> = MutableLiveData()
-    private var card: LiveData<List<CardLocal>>
+    private var cards: LiveData<List<CardLocal>>
 
     init {
-        card = Transformations.switchMap(switcher) {
+        cards = Transformations.switchMap(switcher) {
             if (it == null) {
                 return@switchMap AbsentLiveData.create<List<CardLocal>>()
             }
@@ -33,8 +32,8 @@ internal constructor(private val cardRepo: CardRepo) : ViewModel() {
         }
     }
 
-    fun getCard(): LiveData<List<CardLocal>> {
-        return card
+    fun getCards(): LiveData<List<CardLocal>> {
+        return cards
     }
 
     fun loadCard(mid: String) {

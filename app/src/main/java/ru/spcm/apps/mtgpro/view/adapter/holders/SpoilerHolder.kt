@@ -19,6 +19,13 @@ class SpoilerHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         cardExists.text = ""
         cardExists.visibility = View.INVISIBLE
         cardImage.loadImageFromCache(item.imageUrl)
+
+        if(item.count == 0){
+            cardExists.visibility = View.INVISIBLE
+        }else {
+            cardExists.text = String.format("%s", item.count)
+            cardExists.visibility = View.VISIBLE
+        }
     }
 
     fun setListener(listener: View.OnClickListener) {

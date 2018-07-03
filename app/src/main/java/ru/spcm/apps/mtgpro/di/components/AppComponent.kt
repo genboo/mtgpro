@@ -13,6 +13,7 @@ import ru.spcm.apps.mtgpro.di.modules.DbModule
 import ru.spcm.apps.mtgpro.di.modules.NavigationModule
 import ru.spcm.apps.mtgpro.di.modules.RetrofitModule
 import ru.spcm.apps.mtgpro.view.fragments.CardFragment
+import ru.spcm.apps.mtgpro.view.fragments.CollectionFragment
 import ru.spcm.apps.mtgpro.view.fragments.SetsFragment
 import ru.spcm.apps.mtgpro.view.fragments.SpoilersFragment
 
@@ -39,5 +40,7 @@ interface AppComponent {
     fun inject(fragment: SpoilersFragment)
 
     fun inject(fragment: CardFragment)
+
+    fun inject(fragment: CollectionFragment)
 
 }

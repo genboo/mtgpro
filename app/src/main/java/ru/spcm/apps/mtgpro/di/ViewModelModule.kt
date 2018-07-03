@@ -6,6 +6,7 @@ import dagger.Binds
 import dagger.Module
 import dagger.multibindings.IntoMap
 import ru.spcm.apps.mtgpro.viewmodel.CardViewModel
+import ru.spcm.apps.mtgpro.viewmodel.CollectionViewModel
 import ru.spcm.apps.mtgpro.viewmodel.SetsViewModel
 import ru.spcm.apps.mtgpro.viewmodel.SpoilersViewModel
 
@@ -26,6 +27,11 @@ internal abstract class ViewModelModule {
     @IntoMap
     @ViewModelKey(SpoilersViewModel::class)
     internal abstract fun bindSpoilersViewModel(viewModel: SpoilersViewModel): ViewModel
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(CollectionViewModel::class)
+    internal abstract fun bindCollectionViewModel(viewModel: CollectionViewModel): ViewModel
 
     @Binds
     internal abstract fun bindViewModelFactory(factory: ViewModelFactory): ViewModelProvider.Factory

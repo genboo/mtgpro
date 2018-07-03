@@ -12,61 +12,72 @@ import ru.spcm.apps.mtgpro.model.dto.*
 @Dao
 interface AdditionalInfoCardDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insert(item: Color)
+    fun insertColors(item: List<Color>)
 
     @Query("DELETE FROM Color where card_id = :card")
     fun clearColors(card: String)
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insert(item: Type)
+    fun insertTypes(item: List<Type>)
 
     @Query("DELETE FROM Type where card_id = :card")
     fun clearTypes(card: String)
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insert(item: Subtype)
+    fun insertSubtypes(item: List<Subtype>)
 
     @Query("DELETE FROM Subtype where card_id = :card")
     fun clearSubtypes(card: String)
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insert(item: Supertype)
+    fun insertSupertypes(item: List<Supertype>)
 
     @Query("DELETE FROM Supertype where card_id = :card")
     fun clearSupertypes(card: String)
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insert(item: Reprint)
+    fun insertReprints(item: List<Reprint>)
 
     @Query("DELETE FROM Reprint where card_id = :card")
     fun clearReprints(card: String)
 
     @Transaction
-    fun updateAdditionInfo(card:Card){
+    fun updateAdditionInfo(card: Card) {
         clearColors(card.id)
+        val colors = ArrayList<Color>()
         card.colors?.forEach {
-            insert(Color(card.id, it))
+            colors.add(Color(card.id, it))
         }
+        insertColors(colors)
 
         clearTypes(card.id)
-        card.types?.forEach{
-            insert(Type(card.id, it))
+        val types = ArrayList<Type>()
+        card.types?.forEach {
+            types.add(Type(card.id, it))
         }
+        insertTypes(types)
 
         clearSupertypes(card.id)
-        card.supertypes?.forEach{
-            insert(Supertype(card.id, it))
+        val supertypes = ArrayList<Supertype>()
+        card.supertypes?.forEach {
+            supertypes.add(Supertype(card.id, it))
         }
+        insertSupertypes(supertypes)
 
         clearSubtypes(card.id)
-        card.subtypes?.forEach{
-            insert(Subtype(card.id, it))
+        val subtypes = ArrayList<Subtype>()
+        card.subtypes?.forEach {
+            subtypes.add(Subtype(card.id, it))
         }
+        insertSubtypes(subtypes)
 
         clearReprints(card.id)
-        card.printings?.forEach{
-            insert(Reprint(card.id, it))
+        val printings = ArrayList<Reprint>()
+        card.printings?.forEach {
+            printings.add(Reprint(card.id, it))
         }
+        insertReprints(printings)
+
     }
 
 }

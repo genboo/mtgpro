@@ -1,6 +1,7 @@
 package ru.spcm.apps.mtgpro.model.dto
 
 import android.arch.persistence.room.Embedded
+import android.arch.persistence.room.Ignore
 import android.arch.persistence.room.Relation
 
 class CardLocal {

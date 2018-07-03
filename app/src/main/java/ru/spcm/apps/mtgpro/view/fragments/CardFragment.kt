@@ -45,7 +45,7 @@ class CardFragment : BaseFragment() {
         updateToolbar()
 
         val viewModel = ViewModelProviders.of(this, viewModelFactory).get(CardViewModel::class.java)
-        viewModel.getCard().observe(this, Observer { observeCard(it) })
+        viewModel.getCards().observe(this, Observer { observeCards(it) })
         viewModel.loadCard(args.getString(ARG_ID))
 
         val adapter = ReprintListAdapter(null)
@@ -63,7 +63,7 @@ class CardFragment : BaseFragment() {
         }
     }
 
-    private fun observeCard(data: List<CardLocal>?) {
+    private fun observeCards(data: List<CardLocal>?) {
         if (data != null) {
             if (data.isNotEmpty()) {
                 val firstCard = data[0]

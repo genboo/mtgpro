@@ -40,6 +40,7 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.nav_sets -> navigator.goToSets()
+            R.id.nav_collection -> navigator.goToCollection()
         }
         return true
     }
