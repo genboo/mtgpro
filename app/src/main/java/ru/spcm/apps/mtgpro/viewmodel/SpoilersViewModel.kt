@@ -9,7 +9,6 @@ import ru.spcm.apps.mtgpro.model.dto.Card
 import ru.spcm.apps.mtgpro.model.tools.Resource
 import ru.spcm.apps.mtgpro.repository.SpoilersRepo
 import ru.spcm.apps.mtgpro.tools.AbsentLiveData
-import ru.spcm.apps.mtgpro.tools.Logger
 
 import javax.inject.Inject
 

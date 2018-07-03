@@ -17,6 +17,7 @@ import ru.spcm.apps.mtgpro.model.dto.Set
 @Database(version = 1, exportSchema = false, entities = [
     Card::class,
     SavedCard::class,
+    WishedCard::class,
     Set::class,
     Reprint::class,
     Type::class,

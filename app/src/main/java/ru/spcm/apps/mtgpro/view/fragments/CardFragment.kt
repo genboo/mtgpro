@@ -13,6 +13,7 @@ import kotlinx.android.synthetic.main.fragment_card.*
 import ru.spcm.apps.mtgpro.R
 import ru.spcm.apps.mtgpro.model.dto.Card
 import ru.spcm.apps.mtgpro.model.dto.CardLocal
+import ru.spcm.apps.mtgpro.model.dto.WishedCard
 import ru.spcm.apps.mtgpro.tools.OracleReplacer
 import ru.spcm.apps.mtgpro.view.adapter.ReprintListAdapter
 import ru.spcm.apps.mtgpro.view.components.ExpandListener
@@ -46,6 +47,7 @@ class CardFragment : BaseFragment() {
 
         val viewModel = ViewModelProviders.of(this, viewModelFactory).get(CardViewModel::class.java)
         viewModel.getCards().observe(this, Observer { observeCards(it) })
+        viewModel.getWish().observe(this, Observer { observeWish(it) })
         viewModel.loadCard(args.getString(ARG_ID))
 
         val adapter = ReprintListAdapter(null)
@@ -60,6 +62,10 @@ class CardFragment : BaseFragment() {
             card.count = it
             handler.removeCallbacksAndMessages(null)
             handler.postDelayed(task, 1000)
+        }
+
+        addToWish.setOnClickListener {
+            viewModel.updateWish(card.id, it.tag as Boolean)
         }
     }
 
@@ -91,7 +97,18 @@ class CardFragment : BaseFragment() {
                 (reprints.adapter as ReprintListAdapter).setItems(firstCard.reprints)
 
                 card = firstCard.card
+
             }
+        }
+    }
+
+    private fun observeWish(data: WishedCard?) {
+        if (data == null) {
+            addToWish.setImageDrawable(ContextCompat.getDrawable(requireContext(), R.drawable.ic_heart_outline))
+            addToWish.tag = true
+        } else {
+            addToWish.setImageDrawable(ContextCompat.getDrawable(requireContext(), R.drawable.ic_heart))
+            addToWish.tag = false
         }
     }
 

@@ -41,6 +41,7 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
         when (item.itemId) {
             R.id.nav_sets -> navigator.goToSets()
             R.id.nav_collection -> navigator.goToCollection()
+            R.id.nav_wish_list -> navigator.goToWishList()
         }
         return true
     }
