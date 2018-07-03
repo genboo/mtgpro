@@ -41,6 +41,7 @@ interface CardDao {
     @Query("SELECT c.*, sc.count FROM CacheCard cc LEFT JOIN Card c ON c.id = cc.id LEFT JOIN SavedCard sc ON sc.id = c.id WHERE cc.cache_key = :cacheKey ORDER BY c.numberFormatted")
     fun getCachedCards(cacheKey: String): LiveData<List<Card>>
 
+    @Transaction
     @Query("SELECT c.*, sc.count FROM Card c LEFT JOIN SavedCard sc ON sc.id = c.id WHERE c.id = :id")
     fun getSavedCards(id: String): LiveData<List<CardLocal>>
 
@@ -50,7 +51,7 @@ interface CardDao {
     @Query("SELECT c.*, sc.count FROM SavedCard sc LEFT JOIN Card c ON c.id = sc.id ORDER BY c.setCode, c.numberFormatted LIMIT :limit OFFSET :offset")
     fun getAllCards(offset: Int, limit: Int): LiveData<List<Card>>
 
-    @Query("SELECT c.*, sc.count FROM SavedCard sc LEFT JOIN Card c ON c.id = sc.id ORDER BY c.setCode, c.numberFormatted")
+    @Query("SELECT c.id, c.numberFormatted, c.setCode, c.imageUrl, c.name, c.rarity, c.multiverseId, c.number, c.`set`, c.type, c.cmc, c.text, c.flavor, c.manaCost, c.rulesText, sc.count FROM SavedCard sc LEFT JOIN Card c ON c.id = sc.id ORDER BY c.setCode, c.numberFormatted")
     fun getAllCards(): DataSource.Factory<Int, Card>
 
     @Query("SELECT * FROM WishedCard c WHERE c.id = :id")
@@ -58,4 +59,5 @@ interface CardDao {
 
     @Query("SELECT c.*, sc.count FROM WishedCard wc LEFT JOIN Card c ON c.id = wc.id  LEFT JOIN SavedCard sc ON sc.id = wc.id ORDER BY c.setCode, c.numberFormatted")
     fun getWishedCards(): LiveData<List<Card>>
+
 }
