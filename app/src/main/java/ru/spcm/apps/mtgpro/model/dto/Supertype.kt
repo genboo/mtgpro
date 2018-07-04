@@ -6,7 +6,7 @@ import android.arch.persistence.room.*
         parentColumns = ["id"],
         childColumns = ["card_id"],
         onDelete = ForeignKey.CASCADE)], indices = [(Index("card_id"))])
-class Supertype(@ColumnInfo(name = "card_id")
+data class Supertype(@ColumnInfo(name = "card_id")
                 var cardId: String,
                 var supertype: String)  {
     @PrimaryKey(autoGenerate = true)

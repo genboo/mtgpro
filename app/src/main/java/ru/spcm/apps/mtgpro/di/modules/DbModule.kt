@@ -9,10 +9,7 @@ import javax.inject.Singleton
 import dagger.Module
 import dagger.Provides
 import ru.spcm.apps.mtgpro.model.db.MtgDatabase
-import ru.spcm.apps.mtgpro.model.db.dao.AdditionalInfoCardDao
-import ru.spcm.apps.mtgpro.model.db.dao.CacheDao
-import ru.spcm.apps.mtgpro.model.db.dao.CardDao
-import ru.spcm.apps.mtgpro.model.db.dao.SetsDao
+import ru.spcm.apps.mtgpro.model.db.dao.*
 
 /**
  * Инициализация базы данных
@@ -58,6 +55,13 @@ class DbModule {
     internal fun provideCacheDao(db: MtgDatabase): CacheDao {
         return db.cacheDao()
     }
+
+    @Provides
+    @Singleton
+    internal fun provideLibrariesDao(db: MtgDatabase): LibrariesDao {
+        return db.librariesDao()
+    }
+
 
     companion object {
         const val DB_NAME = "mtg"

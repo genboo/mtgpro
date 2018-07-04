@@ -6,7 +6,7 @@ import android.arch.persistence.room.*
         parentColumns = ["id"],
         childColumns = ["card_id"],
         onDelete = ForeignKey.CASCADE)], indices = [(Index("card_id"))])
-class Reprint(@ColumnInfo(name = "card_id")
+data class Reprint(@ColumnInfo(name = "card_id")
               var cardId: String,
               var reprint: String) {
     @PrimaryKey(autoGenerate = true)

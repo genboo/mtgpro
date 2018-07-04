@@ -42,4 +42,6 @@ interface AppComponent {
 
     fun inject(fragment: WishFragment)
 
+    fun inject(fragment: LibrariesFragment)
+
 }

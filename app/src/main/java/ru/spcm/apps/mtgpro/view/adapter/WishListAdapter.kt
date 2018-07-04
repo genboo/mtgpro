@@ -32,5 +32,4 @@ class WishListAdapter(items: List<Card>?) : RecyclerViewAdapter<Card, SpoilerHol
         diffs.dispatchUpdatesTo(this)
     }
 
-
 }

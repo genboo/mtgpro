@@ -14,18 +14,15 @@ class Navigator(private val activity: FragmentActivity, fragmentManager: Fragmen
 
     override fun createFragment(screenKey: String, data: Any?): Fragment {
         when (screenKey) {
-            SCREEN_SETS ->
-                return SetsFragment()
-            SCREEN_COLLECTION ->
-                return CollectionFragment()
-            SCREEN_WISH_LIST ->
-                return WishFragment()
+            SCREEN_SETS -> return SetsFragment()
+            SCREEN_COLLECTION -> return CollectionFragment()
+            SCREEN_LIBRARIES -> return LibrariesFragment()
+            SCREEN_WISH_LIST -> return WishFragment()
             SCREEN_SPOILERS ->
                 if (data is Array<*>) {
                     return SpoilersFragment.getInstance(data[0] as String, data[1] as String)
                 }
-            SCREEN_CARD ->
-                return CardFragment.getInstance(data as String)
+            SCREEN_CARD -> return CardFragment.getInstance(data as String)
         }
         return SetsFragment()
     }
@@ -48,16 +45,20 @@ class Navigator(private val activity: FragmentActivity, fragmentManager: Fragmen
                 R.anim.slide_out_right_2)
     }
 
-    fun goToCollection(){
+    fun goToCollection() {
         applyCommands(arrayOf(BackTo(null), Replace(SCREEN_COLLECTION, "")))
     }
 
-    fun goToWishList(){
+    fun goToWishList() {
         applyCommands(arrayOf(BackTo(null), Replace(SCREEN_WISH_LIST, "")))
     }
 
     fun goToSets() {
         applyCommands(arrayOf(BackTo(null), Replace(SCREEN_SETS, "")))
+    }
+
+    fun goToLibraries() {
+        applyCommands(arrayOf(BackTo(null), Replace(SCREEN_LIBRARIES, "")))
     }
 
     fun goToSpoilers(set: String, name: String) {
@@ -67,6 +68,11 @@ class Navigator(private val activity: FragmentActivity, fragmentManager: Fragmen
     fun goToCard(id: String) {
         applyCommand(Forward(SCREEN_CARD, id))
     }
+
+    fun goToLibrary(id: String) {
+        applyCommand(Forward(SCREEN_CARD, id))
+    }
+
 
     fun backTo() {
         applyCommand(Back())
@@ -78,6 +84,7 @@ class Navigator(private val activity: FragmentActivity, fragmentManager: Fragmen
         const val SCREEN_CARD = "screen_card"
         const val SCREEN_COLLECTION = "screen_collection"
         const val SCREEN_WISH_LIST = "screen_wish_list"
+        const val SCREEN_LIBRARIES = "screen_libraries"
     }
 
 }

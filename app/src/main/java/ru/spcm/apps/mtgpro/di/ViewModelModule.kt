@@ -36,6 +36,11 @@ internal abstract class ViewModelModule {
     internal abstract fun bindWishViewModel(viewModel: WishViewModel): ViewModel
 
     @Binds
+    @IntoMap
+    @ViewModelKey(LibrariesViewModel::class)
+    internal abstract fun bindLibrariesViewModel(viewModel: LibrariesViewModel): ViewModel
+
+    @Binds
     internal abstract fun bindViewModelFactory(factory: ViewModelFactory): ViewModelProvider.Factory
 
 }

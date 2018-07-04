@@ -21,4 +21,5 @@
     <string name="all">Всего</string>
     <string name="select">Выбрать</string>
     <string name="filters">Фильтры</string>
+    <string name="library">Название колоды</string>
 </resources>

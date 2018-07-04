@@ -19,7 +19,7 @@ class CardHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         cardName.text = item.name
         cardRarity.setColorFilter(ContextCompat.getColor(context, item.getSetIconColor()), PorterDuff.Mode.SRC_IN)
         cardRarity.setImageDrawable(context.getDrawable(item.getSetIcon()))
-        cardSet.text = item.setCode
+        cardSet.text = item.setTitle
         cardType.text = item.type
         cardCount.text = String.format(Locale.getDefault(), "Кол-во: %d", item.count)
         cardNumber.text = String.format(Locale.getDefault(), "%s %s", item.set, item.numberFormatted)

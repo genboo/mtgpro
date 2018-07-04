@@ -1,11 +1,13 @@
 package ru.spcm.apps.mtgpro.view.adapter
 
+import android.support.v7.util.DiffUtil
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import ru.spcm.apps.mtgpro.R
 import ru.spcm.apps.mtgpro.view.adapter.holders.SetHolder
 import ru.spcm.apps.mtgpro.model.dto.Set
+import ru.spcm.apps.mtgpro.view.adapter.diffs.SetsDiffCallback
 
 /**
  * Адаптер для списка сетов
@@ -23,6 +25,12 @@ class SetsListAdapter(items: List<Set>?) : RecyclerViewAdapter<Set, SetHolder>(i
 
     override fun onBindViewHolder(holder: SetHolder, position: Int) {
         holder.bind(getItem(holder.adapterPosition))
+    }
+
+    override fun setItems(items: List<Set>) {
+        val diffs = DiffUtil.calculateDiff(SetsDiffCallback(getItems(), items), !getItems().isEmpty())
+        super.setItems(items)
+        diffs.dispatchUpdatesTo(this)
     }
 
 }

@@ -26,7 +26,7 @@ data class Card(@PrimaryKey @NonNull var id: String) {
     var numberFormatted: String = ""
 
     @SerializedName("setName")
-    var setCode: String = ""
+    var setTitle: String = ""
 
     var set: String = ""
 

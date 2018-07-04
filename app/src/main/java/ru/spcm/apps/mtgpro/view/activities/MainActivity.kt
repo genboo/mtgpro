@@ -42,6 +42,7 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
             R.id.nav_sets -> navigator.goToSets()
             R.id.nav_collection -> navigator.goToCollection()
             R.id.nav_wish_list -> navigator.goToWishList()
+            R.id.nav_libraries -> navigator.goToLibraries()
         }
         return true
     }
