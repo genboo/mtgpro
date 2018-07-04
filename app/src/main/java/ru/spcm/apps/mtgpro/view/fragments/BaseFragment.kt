@@ -39,7 +39,7 @@ abstract class BaseFragment : Fragment() {
 
     protected fun showSnack(text: Int, action: View.OnClickListener?) {
         if (view != null) {
-            val snackBar = Snackbar.make(view as View, text, Snackbar.LENGTH_SHORT)
+            val snackBar = Snackbar.make(view as View, text, Snackbar.LENGTH_LONG)
             if (action != null) {
                 snackBar.setAction(R.string.action_cancel, action)
             }

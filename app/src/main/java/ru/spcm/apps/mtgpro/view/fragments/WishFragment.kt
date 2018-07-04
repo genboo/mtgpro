@@ -54,7 +54,7 @@ class WishFragment : BaseFragment() {
     }
 
     override fun getTitle(): String {
-        return ""
+        return "Хочу!"
     }
 
 }

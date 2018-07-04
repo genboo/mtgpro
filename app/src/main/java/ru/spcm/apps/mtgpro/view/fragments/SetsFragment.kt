@@ -56,7 +56,7 @@ class SetsFragment : BaseFragment() {
     }
 
     override fun getTitle(): String {
-        return ""
+        return "Сеты"
     }
 
 }

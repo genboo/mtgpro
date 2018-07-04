@@ -52,6 +52,7 @@ class LibrariesFragment : BaseFragment() {
                         val name = libraryName.text.toString()
                         if (name.isNotEmpty()) {
                             viewModel.save(Library(name))
+                            showSnack(R.string.action_add_to_library, null)
                         }
                     }
             addDialog.show()
@@ -70,7 +71,7 @@ class LibrariesFragment : BaseFragment() {
     }
 
     override fun getTitle(): String {
-        return ""
+        return "Колоды"
     }
 
 }

@@ -8,6 +8,7 @@ import kotlinx.android.synthetic.main.activity_main.*
 import ru.spcm.apps.mtgpro.App
 import ru.spcm.apps.mtgpro.R
 import ru.spcm.apps.mtgpro.di.components.AppComponent
+import ru.spcm.apps.mtgpro.view.components.BottomNavigationViewHelper
 import ru.spcm.apps.mtgpro.view.components.Navigator
 
 class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemSelectedListener {
@@ -31,6 +32,7 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
             bottomMenu.selectedItemId = R.id.nav_sets
         }
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        BottomNavigationViewHelper.removeShiftMode(bottomMenu)
     }
 
     override fun onBackPressed() {

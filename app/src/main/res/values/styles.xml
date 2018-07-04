@@ -49,11 +49,26 @@
         <item name="android:layout_marginBottom">2dp</item>
         <item name="android:layout_marginTop">2dp</item>
     </style>
+
     <style name="TextView.FilterTitle" parent="android:Widget.TextView">
         <item name="android:textColor">@android:color/white</item>
         <item name="android:textSize">16sp</item>
         <item name="android:paddingEnd">16dp</item>
         <item name="android:paddingStart">16dp</item>
         <item name="android:background">@color/colorPrimary</item>
+    </style>
+
+    <style name="TextView.Search.Theme">
+        <item name="android:textColorHint">@color/colorTextHint</item>
+        <item name="colorControlNormal">@color/colorTextTitle</item>
+        <item name="colorControlActivated">@color/colorAccent</item>
+    </style>
+
+    <style name="TextView.Search" parent="android:Widget.EditText">
+        <item name="android:textColor">@color/colorTextTitle</item>
+        <item name="android:maxLines">1</item>
+        <item name="android:inputType">text</item>
+        <item name="android:singleLine">true</item>
+        <item name="android:selectAllOnFocus">true</item>
     </style>
 </resources>

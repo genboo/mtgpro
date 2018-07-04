@@ -44,7 +44,7 @@ class CollectionFragment : BaseFragment() {
     }
 
     override fun getTitle(): String {
-        return ""
+        return "Коллекция"
     }
 
 }
