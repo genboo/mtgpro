@@ -38,13 +38,11 @@ abstract class BaseFragment : Fragment() {
     }
 
     protected fun showSnack(text: Int, action: View.OnClickListener?) {
-        if (view != null) {
-            val snackBar = Snackbar.make(view as View, text, Snackbar.LENGTH_LONG)
-            if (action != null) {
-                snackBar.setAction(R.string.action_cancel, action)
-            }
-            snackBar.show()
+        val snackBar = Snackbar.make((activity as MainActivity).getView(), text, Snackbar.LENGTH_LONG)
+        if (action != null) {
+            snackBar.setAction(R.string.action_cancel, action)
         }
+        snackBar.show()
     }
 
     open fun updateTitle(title: String) {

@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.support.design.widget.BottomNavigationView
 import android.support.v7.app.AppCompatActivity
 import android.view.MenuItem
+import android.view.View
 import kotlinx.android.synthetic.main.activity_main.*
 import ru.spcm.apps.mtgpro.App
 import ru.spcm.apps.mtgpro.R
@@ -33,6 +34,10 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
         }
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         BottomNavigationViewHelper.removeShiftMode(bottomMenu)
+    }
+
+    fun getView():View{
+        return drawerLayout
     }
 
     override fun onBackPressed() {

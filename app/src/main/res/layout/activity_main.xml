@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.design.widget.CoordinatorLayout
+    android:id="@+id/drawerLayout"
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/drawerLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
@@ -12,8 +13,7 @@
     <FrameLayout
         android:id="@+id/content"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginBottom="56dp" />
+        android:layout_height="match_parent"/>
 
     <android.support.design.widget.BottomNavigationView
         android:id="@+id/bottomMenu"
@@ -25,6 +25,18 @@
         android:background="@color/colorPrimary"
         app:itemIconTint="@color/colorTextHint"
         app:itemTextColor="@color/colorTextHint"
-        app:menu="@menu/bottom_menu" />
+        app:layout_behavior="ru.spcm.apps.mtgpro.view.components.BottomNavigationBehavior"
+        app:menu="@menu/bottom_menu"/>
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/addLibrary"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="top"
+        android:tint="@android:color/white"
+        app:layout_anchorGravity="top|end"
+        app:layout_behavior="ru.spcm.apps.mtgpro.view.components.BottomNavigationFABBehavior"
+        app:srcCompat="@drawable/ic_plus"
+        app:useCompatPadding="true"/>
 
 </android.support.design.widget.CoordinatorLayout>
