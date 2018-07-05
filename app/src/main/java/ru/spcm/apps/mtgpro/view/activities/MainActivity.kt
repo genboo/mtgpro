@@ -2,6 +2,7 @@ package ru.spcm.apps.mtgpro.view.activities
 
 import android.os.Bundle
 import android.support.design.widget.BottomNavigationView
+import android.support.design.widget.FloatingActionButton
 import android.support.v7.app.AppCompatActivity
 import android.view.MenuItem
 import android.view.View
@@ -36,8 +37,12 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
         BottomNavigationViewHelper.removeShiftMode(bottomMenu)
     }
 
-    fun getView():View{
+    fun getView(): View {
         return drawerLayout
+    }
+
+    fun getFab(): FloatingActionButton {
+        return fab
     }
 
     override fun onBackPressed() {

@@ -23,6 +23,7 @@ class Navigator(private val activity: FragmentActivity, fragmentManager: Fragmen
                     return SpoilersFragment.getInstance(data[0] as String, data[1] as String)
                 }
             SCREEN_CARD -> return CardFragment.getInstance(data as String)
+            SCREEN_LIBRARY -> return LibraryFragment.getInstance(data as Long)
         }
         return SetsFragment()
     }
@@ -39,10 +40,15 @@ class Navigator(private val activity: FragmentActivity, fragmentManager: Fragmen
                                                    currentFragment: Fragment?,
                                                    nextFragment: Fragment?,
                                                    fragmentTransaction: FragmentTransaction) {
-        fragmentTransaction.setCustomAnimations(R.anim.slide_in_right,
-                R.anim.slide_out_left,
-                R.anim.slide_in_left,
-                R.anim.slide_out_right_2)
+        if(command is Replace){
+            fragmentTransaction.setCustomAnimations(android.R.anim.fade_in,
+                    android.R.anim.fade_out)
+        }else {
+            fragmentTransaction.setCustomAnimations(R.anim.slide_in_right,
+                    R.anim.slide_out_left,
+                    R.anim.slide_in_left,
+                    R.anim.slide_out_right_2)
+        }
     }
 
     fun goToCollection() {
@@ -69,10 +75,9 @@ class Navigator(private val activity: FragmentActivity, fragmentManager: Fragmen
         applyCommand(Forward(SCREEN_CARD, id))
     }
 
-    fun goToLibrary(id: String) {
-        applyCommand(Forward(SCREEN_CARD, id))
+    fun goToLibrary(id: Long) {
+        applyCommand(Forward(SCREEN_LIBRARY, id))
     }
-
 
     fun backTo() {
         applyCommand(Back())
@@ -85,6 +90,7 @@ class Navigator(private val activity: FragmentActivity, fragmentManager: Fragmen
         const val SCREEN_COLLECTION = "screen_collection"
         const val SCREEN_WISH_LIST = "screen_wish_list"
         const val SCREEN_LIBRARIES = "screen_libraries"
+        const val SCREEN_LIBRARY = "screen_library"
     }
 
 }

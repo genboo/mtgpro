@@ -71,4 +71,9 @@
         <item name="android:singleLine">true</item>
         <item name="android:selectAllOnFocus">true</item>
     </style>
+
+    <style name="ExpandedTextStyle" parent="AppTheme">
+        <item name="android:textColor">@android:color/transparent</item>
+    </style>
+
 </resources>

@@ -44,4 +44,6 @@ interface AppComponent {
 
     fun inject(fragment: LibrariesFragment)
 
+    fun inject(fragment: LibraryFragment)
+
 }

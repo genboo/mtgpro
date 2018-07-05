@@ -4,6 +4,7 @@ import android.arch.lifecycle.Lifecycle
 import android.arch.lifecycle.LifecycleRegistry
 import android.os.Build
 import android.os.Bundle
+import android.support.design.widget.FloatingActionButton
 import android.support.design.widget.Snackbar
 import android.support.v4.app.Fragment
 import android.transition.TransitionInflater
@@ -47,6 +48,10 @@ abstract class BaseFragment : Fragment() {
 
     open fun updateTitle(title: String) {
         toolbar?.title = title
+    }
+
+    fun getFab(): FloatingActionButton {
+        return (activity as MainActivity).getFab()
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
