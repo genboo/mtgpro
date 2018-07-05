@@ -4,10 +4,9 @@ import android.arch.lifecycle.LiveData
 import android.arch.lifecycle.MutableLiveData
 import android.arch.lifecycle.Transformations
 import android.arch.lifecycle.ViewModel
-import ru.spcm.apps.mtgpro.model.dto.Card
-import ru.spcm.apps.mtgpro.model.dto.CardLocal
-import ru.spcm.apps.mtgpro.model.dto.WishedCard
+import ru.spcm.apps.mtgpro.model.dto.*
 import ru.spcm.apps.mtgpro.repository.CardRepo
+import ru.spcm.apps.mtgpro.repository.LibrariesRepo
 import ru.spcm.apps.mtgpro.tools.AbsentLiveData
 
 import javax.inject.Inject
@@ -19,10 +18,13 @@ import javax.inject.Inject
  */
 
 class CardViewModel @Inject
-internal constructor(private val cardRepo: CardRepo) : ViewModel() {
+internal constructor(private val cardRepo: CardRepo,
+                     private val librariesRepo: LibrariesRepo) : ViewModel() {
 
     private val switcher: MutableLiveData<String> = MutableLiveData()
+    private val switcherLibraries: MutableLiveData<Boolean> = MutableLiveData()
     private var cards: LiveData<List<CardLocal>>
+    private var libraries: LiveData<List<LibraryInfo>>
     private var wish: LiveData<WishedCard>
 
     init {
@@ -39,10 +41,21 @@ internal constructor(private val cardRepo: CardRepo) : ViewModel() {
             }
             return@switchMap cardRepo.getWish(it)
         }
+
+        libraries = Transformations.switchMap(switcherLibraries) {
+            if (it) {
+                return@switchMap cardRepo.getLibraries()
+            }
+            return@switchMap AbsentLiveData.create<List<LibraryInfo>>()
+        }
     }
 
     fun getCards(): LiveData<List<CardLocal>> {
         return cards
+    }
+
+    fun getLibraries(): LiveData<List<LibraryInfo>> {
+        return libraries
     }
 
     fun getWish(): LiveData<WishedCard> {
@@ -53,11 +66,19 @@ internal constructor(private val cardRepo: CardRepo) : ViewModel() {
         switcher.postValue(id)
     }
 
+    fun loadLibraries() {
+        switcherLibraries.postValue(true)
+    }
+
     fun updateCard(card: Card) {
         cardRepo.updateCard(card)
     }
 
-    fun updateWish(id:String, wish: Boolean) {
+    fun updateWish(id: String, wish: Boolean) {
         cardRepo.updateWish(id, wish)
+    }
+
+    fun addCard(item: LibraryCard) {
+        librariesRepo.addCard(item)
     }
 }

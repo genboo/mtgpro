@@ -16,10 +16,10 @@
             android:id="@+id/main_collapsing"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:contentScrim="?android:attr/colorPrimary"
+            app:contentScrim="@android:color/white"
             app:expandedTitleGravity="center|top"
             app:expandedTitleTextAppearance="@style/ExpandedTextStyle"
-            app:layout_scrollFlags="scroll|exitUntilCollapsed"
+            app:layout_scrollFlags="scroll|exitUntilCollapsed|snap"
             app:scrimAnimationDuration="200">
 
             <ru.spcm.apps.mtgpro.view.components.LibraryStateView
@@ -50,12 +50,18 @@
 
     </android.support.design.widget.AppBarLayout>
 
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/list"
+    <android.support.v4.widget.NestedScrollView
+        android:id="@+id/main"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/colorBackgroundMain"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior"
-        tools:listitem="@layout/list_item_card" />
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/list"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/colorBackgroundMain"
+            tools:listitem="@layout/list_item_card" />
+
+    </android.support.v4.widget.NestedScrollView>
 </android.support.design.widget.CoordinatorLayout>

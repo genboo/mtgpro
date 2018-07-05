@@ -71,7 +71,7 @@ class NumberCounterView : LinearLayout {
         }
 
         minus.setOnClickListener {
-            if (count > 0) {
+            if (count > defaultCount) {
                 count--
                 counter.text = "$count"
                 change(count)
@@ -104,6 +104,10 @@ class NumberCounterView : LinearLayout {
     fun setCount(count: Int) {
         this.count = count
         counter.text = "$count"
+    }
+
+    fun getCount(): Int {
+        return this.count
     }
 
     fun setOnChangeListener(event: (Int) -> Unit) {

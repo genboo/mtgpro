@@ -5,18 +5,15 @@ import android.arch.lifecycle.MutableLiveData
 import ru.spcm.apps.mtgpro.model.api.CardApi
 import ru.spcm.apps.mtgpro.model.db.dao.CacheDao
 import ru.spcm.apps.mtgpro.model.db.dao.CardDao
-import ru.spcm.apps.mtgpro.model.dto.Card
-import ru.spcm.apps.mtgpro.model.dto.CardLocal
-import ru.spcm.apps.mtgpro.model.dto.SavedCard
-import ru.spcm.apps.mtgpro.model.dto.WishedCard
+import ru.spcm.apps.mtgpro.model.db.dao.LibrariesDao
+import ru.spcm.apps.mtgpro.model.dto.*
 import ru.spcm.apps.mtgpro.tools.AppExecutors
 import javax.inject.Inject
 
 class CardRepo @Inject
 constructor(private val appExecutors: AppExecutors,
-            private val cardApi: CardApi,
             private val cardDao: CardDao,
-            private val cacheDao: CacheDao) {
+            private val librariesDao: LibrariesDao) {
 
     fun getCards(id: String): LiveData<List<CardLocal>> {
         return cardDao.getSavedCards(id)
@@ -24,6 +21,10 @@ constructor(private val appExecutors: AppExecutors,
 
     fun getWish(id: String): LiveData<WishedCard> {
         return cardDao.getWish(id)
+    }
+
+    fun getLibraries(): LiveData<List<LibraryInfo>> {
+        return librariesDao.getLibraries()
     }
 
     fun updateCard(card: Card) {

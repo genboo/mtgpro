@@ -1,12 +1,17 @@
 package ru.spcm.apps.mtgpro.view.fragments
 
+import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProvider
 import android.arch.lifecycle.ViewModelProviders
 import android.os.Bundle
+import android.support.v7.widget.LinearLayoutManager
 import android.view.*
+import kotlinx.android.synthetic.main.fragment_library.*
 import ru.spcm.apps.mtgpro.R
 import ru.spcm.apps.mtgpro.model.dto.Card
-import ru.spcm.apps.mtgpro.viewmodel.CardViewModel
+import ru.spcm.apps.mtgpro.model.dto.CardForLibrary
+import ru.spcm.apps.mtgpro.view.adapter.CardsLibraryListAdapter
+import ru.spcm.apps.mtgpro.viewmodel.LibraryViewModel
 import javax.inject.Inject
 
 /**
@@ -33,8 +38,19 @@ class LibraryFragment : BaseFragment() {
         super.onActivityCreated(savedInstanceState)
         updateToolbar()
 
-        val viewModel = ViewModelProviders.of(this, viewModelFactory).get(CardViewModel::class.java)
+        val viewModel = ViewModelProviders.of(this, viewModelFactory).get(LibraryViewModel::class.java)
+        viewModel.cards.observe(this, Observer { observeCards(it) })
+        viewModel.loadCards(args.getLong(ARG_ID))
 
+        val adapter = CardsLibraryListAdapter(null)
+        list.layoutManager = LinearLayoutManager(context)
+        list.adapter = adapter
+    }
+
+    private fun observeCards(data: List<CardForLibrary>?) {
+        if (data != null) {
+            (list.adapter as CardsLibraryListAdapter).setCards(data)
+        }
     }
 
     override fun inject() {

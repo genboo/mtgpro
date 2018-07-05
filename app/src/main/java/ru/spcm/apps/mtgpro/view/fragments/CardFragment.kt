@@ -7,16 +7,18 @@ import android.graphics.PorterDuff
 import android.os.Bundle
 import android.os.Handler
 import android.support.v4.content.ContextCompat
+import android.support.v7.app.AlertDialog
 import android.support.v7.widget.LinearLayoutManager
 import android.view.*
+import android.widget.Spinner
 import kotlinx.android.synthetic.main.fragment_card.*
 import ru.spcm.apps.mtgpro.R
-import ru.spcm.apps.mtgpro.model.dto.Card
-import ru.spcm.apps.mtgpro.model.dto.CardLocal
-import ru.spcm.apps.mtgpro.model.dto.WishedCard
+import ru.spcm.apps.mtgpro.model.dto.*
 import ru.spcm.apps.mtgpro.tools.OracleReplacer
+import ru.spcm.apps.mtgpro.view.adapter.LibrarySelectAdapter
 import ru.spcm.apps.mtgpro.view.adapter.ReprintListAdapter
 import ru.spcm.apps.mtgpro.view.components.ExpandListener
+import ru.spcm.apps.mtgpro.view.components.NumberCounterView
 import ru.spcm.apps.mtgpro.view.components.loadImageFromCache
 import ru.spcm.apps.mtgpro.viewmodel.CardViewModel
 import javax.inject.Inject
@@ -29,6 +31,9 @@ import javax.inject.Inject
 class CardFragment : BaseFragment() {
 
     lateinit var card: Card
+
+    private lateinit var addDialog: AlertDialog
+    private lateinit var librarySelector: Spinner
 
     @Inject
     lateinit var viewModelFactory: ViewModelProvider.Factory
@@ -48,7 +53,9 @@ class CardFragment : BaseFragment() {
         val viewModel = ViewModelProviders.of(this, viewModelFactory).get(CardViewModel::class.java)
         viewModel.getCards().observe(this, Observer { observeCards(it) })
         viewModel.getWish().observe(this, Observer { observeWish(it) })
+        viewModel.getLibraries().observe(this, Observer { observeLibraries(it) })
         viewModel.loadCard(args.getString(ARG_ID))
+        mainBlock.postDelayed({ viewModel.loadLibraries() }, 200)
 
         val adapter = ReprintListAdapter(null)
         val manager = LinearLayoutManager(context,
@@ -67,7 +74,12 @@ class CardFragment : BaseFragment() {
         addToWish.setOnClickListener {
             viewModel.updateWish(card.id, it.tag as Boolean)
         }
+
+        addToLibrary.setOnClickListener { addDialog.show() }
+
+        initAddToLibraryDialog(viewModel)
     }
+
 
     private fun observeCards(data: List<CardLocal>?) {
         if (data != null) {
@@ -110,6 +122,33 @@ class CardFragment : BaseFragment() {
             addToWish.setImageDrawable(ContextCompat.getDrawable(requireContext(), R.drawable.ic_heart))
             addToWish.tag = false
         }
+    }
+
+    private fun observeLibraries(data: List<LibraryInfo>?) {
+        if (data != null) {
+            val adapter = LibrarySelectAdapter(requireContext(), data)
+            librarySelector.adapter = adapter
+        }
+    }
+
+    private fun initAddToLibraryDialog(model: CardViewModel) {
+        val dialogView = layoutInflater.inflate(R.layout.dialog_add_card, mainBlock, false)
+        librarySelector = dialogView.findViewById(R.id.spn_card_library)
+        val countText = dialogView.findViewById<NumberCounterView>(R.id.counterBlock)
+        addDialog = AlertDialog.Builder(requireContext())
+                .setView(dialogView)
+                .setTitle("Добавить карту")
+                .setNegativeButton("Отмена") { dialog, _ -> dialog.dismiss() }
+                .setPositiveButton("Ok") { _, _ ->
+                    val selectedLibrary = librarySelector.selectedItem as LibraryInfo
+                    if (selectedLibrary.id != 0L) {
+                        val item = LibraryCard(selectedLibrary.id, card.id)
+                        item.count = countText.getCount()
+                        model.addCard(item)
+                    }
+                    showSnack(R.string.action_added, null)
+                }
+                .create()
     }
 
     override fun inject() {

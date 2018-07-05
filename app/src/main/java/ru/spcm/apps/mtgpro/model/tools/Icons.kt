@@ -1,4 +1,4 @@
-package ru.spcm.apps.mtgpro.model.dto
+package ru.spcm.apps.mtgpro.model.tools
 
 
 import ru.spcm.apps.mtgpro.R
@@ -14,7 +14,7 @@ object Icons {
 
     val list: MutableMap<String, Int> = HashMap()
 
-    val colors = mutableMapOf(
+    private val colors = mutableMapOf(
             "Common" to R.color.rarityCommon,
             "Uncommon" to R.color.rarityUncommon,
             "Rare" to R.color.rarityRare,

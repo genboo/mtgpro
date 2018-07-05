@@ -6,6 +6,7 @@ import android.arch.persistence.room.Index
 import android.arch.persistence.room.PrimaryKey
 import android.support.annotation.NonNull
 import com.google.gson.annotations.SerializedName
+import ru.spcm.apps.mtgpro.model.tools.Icons
 
 @Entity(indices = [(Index("multiverseId"))])
 data class Card(@PrimaryKey @NonNull var id: String) {

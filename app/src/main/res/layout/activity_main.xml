@@ -20,8 +20,8 @@
         android:layout_height="wrap_content"
         android:layout_gravity="bottom"
         android:background="@color/colorPrimary"
-        app:itemIconTint="@color/colorTextHint"
-        app:itemTextColor="@color/colorTextHint"
+        app:itemIconTint="@color/bottom_nav_item_style"
+        app:itemTextColor="@color/bottom_nav_item_style"
         app:layout_behavior="ru.spcm.apps.mtgpro.view.components.BottomNavigationBehavior"
         app:menu="@menu/bottom_menu" />
 

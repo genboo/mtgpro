@@ -3,10 +3,7 @@ package ru.spcm.apps.mtgpro.model.db.dao
 import android.arch.lifecycle.LiveData
 import android.arch.paging.DataSource
 import android.arch.persistence.room.*
-import ru.spcm.apps.mtgpro.model.dto.Card
-import ru.spcm.apps.mtgpro.model.dto.CardLocal
-import ru.spcm.apps.mtgpro.model.dto.SavedCard
-import ru.spcm.apps.mtgpro.model.dto.WishedCard
+import ru.spcm.apps.mtgpro.model.dto.*
 
 /**
  * Сохраненные карты
@@ -59,5 +56,13 @@ interface CardDao {
 
     @Query("SELECT c.*, sc.count FROM WishedCard wc LEFT JOIN Card c ON c.id = wc.id  LEFT JOIN SavedCard sc ON sc.id = wc.id ORDER BY c.setTitle, c.numberFormatted")
     fun getWishedCards(): LiveData<List<Card>>
+
+    @Query("SELECT c.*, lc.count, " +
+            " MIN(t.type) typeSingle " +
+            " FROM Card c, LibraryCard lc, Type t " +
+            " WHERE lc.library_id = :library AND lc.card_id = c.id AND t.card_id = c.id " +
+            " GROUP BY c.id " +
+            " ORDER BY typeSingle, c.setTitle, numberFormatted")
+    fun getCardsInLibrary(library: Long): LiveData<List<CardForLibrary>>
 
 }

@@ -16,8 +16,8 @@ class LibraryStateView(context: Context, attrs: AttributeSet) : View(context, at
     private val mTextPaint: Paint
     private val mColorPaint: Paint
 
-    private var mManaState: List<LibraryManaState>? = null
-    private var mColorState: List<LibraryColorState>? = null
+    private var mManaState: List<LibraryManaState> = ArrayList()
+    private var mColorState: List<LibraryColorState> = ArrayList()
     private val mMargin: Float
     private val mColWidth: Float
     private val mColorGraphSize: Float
@@ -28,7 +28,7 @@ class LibraryStateView(context: Context, attrs: AttributeSet) : View(context, at
     private val fullSize: Int
         get() {
             var full = 0
-            for (state in mColorState!!) {
+            for (state in mColorState) {
                 full += state.count
             }
             return if (full == 0) {
@@ -39,7 +39,7 @@ class LibraryStateView(context: Context, attrs: AttributeSet) : View(context, at
     private val maximum: Int
         get() {
             var max = 1
-            for (state in mManaState!!) {
+            for (state in mManaState) {
                 if (state.count > max) {
                     max = state.count
                 }
@@ -88,10 +88,10 @@ class LibraryStateView(context: Context, attrs: AttributeSet) : View(context, at
 
     override fun onDraw(canvas: Canvas) {
         super.onDraw(canvas)
-        if (mManaState != null && !mManaState!!.isEmpty()) {
+        if (mManaState.isNotEmpty()) {
             drawManaState(canvas)
         }
-        if (mColorState != null && !mColorState!!.isEmpty()) {
+        if (mColorState.isNotEmpty()) {
             drawColorState(canvas)
         }
     }
@@ -111,7 +111,7 @@ class LibraryStateView(context: Context, attrs: AttributeSet) : View(context, at
                 height / 2f + paddingBottom, mColorGraphSize, mColorPaint)
 
         mColorPaint.strokeWidth = mColorGraphStrokeWidth
-        for (state in mColorState!!) {
+        for (state in mColorState) {
             val percent = state.count / full.toFloat()
             mColorPaint.color = getStateColor(state)
             val rect = RectF(
@@ -135,8 +135,8 @@ class LibraryStateView(context: Context, attrs: AttributeSet) : View(context, at
     private fun drawManaState(canvas: Canvas) {
         val max = maximum
         mTextPaint.color = mMainColor
-        for (i in mManaState!!.indices) {
-            val state = mManaState!![i]
+        for (i in mManaState.indices) {
+            val state = mManaState[i]
             canvas.drawText(Integer.toString(state.cmc),
                     paddingLeft.toFloat() + i * mColWidth + mColWidth / 2 - mMargin / 2 + mMargin,
                     height - paddingBottom.toFloat(),
@@ -152,8 +152,8 @@ class LibraryStateView(context: Context, attrs: AttributeSet) : View(context, at
             canvas.drawRect(rect, mTextPaint)
         }
         mTextPaint.color = mColorCreatures
-        for (i in mManaState!!.indices) {
-            val state = mManaState!![i]
+        for (i in mManaState.indices) {
+            val state = mManaState[i]
             if (state.creatures > 0) {
                 val percent = state.creatures / max.toFloat()
                 val height = height - paddingBottom - paddingTop - (height - paddingBottom - paddingTop) * percent
@@ -177,13 +177,9 @@ class LibraryStateView(context: Context, attrs: AttributeSet) : View(context, at
         }
     }
 
-    fun setManaState(states: MutableList<LibraryManaState>) {
-        mManaState = states
-        invalidate()
-    }
-
-    fun setColorState(states: MutableList<LibraryColorState>) {
-        mColorState = states
+    fun setData(manaState: MutableList<LibraryManaState>, colorState: MutableList<LibraryColorState>) {
+        mManaState = manaState
+        mColorState = colorState
         invalidate()
     }
 
