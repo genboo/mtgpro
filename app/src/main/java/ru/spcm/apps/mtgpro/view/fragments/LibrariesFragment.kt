@@ -36,7 +36,7 @@ class LibrariesFragment : BaseFragment() {
         list.adapter = adapter
         adapter.setOnItemClickListener { _, libraryInfo, _ -> navigator.goToLibrary(libraryInfo.id) }
 
-        getFab().setOnClickListener {
+        fab.setOnClickListener {
             val view = layoutInflater.inflate(R.layout.dialog_add_library, main, false)
             val addDialog = AlertDialog.Builder(requireContext())
                     .setView(view)
@@ -67,13 +67,4 @@ class LibrariesFragment : BaseFragment() {
         return "Колоды"
     }
 
-    override fun onResume() {
-        super.onResume()
-        getFab().visibility = View.VISIBLE
-    }
-
-    override fun onPause() {
-        super.onPause()
-        getFab().visibility = View.GONE
-    }
 }

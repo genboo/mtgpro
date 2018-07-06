@@ -77,7 +77,7 @@ class LibraryStateView(context: Context, attrs: AttributeSet) : View(context, at
             mManaState = manaState
 
             val colorState = ArrayList<LibraryColorState>()
-            for (i in 0..5) {
+            for (i in 0..4) {
                 val state = LibraryColorState(getEditColor(i), 10)
                 colorState.add(state)
             }
@@ -107,18 +107,18 @@ class LibraryStateView(context: Context, attrs: AttributeSet) : View(context, at
 
         mColorPaint.color = mMainColor
         mColorPaint.strokeWidth = mColorGraphStrokeWidth * 1.3f
-        canvas.drawCircle(width.toFloat() - paddingRight.toFloat() - mColorGraphSize - mColorGraphStrokeWidth,
-                height / 2f + paddingBottom, mColorGraphSize, mColorPaint)
+        canvas.drawCircle(width - paddingRight - mColorGraphSize - mColorGraphStrokeWidth,
+                height / 2f - paddingBottom, mColorGraphSize, mColorPaint)
 
         mColorPaint.strokeWidth = mColorGraphStrokeWidth
         for (state in mColorState) {
             val percent = state.count / full.toFloat()
             mColorPaint.color = getStateColor(state)
             val rect = RectF(
-                    width.toFloat() - paddingRight.toFloat() - 2 * mColorGraphSize - mColorGraphStrokeWidth,
-                    height / 2f - mColorGraphSize + paddingBottom,
-                    width.toFloat() - paddingRight.toFloat() - mColorGraphStrokeWidth,
-                    height / 2f + mColorGraphSize + paddingBottom.toFloat())
+                    width - paddingRight - 2 * mColorGraphSize - mColorGraphStrokeWidth,
+                    height / 2f - mColorGraphSize - paddingBottom,
+                    width - paddingRight - mColorGraphStrokeWidth,
+                    height / 2f + mColorGraphSize - paddingBottom)
             canvas.drawArc(rect, angle, percent * 360f, false, mColorPaint)
             mColorPaint.color = mMainColor
             angle += percent * 360f
