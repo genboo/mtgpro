@@ -1,8 +1,6 @@
 package ru.spcm.apps.mtgpro.view.fragments
 
 import android.arch.lifecycle.Observer
-import android.arch.lifecycle.ViewModelProvider
-import android.arch.lifecycle.ViewModelProviders
 import android.graphics.PorterDuff
 import android.os.Bundle
 import android.os.Handler
@@ -21,7 +19,6 @@ import ru.spcm.apps.mtgpro.view.components.ExpandListener
 import ru.spcm.apps.mtgpro.view.components.NumberCounterView
 import ru.spcm.apps.mtgpro.view.components.loadImageFromCache
 import ru.spcm.apps.mtgpro.viewmodel.CardViewModel
-import javax.inject.Inject
 
 /**
  * Карта
@@ -35,9 +32,6 @@ class CardFragment : BaseFragment() {
     private lateinit var addDialog: AlertDialog
     private lateinit var librarySelector: Spinner
 
-    @Inject
-    lateinit var viewModelFactory: ViewModelProvider.Factory
-
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
         val view = inflater.inflate(R.layout.fragment_card, container, false)
@@ -50,7 +44,7 @@ class CardFragment : BaseFragment() {
         super.onActivityCreated(savedInstanceState)
         updateToolbar()
 
-        val viewModel = ViewModelProviders.of(this, viewModelFactory).get(CardViewModel::class.java)
+        val viewModel = getViewModel(this, CardViewModel::class.java)
         viewModel.getCards().observe(this, Observer { observeCards(it) })
         viewModel.getWish().observe(this, Observer { observeWish(it) })
         viewModel.getLibraries().observe(this, Observer { observeLibraries(it) })

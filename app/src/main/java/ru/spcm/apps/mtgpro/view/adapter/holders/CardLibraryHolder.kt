@@ -6,6 +6,7 @@ import android.support.v4.view.ViewCompat
 import android.support.v7.widget.RecyclerView
 import android.view.View
 import kotlinx.android.synthetic.main.layout_card_header.view.*
+import kotlinx.android.synthetic.main.layout_library_info.view.*
 import kotlinx.android.synthetic.main.list_item_card.view.*
 import ru.spcm.apps.mtgpro.view.adapter.CardListItem
 import ru.spcm.apps.mtgpro.view.components.loadImage
@@ -16,7 +17,9 @@ class CardLibraryHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
     val cardImage: View? = itemView.cardImage
 
     fun bind(item: CardListItem) = with(itemView) {
-        if (item.data == null) {
+        if (item.colorState != null) {
+            libraryState.setData(item.manaState ?: arrayListOf(), item.colorState ?: arrayListOf())
+        } else if (item.data == null) {
             headerName.text = item.title
         } else {
             val card = item.data.card
@@ -32,6 +35,10 @@ class CardLibraryHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
             cardImage.loadImage(card.imageUrl)
 
         }
+    }
+
+    fun setListener(listener: View.OnClickListener) {
+        itemView.itemBlock?.setOnClickListener(listener)
     }
 
 }

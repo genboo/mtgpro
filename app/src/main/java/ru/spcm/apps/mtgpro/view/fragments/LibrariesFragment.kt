@@ -1,8 +1,6 @@
 package ru.spcm.apps.mtgpro.view.fragments
 
 import android.arch.lifecycle.Observer
-import android.arch.lifecycle.ViewModelProvider
-import android.arch.lifecycle.ViewModelProviders
 import android.os.Bundle
 import android.support.v7.app.AlertDialog
 import android.support.v7.widget.LinearLayoutManager
@@ -16,12 +14,8 @@ import ru.spcm.apps.mtgpro.model.dto.Library
 import ru.spcm.apps.mtgpro.model.dto.LibraryInfo
 import ru.spcm.apps.mtgpro.view.adapter.LibrariesListAdapter
 import ru.spcm.apps.mtgpro.viewmodel.LibrariesViewModel
-import javax.inject.Inject
 
 class LibrariesFragment : BaseFragment() {
-
-    @Inject
-    lateinit var viewModelFactory: ViewModelProvider.Factory
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
@@ -34,7 +28,7 @@ class LibrariesFragment : BaseFragment() {
         super.onActivityCreated(savedInstanceState)
         updateToolbar()
 
-        val viewModel = ViewModelProviders.of(this, viewModelFactory).get(LibrariesViewModel::class.java)
+        val viewModel = getViewModel(this, LibrariesViewModel::class.java)
         viewModel.libraries.observe(this, Observer { observeLibraries(it) })
 
         val adapter = LibrariesListAdapter(null)

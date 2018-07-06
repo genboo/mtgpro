@@ -23,7 +23,7 @@ class CardsListAdapter : PagedListAdapter<Card, CardHolder>(CardsDiffItemCallbac
         holder.setListener(View.OnClickListener {
             val card = getItem(holder.adapterPosition)
             if (card != null) {
-                listener(card)
+                parent.postDelayed({ listener(card) }, 100)
             }
         })
         return holder

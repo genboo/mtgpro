@@ -1,8 +1,6 @@
 package ru.spcm.apps.mtgpro.view.fragments
 
 import android.arch.lifecycle.Observer
-import android.arch.lifecycle.ViewModelProvider
-import android.arch.lifecycle.ViewModelProviders
 import android.os.Bundle
 import android.support.v7.widget.GridLayoutManager
 import android.view.LayoutInflater
@@ -13,12 +11,8 @@ import ru.spcm.apps.mtgpro.R
 import ru.spcm.apps.mtgpro.model.dto.Card
 import ru.spcm.apps.mtgpro.view.adapter.WishListAdapter
 import ru.spcm.apps.mtgpro.viewmodel.WishViewModel
-import javax.inject.Inject
 
 class WishFragment : BaseFragment() {
-
-    @Inject
-    lateinit var viewModelFactory: ViewModelProvider.Factory
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
@@ -31,7 +25,7 @@ class WishFragment : BaseFragment() {
         super.onActivityCreated(savedInstanceState)
         updateToolbar()
 
-        val viewModel = ViewModelProviders.of(this, viewModelFactory).get(WishViewModel::class.java)
+        val viewModel = getViewModel(this, WishViewModel::class.java)
         viewModel.getCards().observe(this, Observer { observeCards(it) })
 
         val adapter = WishListAdapter(null)

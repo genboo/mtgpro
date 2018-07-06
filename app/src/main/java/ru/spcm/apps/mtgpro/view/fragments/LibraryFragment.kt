@@ -1,30 +1,25 @@
 package ru.spcm.apps.mtgpro.view.fragments
 
 import android.arch.lifecycle.Observer
-import android.arch.lifecycle.ViewModelProvider
-import android.arch.lifecycle.ViewModelProviders
 import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
 import android.view.*
 import kotlinx.android.synthetic.main.fragment_library.*
 import ru.spcm.apps.mtgpro.R
 import ru.spcm.apps.mtgpro.model.dto.Card
-import ru.spcm.apps.mtgpro.model.dto.CardForLibrary
+import ru.spcm.apps.mtgpro.model.dto.Library
+import ru.spcm.apps.mtgpro.model.dto.LibraryData
 import ru.spcm.apps.mtgpro.view.adapter.CardsLibraryListAdapter
 import ru.spcm.apps.mtgpro.viewmodel.LibraryViewModel
-import javax.inject.Inject
 
 /**
- * Карта
+ * Колода
  * Created by gen on 29.06.2018.
  */
 
 class LibraryFragment : BaseFragment() {
 
     lateinit var card: Card
-
-    @Inject
-    lateinit var viewModelFactory: ViewModelProvider.Factory
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
@@ -38,18 +33,34 @@ class LibraryFragment : BaseFragment() {
         super.onActivityCreated(savedInstanceState)
         updateToolbar()
 
-        val viewModel = ViewModelProviders.of(this, viewModelFactory).get(LibraryViewModel::class.java)
-        viewModel.cards.observe(this, Observer { observeCards(it) })
+        val viewModel = getViewModel(this, LibraryViewModel::class.java)
+        viewModel.cards.observe(this, Observer { viewModel.setCards(it ?: arrayListOf()) })
+        viewModel.mana.observe(this, Observer { viewModel.setManaState(it ?: arrayListOf()) })
+        viewModel.colors.observe(this, Observer { viewModel.setColorState(it ?: arrayListOf()) })
+        viewModel.library.observe(this, Observer { observeLibrary(it) })
+
+        viewModel.data.observe(this, Observer { observeData(it) })
+
         viewModel.loadCards(args.getLong(ARG_ID))
 
         val adapter = CardsLibraryListAdapter(null)
         list.layoutManager = LinearLayoutManager(context)
         list.adapter = adapter
+
+        adapter.setOnItemClickListener { _, item, _ ->
+            navigator.goToCard(item.data?.card?.id ?: "")
+        }
     }
 
-    private fun observeCards(data: List<CardForLibrary>?) {
+    private fun observeData(data: LibraryData?) {
+        if(data != null && data.isFull()){
+            (list.adapter as CardsLibraryListAdapter).setData(data)
+        }
+    }
+
+    private fun observeLibrary(data: Library?) {
         if (data != null) {
-            (list.adapter as CardsLibraryListAdapter).setCards(data)
+            updateTitle(data.name)
         }
     }
 

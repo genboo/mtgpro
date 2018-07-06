@@ -50,11 +50,14 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
     }
 
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
-        when (item.itemId) {
-            R.id.nav_sets -> navigator.goToSets()
-            R.id.nav_collection -> navigator.goToCollection()
-            R.id.nav_wish_list -> navigator.goToWishList()
-            R.id.nav_libraries -> navigator.goToLibraries()
+        if(bottomMenu.selectedItemId != item.itemId) {
+            when (item.itemId) {
+                R.id.nav_sets -> navigator.goToSets()
+                R.id.nav_collection -> navigator.goToCollection()
+                R.id.nav_wish_list -> navigator.goToWishList()
+                R.id.nav_libraries -> navigator.goToLibraries()
+                R.id.nav_search -> navigator.goToLibraries()
+            }
         }
         return true
     }

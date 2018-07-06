@@ -1,8 +1,6 @@
 package ru.spcm.apps.mtgpro.view.fragments
 
 import android.arch.lifecycle.Observer
-import android.arch.lifecycle.ViewModelProvider
-import android.arch.lifecycle.ViewModelProviders
 import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
 import android.view.LayoutInflater
@@ -14,12 +12,8 @@ import ru.spcm.apps.mtgpro.model.dto.Set
 import ru.spcm.apps.mtgpro.model.tools.Resource
 import ru.spcm.apps.mtgpro.view.adapter.SetsListAdapter
 import ru.spcm.apps.mtgpro.viewmodel.SetsViewModel
-import javax.inject.Inject
 
 class SetsFragment : BaseFragment() {
-
-    @Inject
-    lateinit var viewModelFactory: ViewModelProvider.Factory
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
@@ -32,7 +26,7 @@ class SetsFragment : BaseFragment() {
         super.onActivityCreated(savedInstanceState)
         updateToolbar()
 
-        val viewModel = ViewModelProviders.of(this, viewModelFactory).get(SetsViewModel::class.java)
+        val viewModel = getViewModel(this, SetsViewModel::class.java)
         viewModel.getSets().observe(this, Observer { observeSets(it) })
 
         val adapter = SetsListAdapter(null)

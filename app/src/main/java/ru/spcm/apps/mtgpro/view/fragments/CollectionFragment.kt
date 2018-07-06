@@ -1,8 +1,6 @@
 package ru.spcm.apps.mtgpro.view.fragments
 
 import android.arch.lifecycle.Observer
-import android.arch.lifecycle.ViewModelProvider
-import android.arch.lifecycle.ViewModelProviders
 import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
 import android.view.LayoutInflater
@@ -12,12 +10,8 @@ import kotlinx.android.synthetic.main.fragment_collection.*
 import ru.spcm.apps.mtgpro.R
 import ru.spcm.apps.mtgpro.view.adapter.CardsListAdapter
 import ru.spcm.apps.mtgpro.viewmodel.CollectionViewModel
-import javax.inject.Inject
 
 class CollectionFragment : BaseFragment() {
-
-    @Inject
-    lateinit var viewModelFactory: ViewModelProvider.Factory
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
@@ -35,7 +29,7 @@ class CollectionFragment : BaseFragment() {
         list.layoutManager = LinearLayoutManager(context)
         list.adapter = adapter
 
-        val viewModel = ViewModelProviders.of(this, viewModelFactory).get(CollectionViewModel::class.java)
+        val viewModel = getViewModel(this, CollectionViewModel::class.java)
         viewModel.allCards.observe(this, Observer { adapter.submitList(it) })
     }
 

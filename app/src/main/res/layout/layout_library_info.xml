@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:paddingBottom="4dp">
+
+    <ru.spcm.apps.mtgpro.view.components.LibraryStateView
+        android:id="@+id/libraryState"
+        android:layout_width="match_parent"
+        android:layout_height="150dp"
+        android:background="@color/colorPrimary"
+        android:paddingBottom="16dp"
+        android:paddingEnd="32dp"
+        android:paddingStart="32dp"
+        android:paddingTop="32dp"
+        app:color="@android:color/white"
+        app:colorCreatures="@color/rarityUncommon"
+        app:colorGraphSize="36dp"
+        app:colorGraphStrokeWidth="10dp"
+        app:manaColWidth="20dp"
+        app:manaGraphMargin="8dp" />
+</LinearLayout>

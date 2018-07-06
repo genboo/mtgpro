@@ -1,8 +1,6 @@
 package ru.spcm.apps.mtgpro.view.fragments
 
 import android.arch.lifecycle.Observer
-import android.arch.lifecycle.ViewModelProvider
-import android.arch.lifecycle.ViewModelProviders
 import android.os.Bundle
 import android.support.v7.widget.GridLayoutManager
 import android.view.LayoutInflater
@@ -19,7 +17,6 @@ import ru.spcm.apps.mtgpro.view.adapter.SpoilersListAdapter
 import ru.spcm.apps.mtgpro.view.components.fadeIn
 import ru.spcm.apps.mtgpro.view.components.fadeOut
 import ru.spcm.apps.mtgpro.viewmodel.SpoilersViewModel
-import javax.inject.Inject
 
 /**
  * Список спойлеров
@@ -27,9 +24,6 @@ import javax.inject.Inject
  */
 
 class SpoilersFragment : BaseFragment() {
-
-    @Inject
-    lateinit var viewModelFactory: ViewModelProvider.Factory
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
@@ -43,7 +37,7 @@ class SpoilersFragment : BaseFragment() {
         updateToolbar()
         val set = args.getString(ARG_SET)
 
-        val viewModel = ViewModelProviders.of(this, viewModelFactory).get(SpoilersViewModel::class.java)
+        val viewModel = getViewModel(this, SpoilersViewModel::class.java)
         viewModel.getSpoilers().observe(this, Observer { observeSpoilers(it) })
 
         val adapter = SpoilersListAdapter(null)

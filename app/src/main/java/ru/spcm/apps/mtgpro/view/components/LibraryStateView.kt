@@ -177,7 +177,7 @@ class LibraryStateView(context: Context, attrs: AttributeSet) : View(context, at
         }
     }
 
-    fun setData(manaState: MutableList<LibraryManaState>, colorState: MutableList<LibraryColorState>) {
+    fun setData(manaState: List<LibraryManaState>, colorState: List<LibraryColorState>) {
         mManaState = manaState
         mColorState = colorState
         invalidate()

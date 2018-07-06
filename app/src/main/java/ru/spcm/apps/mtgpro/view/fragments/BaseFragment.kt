@@ -1,7 +1,6 @@
 package ru.spcm.apps.mtgpro.view.fragments
 
-import android.arch.lifecycle.Lifecycle
-import android.arch.lifecycle.LifecycleRegistry
+import android.arch.lifecycle.*
 import android.os.Build
 import android.os.Bundle
 import android.support.design.widget.FloatingActionButton
@@ -15,15 +14,23 @@ import ru.spcm.apps.mtgpro.view.activities.MainActivity
 import ru.spcm.apps.mtgpro.R
 import ru.spcm.apps.mtgpro.di.components.AppComponent
 import ru.spcm.apps.mtgpro.view.components.Navigator
+import javax.inject.Inject
 
 
 abstract class BaseFragment : Fragment() {
+
+    @Inject
+    lateinit var viewModelFactory: ViewModelProvider.Factory
 
     var component: AppComponent? = null
 
     val args: Bundle by lazy { arguments ?: Bundle() }
 
     val navigator: Navigator by lazy { (activity as MainActivity).navigator }
+
+    protected fun <T : ViewModel> getViewModel(owner: Fragment, t: Class<T>): T {
+        return ViewModelProviders.of(owner, viewModelFactory).get(t)
+    }
 
     protected fun updateToolbar() {
         if (toolbar != null) {
