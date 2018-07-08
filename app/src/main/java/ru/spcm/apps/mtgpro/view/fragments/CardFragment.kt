@@ -36,7 +36,7 @@ class CardFragment : BaseFragment() {
                               savedInstanceState: Bundle?): View? {
         val view = inflater.inflate(R.layout.fragment_card, container, false)
         initFragment()
-        setHasOptionsMenu(true)
+
         return view
     }
 
@@ -81,6 +81,7 @@ class CardFragment : BaseFragment() {
                 val firstCard = data[0]
                 updateTitle(firstCard.card.name)
                 cardImage.loadImageFromCache(firstCard.card.imageUrl)
+                cardImage.setOnClickListener { navigator.goToImage(firstCard.card.id, firstCard.card.imageUrl) }
                 cardName.text = firstCard.card.name
                 cardRarity.setColorFilter(ContextCompat.getColor(requireContext(), firstCard.card.getSetIconColor()), PorterDuff.Mode.SRC_IN)
                 cardRarity.setImageDrawable(resources.getDrawable(firstCard.card.getSetIcon(), requireContext().theme))

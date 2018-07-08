@@ -42,7 +42,7 @@ class RetrofitModule {
         builder.registerTypeAdapterFactory(ResultTypeAdapterFactory())
 
         return Retrofit.Builder()
-                .baseUrl(BuildConfig.API_URL)
+                .baseUrl(API_URL)
                 .addConverterFactory(GsonConverterFactory.create(builder.create()))
                 .addCallAdapterFactory(LiveDataCallAdapterFactory())
                 .client(httpClient.build())
@@ -88,5 +88,6 @@ class RetrofitModule {
     companion object {
         private const val READ_TIMEOUT: Long = 15
         private const val CONNECT_TIMEOUT: Long = 15
+        private const val API_URL = "https://api.magicthegathering.io"
     }
 }

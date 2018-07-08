@@ -11,7 +11,6 @@
 
     <FrameLayout
         android:id="@+id/content"
-        android:layout_marginBottom="?android:attr/actionBarSize"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 
@@ -23,8 +22,21 @@
         android:background="@color/colorPrimary"
         app:itemIconTint="@color/bottom_nav_item_style"
         app:itemTextColor="@color/bottom_nav_item_style"
+        app:layout_behavior="ru.spcm.apps.mtgpro.view.components.BottomNavigationBehavior"
         app:menu="@menu/bottom_menu" />
 
-
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/fab"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="top"
+        android:tint="@android:color/white"
+        android:visibility="gone"
+        app:layout_anchor="@id/bottomMenu"
+        app:layout_anchorGravity="top|end"
+        app:layout_behavior="ru.spcm.apps.mtgpro.view.components.BottomNavigationFABBehavior"
+        app:srcCompat="@drawable/ic_plus"
+        app:useCompatPadding="true"
+        tools:visibility="visible" />
 
 </android.support.design.widget.CoordinatorLayout>

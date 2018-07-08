@@ -169,6 +169,7 @@ class LibraryStateView(context: Context, attrs: AttributeSet) : View(context, at
 
     private fun getStateColor(state: LibraryColorState): Int {
         return when (state.color) {
+            null -> getColor(R.color.colorNoColor)
             "Red" -> getColor(R.color.colorRed)
             "Green" -> getColor(R.color.colorGreen)
             "Blue" -> getColor(R.color.colorBlue)

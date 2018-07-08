@@ -46,4 +46,10 @@ interface AppComponent {
 
     fun inject(fragment: LibraryFragment)
 
+    fun inject(fragment: SearchFragment)
+
+    fun inject(fragment: FullScreenImageFragment)
+
+    fun inject(fragment: SettingsFragment)
+
 }

@@ -2,8 +2,11 @@ package ru.spcm.apps.mtgpro.view.activities
 
 import android.os.Bundle
 import android.support.design.widget.BottomNavigationView
+import android.support.design.widget.FloatingActionButton
 import android.support.v7.app.AppCompatActivity
+import android.view.Menu
 import android.view.MenuItem
+import android.view.View
 import kotlinx.android.synthetic.main.activity_main.*
 import ru.spcm.apps.mtgpro.App
 import ru.spcm.apps.mtgpro.R
@@ -35,19 +38,37 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
         BottomNavigationViewHelper.removeShiftMode(bottomMenu)
     }
 
+    fun getView(): View {
+        return drawerLayout
+    }
+
+    fun getFab(): FloatingActionButton {
+        return fab
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu): Boolean {
+        menuInflater.inflate(R.menu.main_menu, menu)
+        return true
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        if(item.itemId == R.id.nav_settings){
+            navigator.goToSettings()
+        }
+        return super.onOptionsItemSelected(item)
+    }
+
     override fun onBackPressed() {
         navigator.backTo()
     }
 
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
-        if(bottomMenu.selectedItemId != item.itemId) {
-            when (item.itemId) {
-                R.id.nav_sets -> navigator.goToSets()
-                R.id.nav_collection -> navigator.goToCollection()
-                R.id.nav_wish_list -> navigator.goToWishList()
-                R.id.nav_libraries -> navigator.goToLibraries()
-                R.id.nav_search -> navigator.goToLibraries()
-            }
+        when (item.itemId) {
+            R.id.nav_sets -> navigator.goToSets()
+            R.id.nav_collection -> navigator.goToCollection()
+            R.id.nav_wish_list -> navigator.goToWishList()
+            R.id.nav_libraries -> navigator.goToLibraries()
+            R.id.nav_search -> navigator.goToSearch()
         }
         return true
     }

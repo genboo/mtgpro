@@ -14,7 +14,7 @@ data class Card(@PrimaryKey @NonNull var id: String) {
     var name: String = ""
 
     @SerializedName("multiverseid")
-    var multiverseId: String = ""
+    var multiverseId: String? = ""
 
     var imageUrl: String = ""
 
@@ -22,7 +22,7 @@ data class Card(@PrimaryKey @NonNull var id: String) {
 
     var flavor: String? = ""
 
-    var number: String = ""
+    var number: String? = ""
 
     var numberFormatted: String = ""
 
@@ -85,18 +85,24 @@ data class Card(@PrimaryKey @NonNull var id: String) {
     }
 
     private fun prepareNumber() {
-        numberFormatted = number
-        if (number.endsWith("a") || number.endsWith("b")) {
-            if (number.length == 2) {
+        val num = number
+        if (num == null) {
+            numberFormatted = ""
+            number = ""
+        } else {
+            numberFormatted = num
+            if (num.endsWith("a") || num.endsWith("b")) {
+                if (num.length == 2) {
+                    numberFormatted = "00$num"
+                } else if (num.length == 3) {
+                    numberFormatted = "0$num"
+                }
+                numberFormatted = numberFormatted.replace("a", "").replace("b", "")
+            } else if (num.length == 1) {
                 numberFormatted = "00$number"
-            } else if (number.length == 3) {
-                numberFormatted = "0$number"
+            } else if (num.length == 2) {
+                numberFormatted = "0$num"
             }
-            numberFormatted = numberFormatted.replace("a", "").replace("b", "")
-        } else if (number.length == 1) {
-            numberFormatted = "00$number"
-        } else if (number.length == 2) {
-            numberFormatted = "0$number"
         }
     }
 

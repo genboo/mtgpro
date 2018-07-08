@@ -20,9 +20,9 @@ class SpoilerHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         cardExists.visibility = View.INVISIBLE
         cardImage.loadImageFromCache(item.imageUrl)
 
-        if(item.count == 0){
+        if (item.count == 0) {
             cardExists.visibility = View.INVISIBLE
-        }else {
+        } else {
             cardExists.text = String.format("%s", item.count)
             cardExists.visibility = View.VISIBLE
         }
@@ -32,7 +32,7 @@ class SpoilerHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         itemView.itemBlock?.setOnClickListener(listener)
     }
 
-    fun switchLoading(loading : Boolean) = with(itemView) {
-        loadingBlock.visibility = if(loading) View.VISIBLE else View.INVISIBLE
+    fun switchLoading(loading: Boolean) = with(itemView) {
+        loadingBlock.visibility = if (loading) View.VISIBLE else View.INVISIBLE
     }
 }

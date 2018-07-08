@@ -18,7 +18,7 @@
         android:background="@color/colorBackgroundMain"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-        <android.support.v4.widget.NestedScrollView
+        <ru.spcm.apps.mtgpro.view.components.FixedNestedScrollView
             android:id="@+id/mainScroll"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
@@ -310,6 +310,6 @@
                 </LinearLayout>
             </LinearLayout>
 
-        </android.support.v4.widget.NestedScrollView>
+        </ru.spcm.apps.mtgpro.view.components.FixedNestedScrollView>
     </LinearLayout>
 </android.support.design.widget.CoordinatorLayout>
