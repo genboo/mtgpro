@@ -10,7 +10,7 @@ import android.arch.persistence.room.*
             ForeignKey(entity = Card::class,
                     parentColumns = ["id"],
                     childColumns = ["card_id"],
-                    onDelete = ForeignKey.CASCADE),
+                    onDelete = ForeignKey.NO_ACTION),
             ForeignKey(entity = Library::class,
                     parentColumns = ["id"],
                     childColumns = ["library_id"],

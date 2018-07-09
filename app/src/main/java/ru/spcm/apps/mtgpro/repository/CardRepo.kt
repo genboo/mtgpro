@@ -1,9 +1,6 @@
 package ru.spcm.apps.mtgpro.repository
 
 import android.arch.lifecycle.LiveData
-import android.arch.lifecycle.MutableLiveData
-import ru.spcm.apps.mtgpro.model.api.CardApi
-import ru.spcm.apps.mtgpro.model.db.dao.CacheDao
 import ru.spcm.apps.mtgpro.model.db.dao.CardDao
 import ru.spcm.apps.mtgpro.model.db.dao.LibrariesDao
 import ru.spcm.apps.mtgpro.model.dto.*
@@ -30,9 +27,9 @@ constructor(private val appExecutors: AppExecutors,
     fun updateCard(card: Card) {
         appExecutors.diskIO().execute {
             if (card.count == 0) {
-                cardDao.delete(SavedCard(card.id, 0))
+                cardDao.delete(SavedCard(card.id, 0, card.parent ?: ""))
             } else {
-                cardDao.insert(SavedCard(card.id, card.count))
+                cardDao.insert(SavedCard(card.id, card.count, card.parent ?: ""))
             }
         }
     }

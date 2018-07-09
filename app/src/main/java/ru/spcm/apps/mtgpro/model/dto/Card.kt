@@ -43,6 +43,8 @@ data class Card(@PrimaryKey @NonNull var id: String) {
 
     var count: Int = 0
 
+    var parent: String? = ""
+
     @Ignore
     private val foreignNames: List<ForeignName>? = null
 

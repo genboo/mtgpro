@@ -10,4 +10,4 @@ import android.support.annotation.NonNull
 @Entity
 data class SavedCard(@PrimaryKey
                      @NonNull var id: String,
-                     var count: Int = 0)
+                     var count: Int = 0, val parent: String)

@@ -51,6 +51,11 @@ internal abstract class ViewModelModule {
     internal abstract fun bindSearchViewModel(viewModel: SearchViewModel): ViewModel
 
     @Binds
+    @IntoMap
+    @ViewModelKey(SettingsViewModel::class)
+    internal abstract fun bindSettingsViewModel(viewModel: SettingsViewModel): ViewModel
+
+    @Binds
     internal abstract fun bindViewModelFactory(factory: ViewModelFactory): ViewModelProvider.Factory
 
 }

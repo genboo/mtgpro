@@ -39,16 +39,16 @@ interface CardDao {
     fun getCachedCards(cacheKey: String): LiveData<List<Card>>
 
     @Transaction
-    @Query("SELECT c.*, sc.count FROM Card c LEFT JOIN SavedCard sc ON sc.id = c.id WHERE c.id = :id")
+    @Query("SELECT c.*, sc.count, sc.parent FROM Card c LEFT JOIN SavedCard sc ON sc.id = c.id WHERE c.id = :id")
     fun getSavedCards(id: String): LiveData<List<CardLocal>>
 
     @Query("SELECT c.* FROM Card c WHERE c.multiverseId = :mid")
     fun getCards(mid: String): LiveData<List<Card>>
 
-    @Query("SELECT c.*, sc.count FROM SavedCard sc LEFT JOIN Card c ON c.id = sc.id ORDER BY c.setTitle, c.numberFormatted LIMIT :limit OFFSET :offset")
+    @Query("SELECT c.*, sc.count, sc.parent FROM SavedCard sc LEFT JOIN Card c ON c.id = sc.id ORDER BY c.setTitle, c.numberFormatted LIMIT :limit OFFSET :offset")
     fun getAllCards(offset: Int, limit: Int): LiveData<List<Card>>
 
-    @Query("SELECT c.id, c.numberFormatted, c.setTitle, c.imageUrl, c.name, c.rarity, c.multiverseId, c.number, c.`set`, c.type, c.cmc, c.text, c.flavor, c.manaCost, c.rulesText, sc.count FROM SavedCard sc LEFT JOIN Card c ON c.id = sc.id ORDER BY c.setTitle, c.numberFormatted")
+    @Query("SELECT c.id, c.numberFormatted, c.setTitle, c.parent, c.imageUrl, c.name, c.rarity, c.multiverseId, c.number, c.`set`, c.type, c.cmc, c.text, c.flavor, c.manaCost, c.rulesText, sc.count FROM SavedCard sc LEFT JOIN Card c ON c.id = sc.id ORDER BY c.setTitle, c.numberFormatted")
     fun getAllCards(): DataSource.Factory<Int, Card>
 
     @Query("SELECT * FROM WishedCard c WHERE c.id = :id")
