@@ -16,13 +16,13 @@ fun View.fadeOut(viewGroup: ViewGroup) {
     this.visibility = View.GONE
 }
 
-fun View.slideIn(viewGroup: ViewGroup, edge:Int){
-    TransitionManager.beginDelayedTransition(viewGroup, Slide(edge))
+fun View.slideIn(edge:Int){
+    TransitionManager.beginDelayedTransition(parent as ViewGroup, Slide(edge))
     this.visibility = View.VISIBLE
 }
 
-fun View.slideOut(viewGroup: ViewGroup, edge:Int){
-    TransitionManager.beginDelayedTransition(viewGroup, Slide(edge))
+fun View.slideOut(edge:Int){
+    TransitionManager.beginDelayedTransition(parent as ViewGroup, Slide(edge))
     this.visibility = View.GONE
 }
 

@@ -16,6 +16,8 @@ import ru.spcm.apps.mtgpro.view.components.Navigator
 
 class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemSelectedListener {
 
+    private lateinit var settingsItemMenu: MenuItem
+
     private var component: AppComponent? = null
 
     val navigator by lazy { Navigator(this, supportFragmentManager, R.id.content) }
@@ -34,7 +36,7 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
             navigator.goToSets()
             bottomMenu.selectedItemId = R.id.nav_sets
         }
-        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+
         BottomNavigationViewHelper.removeShiftMode(bottomMenu)
     }
 
@@ -46,13 +48,18 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
         return fab
     }
 
+    fun getBottomMenu(): BottomNavigationView {
+        return bottomMenu
+    }
+
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         menuInflater.inflate(R.menu.main_menu, menu)
+        settingsItemMenu = menu.findItem(R.id.nav_settings)
         return true
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        if(item.itemId == R.id.nav_settings){
+        if (item.itemId == R.id.nav_settings) {
             navigator.goToSettings()
         }
         return super.onOptionsItemSelected(item)

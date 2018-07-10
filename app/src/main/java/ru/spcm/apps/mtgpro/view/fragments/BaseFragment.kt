@@ -35,7 +35,20 @@ abstract class BaseFragment : Fragment() {
     protected fun updateToolbar() {
         if (toolbar != null) {
             toolbar.title = getTitle()
-            (activity as MainActivity).setSupportActionBar(toolbar)
+            val activity = (activity as MainActivity)
+            activity.setSupportActionBar(toolbar)
+            toolbar.setNavigationOnClickListener {
+                if (activity.supportFragmentManager.backStackEntryCount > 0) {
+                    activity.onBackPressed()
+                }
+            }
+            activity.supportActionBar?.setDisplayHomeAsUpEnabled(true)
+            activity.supportActionBar?.setHomeButtonEnabled(true)
+            if (activity.supportFragmentManager.backStackEntryCount == 0) {
+                activity.supportActionBar?.setHomeAsUpIndicator(R.drawable.ic_home)
+            } else {
+                activity.supportActionBar?.setHomeAsUpIndicator(null)
+            }
         }
     }
 
@@ -60,6 +73,17 @@ abstract class BaseFragment : Fragment() {
 
     fun getFab(): FloatingActionButton {
         return (activity as MainActivity).getFab()
+    }
+
+    fun toggleBottomMenu(visible: Boolean) {
+        val bottomMenu = (activity as MainActivity).getBottomMenu()
+        if (visible) {
+            bottomMenu.visibility = View.VISIBLE
+            bottomMenu.translationY = 0f
+        } else {
+            bottomMenu.visibility = View.GONE
+            bottomMenu.translationY = bottomMenu.height.toFloat()
+        }
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {

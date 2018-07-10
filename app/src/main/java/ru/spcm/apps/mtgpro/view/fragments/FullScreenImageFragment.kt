@@ -20,8 +20,8 @@ class FullScreenImageFragment : BaseFragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         cardImage.loadImageFromCache(args.getString(ARG_URL))
-        close.setOnClickListener{ _ -> navigator.backTo() }
-        cardImage.setOnClickListener{ _ -> navigator.backTo() }
+        close.setOnClickListener { _ -> navigator.backTo() }
+        cardImage.setOnClickListener { _ -> navigator.backTo() }
     }
 
     override fun inject() {
@@ -30,6 +30,16 @@ class FullScreenImageFragment : BaseFragment() {
 
     override fun getTitle(): String {
         return ""
+    }
+
+    override fun onResume() {
+        super.onResume()
+        toggleBottomMenu(false)
+    }
+
+    override fun onPause() {
+        super.onPause()
+        toggleBottomMenu(true)
     }
 
     companion object {

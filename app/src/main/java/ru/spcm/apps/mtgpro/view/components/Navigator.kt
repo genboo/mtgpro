@@ -97,7 +97,6 @@ class Navigator(private val activity: FragmentActivity, fragmentManager: Fragmen
         applyCommand(Forward(SCREEN_IMAGE, arrayOf(id, url)))
     }
 
-
     fun backTo() {
         applyCommand(Back())
     }
