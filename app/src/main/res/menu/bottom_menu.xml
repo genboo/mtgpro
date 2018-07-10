@@ -12,14 +12,14 @@
         android:title="@string/menu_spoilers" />
 
     <item
-        android:id="@+id/nav_wish_list"
-        android:icon="@drawable/ic_heart_outline"
-        android:title="@string/menu_wish" />
-
-    <item
         android:id="@+id/nav_libraries"
         android:icon="@drawable/ic_cards"
         android:title="@string/menu_libraries" />
+
+    <item
+        android:id="@+id/nav_wish_list"
+        android:icon="@drawable/ic_heart_outline"
+        android:title="@string/menu_wish" />
 
     <item
         android:id="@+id/nav_search"

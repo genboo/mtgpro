@@ -12,6 +12,7 @@
     <string name="menu_gallery">Галлерея</string>
     <string name="menu_filter">Фильтр</string>
     <string name="menu_settings">Настройки</string>
+    <string name="menu_link">Связать</string>
 
     <string name="action_cancel">Отменить</string>
     <string name="action_added">Добавлено</string>
@@ -20,6 +21,7 @@
     <string name="action_add_to_library">Добавить в библиотеку</string>
     <string name="action_make_backup">Сохранить</string>
     <string name="action_restore_backup">Восстановить</string>
+    <string name="action_copy_to_clip">Скопировано в буфер обмена</string>
 
     <string name="rules">Правила</string>
     <string name="text">Текст</string>
@@ -28,6 +30,7 @@
     <string name="filters">Фильтры</string>
     <string name="library">Название колоды</string>
     <string name="search">Поиск…</string>
+    <string name="child">ID второй стороны</string>
 
     <string name="backup_text">Сохранить базу данных карт на носителе.</string>
     <string name="restore_text">Восстановить базу данных карт с носителя. Все существующие данные будут удалены.</string>

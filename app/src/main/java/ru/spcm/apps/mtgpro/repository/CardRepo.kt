@@ -39,4 +39,9 @@ constructor(private val appExecutors: AppExecutors,
         }
     }
 
+    fun updateLink(id: String, parent: String) {
+        appExecutors.diskIO().execute { cardDao.updateLink(id, parent) }
+    }
+
+
 }
