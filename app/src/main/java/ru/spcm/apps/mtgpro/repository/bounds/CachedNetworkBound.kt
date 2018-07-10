@@ -39,7 +39,7 @@ constructor(appExecutors: AppExecutors) : NetworkBound<R, Q>(appExecutors) {
     protected abstract fun loadCacheTime(): LiveData<Cache>
 
     companion object {
-        private const val DEFAULT_CACHE_TIME = 1000
+        private const val DEFAULT_CACHE_TIME = 24 * 60 * 60 * 1000
     }
 
 }

@@ -9,8 +9,7 @@ import javax.inject.Inject
 
 class CardRepo @Inject
 constructor(private val appExecutors: AppExecutors,
-            private val cardDao: CardDao,
-            private val librariesDao: LibrariesDao) {
+            private val cardDao: CardDao) {
 
     fun getCards(id: String): LiveData<List<CardLocal>> {
         return cardDao.getSavedCards(id)
@@ -18,10 +17,6 @@ constructor(private val appExecutors: AppExecutors,
 
     fun getWish(id: String): LiveData<WishedCard> {
         return cardDao.getWish(id)
-    }
-
-    fun getLibraries(): LiveData<List<LibraryInfo>> {
-        return librariesDao.getLibraries()
     }
 
     fun updateCard(card: Card) {

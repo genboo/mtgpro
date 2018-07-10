@@ -9,6 +9,7 @@ import android.support.v7.app.AlertDialog
 import android.support.v7.widget.LinearLayoutManager
 import android.view.*
 import android.widget.Spinner
+import android.widget.TextView
 import kotlinx.android.synthetic.main.fragment_card.*
 import ru.spcm.apps.mtgpro.R
 import ru.spcm.apps.mtgpro.model.dto.*
@@ -48,6 +49,7 @@ class CardFragment : BaseFragment() {
         viewModel.getCards().observe(this, Observer { observeCards(it) })
         viewModel.getWish().observe(this, Observer { observeWish(it) })
         viewModel.getLibraries().observe(this, Observer { observeLibraries(it) })
+        viewModel.getLibrariesByCard().observe(this, Observer { observeLibrariesByCard(viewModel, it) })
         viewModel.loadCard(args.getString(ARG_ID))
         mainBlock.postDelayed({ viewModel.loadLibraries() }, 200)
 
@@ -57,7 +59,7 @@ class CardFragment : BaseFragment() {
         reprints.adapter = adapter
         reprints.layoutManager = manager
 
-        val task = { viewModel.updateCard(card) }
+        val task = Runnable { viewModel.updateCard(card) }
         val handler = Handler()
         counterBlock.setOnChangeListener {
             card.count = it
@@ -123,6 +125,29 @@ class CardFragment : BaseFragment() {
         if (data != null) {
             val adapter = LibrarySelectAdapter(requireContext(), data)
             librarySelector.adapter = adapter
+        }
+    }
+
+    private fun observeLibrariesByCard(viewModel: CardViewModel, data: List<LibraryInfo>?) {
+        if (data != null) {
+            librariesBlock.removeAllViews()
+            val handler = Handler()
+            data.forEach {
+                val view = layoutInflater.inflate(R.layout.layout_cards_counter, librariesBlock, false)
+                val number = view.findViewById<NumberCounterView>(R.id.counterBlock)
+                val title = view.findViewById<TextView>(R.id.libraryName)
+                number.setCount(it.cardsCount)
+                title.text = it.name
+                val item = LibraryCard(it.id, "")
+                val updateCardTask = Runnable { viewModel.updateLibraryCard(item) }
+                number.setOnChangeListener {
+                    item.cardId = card.id
+                    item.count = it
+                    handler.removeCallbacks(updateCardTask)
+                    handler.postDelayed(updateCardTask, 1000)
+                }
+                librariesBlock.addView(view)
+            }
         }
     }
 

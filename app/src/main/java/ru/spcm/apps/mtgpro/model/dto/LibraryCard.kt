@@ -20,7 +20,7 @@ data class LibraryCard(
         @ColumnInfo(name = "library_id")
         val libraryId: Long,
         @ColumnInfo(name = "card_id")
-        val cardId: String) {
+        var cardId: String) {
 
     @PrimaryKey(autoGenerate = true)
     var id: Long = 0

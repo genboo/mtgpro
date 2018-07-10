@@ -8,6 +8,7 @@ import android.util.AttributeSet
 import android.widget.*
 import android.util.TypedValue
 import android.view.Gravity
+import android.view.View
 import ru.spcm.apps.mtgpro.R
 
 
@@ -16,7 +17,7 @@ class NumberCounterView : LinearLayout {
     private lateinit var counter: TextView
     private lateinit var plus: ImageButton
     private lateinit var minus: ImageButton
-    private var change: (Int) -> Unit = {}
+    private var change: (Int) -> Unit = { }
 
     private var count = 0
 
@@ -49,6 +50,7 @@ class NumberCounterView : LinearLayout {
         counter = TextView(context)
 
         val plusIcon = a.getDrawable(R.styleable.NumberCounterView_icon_plus)
+                ?: resources.getDrawable(R.drawable.ic_plus, context.theme)
         val minusIcon = a.getDrawable(R.styleable.NumberCounterView_icon_minus)
         val defaultCount = a.getInt(R.styleable.NumberCounterView_default_count, 0)
         val size = a.getDimensionPixelSize(R.styleable.NumberCounterView_size, 48)

@@ -32,6 +32,9 @@ constructor(private val appExecutors: AppExecutors,
         return librariesDao.getLibraryColorState(library)
     }
 
+    fun getLibrariesByCard(id: String): LiveData<List<LibraryInfo>> {
+        return librariesDao.getLibrariesByCard(id)
+    }
 
     fun save(item: Library) {
         appExecutors.diskIO().execute { librariesDao.insert(item) }
@@ -43,6 +46,16 @@ constructor(private val appExecutors: AppExecutors,
 
     fun addCard(item: LibraryCard) {
         appExecutors.diskIO().execute { librariesDao.insert(item) }
+    }
+
+    fun updateCard(card: LibraryCard) {
+        appExecutors.diskIO().execute {
+            if (card.count == 0) {
+                librariesDao.delete(card.libraryId, card.cardId)
+            } else {
+                librariesDao.insert(card)
+            }
+        }
     }
 
 }

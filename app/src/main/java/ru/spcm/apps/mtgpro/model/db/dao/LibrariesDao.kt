@@ -24,7 +24,7 @@ interface LibrariesDao {
     fun insert(item: LibraryCard)
 
     @Query("DELETE FROM LibraryCard where library_id = :library AND card_id = :card")
-    fun delete(library: Int, card: String)
+    fun delete(library: Long, card: String)
 
     @Query("SELECT ac.cmc, ac.count count, IFNULL(acr.count, 0) creatures " +
             "FROM (SELECT c.cmc, SUM(lc.count) count " +
@@ -50,4 +50,9 @@ interface LibrariesDao {
             "GROUP BY cl.color " +
             "ORDER BY cl.color")
     fun getLibraryColorState(library: Long): LiveData<List<LibraryColorState>>
+
+    @Query("SELECT l.name, lc.library_id as id, lc.count " +
+            "FROM LibraryCard lc, Library l " +
+            "WHERE lc.library_id = l.id AND lc.card_id = :card")
+    fun getLibrariesByCard(card: String): LiveData<List<LibraryInfo>>
 }

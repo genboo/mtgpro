@@ -25,6 +25,7 @@ internal constructor(private val cardRepo: CardRepo,
     private val switcherLibraries: MutableLiveData<Boolean> = MutableLiveData()
     private var cards: LiveData<List<CardLocal>>
     private var libraries: LiveData<List<LibraryInfo>>
+    private var librariesByCard: LiveData<List<LibraryInfo>>
     private var wish: LiveData<WishedCard>
 
     init {
@@ -44,9 +45,16 @@ internal constructor(private val cardRepo: CardRepo,
 
         libraries = Transformations.switchMap(switcherLibraries) {
             if (it) {
-                return@switchMap cardRepo.getLibraries()
+                return@switchMap librariesRepo.getLibraries()
             }
             return@switchMap AbsentLiveData.create<List<LibraryInfo>>()
+        }
+
+        librariesByCard = Transformations.switchMap(switcher) {
+            if (it == null) {
+                return@switchMap AbsentLiveData.create<List<LibraryInfo>>()
+            }
+            return@switchMap librariesRepo.getLibrariesByCard(it)
         }
     }
 
@@ -56,6 +64,10 @@ internal constructor(private val cardRepo: CardRepo,
 
     fun getLibraries(): LiveData<List<LibraryInfo>> {
         return libraries
+    }
+
+    fun getLibrariesByCard(): LiveData<List<LibraryInfo>> {
+        return librariesByCard
     }
 
     fun getWish(): LiveData<WishedCard> {
@@ -72,6 +84,10 @@ internal constructor(private val cardRepo: CardRepo,
 
     fun updateCard(card: Card) {
         cardRepo.updateCard(card)
+    }
+
+    fun updateLibraryCard(card: LibraryCard) {
+        librariesRepo.updateCard(card)
     }
 
     fun updateWish(id: String, wish: Boolean) {

@@ -27,8 +27,8 @@ task clean(type: Delete) {
 
 ext {
     //Version and code
-    ver = '0.2.' + new Date().format('yyMMdd')
-    code = 1
+    ver = '0.9.' + new Date().format('yyMMdd')
+    code = 2
 
     // App dependencies
     supportLibVersion = '27.1.1'
