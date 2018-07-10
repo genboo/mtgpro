@@ -44,7 +44,7 @@ class SearchBound(appExecutors: AppExecutors,
     }
 
     override fun loadSaved(): LiveData<List<Card>> {
-        return cardDao.getCachedCards(getCacheKey())
+        return cardDao.getCachedCards(getCacheKey(), 100)
     }
 
     override fun createCall(): LiveData<ApiResponse<List<Card>>> {

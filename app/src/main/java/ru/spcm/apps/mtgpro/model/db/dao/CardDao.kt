@@ -35,8 +35,8 @@ interface CardDao {
     @Delete
     fun delete(item: WishedCard)
 
-    @Query("SELECT c.*, sc.count FROM CacheCard cc LEFT JOIN Card c ON c.id = cc.id LEFT JOIN SavedCard sc ON sc.id = c.id WHERE cc.cache_key = :cacheKey ORDER BY c.numberFormatted")
-    fun getCachedCards(cacheKey: String): LiveData<List<Card>>
+    @Query("SELECT c.*, sc.count FROM CacheCard cc LEFT JOIN Card c ON c.id = cc.id LEFT JOIN SavedCard sc ON sc.id = c.id WHERE cc.cache_key = :cacheKey ORDER BY c.numberFormatted LIMIT :limit")
+    fun getCachedCards(cacheKey: String, limit: Int): LiveData<List<Card>>
 
     @Transaction
     @Query("SELECT c.*, sc.count, sc.parent FROM Card c LEFT JOIN SavedCard sc ON sc.id = c.id WHERE c.id = :id OR c.parent = :id ORDER BY c.parent ASC")

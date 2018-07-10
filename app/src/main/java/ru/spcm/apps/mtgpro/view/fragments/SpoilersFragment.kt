@@ -13,6 +13,7 @@ import ru.spcm.apps.mtgpro.model.tools.Resource
 import ru.spcm.apps.mtgpro.model.tools.Status
 import ru.spcm.apps.mtgpro.repository.bounds.SpoilersBound
 import ru.spcm.apps.mtgpro.view.adapter.RecyclerViewLoaderScrollListener
+import ru.spcm.apps.mtgpro.view.adapter.RecyclerViewScrollListener
 import ru.spcm.apps.mtgpro.view.adapter.SpoilersListAdapter
 import ru.spcm.apps.mtgpro.view.components.fadeIn
 import ru.spcm.apps.mtgpro.view.components.fadeOut
@@ -45,11 +46,15 @@ class SpoilersFragment : BaseFragment() {
         list.layoutManager = layoutManager
         list.adapter = adapter
         list.clearOnScrollListeners()
-        list.addOnScrollListener(RecyclerViewLoaderScrollListener({ viewModel.loadSpoilers(set, it) },
+        list.addOnScrollListener(RecyclerViewScrollListener({ viewModel.loadSpoilers(set, it) },
                 SpoilersBound.PAGES_SIZE))
 
         showProgressBar()
-        list.postDelayed({ viewModel.loadSpoilers(set, 1) }, 200)
+        list.postDelayed({
+            if(adapter.getSize() == 0) {
+                viewModel.loadSpoilers(set, SpoilersBound.PAGES_SIZE)
+            }
+        }, 200)
 
         layoutManager.spanSizeLookup = object : GridLayoutManager.SpanSizeLookup() {
             override fun getSpanSize(position: Int): Int {
@@ -71,7 +76,7 @@ class SpoilersFragment : BaseFragment() {
                 val sameCount = data.data.size == adapter.getSize()
                 adapter.setItems(data.data)
                 if (sameCount) {
-                    adapter.notifyItemChanged(adapter.getSize())
+                    adapter.notifyItemChanged(adapter.itemCount)
                 }
             }
         }

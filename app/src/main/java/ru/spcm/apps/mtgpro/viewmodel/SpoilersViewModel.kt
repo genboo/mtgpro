@@ -29,7 +29,7 @@ internal constructor(private val spoilersRepo: SpoilersRepo) : ViewModel() {
             if (it == null) {
                 return@switchMap AbsentLiveData.create<Resource<List<Card>>>()
             }
-            return@switchMap spoilersRepo.getSpoilers(it.set, it.page)
+            return@switchMap spoilersRepo.getSpoilers(it.set, it.limit)
         }
     }
 
@@ -37,10 +37,10 @@ internal constructor(private val spoilersRepo: SpoilersRepo) : ViewModel() {
         return cards
     }
 
-    fun loadSpoilers(set: String, page: Int) {
-        switcher.postValue(Params(set, page))
+    fun loadSpoilers(set: String, limit: Int) {
+        switcher.postValue(Params(set, limit))
     }
 
-    private inner class Params(val set: String, val page: Int)
+    private inner class Params(val set: String, val limit: Int)
 
 }

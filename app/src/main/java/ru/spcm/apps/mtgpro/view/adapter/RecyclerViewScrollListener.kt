@@ -26,8 +26,8 @@ class RecyclerViewScrollListener(private val load: (Int) -> Unit,
 
         if (!loading && totalItemCount - (visibleItemCount + firstVisibleItem) < DEFAULT_REACT) {
             loading = true
-            if (totalItemCount % pageSize == 0) {
-                load(totalItemCount + 1)
+            if ((totalItemCount - 1) % pageSize == 0) {
+                load(totalItemCount - 1 + pageSize)
             }
         }
     }

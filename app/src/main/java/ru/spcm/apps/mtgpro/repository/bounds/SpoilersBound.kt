@@ -18,7 +18,7 @@ class SpoilersBound(appExecutors: AppExecutors,
 
     private val type: String = Card::class.java.simpleName + "::" + SpoilersBound.METHOD
     private var set: String = ""
-    private var page: Int = 0
+    private var limit: Int = 0
 
     override fun loadCacheTime(): LiveData<Cache> {
         return cacheDao.getCache(getCacheKey())
@@ -45,24 +45,24 @@ class SpoilersBound(appExecutors: AppExecutors,
     }
 
     override fun loadSaved(): LiveData<List<Card>> {
-        return cardDao.getCachedCards(getSaveKey())
+        return cardDao.getCachedCards(getSaveKey(), limit)
     }
 
     override fun createCall(): LiveData<ApiResponse<List<Card>>> {
-        return cardApi.getCardsBySet(set, page, PAGES_SIZE)
+        return cardApi.getCardsBySet(set, limit / PAGES_SIZE, PAGES_SIZE)
     }
 
     private fun getCacheKey(): String {
-        return type + set + page
+        return type + set + limit
     }
 
     private fun getSaveKey(): String {
         return type + set
     }
 
-    fun setParams(set: String, page: Int): SpoilersBound {
+    fun setParams(set: String, offset: Int): SpoilersBound {
         this.set = set
-        this.page = page
+        this.limit = offset
         return this
     }
 
