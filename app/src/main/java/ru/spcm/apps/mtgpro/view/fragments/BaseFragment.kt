@@ -43,11 +43,12 @@ abstract class BaseFragment : Fragment() {
                 }
             }
             activity.supportActionBar?.setDisplayHomeAsUpEnabled(true)
-            activity.supportActionBar?.setHomeButtonEnabled(true)
             if (activity.supportFragmentManager.backStackEntryCount == 0) {
                 activity.supportActionBar?.setHomeAsUpIndicator(R.drawable.ic_home)
+                activity.supportActionBar?.setHomeButtonEnabled(false)
             } else {
                 activity.supportActionBar?.setHomeAsUpIndicator(null)
+                activity.supportActionBar?.setHomeButtonEnabled(true)
             }
         }
     }

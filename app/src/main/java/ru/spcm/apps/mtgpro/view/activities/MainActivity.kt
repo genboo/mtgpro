@@ -33,8 +33,8 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
 
         bottomMenu.setOnNavigationItemSelectedListener(this)
         if (savedInstanceState == null) {
-            navigator.goToSets()
-            bottomMenu.selectedItemId = R.id.nav_sets
+            navigator.goToCollection()
+            bottomMenu.selectedItemId = R.id.nav_collection
         }
 
         BottomNavigationViewHelper.removeShiftMode(bottomMenu)

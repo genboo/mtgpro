@@ -42,6 +42,9 @@ class SearchFragment : BaseFragment() {
         searchText.setOnEditorActionListener { view, actionId, _ ->
             var handled = false
             if (actionId == EditorInfo.IME_ACTION_SEARCH || actionId == EditorInfo.IME_ACTION_UNSPECIFIED) {
+                if(adapter.itemCount != 0) {
+                    adapter.setItems(arrayListOf())
+                }
                 viewModel.search((view as EditText).text.toString())
                 handled = true
             }
@@ -51,11 +54,37 @@ class SearchFragment : BaseFragment() {
 
     private fun observeSearch(data: Resource<List<Card>>?) {
         if (data != null) {
-            if (data.status == Status.SUCCESS && data.data != null) {
-                val adapter = list.adapter as WishListAdapter
-                adapter.setItems(data.data)
+            if (data.status == Status.LOADING) {
+                showProgress()
+            }
+            if (data.status == Status.SUCCESS) {
+                if (data.data == null || data.data.isEmpty()) {
+                    showEmpty()
+                } else {
+                    val adapter = list.adapter as WishListAdapter
+                    adapter.setItems(data.data)
+                    showContent()
+                }
             }
         }
+    }
+
+    private fun showProgress() {
+        progressBlock.visibility = View.VISIBLE
+        list.visibility = View.GONE
+        emptyBlock.visibility = View.GONE
+    }
+
+    private fun showContent() {
+        progressBlock.visibility = View.GONE
+        list.visibility = View.VISIBLE
+        emptyBlock.visibility = View.GONE
+    }
+
+    private fun showEmpty() {
+        progressBlock.visibility = View.GONE
+        list.visibility = View.GONE
+        emptyBlock.visibility = View.VISIBLE
     }
 
     override fun inject() {
