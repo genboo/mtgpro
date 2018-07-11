@@ -78,18 +78,21 @@ class SearchFragment : BaseFragment() {
         progressBlock.visibility = View.VISIBLE
         list.visibility = View.GONE
         emptyBlock.visibility = View.GONE
+        hintBlock.visibility = View.GONE
     }
 
     private fun showContent() {
         progressBlock.visibility = View.GONE
         list.visibility = View.VISIBLE
         emptyBlock.visibility = View.GONE
+        hintBlock.visibility = View.GONE
     }
 
     private fun showEmpty() {
         progressBlock.visibility = View.GONE
         list.visibility = View.GONE
         emptyBlock.visibility = View.VISIBLE
+        hintBlock.visibility = View.GONE
     }
 
     override fun inject() {
