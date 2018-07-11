@@ -9,9 +9,12 @@ import android.support.annotation.NonNull
 /**
  * Created by gen on 29.06.2018.
  */
-@Entity(indices = [Index("cache_key"), Index(value = ["id", "cache_key"],
+@Entity(indices = [Index("cache_key"), Index(value = ["card_id", "cache_key"],
         unique = true)])
-data class CacheCard(@PrimaryKey
-                     @NonNull var id: String,
+data class CacheCard(@ColumnInfo(name = "card_id")
+                     var cardId: String = "",
                      @ColumnInfo(name = "cache_key")
-                     var cacheKey: String = "")
+                     var cacheKey: String = "") {
+    @PrimaryKey(autoGenerate = true)
+    var id: Long = 0
+}

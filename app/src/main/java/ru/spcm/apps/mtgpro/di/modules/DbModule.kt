@@ -32,7 +32,8 @@ class DbModule {
         return Room
                 .databaseBuilder(context, MtgDatabase::class.java, DB_NAME)
                 .addMigrations(
-                        MIGRATION_1_2
+                        MIGRATION_1_2,
+                        MIGRATION_2_3
                 )
                 .build()
     }
@@ -45,7 +46,7 @@ class DbModule {
 
     @Provides
     @Singleton
-    internal fun provideAdditionalInfoDao(db: MtgDatabase): AdditionalInfoCardDao{
+    internal fun provideAdditionalInfoDao(db: MtgDatabase): AdditionalInfoCardDao {
         return db.additionalInfoDao()
     }
 
@@ -77,7 +78,22 @@ class DbModule {
         private val MIGRATION_1_2 = object : Migration(1, 2) {
             override fun migrate(database: SupportSQLiteDatabase) {
                 //Оригинальное название карты
-                database.execSQL("ALTER TABLE Card " + " ADD COLUMN nameOrigin TEXT")
+                database.execSQL("ALTER TABLE Card ADD COLUMN nameOrigin TEXT")
+            }
+        }
+
+        private val MIGRATION_2_3 = object : Migration(2, 3) {
+            override fun migrate(database: SupportSQLiteDatabase) {
+                //Пересоздание таблицы закешированных карт
+                database.execSQL("CREATE TABLE temp_table AS SELECT * FROM CacheCard")
+                database.execSQL("DROP TABLE CacheCard")
+
+                database.execSQL("CREATE TABLE CacheCard (id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, card_id TEXT NOT NULL, cache_key TEXT NOT NULL)")
+                database.execSQL("INSERT INTO CacheCard (card_id, cache_key) SELECT id, cache_key FROM temp_table")
+                database.execSQL("DROP TABLE temp_table")
+                database.execSQL("CREATE INDEX index_CacheCard_cache_key ON CacheCard (cache_key)")
+                database.execSQL("CREATE UNIQUE INDEX index_CacheCard_id_cache_key ON CacheCard (card_id, cache_key)")
+
             }
         }
     }
