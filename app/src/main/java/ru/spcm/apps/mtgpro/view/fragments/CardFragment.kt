@@ -59,6 +59,8 @@ class CardFragment : BaseFragment() {
         mainBlock.postDelayed({ viewModel.loadLibraries() }, 200)
 
         val adapter = ReprintListAdapter(null)
+        adapter.setOnItemClickListener { _, item, _ -> navigator.goToSearch("s " + item.reprint + " " + card.nameOrigin) }
+
         val manager = LinearLayoutManager(context,
                 LinearLayoutManager.HORIZONTAL, false)
         reprints.adapter = adapter

@@ -15,7 +15,7 @@ class Navigator(private val activity: FragmentActivity, fragmentManager: Fragmen
     override fun createFragment(screenKey: String, data: Any?): Fragment {
         when (screenKey) {
             SCREEN_SETS -> return SetsFragment()
-            SCREEN_SEARCH -> return SearchFragment()
+            SCREEN_SEARCH -> return SearchFragment.getInstance(data as String)
             SCREEN_COLLECTION -> return CollectionFragment()
             SCREEN_LIBRARIES -> return LibrariesFragment()
             SCREEN_WISH_LIST -> return WishFragment()
@@ -46,10 +46,10 @@ class Navigator(private val activity: FragmentActivity, fragmentManager: Fragmen
                                                    currentFragment: Fragment?,
                                                    nextFragment: Fragment?,
                                                    fragmentTransaction: FragmentTransaction) {
-        if(command is Replace){
+        if (command is Replace) {
             fragmentTransaction.setCustomAnimations(android.R.anim.fade_in,
                     android.R.anim.fade_out)
-        }else {
+        } else {
             fragmentTransaction.setCustomAnimations(R.anim.slide_in_right,
                     R.anim.slide_out_left,
                     R.anim.slide_in_left,
@@ -75,6 +75,10 @@ class Navigator(private val activity: FragmentActivity, fragmentManager: Fragmen
 
     fun goToSearch() {
         applyCommands(arrayOf(BackTo(null), Replace(SCREEN_SEARCH, "")))
+    }
+
+    fun goToSearch(search: String) {
+        applyCommand(Forward(SCREEN_SEARCH, search))
     }
 
     fun goToSpoilers(set: String, name: String) {

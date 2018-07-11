@@ -48,7 +48,7 @@ interface CardDao {
     @Query("SELECT c.*, sc.count, sc.parent FROM SavedCard sc LEFT JOIN Card c ON c.id = sc.id ORDER BY c.setTitle, c.numberFormatted LIMIT :limit OFFSET :offset")
     fun getAllCards(offset: Int, limit: Int): LiveData<List<Card>>
 
-    @Query("SELECT c.id, c.numberFormatted, c.setTitle, c.parent, c.imageUrl, c.name, c.rarity, c.multiverseId, c.number, c.`set`, c.type, c.cmc, c.text, c.flavor, c.manaCost, c.rulesText, sc.count FROM SavedCard sc LEFT JOIN Card c ON c.id = sc.id ORDER BY c.setTitle, c.numberFormatted")
+    @Query("SELECT c.id, c.numberFormatted, c.nameOrigin, c.setTitle, c.parent, c.imageUrl, c.name, c.rarity, c.multiverseId, c.number, c.`set`, c.type, c.cmc, c.text, c.flavor, c.manaCost, c.rulesText, sc.count FROM SavedCard sc LEFT JOIN Card c ON c.id = sc.id ORDER BY c.setTitle, c.numberFormatted")
     fun getAllCards(): DataSource.Factory<Int, Card>
 
     @Query("SELECT * FROM WishedCard c WHERE c.id = :id")

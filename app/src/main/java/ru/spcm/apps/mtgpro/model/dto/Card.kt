@@ -66,8 +66,7 @@ data class Card(@PrimaryKey @NonNull var id: String) {
     @Ignore
     val printings: List<String>? = null
 
-    @Ignore
-    private var nameOrigin: String? = null
+    var nameOrigin: String? = null
 
     fun getSetIcon(): Int {
         return Icons.getIcon(set)

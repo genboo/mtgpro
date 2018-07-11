@@ -11,7 +11,7 @@ import ru.spcm.apps.mtgpro.model.dto.Set
  * База данных
  * Created by gen on 28.06.2018.
  */
-@Database(version = 1, exportSchema = false, entities = [
+@Database(version = 2, exportSchema = false, entities = [
     Card::class,
     SavedCard::class,
     WishedCard::class,

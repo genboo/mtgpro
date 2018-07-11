@@ -68,7 +68,7 @@ class SpoilersBound(appExecutors: AppExecutors,
 
     companion object {
         private const val METHOD = "spoilers"
-        const val PAGES_SIZE = 24
+        const val PAGES_SIZE = 21
     }
 
 }

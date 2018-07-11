@@ -1,7 +1,9 @@
 package ru.spcm.apps.mtgpro.di.modules
 
 
+import android.arch.persistence.db.SupportSQLiteDatabase
 import android.arch.persistence.room.Room
+import android.arch.persistence.room.migration.Migration
 import android.content.Context
 
 import javax.inject.Singleton
@@ -29,6 +31,9 @@ class DbModule {
     internal fun provideDatabase(context: Context): MtgDatabase {
         return Room
                 .databaseBuilder(context, MtgDatabase::class.java, DB_NAME)
+                .addMigrations(
+                        MIGRATION_1_2
+                )
                 .build()
     }
 
@@ -65,5 +70,15 @@ class DbModule {
 
     companion object {
         const val DB_NAME = "mtg"
+
+        /**
+         * Список миграций
+         */
+        private val MIGRATION_1_2 = object : Migration(1, 2) {
+            override fun migrate(database: SupportSQLiteDatabase) {
+                //Оригинальное название карты
+                database.execSQL("ALTER TABLE Card " + " ADD COLUMN nameOrigin TEXT")
+            }
+        }
     }
 }

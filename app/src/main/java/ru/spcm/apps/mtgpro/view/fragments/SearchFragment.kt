@@ -35,20 +35,25 @@ class SearchFragment : BaseFragment() {
         viewModel.getCards().observe(this, Observer { observeSearch(it) })
 
         val adapter = WishListAdapter(null)
-        list.layoutManager = GridLayoutManager(context, 2)
+        list.layoutManager = GridLayoutManager(context, 3)
         list.adapter = adapter
         adapter.setOnItemClickListener { _, item, _ -> navigator.goToCard(item.id) }
 
         searchText.setOnEditorActionListener { view, actionId, _ ->
             var handled = false
             if (actionId == EditorInfo.IME_ACTION_SEARCH || actionId == EditorInfo.IME_ACTION_UNSPECIFIED) {
-                if(adapter.itemCount != 0) {
+                if (adapter.itemCount != 0) {
                     adapter.setItems(arrayListOf())
                 }
                 viewModel.search((view as EditText).text.toString())
                 handled = true
             }
             return@setOnEditorActionListener handled
+        }
+
+        if (args.containsKey(ARG_SEARCH_STRING) && args.getString(ARG_SEARCH_STRING).isNotEmpty()) {
+            viewModel.search(args.getString(ARG_SEARCH_STRING))
+            searchText.setText(args.getString(ARG_SEARCH_STRING))
         }
     }
 
@@ -93,6 +98,19 @@ class SearchFragment : BaseFragment() {
 
     override fun getTitle(): String {
         return ""
+    }
+
+    companion object {
+
+        private const val ARG_SEARCH_STRING = "search"
+
+        fun getInstance(search: String?): SearchFragment {
+            val args = Bundle()
+            val fragment = SearchFragment()
+            args.putString(ARG_SEARCH_STRING, search)
+            fragment.arguments = args
+            return fragment
+        }
     }
 
 }

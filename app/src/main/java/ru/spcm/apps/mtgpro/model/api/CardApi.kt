@@ -18,7 +18,10 @@ interface CardApi {
     fun getCardsByNumber(@Query("set") set: String, @Query("number") number: String): LiveData<ApiResponse<List<Card>>>
 
     @GET("/v1/cards")
-    fun getCardsByName(@Query("name") name: String): LiveData<ApiResponse<List<Card>>>
+    fun getCardsByName(@Query("set") set: String, @Query("name") name: String): LiveData<ApiResponse<List<Card>>>
+
+    @GET("/v1/cards")
+    fun getCardsByLanguage(@Query("name") name: String, @Query("language") language: String?): LiveData<ApiResponse<List<Card>>>
 
     @GET("/v1/cards")
     fun getCardsBySet(@Query("set") set: String, @Query("page") page: Int, @Query("pageSize") pages: Int): LiveData<ApiResponse<List<Card>>>

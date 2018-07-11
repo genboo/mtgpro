@@ -18,7 +18,10 @@ class SearchBound(appExecutors: AppExecutors,
 
     private val type: String = Card::class.java.simpleName + "::" + SearchBound.METHOD
     private var searchString: String = ""
-    private var russian: Boolean = true
+    private var language: String? = "russian"
+    private var set: String = ""
+    private var number: String = ""
+    private var name: String = ""
 
     override fun loadCacheTime(): LiveData<Cache> {
         return cacheDao.getCache(getCacheKey())
@@ -48,16 +51,43 @@ class SearchBound(appExecutors: AppExecutors,
     }
 
     override fun createCall(): LiveData<ApiResponse<List<Card>>> {
-        return cardApi.getCardsByName(searchString)
+        if (set.isNotEmpty() && number.isNotEmpty()) {
+            return cardApi.getCardsByNumber(set, number)
+        } else if (set.isNotEmpty() && name.isNotEmpty()) {
+            return cardApi.getCardsByName(set, name)
+        }
+        return cardApi.getCardsByLanguage(searchString, language)
     }
 
     private fun getCacheKey(): String {
         return type + searchString
     }
 
-    fun setParams(searchString: String, russian: Boolean): SearchBound {
-        this.searchString = searchString
-        this.russian = russian
+    fun setParams(search: String): SearchBound {
+        when {
+            search.startsWith("e ", true) -> {
+                searchString = search.replaceFirst("e ", "", true)
+                language = null
+            }
+            search.startsWith("n ", true) -> {
+                searchString = search.replaceFirst("n ", "", true)
+                val parts = searchString.split(" ")
+                if (parts.size > 1) {
+                    set = parts[0]
+                    number = parts[1]
+                }
+            }
+            search.startsWith("s ", true) -> {
+                searchString = search.replaceFirst("s ", "", true)
+                val parts = searchString.split("[ ]".toRegex(), 2)
+                if (parts.size > 1) {
+                    set = parts[0]
+                    name = parts[1]
+                }
+            }
+            else -> searchString = search
+        }
+
         return this
     }
 
