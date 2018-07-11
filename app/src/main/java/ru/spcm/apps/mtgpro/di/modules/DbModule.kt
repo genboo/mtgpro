@@ -17,6 +17,7 @@ import ru.spcm.apps.mtgpro.model.db.dao.*
  * Инициализация базы данных
  * Created by gen on 28.06.2018.
  */
+@Suppress("unused")
 @Module
 class DbModule {
 

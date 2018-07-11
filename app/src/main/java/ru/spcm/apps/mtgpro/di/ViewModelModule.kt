@@ -7,6 +7,7 @@ import dagger.Module
 import dagger.multibindings.IntoMap
 import ru.spcm.apps.mtgpro.viewmodel.*
 
+@Suppress("unused")
 @Module
 internal abstract class ViewModelModule {
 
