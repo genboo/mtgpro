@@ -39,7 +39,7 @@ interface CardDao {
     fun getCachedCards(cacheKey: String, limit: Int): LiveData<List<Card>>
 
     @Transaction
-    @Query("SELECT c.*, sc.count, sc.parent FROM Card c LEFT JOIN SavedCard sc ON sc.id = c.id WHERE c.id = :id OR c.parent = :id ORDER BY c.parent ASC")
+    @Query("SELECT c.*, sc.count, sc.parent FROM Card c LEFT JOIN SavedCard sc ON sc.id = c.id WHERE c.id = :id OR sc.parent = :id ORDER BY sc.parent ASC")
     fun getSavedCards(id: String): LiveData<List<CardLocal>>
 
     @Query("SELECT c.* FROM Card c WHERE c.multiverseId = :mid")
@@ -65,7 +65,7 @@ interface CardDao {
             " ORDER BY typeSingle, c.setTitle, numberFormatted")
     fun getCardsInLibrary(library: Long): LiveData<List<CardForLibrary>>
 
-    @Query("UPDATE Card SET parent = :parent WHERE id = :id")
+    @Query("UPDATE SavedCard SET parent = :parent WHERE id = :id")
     fun updateLink(id: String, parent: String)
 
 }
