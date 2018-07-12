@@ -54,8 +54,11 @@ interface CardDao {
     @Query("SELECT * FROM WishedCard c WHERE c.id = :id")
     fun getWish(id: String): LiveData<WishedCard>
 
-    @Query("SELECT c.*, sc.count FROM WishedCard wc LEFT JOIN Card c ON c.id = wc.id  LEFT JOIN SavedCard sc ON sc.id = wc.id ORDER BY c.setTitle, c.numberFormatted")
+    @Query("SELECT c.*, sc.count FROM WishedCard wc LEFT JOIN Card c ON c.id = wc.id LEFT JOIN SavedCard sc ON sc.id = wc.id ORDER BY c.setTitle, c.numberFormatted")
     fun getWishedCards(): LiveData<List<Card>>
+
+    @Query("SELECT c.*, sc.count FROM WishedCard wc LEFT JOIN Card c ON c.id = wc.id LEFT JOIN SavedCard sc ON sc.id = wc.id WHERE c.`set` IN (:sets) ORDER BY c.setTitle, c.numberFormatted")
+    fun getWishedCardsFiltered(sets: Array<String>): LiveData<List<Card>>
 
     @Query("SELECT c.*, lc.count, " +
             " MIN(t.type) typeSingle " +
@@ -67,5 +70,8 @@ interface CardDao {
 
     @Query("UPDATE SavedCard SET parent = :parent WHERE id = :id")
     fun updateLink(id: String, parent: String)
+
+
+
 
 }

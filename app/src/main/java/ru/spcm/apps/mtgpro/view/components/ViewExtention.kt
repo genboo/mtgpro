@@ -16,14 +16,22 @@ fun View.fadeOut(viewGroup: ViewGroup) {
     this.visibility = View.GONE
 }
 
-fun View.slideIn(edge:Int){
+fun View.slideIn(edge: Int) {
     TransitionManager.beginDelayedTransition(parent as ViewGroup, Slide(edge))
     this.visibility = View.VISIBLE
 }
 
-fun View.slideOut(edge:Int){
+fun View.slideOut(edge: Int) {
     TransitionManager.beginDelayedTransition(parent as ViewGroup, Slide(edge))
     this.visibility = View.GONE
+}
+
+fun View.expand(listener: Transition.TransitionListener? = null) {
+    val transition = ChangeBounds()
+    if (listener != null) {
+        transition.addListener(listener)
+    }
+    TransitionManager.beginDelayedTransition(parent as ViewGroup, transition)
 }
 
 fun ViewGroup.toggleSlideChilds(visibility: Int, edge: Int, vararg views: View) {

@@ -3,6 +3,7 @@ package ru.spcm.apps.mtgpro.model.db.dao
 import android.arch.lifecycle.LiveData
 import android.arch.persistence.room.*
 import ru.spcm.apps.mtgpro.model.dto.Set
+import ru.spcm.apps.mtgpro.model.dto.SetName
 
 /**
  * Получение данных по сетам
@@ -27,4 +28,7 @@ interface SetsDao {
 
     @Query ("SELECT * FROM `Set` ORDER BY releaseDate DESC")
     fun getSets() : LiveData<List<Set>>
+
+    @Query("SELECT c.`set`, c.setTitle FROM Card c, WishedCard w WHERE c.id = w.id GROUP BY c.`set` ORDER BY c.setTitle")
+    fun getWishedSetNames():LiveData<List<SetName>>
 }

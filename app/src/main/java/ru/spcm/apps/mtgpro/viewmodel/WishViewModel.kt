@@ -8,7 +8,7 @@ import android.arch.lifecycle.ViewModel
 import ru.spcm.apps.mtgpro.model.dto.Card
 import ru.spcm.apps.mtgpro.repository.WishRepo
 import ru.spcm.apps.mtgpro.tools.AbsentLiveData
-
+import ru.spcm.apps.mtgpro.model.dto.SetName
 import javax.inject.Inject
 
 
@@ -20,15 +20,21 @@ import javax.inject.Inject
 class WishViewModel @Inject
 internal constructor(private val wishRepo: WishRepo) : ViewModel() {
 
-    private val switcher: MutableLiveData<Boolean> = MutableLiveData()
+    private val filterSwitcher = MutableLiveData<Array<String>>()
     private var cards: LiveData<List<Card>>
+    private var sets: LiveData<List<SetName>> = wishRepo.getWishedSetNames()
+
+    val selectedFilter: Array<String>?
+        get() = filterSwitcher.value
 
     init {
-        cards = Transformations.switchMap(switcher) {
-            if (it) {
+        cards = Transformations.switchMap(filterSwitcher) {
+            if (it == null) {
+                return@switchMap AbsentLiveData.create<List<Card>>()
+            } else if (it.isEmpty()) {
                 return@switchMap wishRepo.getWishedCards()
             }
-            return@switchMap AbsentLiveData.create<List<Card>>()
+            return@switchMap wishRepo.getWishedCardsFiltered(it)
         }
     }
 
@@ -36,8 +42,12 @@ internal constructor(private val wishRepo: WishRepo) : ViewModel() {
         return cards
     }
 
-    fun loadWishedCards() {
-        switcher.postValue(true)
+    fun getWishedSetNames(): LiveData<List<SetName>> {
+        return sets
+    }
+
+    fun loadWishedCards(data: Array<String>) {
+        filterSwitcher.postValue(data)
     }
 
 }

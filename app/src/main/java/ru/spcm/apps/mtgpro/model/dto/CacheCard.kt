@@ -14,6 +14,9 @@ data class CacheCard(@ColumnInfo(name = "card_id")
                      var cardId: String = "",
                      @ColumnInfo(name = "cache_key")
                      var cacheKey: String = "") {
+
     @PrimaryKey(autoGenerate = true)
     var id: Long = 0
+
+
 }

@@ -34,7 +34,8 @@ class DbModule {
                 .databaseBuilder(context, MtgDatabase::class.java, DB_NAME)
                 .addMigrations(
                         MIGRATION_1_2,
-                        MIGRATION_2_3
+                        MIGRATION_2_3,
+                        MIGRATION_3_4
                 )
                 .build()
     }
@@ -95,6 +96,13 @@ class DbModule {
                 database.execSQL("CREATE INDEX index_CacheCard_cache_key ON CacheCard (cache_key)")
                 database.execSQL("CREATE UNIQUE INDEX index_CacheCard_id_cache_key ON CacheCard (card_id, cache_key)")
 
+            }
+        }
+
+        private val MIGRATION_3_4 = object : Migration(3, 4) {
+            override fun migrate(database: SupportSQLiteDatabase) {
+                //Добавление индекса для поля
+                database.execSQL("CREATE INDEX index_Card_set ON Card (\"set\")")
             }
         }
     }

@@ -8,7 +8,7 @@ import android.support.annotation.NonNull
 import com.google.gson.annotations.SerializedName
 import ru.spcm.apps.mtgpro.model.tools.Icons
 
-@Entity(indices = [(Index("multiverseId"))])
+@Entity(indices = [(Index("multiverseId")), (Index("set"))])
 data class Card(@PrimaryKey @NonNull var id: String) {
 
     var name: String = ""
