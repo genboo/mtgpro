@@ -17,6 +17,8 @@ import java.util.ArrayList
 
 class WishFragment : BaseFragment() {
 
+    private val sets = HashMap<String, String>()
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
         val view = inflater.inflate(R.layout.fragment_wish, container, false)
@@ -63,9 +65,10 @@ class WishFragment : BaseFragment() {
                     viewModel.loadWishedCards(selected)
                     setSelectedFiltersTitle(selected)
                 }
-                if (selectedFilters.contains(it.set)){
+                if (selectedFilters.contains(it.set)) {
                     checkBox.isChecked = true
                 }
+                sets[it.set] = it.setTitle
             }
             setSelectedFiltersTitle(viewModel.selectedFilter ?: arrayOf())
         }
@@ -80,7 +83,7 @@ class WishFragment : BaseFragment() {
                 if (str.isNotEmpty()) {
                     str.append(", ")
                 }
-                str.append(it)
+                str.append(sets[it])
             }
             filterValues.text = str.toString()
         }
