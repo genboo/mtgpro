@@ -20,15 +20,15 @@ import javax.inject.Inject
 class SetsViewModel @Inject
 internal constructor(private val setsRepo: SetsRepo) : ViewModel() {
 
-    private val switcher: MutableLiveData<Boolean> = MutableLiveData()
+    private val switcher: MutableLiveData<Boolean?> = MutableLiveData()
     private var sets: LiveData<Resource<List<Set>>>
 
     init {
         sets = Transformations.switchMap(switcher) {
-            if (it) {
-                return@switchMap setsRepo.getSets()
+            if (it == null) {
+                return@switchMap AbsentLiveData.create<Resource<List<Set>>>()
             }
-            return@switchMap AbsentLiveData.create<Resource<List<Set>>>()
+            return@switchMap setsRepo.getSets(it)
         }
     }
 
@@ -36,8 +36,8 @@ internal constructor(private val setsRepo: SetsRepo) : ViewModel() {
         return sets
     }
 
-    fun loadSets() {
-        switcher.postValue(true)
+    fun loadSets(force: Boolean?) {
+        switcher.postValue(force)
     }
 
 }

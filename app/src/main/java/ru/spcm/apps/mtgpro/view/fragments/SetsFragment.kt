@@ -33,9 +33,9 @@ class SetsFragment : BaseFragment() {
         adapter.setOnItemClickListener { _, item, _ -> navigator.goToSpoilers(item.code, item.name) }
         list.layoutManager = LinearLayoutManager(context)
         list.adapter = adapter
-        list.postDelayed({ viewModel.loadSets() }, 200)
+        list.postDelayed({ viewModel.loadSets(false) }, 200)
 
-        swipeRefresh.setOnRefreshListener { viewModel.loadSets() }
+        swipeRefresh.setOnRefreshListener { viewModel.loadSets(true) }
     }
 
     private fun observeSets(data: Resource<List<Set>>?) {

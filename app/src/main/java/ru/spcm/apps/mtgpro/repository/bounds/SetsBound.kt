@@ -16,6 +16,7 @@ class SetsBound(appExecutors: AppExecutors,
                 private val cacheDao: CacheDao) : CachedNetworkBound<List<Set>, List<Set>>(appExecutors) {
 
     private val type: String = Set::class.java.simpleName + "::" + METHOD
+    private var force = false
 
     override fun saveCallResult(data: List<Set>?) {
         if (data != null) {
@@ -30,7 +31,7 @@ class SetsBound(appExecutors: AppExecutors,
     }
 
     override fun shouldFetch(data: List<Set>?): Boolean {
-        return data == null || checkExpireCache(cacheExpire)
+        return force || data == null || checkExpireCache(cacheExpire)
     }
 
     override fun loadSaved(): LiveData<List<Set>> {
@@ -39,6 +40,11 @@ class SetsBound(appExecutors: AppExecutors,
 
     override fun createCall(): LiveData<ApiResponse<List<Set>>> {
         return setsApi.getSets()
+    }
+
+    fun setForce(flag: Boolean): SetsBound {
+        force = flag
+        return this
     }
 
     override fun loadCacheTime(): LiveData<Cache> {
