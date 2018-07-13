@@ -20,6 +20,7 @@
 
     <color name="colorShadow">#45000000</color>
     <color name="colorShadowSecond">#24000000</color>
+    <color name="colorShadowDark">#99000000</color>
 
     <color name="rarityCommon">#000000</color>
     <color name="rarityUncommon">#9CC1CE</color>

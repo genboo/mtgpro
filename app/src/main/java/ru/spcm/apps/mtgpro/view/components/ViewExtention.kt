@@ -6,13 +6,13 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.animation.AnticipateOvershootInterpolator
 
-fun View.fadeIn(viewGroup: ViewGroup) {
-    TransitionManager.beginDelayedTransition(viewGroup, Fade())
+fun View.fadeIn() {
+    TransitionManager.beginDelayedTransition(parent as ViewGroup, Fade())
     this.visibility = View.VISIBLE
 }
 
-fun View.fadeOut(viewGroup: ViewGroup) {
-    TransitionManager.beginDelayedTransition(viewGroup, Fade())
+fun View.fadeOut() {
+    TransitionManager.beginDelayedTransition(parent as ViewGroup, Fade())
     this.visibility = View.GONE
 }
 

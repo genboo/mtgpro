@@ -88,8 +88,8 @@ class SpoilersFragment : BaseFragment() {
     }
 
     private fun showContent() {
-        progressBlock.fadeOut(progressBlock.parent as ViewGroup)
-        list.fadeIn(list.parent as ViewGroup)
+        progressBlock.fadeOut()
+        list.fadeIn()
     }
 
     override fun inject() {
