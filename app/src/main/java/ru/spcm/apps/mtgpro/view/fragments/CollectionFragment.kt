@@ -3,9 +3,7 @@ package ru.spcm.apps.mtgpro.view.fragments
 import android.arch.lifecycle.Observer
 import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import kotlinx.android.synthetic.main.fragment_collection.*
 import ru.spcm.apps.mtgpro.R
 import ru.spcm.apps.mtgpro.view.adapter.CardsListAdapter
@@ -17,6 +15,7 @@ class CollectionFragment : BaseFragment() {
                               savedInstanceState: Bundle?): View? {
         val view = inflater.inflate(R.layout.fragment_collection, container, false)
         initFragment()
+        setHasOptionsMenu(true)
         return view
     }
 
@@ -31,6 +30,18 @@ class CollectionFragment : BaseFragment() {
 
         val viewModel = getViewModel(this, CollectionViewModel::class.java)
         viewModel.allCards.observe(this, Observer { adapter.submitList(it) })
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        if (item.itemId == R.id.nav_filter) {
+
+        }
+        return super.onOptionsItemSelected(item)
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        super.onCreateOptionsMenu(menu, inflater)
+        inflater.inflate(R.menu.collection_menu, menu)
     }
 
     override fun inject() {
