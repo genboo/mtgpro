@@ -1,9 +1,6 @@
 package ru.spcm.apps.mtgpro.model.dto
 
-import android.arch.persistence.room.ColumnInfo
-import android.arch.persistence.room.Entity
-import android.arch.persistence.room.Index
-import android.arch.persistence.room.PrimaryKey
+import android.arch.persistence.room.*
 
 /**
  * Created by gen on 29.06.2018.
@@ -18,5 +15,6 @@ data class CacheCard(@ColumnInfo(name = "card_id")
     @PrimaryKey(autoGenerate = true)
     var id: Long = 0
 
-
+    @Ignore
+    constructor() :this("", "")
 }

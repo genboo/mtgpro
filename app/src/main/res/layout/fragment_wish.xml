@@ -1,15 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.design.widget.CoordinatorLayout
+    android:id="@+id/contentBlock"
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/contentBlock"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
     <include
         layout="@layout/layout_app_bar_main"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"/>
 
     <FrameLayout
         android:id="@+id/main"
@@ -23,9 +24,9 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:clipToPadding="false"
-            android:paddingBottom="8dp"
+            android:paddingBottom="?android:attr/actionBarSize"
             android:paddingTop="?android:attr/actionBarSize"
-            tools:listitem="@layout/list_item_card" />
+            tools:listitem="@layout/list_item_card"/>
 
         <ru.spcm.apps.mtgpro.view.components.ExpandableLinearLayout
             android:id="@+id/filterBlock"
@@ -51,7 +52,7 @@
                     android:layout_height="wrap_content"
                     android:text="@string/filters_sets"
                     app:layout_constraintLeft_toLeftOf="parent"
-                    app:layout_constraintRight_toLeftOf="@+id/filterArrow" />
+                    app:layout_constraintRight_toLeftOf="@+id/filterArrow"/>
 
                 <TextView
                     android:id="@+id/filterValues"
@@ -63,7 +64,7 @@
                     app:layout_constraintLeft_toLeftOf="parent"
                     app:layout_constraintRight_toLeftOf="@+id/filterArrow"
                     app:layout_constraintTop_toBottomOf="@+id/filterTitle"
-                    tools:text="Amonkhet, Kaladesh" />
+                    tools:text="Amonkhet, Kaladesh"/>
 
                 <ImageView
                     android:id="@+id/filterArrow"
@@ -75,7 +76,7 @@
                     android:src="@drawable/ic_keyboard_arrow_down"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintRight_toRightOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
+                    app:layout_constraintTop_toTopOf="parent"/>
             </android.support.constraint.ConstraintLayout>
 
             <ScrollView

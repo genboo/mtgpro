@@ -5,8 +5,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:theme="@style/AppTheme.Main.ActionBar"
-    app:layout_behavior="ru.spcm.apps.mtgpro.view.components.FixAppBarLayoutBehavior">
+    android:theme="@style/AppTheme.Main.ActionBar">
 
     <android.support.v7.widget.Toolbar
         android:id="@+id/toolbar"
@@ -14,6 +13,7 @@
         android:layout_height="?android:attr/actionBarSize"
         android:background="@android:color/white"
         android:theme="@style/AppTheme.Main.ActionBar"
+        app:layout_scrollFlags="scroll|enterAlways"
         app:popupTheme="@style/ThemeOverlay.AppCompat.Light"/>
 
 </android.support.design.widget.AppBarLayout>

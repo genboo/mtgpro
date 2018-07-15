@@ -14,7 +14,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
 
-    <ru.spcm.apps.mtgpro.view.components.FixedNestedScrollView
+    <android.support.v4.widget.NestedScrollView
         android:id="@+id/main"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -23,6 +23,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:paddingBottom="?android:attr/actionBarSize"
             android:orientation="vertical">
 
             <android.support.v7.widget.CardView
@@ -84,6 +85,6 @@
             </android.support.v7.widget.CardView>
 
         </LinearLayout>
-    </ru.spcm.apps.mtgpro.view.components.FixedNestedScrollView>
+    </android.support.v4.widget.NestedScrollView>
 
 </android.support.design.widget.CoordinatorLayout>

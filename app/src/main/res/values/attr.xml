@@ -1,26 +1,31 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <attr name="animation_speed" format="integer" />
+    <attr name="animation_speed" format="integer"/>
 
     <declare-styleable name="LibraryStateView">
-        <attr name="color" format="color" />
-        <attr name="colorCreatures" format="color" />
-        <attr name="manaGraphMargin" format="dimension" />
-        <attr name="manaColWidth" format="dimension" />
-        <attr name="colorGraphStrokeWidth" format="dimension" />
-        <attr name="colorGraphSize" format="dimension" />
+        <attr name="color" format="color"/>
+        <attr name="colorCreatures" format="color"/>
+        <attr name="manaGraphMargin" format="dimension"/>
+        <attr name="manaColWidth" format="dimension"/>
+        <attr name="colorGraphStrokeWidth" format="dimension"/>
+        <attr name="colorGraphSize" format="dimension"/>
     </declare-styleable>
 
     <declare-styleable name="ExpandableTextView">
-        <attr name="animation_speed" />
+        <attr name="animation_speed"/>
     </declare-styleable>
 
     <declare-styleable name="NumberCounterView">
-        <attr name="text_size" format="dimension"  />
-        <attr name="size" format="dimension"  />
-        <attr name="counter_size" format="dimension"  />
-        <attr name="default_count" format="integer"  />
-        <attr name="icon_plus" format="integer"  />
-        <attr name="icon_minus" format="integer"  />
+        <attr name="text_size" format="dimension"/>
+        <attr name="size" format="dimension"/>
+        <attr name="counter_size" format="dimension"/>
+        <attr name="default_count" format="integer"/>
+        <attr name="icon_plus" format="integer"/>
+        <attr name="icon_minus" format="integer"/>
+    </declare-styleable>
+
+    <declare-styleable name="BottomView">
+        <attr name="menu_resource" format="integer"/>
+        <attr name="show_text" format="boolean"/>
     </declare-styleable>
 </resources>

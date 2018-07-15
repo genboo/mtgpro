@@ -1,15 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.design.widget.CoordinatorLayout
+    android:id="@+id/contentBlock"
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/contentBlock"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
     <include
         layout="@layout/layout_app_bar_main"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"/>
 
     <LinearLayout
         android:id="@+id/main"
@@ -23,7 +24,9 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="@color/colorBackgroundMain"
-            tools:listitem="@layout/list_item_card" />
+            android:clipToPadding="false"
+            android:paddingBottom="?android:attr/actionBarSize"
+            tools:listitem="@layout/list_item_card"/>
 
     </LinearLayout>
 
