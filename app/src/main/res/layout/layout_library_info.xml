@@ -9,7 +9,7 @@
     <ru.spcm.apps.mtgpro.view.components.LibraryStateView
         android:id="@+id/libraryState"
         android:layout_width="match_parent"
-        android:layout_height="140dp"
+        android:layout_height="150dp"
         android:paddingBottom="8dp"
         android:paddingEnd="32dp"
         android:paddingStart="32dp"

@@ -108,7 +108,7 @@ class LibraryStateView(context: Context, attrs: AttributeSet) : View(context, at
         mColorPaint.color = mMainColor
         mColorPaint.strokeWidth = mColorGraphStrokeWidth * 1.3f
         canvas.drawCircle(width - paddingRight - mColorGraphSize - mColorGraphStrokeWidth,
-                height / 2f - paddingBottom, mColorGraphSize, mColorPaint)
+                height / 2f + paddingTop / 2 - paddingBottom, mColorGraphSize, mColorPaint)
 
         mColorPaint.strokeWidth = mColorGraphStrokeWidth
         for (state in mColorState) {
@@ -116,9 +116,9 @@ class LibraryStateView(context: Context, attrs: AttributeSet) : View(context, at
             mColorPaint.color = getStateColor(state)
             val rect = RectF(
                     width - paddingRight - 2 * mColorGraphSize - mColorGraphStrokeWidth,
-                    height / 2f - mColorGraphSize - paddingBottom,
+                    height / 2f - mColorGraphSize + paddingTop / 2 - paddingBottom,
                     width - paddingRight - mColorGraphStrokeWidth,
-                    height / 2f + mColorGraphSize - paddingBottom)
+                    height / 2f + mColorGraphSize + paddingTop / 2 - paddingBottom)
             canvas.drawArc(rect, angle, percent * 360f, false, mColorPaint)
             mColorPaint.color = mMainColor
             angle += percent * 360f
