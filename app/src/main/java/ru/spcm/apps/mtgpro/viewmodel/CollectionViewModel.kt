@@ -6,6 +6,7 @@ import android.arch.paging.LivePagedListBuilder
 import android.arch.paging.PagedList
 import ru.spcm.apps.mtgpro.model.dto.Card
 import ru.spcm.apps.mtgpro.repository.CollectionRepo
+import ru.spcm.apps.mtgpro.view.adapter.FilterItem
 
 import javax.inject.Inject
 
@@ -21,5 +22,7 @@ internal constructor(collectionRepo: CollectionRepo) : ViewModel() {
     val allCards: LiveData<PagedList<Card>> = LivePagedListBuilder(
             collectionRepo.getAllCards(), 20
     ).build()
+
+    val filters: LiveData<List<FilterItem>> = collectionRepo.getFilters()
 
 }

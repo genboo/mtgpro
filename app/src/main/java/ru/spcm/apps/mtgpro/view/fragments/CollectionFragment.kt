@@ -5,8 +5,13 @@ import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
 import android.view.*
 import kotlinx.android.synthetic.main.fragment_collection.*
+import kotlinx.android.synthetic.main.layout_filter.*
 import ru.spcm.apps.mtgpro.R
 import ru.spcm.apps.mtgpro.view.adapter.CardsListAdapter
+import ru.spcm.apps.mtgpro.view.adapter.ExpandableListAdapter
+import ru.spcm.apps.mtgpro.view.adapter.FilterItem
+import ru.spcm.apps.mtgpro.view.components.slideIn
+import ru.spcm.apps.mtgpro.view.components.slideOut
 import ru.spcm.apps.mtgpro.viewmodel.CollectionViewModel
 
 class CollectionFragment : BaseFragment() {
@@ -30,11 +35,25 @@ class CollectionFragment : BaseFragment() {
 
         val viewModel = getViewModel(this, CollectionViewModel::class.java)
         viewModel.allCards.observe(this, Observer { adapter.submitList(it) })
+        viewModel.filters.observe(this, Observer { observeFilters(it) })
+
+        filterApply.setOnClickListener {
+            filterBlock.slideOut(Gravity.TOP)
+            toggleAppBar(true)
+        }
+    }
+
+    private fun observeFilters(data: List<FilterItem>?) {
+        if(data != null){
+            val adapter = ExpandableListAdapter(requireActivity(), data)
+            filterList.setAdapter(adapter)
+        }
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         if (item.itemId == R.id.nav_filter) {
-
+            filterBlock.slideIn(Gravity.TOP)
+            toggleAppBar(false)
         }
         return super.onOptionsItemSelected(item)
     }

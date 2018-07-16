@@ -80,10 +80,16 @@ abstract class BaseFragment : Fragment() {
         val bottomMenu = (activity as MainActivity).getBottomMenu()
         if (visible) {
             bottomMenu.visibility = View.VISIBLE
-            bottomMenu.translationY = 0f
         } else {
             bottomMenu.visibility = View.GONE
-            bottomMenu.translationY = bottomMenu.height.toFloat()
+        }
+    }
+
+    fun toggleAppBar(visible: Boolean){
+        if(visible){
+            appBar.visibility = View.VISIBLE
+        }else{
+            appBar.visibility = View.GONE
         }
     }
 
