@@ -9,8 +9,6 @@ import android.widget.TextView
 import ru.spcm.apps.mtgpro.R
 import ru.spcm.apps.mtgpro.model.dto.FilterItem
 import ru.spcm.apps.mtgpro.model.dto.FilterOption
-import java.util.*
-import kotlin.collections.HashMap
 
 class ExpandableListAdapter(private val activity: Activity,
                             private val items: List<FilterItem>) : BaseExpandableListAdapter() {
