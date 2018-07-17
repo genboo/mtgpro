@@ -37,8 +37,9 @@ class CollectionFragment : BaseFragment() {
         viewModel.cards.observe(this, Observer { adapter.submitList(it) })
         viewModel.filters.observe(this, Observer { observeFilters(it) })
 
-        viewModel.loadCards(viewModel.selectedFilter)
-
+        if(viewModel.cards.value == null) {
+            viewModel.loadCards(viewModel.selectedFilter)
+        }
         filterApply.setOnClickListener {
             filterBlock.slideOut(Gravity.TOP)
             toggleAppBar(true)
