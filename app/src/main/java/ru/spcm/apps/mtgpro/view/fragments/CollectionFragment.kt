@@ -1,14 +1,12 @@
 package ru.spcm.apps.mtgpro.view.fragments
 
 import android.arch.lifecycle.Observer
-import android.arch.paging.PagedList
 import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
 import android.view.*
 import kotlinx.android.synthetic.main.fragment_collection.*
 import kotlinx.android.synthetic.main.layout_filter.*
 import ru.spcm.apps.mtgpro.R
-import ru.spcm.apps.mtgpro.model.dto.Card
 import ru.spcm.apps.mtgpro.view.adapter.CardsListAdapter
 import ru.spcm.apps.mtgpro.view.adapter.ExpandableListAdapter
 import ru.spcm.apps.mtgpro.model.dto.FilterItem
