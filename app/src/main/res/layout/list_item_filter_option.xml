@@ -3,16 +3,17 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical"
-    android:paddingBottom="8dp"
-    android:paddingEnd="32dp"
-    android:paddingStart="32dp"
-    android:paddingTop="8dp">
+    android:orientation="vertical">
 
     <CheckBox
         android:id="@+id/filterCheckbox"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        android:paddingBottom="8dp"
+        android:paddingEnd="16dp"
+        android:paddingStart="16dp"
+        android:paddingTop="8dp"
         tools:text="Элемент" />
 
 </LinearLayout>

@@ -1,15 +1,17 @@
 package ru.spcm.apps.mtgpro.view.fragments
 
 import android.arch.lifecycle.Observer
+import android.arch.paging.PagedList
 import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
 import android.view.*
 import kotlinx.android.synthetic.main.fragment_collection.*
 import kotlinx.android.synthetic.main.layout_filter.*
 import ru.spcm.apps.mtgpro.R
+import ru.spcm.apps.mtgpro.model.dto.Card
 import ru.spcm.apps.mtgpro.view.adapter.CardsListAdapter
 import ru.spcm.apps.mtgpro.view.adapter.ExpandableListAdapter
-import ru.spcm.apps.mtgpro.view.adapter.FilterItem
+import ru.spcm.apps.mtgpro.model.dto.FilterItem
 import ru.spcm.apps.mtgpro.view.components.slideIn
 import ru.spcm.apps.mtgpro.view.components.slideOut
 import ru.spcm.apps.mtgpro.viewmodel.CollectionViewModel
@@ -34,12 +36,17 @@ class CollectionFragment : BaseFragment() {
         list.adapter = adapter
 
         val viewModel = getViewModel(this, CollectionViewModel::class.java)
-        viewModel.allCards.observe(this, Observer { adapter.submitList(it) })
+        viewModel.cards.observe(this, Observer { adapter.submitList(it) })
         viewModel.filters.observe(this, Observer { observeFilters(it) })
+
+        viewModel.loadCards(viewModel.selectedFilter)
 
         filterApply.setOnClickListener {
             filterBlock.slideOut(Gravity.TOP)
             toggleAppBar(true)
+            toggleBottomMenu(true)
+            adapter.submitList(null)
+            viewModel.loadCards((filterList.expandableListAdapter as ExpandableListAdapter).getSelectedItems())
         }
     }
 
@@ -54,6 +61,7 @@ class CollectionFragment : BaseFragment() {
         if (item.itemId == R.id.nav_filter) {
             filterBlock.slideIn(Gravity.TOP)
             toggleAppBar(false)
+            toggleBottomMenu(false)
         }
         return super.onOptionsItemSelected(item)
     }

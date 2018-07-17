@@ -45,11 +45,24 @@ interface CardDao {
     @Query("SELECT c.* FROM Card c WHERE c.multiverseId = :mid")
     fun getCards(mid: String): LiveData<List<Card>>
 
-    @Query("SELECT c.*, sc.count, sc.parent FROM SavedCard sc LEFT JOIN Card c ON c.id = sc.id ORDER BY c.setTitle, c.numberFormatted LIMIT :limit OFFSET :offset")
-    fun getAllCards(offset: Int, limit: Int): LiveData<List<Card>>
-
     @Query("SELECT c.id, c.numberFormatted, c.nameOrigin, c.setTitle, c.parent, c.imageUrl, c.name, c.rarity, c.multiverseId, c.number, c.`set`, c.type, c.cmc, c.text, c.flavor, c.manaCost, c.rulesText, sc.count FROM SavedCard sc LEFT JOIN Card c ON c.id = sc.id ORDER BY c.setTitle, c.numberFormatted")
     fun getAllCards(): DataSource.Factory<Int, Card>
+
+    @Query("SELECT c.id, c.numberFormatted, c.nameOrigin, c.setTitle, c.parent, c.imageUrl, c.name, c.rarity, c.multiverseId, c.number, c.`set`, c.type, c.cmc, c.text, c.flavor, c.manaCost, c.rulesText, sc.count FROM SavedCard sc " +
+            "LEFT JOIN Card c ON c.id = sc.id " +
+            "LEFT JOIN Type type ON c.id = type.card_id " +
+            "LEFT JOIN Subtype sub ON c.id = sub.card_id " +
+            "LEFT JOIN Color col ON col.card_id = c.id " +
+            "WHERE " +
+            "    (sub.subtype IN (:subtypes)  OR (sub.subtype is NULL AND (type.type NOT IN ('Instant', 'Enchantment', 'Sorcery') OR type.type IN (:types)))) " +
+            "    AND type.type IN (:types)" +
+            "    AND (col.color IN (:colors) OR col.color is null) " +
+            "    AND c.rarity IN (:rarities) " +
+            "    AND c.`set` IN (:sets) " +
+            "GROUP BY c.id " +
+            "ORDER BY c.setTitle, c.numberFormatted")
+    fun getFilteredCards(types: Array<String>, subtypes: Array<String>, colors: Array<String>,
+                         rarities: Array<String>, sets: Array<String>): DataSource.Factory<Int, Card>
 
     @Query("SELECT * FROM WishedCard c WHERE c.id = :id")
     fun getWish(id: String): LiveData<WishedCard>
@@ -70,8 +83,6 @@ interface CardDao {
 
     @Query("UPDATE SavedCard SET parent = :parent WHERE id = :id")
     fun updateLink(id: String, parent: String)
-
-
 
 
 }

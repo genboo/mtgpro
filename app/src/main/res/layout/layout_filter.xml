@@ -5,7 +5,6 @@
     android:id="@+id/filterBlock"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_marginBottom="?android:attr/actionBarSize"
     android:visibility="gone"
     tools:visibility="visible">
 
@@ -15,6 +14,7 @@
         android:layout_height="0dp"
         android:background="@android:color/white"
         android:dividerHeight="0dp"
+        android:divider="@null"
         app:layout_constraintBottom_toTopOf="@+id/filterApply"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"

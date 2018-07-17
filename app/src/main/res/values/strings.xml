@@ -41,4 +41,8 @@
 
     <string name="backup_text">Сохранить базу данных карт на носителе.</string>
     <string name="restore_text">Восстановить базу данных карт с носителя. Все существующие данные будут удалены.</string>
+
+
+    <string name="tag_parent">parent</string>
+    <string name="tag_id">id</string>
 </resources>
