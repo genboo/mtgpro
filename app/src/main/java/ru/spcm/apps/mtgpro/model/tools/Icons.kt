@@ -223,6 +223,7 @@ object Icons {
 
         //Commander
         list["CMA"] = R.drawable.ic_cma
+        list["C18"] = R.drawable.ic_c18
         list["C17"] = R.drawable.ic_c17
         list["C16"] = R.drawable.ic_c16
         list["C15"] = R.drawable.ic_c15
