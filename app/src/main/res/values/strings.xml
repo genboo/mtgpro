@@ -23,6 +23,7 @@
     <string name="action_restore_backup">Восстановить</string>
     <string name="action_copy_to_clip">Скопировано в буфер обмена</string>
     <string name="action_apply">Применить</string>
+    <string name="action_seconds_side_not_found">Вторая сторона не найдена</string>
 
     <string name="rules">Правила</string>
     <string name="text">Текст</string>

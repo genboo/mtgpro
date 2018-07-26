@@ -11,7 +11,6 @@ import android.support.v4.content.ContextCompat
 import android.support.v7.app.AlertDialog
 import android.support.v7.widget.LinearLayoutManager
 import android.view.*
-import android.widget.EditText
 import android.widget.Spinner
 import android.widget.TextView
 import kotlinx.android.synthetic.main.fragment_card.*
@@ -35,8 +34,8 @@ class CardFragment : BaseFragment() {
     lateinit var card: Card
 
     private lateinit var addDialog: AlertDialog
-    private lateinit var addChildDialog: AlertDialog
     private lateinit var librarySelector: Spinner
+    private var cardLoaded = false
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
@@ -88,7 +87,6 @@ class CardFragment : BaseFragment() {
         }
 
         initAddToLibraryDialog(viewModel)
-        initAddChildDialog(viewModel)
     }
 
 
@@ -121,6 +119,7 @@ class CardFragment : BaseFragment() {
             (reprints.adapter as ReprintListAdapter).setItems(firstCard.reprints)
 
             card = firstCard.card
+            cardLoaded = true
 
             if (data.size > 1) {
                 val secondCard = data[1]
@@ -174,21 +173,6 @@ class CardFragment : BaseFragment() {
         }
     }
 
-    private fun initAddChildDialog(viewModel: CardViewModel) {
-        addChildDialog = AlertDialog.Builder(requireContext())
-                .setView(layoutInflater.inflate(R.layout.dialog_add_child, mainBlock, false))
-                .setTitle("Указать вторую сторону")
-                .setNegativeButton("Отмена") { dialog, _ -> dialog.dismiss() }
-                .setPositiveButton("Ok") { _, _ ->
-                    val child = addChildDialog.findViewById<EditText>(R.id.et_card_id)
-                    if (child != null && child.text.isNotEmpty()) {
-                        viewModel.updateLink(child.text.toString(), card.id)
-                        showSnack(R.string.action_added, null)
-                    }
-                }
-                .create()
-    }
-
     private fun initAddToLibraryDialog(model: CardViewModel) {
         val dialogView = layoutInflater.inflate(R.layout.dialog_add_card, mainBlock, false)
         librarySelector = dialogView.findViewById(R.id.spn_card_library)
@@ -210,8 +194,15 @@ class CardFragment : BaseFragment() {
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        if (item.itemId == R.id.nav_link) {
-            addChildDialog.show()
+        if (item.itemId == R.id.nav_link && cardLoaded) {
+            val viewModel = getViewModel(this, CardViewModel::class.java)
+            viewModel.findAndUpdateSecondSide(card.id).observe(this, Observer {
+                if(it != null && it){
+                    showSnack(R.string.action_added, null)
+                }else{
+                    showSnack(R.string.action_seconds_side_not_found, null)
+                }
+            })
         }
         return super.onOptionsItemSelected(item)
     }

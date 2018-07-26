@@ -101,4 +101,9 @@ internal constructor(private val cardRepo: CardRepo,
     fun addCard(item: LibraryCard) {
         librariesRepo.addCard(item)
     }
+
+
+    fun findAndUpdateSecondSide(id: String): LiveData<Boolean> {
+        return cardRepo.findAndUpdateSecondSide(id)
+    }
 }

@@ -1,8 +1,8 @@
 package ru.spcm.apps.mtgpro.repository
 
 import android.arch.lifecycle.LiveData
+import android.arch.lifecycle.MutableLiveData
 import ru.spcm.apps.mtgpro.model.db.dao.CardDao
-import ru.spcm.apps.mtgpro.model.db.dao.LibrariesDao
 import ru.spcm.apps.mtgpro.model.dto.*
 import ru.spcm.apps.mtgpro.tools.AppExecutors
 import javax.inject.Inject
@@ -41,6 +41,32 @@ constructor(private val appExecutors: AppExecutors,
 
     fun updateLink(id: String, parent: String) {
         appExecutors.diskIO().execute { cardDao.updateLink(id, parent) }
+    }
+
+    fun findAndUpdateSecondSide(id: String): LiveData<Boolean> {
+        val result = MutableLiveData<Boolean>()
+
+        appExecutors.diskIO().execute {
+            val card = cardDao.getCardById(id)
+            val numberFull = card.number
+            var wasUpdate = false
+            if (numberFull != null && numberFull.takeLast(1) == "a") {
+                val number = numberFull.substring(0, numberFull.length - 1)
+                val secondSide = cardDao.getCardBySetAndNumber(card.set, number + "b")
+                if (secondSide != null) {
+                    cardDao.updateLink(secondSide.id, card.id)
+                    wasUpdate = true
+                }
+            }
+            if (wasUpdate) {
+                result.postValue(true)
+            } else {
+                result.postValue(false)
+            }
+        }
+
+
+        return result
     }
 
 

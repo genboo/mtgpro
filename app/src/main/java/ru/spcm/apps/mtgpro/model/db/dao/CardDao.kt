@@ -84,5 +84,10 @@ interface CardDao {
     @Query("UPDATE SavedCard SET parent = :parent WHERE id = :id")
     fun updateLink(id: String, parent: String)
 
+    @Query("SELECT * FROM Card c WHERE c.id = :id")
+    fun getCardById(id: String): Card
+
+    @Query("SELECT * FROM Card c WHERE c.`set` = :set AND c.number = :number")
+    fun getCardBySetAndNumber(set: String, number: String): Card?
 
 }
