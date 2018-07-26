@@ -1,16 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.design.widget.CoordinatorLayout android:id="@+id/contentBlock"
-                                                 xmlns:android="http://schemas.android.com/apk/res/android"
-                                                 xmlns:app="http://schemas.android.com/apk/res-auto"
-                                                 xmlns:tools="http://schemas.android.com/tools"
-                                                 android:layout_width="match_parent"
-                                                 android:layout_height="match_parent"
-                                                 tools:context=".view.activities.MainActivity">
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/contentBlock"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".view.activities.MainActivity">
 
     <include
         layout="@layout/layout_app_bar_search"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content" />
 
     <FrameLayout
         android:id="@+id/main"
@@ -25,20 +25,21 @@
             android:layout_height="match_parent"
             android:clipToPadding="false"
             android:paddingBottom="?android:attr/actionBarSize"
-            tools:listitem="@layout/list_item_card"/>
+            tools:listitem="@layout/list_item_card" />
 
         <LinearLayout
             android:id="@+id/progressBlock"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:gravity="center"
+            android:gravity="center_horizontal"
             android:orientation="vertical"
+            android:paddingTop="48dp"
             android:visibility="gone"
             tools:visibility="visible">
 
             <ProgressBar
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
+                android:layout_height="wrap_content" />
         </LinearLayout>
 
         <LinearLayout
@@ -53,7 +54,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/empty_search"/>
+                android:text="@string/empty_search" />
         </LinearLayout>
 
         <LinearLayout
@@ -67,7 +68,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:padding="32dp"
-                android:text="@string/hint_search"/>
+                android:text="@string/hint_search" />
         </LinearLayout>
     </FrameLayout>
 
