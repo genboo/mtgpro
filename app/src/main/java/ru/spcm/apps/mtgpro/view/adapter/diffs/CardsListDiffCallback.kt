@@ -16,12 +16,12 @@ class CardsListDiffCallback(private val oldList: List<CardListItem>,
 
     override fun areContentsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean {
         return oldList[oldItemPosition].data?.typeSingle == newList[newItemPosition].data?.typeSingle
-                && oldList[oldItemPosition].data?.card?.count == newList[oldItemPosition].data?.card?.count
+                && oldList[oldItemPosition].data?.card?.count == newList[newItemPosition].data?.card?.count
     }
 
     override fun areItemsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean {
         return oldList[oldItemPosition].title == newList[newItemPosition].title ||
-                (oldList[oldItemPosition].data?.card?.id == newList[oldItemPosition].data?.card?.id)
+                (oldList[oldItemPosition].data?.card?.id == newList[newItemPosition].data?.card?.id)
     }
 
 }
