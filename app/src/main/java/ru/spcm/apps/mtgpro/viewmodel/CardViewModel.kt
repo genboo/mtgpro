@@ -94,10 +94,6 @@ internal constructor(private val cardRepo: CardRepo,
         cardRepo.updateWish(id, wish)
     }
 
-    fun updateLink(id: String, parent: String) {
-        cardRepo.updateLink(id, parent)
-    }
-
     fun addCard(item: LibraryCard) {
         librariesRepo.addCard(item)
     }

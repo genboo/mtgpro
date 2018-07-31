@@ -31,7 +31,7 @@ import ru.spcm.apps.mtgpro.viewmodel.CardViewModel
 
 class CardFragment : BaseFragment() {
 
-    lateinit var card: Card
+    private lateinit var card: Card
 
     private lateinit var addDialog: AlertDialog
     private lateinit var librarySelector: Spinner
@@ -73,9 +73,7 @@ class CardFragment : BaseFragment() {
             handler.postDelayed(task, 1000)
         }
 
-        addToWish.setOnClickListener {
-            viewModel.updateWish(card.id, it.tag as Boolean)
-        }
+        addToWish.setOnClickListener { viewModel.updateWish(card.id, it.tag as Boolean) }
 
         addToLibrary.setOnClickListener { addDialog.show() }
 
@@ -130,6 +128,7 @@ class CardFragment : BaseFragment() {
                         + secondCard.card.text, requireActivity())
             }
 
+            mainScroll.visibility = View.VISIBLE
         }
     }
 
@@ -197,9 +196,9 @@ class CardFragment : BaseFragment() {
         if (item.itemId == R.id.nav_link && cardLoaded) {
             val viewModel = getViewModel(this, CardViewModel::class.java)
             viewModel.findAndUpdateSecondSide(card.id).observe(this, Observer {
-                if(it != null && it){
+                if (it != null && it) {
                     showSnack(R.string.action_added, null)
-                }else{
+                } else {
                     showSnack(R.string.action_seconds_side_not_found, null)
                 }
             })

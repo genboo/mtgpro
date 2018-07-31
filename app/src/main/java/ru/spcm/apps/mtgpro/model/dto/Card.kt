@@ -118,7 +118,7 @@ data class Card(@PrimaryKey @NonNull var id: String) {
                 }
             }
         }
-        if(imageUrl == null){
+        if (imageUrl == null) {
             imageUrl = ""
         }
     }
