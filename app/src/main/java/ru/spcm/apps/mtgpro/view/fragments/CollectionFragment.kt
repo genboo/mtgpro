@@ -2,6 +2,7 @@ package ru.spcm.apps.mtgpro.view.fragments
 
 import android.arch.lifecycle.Observer
 import android.os.Bundle
+import android.support.v4.view.GravityCompat
 import android.support.v7.widget.LinearLayoutManager
 import android.view.*
 import kotlinx.android.synthetic.main.fragment_collection.*
@@ -10,8 +11,6 @@ import ru.spcm.apps.mtgpro.R
 import ru.spcm.apps.mtgpro.view.adapter.CardsListAdapter
 import ru.spcm.apps.mtgpro.view.adapter.ExpandableListAdapter
 import ru.spcm.apps.mtgpro.model.dto.FilterItem
-import ru.spcm.apps.mtgpro.view.components.slideIn
-import ru.spcm.apps.mtgpro.view.components.slideOut
 import ru.spcm.apps.mtgpro.viewmodel.CollectionViewModel
 
 class CollectionFragment : BaseFragment() {
@@ -40,10 +39,9 @@ class CollectionFragment : BaseFragment() {
         if(viewModel.cards.value == null) {
             viewModel.loadCards(viewModel.selectedFilter)
         }
+
         filterApply.setOnClickListener {
-            filterBlock.slideOut(Gravity.TOP)
-            toggleAppBar(true)
-            toggleBottomMenu(true)
+            drawerLayout.closeDrawer(GravityCompat.END)
             adapter.submitList(null)
             viewModel.loadCards((filterList.expandableListAdapter as ExpandableListAdapter).getSelectedItems())
         }
@@ -58,9 +56,11 @@ class CollectionFragment : BaseFragment() {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         if (item.itemId == R.id.nav_filter) {
-            filterBlock.slideIn(Gravity.TOP)
-            toggleAppBar(false)
-            toggleBottomMenu(false)
+            if (drawerLayout.isDrawerOpen(GravityCompat.END)) {
+                drawerLayout.closeDrawer(GravityCompat.END)
+            } else {
+                drawerLayout.openDrawer(GravityCompat.END)
+            }
         }
         return super.onOptionsItemSelected(item)
     }

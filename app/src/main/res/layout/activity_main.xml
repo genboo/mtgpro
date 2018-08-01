@@ -6,11 +6,11 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
-    tools:context=".view.activities.MainActivity"
-    tools:openDrawer="start">
+    tools:context=".view.activities.MainActivity">
 
     <FrameLayout
         android:id="@+id/content"
+        android:fitsSystemWindows="true"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 
