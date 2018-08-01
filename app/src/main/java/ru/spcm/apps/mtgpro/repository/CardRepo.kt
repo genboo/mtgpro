@@ -39,10 +39,6 @@ constructor(private val appExecutors: AppExecutors,
         }
     }
 
-    fun updateLink(id: String, parent: String) {
-        appExecutors.diskIO().execute { cardDao.updateLink(id, parent) }
-    }
-
     fun findAndUpdateSecondSide(id: String): LiveData<Boolean> {
         val result = MutableLiveData<Boolean>()
 
@@ -58,13 +54,8 @@ constructor(private val appExecutors: AppExecutors,
                     wasUpdate = true
                 }
             }
-            if (wasUpdate) {
-                result.postValue(true)
-            } else {
-                result.postValue(false)
-            }
+            result.postValue(wasUpdate)
         }
-
 
         return result
     }
