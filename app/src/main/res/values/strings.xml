@@ -11,6 +11,7 @@
     <string name="menu_spoilers">Спойлеры</string>
     <string name="menu_gallery">Галлерея</string>
     <string name="menu_filter">Фильтр</string>
+    <string name="menu_toggle">Сетка</string>
     <string name="menu_settings">Настройки</string>
     <string name="menu_link">Связать</string>
 

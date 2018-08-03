@@ -23,6 +23,7 @@ internal constructor(private val spoilersRepo: SpoilersRepo) : ViewModel() {
 
     private val switcher: MutableLiveData<Params> = MutableLiveData()
     private var cards: LiveData<Resource<List<Card>>>
+    var spanCount = 3
 
     init {
         cards = Transformations.switchMap(switcher) {

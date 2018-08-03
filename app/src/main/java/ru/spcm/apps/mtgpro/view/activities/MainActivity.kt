@@ -13,12 +13,18 @@ import ru.spcm.apps.mtgpro.R
 import ru.spcm.apps.mtgpro.di.components.AppComponent
 import ru.spcm.apps.mtgpro.view.components.BottomNavigationViewHelper
 import ru.spcm.apps.mtgpro.view.components.Navigator
+import ru.terrakok.cicerone.NavigatorHolder
+import javax.inject.Inject
+
 
 class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemSelectedListener {
 
     private lateinit var settingsItemMenu: MenuItem
 
     private var component: AppComponent? = null
+
+    @Inject
+    lateinit var navigatorHolder: NavigatorHolder
 
     val navigator by lazy { Navigator(this, supportFragmentManager, R.id.content) }
 
@@ -77,6 +83,16 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
             R.id.nav_search -> navigator.goToSearch()
         }
         return true
+    }
+
+    override fun onResume() {
+        super.onResume()
+        navigatorHolder.setNavigator(navigator)
+    }
+
+    override fun onPause() {
+        navigatorHolder.removeNavigator()
+        super.onPause()
     }
 
 }

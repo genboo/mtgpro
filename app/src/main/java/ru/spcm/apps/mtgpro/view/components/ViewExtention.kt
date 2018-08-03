@@ -34,6 +34,33 @@ fun View.expand(listener: Transition.TransitionListener? = null) {
     TransitionManager.beginDelayedTransition(parent as ViewGroup, transition)
 }
 
+fun View.blink(){
+    val view = this
+    val fade = Fade()
+    fade.addListener( object: Transition.TransitionListener {
+
+        override fun onTransitionEnd(transition: Transition) {
+            transition.removeListener(this)
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                TransitionManager.endTransitions(parent as ViewGroup)
+            }
+            TransitionManager.beginDelayedTransition(parent as ViewGroup, Fade())
+            view.visibility = View.VISIBLE
+        }
+
+        override fun onTransitionStart(transition: Transition) {}
+
+        override fun onTransitionResume(transition: Transition) {}
+
+        override fun onTransitionPause(transition: Transition) {}
+
+        override fun onTransitionCancel(transition: Transition) {}
+
+    })
+    TransitionManager.beginDelayedTransition(parent as ViewGroup, fade)
+    this.visibility = View.GONE
+}
+
 fun ViewGroup.toggleSlideChilds(visibility: Int, edge: Int, vararg views: View) {
     val transition = TransitionSet()
     var delay: Long = 0

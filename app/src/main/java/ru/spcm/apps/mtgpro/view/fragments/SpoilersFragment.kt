@@ -3,16 +3,13 @@ package ru.spcm.apps.mtgpro.view.fragments
 import android.arch.lifecycle.Observer
 import android.os.Bundle
 import android.support.v7.widget.GridLayoutManager
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import kotlinx.android.synthetic.main.fragment_spoilers.*
 import ru.spcm.apps.mtgpro.R
 import ru.spcm.apps.mtgpro.model.dto.Card
 import ru.spcm.apps.mtgpro.model.tools.Resource
 import ru.spcm.apps.mtgpro.model.tools.Status
 import ru.spcm.apps.mtgpro.repository.bounds.SpoilersBound
-import ru.spcm.apps.mtgpro.view.adapter.RecyclerViewLoaderScrollListener
 import ru.spcm.apps.mtgpro.view.adapter.RecyclerViewScrollListener
 import ru.spcm.apps.mtgpro.view.adapter.SpoilersListAdapter
 import ru.spcm.apps.mtgpro.view.components.fadeIn
@@ -30,11 +27,12 @@ class SpoilersFragment : BaseFragment() {
                               savedInstanceState: Bundle?): View? {
         val view = inflater.inflate(R.layout.fragment_spoilers, container, false)
         initFragment()
+        setHasOptionsMenu(true)
         return view
     }
 
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
+    override fun onActivityCreated(state: Bundle?) {
+        super.onActivityCreated(state)
         updateToolbar()
         val set = args.getString(ARG_SET)
 
@@ -42,7 +40,7 @@ class SpoilersFragment : BaseFragment() {
         viewModel.getSpoilers().observe(this, Observer { observeSpoilers(it) })
 
         val adapter = SpoilersListAdapter(null)
-        val layoutManager = GridLayoutManager(context, 3)
+        val layoutManager = GridLayoutManager(context, viewModel.spanCount)
         list.layoutManager = layoutManager
         list.adapter = adapter
         list.clearOnScrollListeners()
@@ -51,7 +49,7 @@ class SpoilersFragment : BaseFragment() {
 
         showProgressBar()
         list.postDelayed({
-            if(adapter.getSize() == 0) {
+            if (adapter.getSize() == 0) {
                 viewModel.loadSpoilers(set, SpoilersBound.PAGES_SIZE)
             }
         }, 200)
@@ -92,6 +90,31 @@ class SpoilersFragment : BaseFragment() {
         list.fadeIn()
     }
 
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        if (item.itemId == R.id.nav_toggle_list) {
+            val layoutManager = list.layoutManager as GridLayoutManager
+            val spanCount = when (layoutManager.spanCount) {
+                3 -> 2
+                2 -> 1
+                else -> 3
+            }
+            layoutManager.spanCount = spanCount
+            val viewModel = getViewModel(this, SpoilersViewModel::class.java)
+            viewModel.spanCount = spanCount
+        }
+        return super.onOptionsItemSelected(item)
+    }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        outState.putInt("SPAN_COUNT", (list.layoutManager as GridLayoutManager).spanCount)
+        super.onSaveInstanceState(outState)
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        super.onCreateOptionsMenu(menu, inflater)
+        inflater.inflate(R.menu.spoilers_menu, menu)
+    }
+
     override fun inject() {
         component?.inject(this)
     }
@@ -102,6 +125,7 @@ class SpoilersFragment : BaseFragment() {
 
     companion object {
 
+        private const val SPAN_COUNT = "span_count"
         private const val ARG_SET = "set"
         private const val ARG_NAME = "name"
 

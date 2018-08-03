@@ -161,9 +161,9 @@ class CardFragment : BaseFragment() {
                 title.text = it.name
                 val item = LibraryCard(it.id, "")
                 val updateCardTask = Runnable { viewModel.updateLibraryCard(item) }
-                number.setOnChangeListener {
+                number.setOnChangeListener { count ->
                     item.cardId = card.id
-                    item.count = it
+                    item.count = count
                     handler.removeCallbacks(updateCardTask)
                     handler.postDelayed(updateCardTask, 1000)
                 }

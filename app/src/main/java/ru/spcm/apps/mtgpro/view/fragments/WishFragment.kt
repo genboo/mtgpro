@@ -60,7 +60,7 @@ class WishFragment : BaseFragment() {
                 checkBox.text = it.setTitle
                 checkBox.tag = it.set
                 itemsBlock.addView(checkBox)
-                checkBox.setOnClickListener {
+                checkBox.setOnClickListener { _ ->
                     val selected = getSelectedFilters()
                     viewModel.loadWishedCards(selected)
                     setSelectedFiltersTitle(selected)
