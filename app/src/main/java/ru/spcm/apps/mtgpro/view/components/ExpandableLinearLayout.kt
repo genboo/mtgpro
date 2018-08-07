@@ -34,7 +34,7 @@ class ExpandableLinearLayout(context: Context, attrs: AttributeSet) : LinearLayo
 
     init {
         val metrics = resources.displayMetrics
-        maxHeight = 250 * (metrics.densityDpi / DisplayMetrics.DENSITY_DEFAULT)
+        maxHeight = 350 * (metrics.densityDpi / DisplayMetrics.DENSITY_DEFAULT)
     }
 
     fun toggle() {

@@ -17,8 +17,7 @@ import ru.spcm.apps.mtgpro.view.adapter.diffs.SetsDiffCallback
 class SetsListAdapter(items: List<Set>?) : RecyclerViewAdapter<Set, SetHolder>(items) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SetHolder {
-        val view = LayoutInflater.from(parent.context).inflate(R.layout.list_item_set, parent, false)
-        val holder = SetHolder(view)
+        val holder = SetHolder(LayoutInflater.from(parent.context).inflate(R.layout.list_item_set, parent, false))
         holder.setListener(View.OnClickListener { v -> onItemClick(v, holder.adapterPosition) })
         return holder
     }
