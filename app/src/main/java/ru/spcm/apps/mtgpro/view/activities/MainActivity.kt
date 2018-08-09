@@ -42,6 +42,7 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
             bottomMenu.selectedItemId = R.id.nav_collection
         }
 
+        window.setBackgroundDrawable(null)
         BottomNavigationViewHelper.removeShiftMode(bottomMenu)
     }
 
