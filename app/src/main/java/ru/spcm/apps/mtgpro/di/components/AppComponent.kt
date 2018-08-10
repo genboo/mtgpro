@@ -12,13 +12,19 @@ import ru.spcm.apps.mtgpro.view.activities.MainActivity
 import ru.spcm.apps.mtgpro.di.modules.DbModule
 import ru.spcm.apps.mtgpro.di.modules.NavigationModule
 import ru.spcm.apps.mtgpro.di.modules.RetrofitModule
+import ru.spcm.apps.mtgpro.di.modules.ScryRetrofitModule
 import ru.spcm.apps.mtgpro.view.fragments.*
 
 /**
  * Компонент di
  * Created by gen on 28.06.2018.
  */
-@Component(modules = [ViewModelModule::class, RetrofitModule::class, DbModule::class, NavigationModule::class])
+@Component(modules = [
+    ViewModelModule::class,
+    RetrofitModule::class,
+    ScryRetrofitModule::class,
+    DbModule::class,
+    NavigationModule::class])
 @Singleton
 interface AppComponent {
 

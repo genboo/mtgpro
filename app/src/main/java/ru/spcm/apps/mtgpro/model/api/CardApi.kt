@@ -27,6 +27,6 @@ interface CardApi {
     fun getCardsBySet(@Query("set") set: String, @Query("page") page: Int, @Query("pageSize") pages: Int): LiveData<ApiResponse<List<Card>>>
 
     @GET("/v1/cards")
-    fun getCardsByMid(@Query("multiverseid") set: String): LiveData<ApiResponse<List<Card>>>
+    fun getCardsByMid(@Query("multiverseid") id: String): LiveData<ApiResponse<List<Card>>>
 
 }

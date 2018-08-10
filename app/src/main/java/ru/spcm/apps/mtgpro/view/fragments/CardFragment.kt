@@ -16,6 +16,7 @@ import android.widget.TextView
 import kotlinx.android.synthetic.main.fragment_card.*
 import ru.spcm.apps.mtgpro.R
 import ru.spcm.apps.mtgpro.model.dto.*
+import ru.spcm.apps.mtgpro.tools.Logger
 import ru.spcm.apps.mtgpro.tools.OracleReplacer
 import ru.spcm.apps.mtgpro.view.adapter.LibrarySelectAdapter
 import ru.spcm.apps.mtgpro.view.adapter.ReprintListAdapter
@@ -82,6 +83,12 @@ class CardFragment : BaseFragment() {
             val clip = ClipData.newPlainText("multivers id", cardName.tag.toString())
             clipboard.primaryClip = clip
             showSnack(R.string.action_copy_to_clip, null)
+        }
+
+        loadPrices.setOnClickListener { _ ->
+            viewModel.loadPrices(card.set, card.number ?: "").observe(this, Observer {
+                Logger.e("")
+            })
         }
 
         initAddToLibraryDialog(viewModel)

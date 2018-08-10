@@ -2,14 +2,25 @@ package ru.spcm.apps.mtgpro.repository
 
 import android.arch.lifecycle.LiveData
 import android.arch.lifecycle.MutableLiveData
+import ru.spcm.apps.mtgpro.model.api.ScryCardApi
 import ru.spcm.apps.mtgpro.model.db.dao.CardDao
 import ru.spcm.apps.mtgpro.model.dto.*
+import ru.spcm.apps.mtgpro.model.tools.Resource
+import ru.spcm.apps.mtgpro.repository.bounds.ScryCardBound
 import ru.spcm.apps.mtgpro.tools.AppExecutors
 import javax.inject.Inject
 
 class CardRepo @Inject
 constructor(private val appExecutors: AppExecutors,
+            private val scryCardApi: ScryCardApi,
             private val cardDao: CardDao) {
+
+    fun getPrices(set: String, number: String): LiveData<Resource<ScryCard>> {
+        return ScryCardBound(appExecutors, scryCardApi)
+                .setParams(set, number)
+                .create()
+                .asLiveData()
+    }
 
     fun getCards(id: String): LiveData<List<CardLocal>> {
         return cardDao.getSavedCards(id)

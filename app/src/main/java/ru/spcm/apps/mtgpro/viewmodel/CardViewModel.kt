@@ -5,6 +5,7 @@ import android.arch.lifecycle.MutableLiveData
 import android.arch.lifecycle.Transformations
 import android.arch.lifecycle.ViewModel
 import ru.spcm.apps.mtgpro.model.dto.*
+import ru.spcm.apps.mtgpro.model.tools.Resource
 import ru.spcm.apps.mtgpro.repository.CardRepo
 import ru.spcm.apps.mtgpro.repository.LibrariesRepo
 import ru.spcm.apps.mtgpro.tools.AbsentLiveData
@@ -76,6 +77,10 @@ internal constructor(private val cardRepo: CardRepo,
 
     fun loadCard(id: String) {
         switcher.postValue(id)
+    }
+
+    fun loadPrices(set: String, number: String): LiveData<Resource<ScryCard>> {
+        return cardRepo.getPrices(set, number)
     }
 
     fun loadLibraries() {

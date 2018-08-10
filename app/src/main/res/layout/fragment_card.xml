@@ -1,9 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.design.widget.CoordinatorLayout
-    android:id="@+id/mainBlock"
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mainBlock"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".view.activities.MainActivity">
@@ -11,7 +10,7 @@
     <include
         layout="@layout/layout_app_bar_main"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -43,14 +42,14 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:orientation="vertical"
-                        app:layout_constraintGuide_begin="16dp"/>
+                        app:layout_constraintGuide_begin="16dp" />
 
                     <android.support.constraint.Guideline
                         android:id="@+id/line_right"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:orientation="vertical"
-                        app:layout_constraintGuide_end="16dp"/>
+                        app:layout_constraintGuide_end="16dp" />
 
                     <LinearLayout
                         android:id="@+id/imagesBlock"
@@ -70,7 +69,7 @@
                             android:layout_marginEnd="5dp"
                             android:layout_weight=".5"
                             android:contentDescription="@string/app_name"
-                            tools:src="@drawable/pic_card"/>
+                            tools:src="@drawable/pic_card" />
 
                         <ImageView
                             android:id="@+id/cardImageSecond"
@@ -79,7 +78,7 @@
                             android:layout_marginStart="5dp"
                             android:layout_weight=".5"
                             android:contentDescription="@string/app_name"
-                            tools:src="@drawable/pic_card_back"/>
+                            tools:src="@drawable/pic_card_back" />
                     </LinearLayout>
 
                     <ImageButton
@@ -95,7 +94,21 @@
                         android:src="@drawable/ic_heart_outline"
                         android:tint="@color/colorAccent"
                         app:layout_constraintRight_toRightOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"/>
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <ImageButton
+                        android:id="@+id/loadPrices"
+                        android:layout_width="42dp"
+                        android:layout_height="42dp"
+                        android:layout_marginEnd="16dp"
+                        android:background="?android:attr/selectableItemBackgroundBorderless"
+                        android:contentDescription="@string/app_name"
+                        android:padding="8dp"
+                        android:scaleType="fitCenter"
+                        android:src="@drawable/ic_link"
+                        android:tint="@color/colorAccent"
+                        app:layout_constraintRight_toRightOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/addToWish" />
 
 
                     <TextView
@@ -106,7 +119,7 @@
                         android:gravity="center_vertical"
                         app:layout_constraintLeft_toLeftOf="@+id/line_left"
                         app:layout_constraintTop_toBottomOf="@+id/imagesBlock"
-                        tools:text="10GG"/>
+                        tools:text="10GG" />
 
                     <TextView
                         android:id="@+id/cardName"
@@ -120,7 +133,7 @@
                         app:layout_constraintLeft_toRightOf="@+id/cardManaCost"
                         app:layout_constraintRight_toLeftOf="@+id/line_right"
                         app:layout_constraintTop_toBottomOf="@+id/imagesBlock"
-                        tools:text="Карн, Детище Урзы"/>
+                        tools:text="Карн, Детище Урзы" />
 
                     <ImageView
                         android:id="@+id/cardRarity"
@@ -131,7 +144,7 @@
                         android:src="@drawable/ic_xln"
                         android:tint="@color/rarityMythicRare"
                         app:layout_constraintLeft_toLeftOf="@+id/line_left"
-                        app:layout_constraintTop_toBottomOf="@+id/cardName"/>
+                        app:layout_constraintTop_toBottomOf="@+id/cardName" />
 
                     <TextView
                         android:id="@+id/cardNumber"
@@ -144,7 +157,7 @@
                         app:layout_constraintLeft_toRightOf="@+id/cardRarity"
                         app:layout_constraintRight_toRightOf="@+id/line_right"
                         app:layout_constraintTop_toBottomOf="@+id/cardName"
-                        tools:text="DOM 001"/>
+                        tools:text="DOM 001" />
 
                     <android.support.v7.widget.RecyclerView
                         android:id="@+id/reprints"
@@ -156,7 +169,7 @@
                         app:layout_constraintLeft_toLeftOf="parent"
                         app:layout_constraintRight_toRightOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/cardRarity"
-                        tools:listitem="@layout/list_item_reprint"/>
+                        tools:listitem="@layout/list_item_reprint" />
                 </android.support.constraint.ConstraintLayout>
 
 
@@ -175,7 +188,7 @@
                         android:text="@string/text"
                         app:layout_constraintLeft_toLeftOf="parent"
                         app:layout_constraintRight_toRightOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"/>
+                        app:layout_constraintTop_toTopOf="parent" />
 
                     <ImageView
                         android:id="@+id/cardOracleArrow"
@@ -186,7 +199,7 @@
                         android:src="@drawable/ic_keyboard_arrow_down"
                         app:layout_constraintLeft_toRightOf="@id/cardText"
                         app:layout_constraintRight_toRightOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"/>
+                        app:layout_constraintTop_toTopOf="parent" />
 
 
                     <ru.spcm.apps.mtgpro.view.components.ExpandableTextView
@@ -200,7 +213,7 @@
                         app:layout_constraintRight_toRightOf="parent"
                         app:layout_constraintTop_toBottomOf="@id/cardText"
                         tools:maxLines="10"
-                        tools:text="Оракл текст\nВторая строка"/>
+                        tools:text="Оракл текст\nВторая строка" />
 
                     <TextView
                         android:id="@+id/cardRulesTitle"
@@ -213,7 +226,7 @@
                         app:layout_constraintLeft_toLeftOf="parent"
                         app:layout_constraintRight_toRightOf="parent"
                         app:layout_constraintTop_toBottomOf="@id/cardOracle"
-                        tools:text="Правила"/>
+                        tools:text="Правила" />
 
                     <ImageView
                         android:id="@+id/cardRulesArrow"
@@ -224,7 +237,7 @@
                         android:src="@drawable/ic_keyboard_arrow_down"
                         app:layout_constraintLeft_toRightOf="@id/cardRulesTitle"
                         app:layout_constraintRight_toRightOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/cardOracle"/>
+                        app:layout_constraintTop_toBottomOf="@id/cardOracle" />
 
                     <ru.spcm.apps.mtgpro.view.components.ExpandableTextView
                         android:id="@+id/cardRules"
@@ -237,7 +250,7 @@
                         app:layout_constraintRight_toRightOf="parent"
                         app:layout_constraintTop_toBottomOf="@id/cardRulesTitle"
                         tools:maxLines="10"
-                        tools:text="Правила"/>
+                        tools:text="Правила" />
                 </android.support.constraint.ConstraintLayout>
 
                 <LinearLayout
@@ -267,7 +280,7 @@
                             app:icon_plus="@drawable/ic_plus"
                             app:layout_constraintRight_toRightOf="parent"
                             app:size="@dimen/counter_button_size"
-                            app:text_size="20sp"/>
+                            app:text_size="20sp" />
 
                         <TextView
                             android:id="@+id/tv_library_name"
@@ -281,7 +294,7 @@
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintLeft_toLeftOf="parent"
                             app:layout_constraintRight_toLeftOf="@+id/counterBlock"
-                            app:layout_constraintTop_toTopOf="parent"/>
+                            app:layout_constraintTop_toTopOf="parent" />
                     </android.support.constraint.ConstraintLayout>
 
                 </LinearLayout>
@@ -312,7 +325,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="10dp"
-                        android:text="@string/action_add_to_library"/>
+                        android:text="@string/action_add_to_library" />
                 </LinearLayout>
             </LinearLayout>
 
