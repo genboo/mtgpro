@@ -11,7 +11,7 @@ import ru.spcm.apps.mtgpro.tools.AppExecutors
 import java.util.*
 
 class ScryCardBound(appExecutors: AppExecutors,
-                    private val cardApi: ScryCardApi,
+                    private val scryCardApi: ScryCardApi,
                     private val cacheDao: CacheDao,
                     private val scryCardDao: ScryCardDao) : CachedNetworkBound<ScryCard, ScryCard>(appExecutors) {
 
@@ -42,7 +42,7 @@ class ScryCardBound(appExecutors: AppExecutors,
     }
 
     override fun createCall(): LiveData<ApiResponse<ScryCard>> {
-        return cardApi.getCardByNumber(set, number)
+        return scryCardApi.getCardByNumber(set, number)
     }
 
     private fun getCacheKey(): String {
@@ -51,7 +51,7 @@ class ScryCardBound(appExecutors: AppExecutors,
 
     fun setParams(set: String, number: String): ScryCardBound {
         this.set = set.toLowerCase()
-        this.number = number
+        this.number = number.replace("a", "").replace("b", "")
         return this
     }
 
