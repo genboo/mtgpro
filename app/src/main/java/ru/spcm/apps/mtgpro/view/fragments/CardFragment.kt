@@ -167,6 +167,9 @@ class CardFragment : BaseFragment() {
                 pricesLabel.text = stringBuilder
                 priceLoader.fadeOut()
                 pricesLabel.fadeIn()
+            } else if (data.status == Status.ERROR) {
+                prices.fadeOut()
+                showSnack(R.string.action_network_error, null)
             }
         }
     }
