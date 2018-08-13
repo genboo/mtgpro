@@ -21,7 +21,6 @@ import ru.spcm.apps.mtgpro.R
 import ru.spcm.apps.mtgpro.model.dto.*
 import ru.spcm.apps.mtgpro.model.tools.Resource
 import ru.spcm.apps.mtgpro.model.tools.Status
-import ru.spcm.apps.mtgpro.tools.Logger
 import ru.spcm.apps.mtgpro.tools.OracleReplacer
 import ru.spcm.apps.mtgpro.view.adapter.LibrarySelectAdapter
 import ru.spcm.apps.mtgpro.view.adapter.ReprintListAdapter
