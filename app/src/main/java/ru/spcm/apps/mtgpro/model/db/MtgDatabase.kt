@@ -11,7 +11,7 @@ import ru.spcm.apps.mtgpro.model.dto.Set
  * База данных
  * Created by gen on 28.06.2018.
  */
-@Database(version = 4, exportSchema = false, entities = [
+@Database(version = 5, exportSchema = false, entities = [
     Card::class,
     SavedCard::class,
     WishedCard::class,
@@ -23,6 +23,7 @@ import ru.spcm.apps.mtgpro.model.dto.Set
     Subtype::class,
     Library::class,
     LibraryCard::class,
+    ScryCard::class,
     Cache::class,
     CacheCard::class,
     CacheTime::class
@@ -36,6 +37,8 @@ abstract class MtgDatabase : RoomDatabase() {
     abstract fun librariesDao(): LibrariesDao
 
     abstract fun additionalInfoDao(): AdditionalInfoCardDao
+
+    abstract fun scryCardDao(): ScryCardDao
 
     abstract fun cacheDao(): CacheDao
 }

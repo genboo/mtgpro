@@ -10,19 +10,22 @@ import android.os.Handler
 import android.support.v4.content.ContextCompat
 import android.support.v7.app.AlertDialog
 import android.support.v7.widget.LinearLayoutManager
+import android.text.Spannable
+import android.text.SpannableStringBuilder
+import android.text.style.RelativeSizeSpan
 import android.view.*
 import android.widget.Spinner
 import android.widget.TextView
 import kotlinx.android.synthetic.main.fragment_card.*
 import ru.spcm.apps.mtgpro.R
 import ru.spcm.apps.mtgpro.model.dto.*
+import ru.spcm.apps.mtgpro.model.tools.Resource
+import ru.spcm.apps.mtgpro.model.tools.Status
 import ru.spcm.apps.mtgpro.tools.Logger
 import ru.spcm.apps.mtgpro.tools.OracleReplacer
 import ru.spcm.apps.mtgpro.view.adapter.LibrarySelectAdapter
 import ru.spcm.apps.mtgpro.view.adapter.ReprintListAdapter
-import ru.spcm.apps.mtgpro.view.components.ExpandListener
-import ru.spcm.apps.mtgpro.view.components.NumberCounterView
-import ru.spcm.apps.mtgpro.view.components.loadImageFromCache
+import ru.spcm.apps.mtgpro.view.components.*
 import ru.spcm.apps.mtgpro.viewmodel.CardViewModel
 
 /**
@@ -86,9 +89,13 @@ class CardFragment : BaseFragment() {
         }
 
         loadPrices.setOnClickListener { _ ->
-            viewModel.loadPrices(card.set, card.number ?: "").observe(this, Observer {
-                Logger.e("")
-            })
+            prices.slideIn(Gravity.END)
+            viewModel.loadPrices(card.set, card.number
+                    ?: "").observe(this, Observer { observerPrices(it) })
+        }
+
+        prices.setOnClickListener {
+            prices.slideOut(Gravity.END)
         }
 
         initAddToLibraryDialog(viewModel)
@@ -146,6 +153,22 @@ class CardFragment : BaseFragment() {
         } else {
             addToWish.setImageDrawable(ContextCompat.getDrawable(requireContext(), R.drawable.ic_heart))
             addToWish.tag = false
+        }
+    }
+
+    private fun observerPrices(data: Resource<ScryCard>?) {
+        if (data != null) {
+            if (data.status == Status.LOADING) {
+                priceLoader.fadeIn()
+            } else if (data.status == Status.SUCCESS && data.data != null) {
+                val scryCard: ScryCard = data.data
+                val stringBuilder = SpannableStringBuilder()
+                stringBuilder.append(scryCard.usd).append(" ").append("usd")
+                stringBuilder.setSpan(RelativeSizeSpan(1.5f), 0, scryCard.usd.length, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
+                pricesLabel.text = stringBuilder
+                priceLoader.fadeOut()
+                pricesLabel.fadeIn()
+            }
         }
     }
 

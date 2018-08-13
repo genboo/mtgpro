@@ -35,7 +35,8 @@ class DbModule {
                 .addMigrations(
                         MIGRATION_1_2,
                         MIGRATION_2_3,
-                        MIGRATION_3_4
+                        MIGRATION_3_4,
+                        MIGRATION_4_5
                 )
                 .build()
     }
@@ -68,6 +69,12 @@ class DbModule {
     @Singleton
     internal fun provideLibrariesDao(db: MtgDatabase): LibrariesDao {
         return db.librariesDao()
+    }
+
+    @Provides
+    @Singleton
+    internal fun provideScryCardDao(db: MtgDatabase): ScryCardDao {
+        return db.scryCardDao()
     }
 
 
@@ -103,6 +110,14 @@ class DbModule {
             override fun migrate(database: SupportSQLiteDatabase) {
                 //Добавление индекса для поля
                 database.execSQL("CREATE INDEX index_Card_set ON Card (\"set\")")
+            }
+        }
+
+        private val MIGRATION_4_5 = object : Migration(4, 5) {
+            override fun migrate(database: SupportSQLiteDatabase) {
+                //Добавление таблицы с ценами
+                database.execSQL("CREATE TABLE ScryCard (id TEXT NOT NULL PRIMARY KEY, usd TEXT NOT NULL, eur TEXT NOT NULL, [set] TEXT NOT NULL, number TEXT NOT NULL)")
+                database.execSQL("CREATE INDEX index_ScryCard_set_number ON ScryCard (\"set\", number)")
             }
         }
     }

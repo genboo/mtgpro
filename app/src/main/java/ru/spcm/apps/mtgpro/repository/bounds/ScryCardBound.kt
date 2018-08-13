@@ -1,55 +1,62 @@
 package ru.spcm.apps.mtgpro.repository.bounds
 
 import android.arch.lifecycle.LiveData
-import android.arch.lifecycle.MutableLiveData
 import ru.spcm.apps.mtgpro.model.api.ScryCardApi
+import ru.spcm.apps.mtgpro.model.db.dao.CacheDao
+import ru.spcm.apps.mtgpro.model.db.dao.ScryCardDao
+import ru.spcm.apps.mtgpro.model.dto.Cache
 import ru.spcm.apps.mtgpro.model.dto.ScryCard
 import ru.spcm.apps.mtgpro.model.tools.ApiResponse
 import ru.spcm.apps.mtgpro.tools.AppExecutors
+import java.util.*
 
 class ScryCardBound(appExecutors: AppExecutors,
-                    private val cardApi: ScryCardApi) : NetworkBound<ScryCard, ScryCard>(appExecutors) {
+                    private val cardApi: ScryCardApi,
+                    private val cacheDao: CacheDao,
+                    private val scryCardDao: ScryCardDao) : CachedNetworkBound<ScryCard, ScryCard>(appExecutors) {
+
+    private val type: String = ScryCard::class.java.simpleName + "::" + ScryCardBound.METHOD
 
     private var set: String = ""
     private var number: String = ""
 
     override fun saveCallResult(data: ScryCard?) {
         if (data != null) {
-            if (cache.size == MAX_CACHE_SIZE) {
-                cache.clear()
-            }
-            cache[set + number] = data
+            scryCardDao.insert(data)
+            val cache = Cache(getCacheKey(),
+                    Date().time + getCacheTime(cacheDao.getCacheType(type)))
+            cacheDao.insert(cache)
         }
     }
 
     override fun shouldFetch(data: ScryCard?): Boolean {
-        return !cache.containsKey(set + number)
+        return data == null || checkExpireCache(cacheExpire)
     }
 
     override fun loadSaved(): LiveData<ScryCard> {
-        val data = MutableLiveData<ScryCard>()
-        val card = cache[set + number]
-        if (card != null) {
-            data.setValue(card)
-        } else {
-            data.setValue(null)
-        }
-        return data
+        return scryCardDao.getPrices(set, number)
+    }
+
+    override fun loadCacheTime(): LiveData<Cache> {
+        return cacheDao.getCache(getCacheKey())
     }
 
     override fun createCall(): LiveData<ApiResponse<ScryCard>> {
-        return cardApi.getCardByNumber(set.toLowerCase(), number)
+        return cardApi.getCardByNumber(set, number)
+    }
+
+    private fun getCacheKey(): String {
+        return type + set + number
     }
 
     fun setParams(set: String, number: String): ScryCardBound {
-        this.set = set
+        this.set = set.toLowerCase()
         this.number = number
         return this
     }
 
     companion object {
-        private const val MAX_CACHE_SIZE = 100
-        private val cache = HashMap<String, ScryCard>()
+        private const val METHOD = "price"
     }
 
 }
