@@ -36,7 +36,8 @@ class DbModule {
                         MIGRATION_1_2,
                         MIGRATION_2_3,
                         MIGRATION_3_4,
-                        MIGRATION_4_5
+                        MIGRATION_4_5,
+                        MIGRATION_5_6
                 )
                 .build()
     }
@@ -118,6 +119,13 @@ class DbModule {
                 //Добавление таблицы с ценами
                 database.execSQL("CREATE TABLE ScryCard (id TEXT NOT NULL PRIMARY KEY, usd TEXT NOT NULL, eur TEXT NOT NULL, [set] TEXT NOT NULL, number TEXT NOT NULL)")
                 database.execSQL("CREATE INDEX index_ScryCard_set_number ON ScryCard (\"set\", number)")
+            }
+        }
+
+        private val MIGRATION_5_6 = object : Migration(5, 6) {
+            override fun migrate(database: SupportSQLiteDatabase) {
+                //Добавление таблицы для слежения
+                database.execSQL("CREATE TABLE WatchedCard ( id TEXT NOT NULL, PRIMARY KEY ( id ))")
             }
         }
     }

@@ -77,6 +77,7 @@ class CardFragment : BaseFragment() {
         }
 
         addToWish.setOnClickListener { viewModel.updateWish(card.id, it.tag as Boolean) }
+        watch.setOnClickListener { viewModel.updateWatch(card.id, true) }
 
         addToLibrary.setOnClickListener { addDialog.show() }
 

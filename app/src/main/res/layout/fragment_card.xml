@@ -112,10 +112,9 @@
 
                     <android.support.constraint.ConstraintLayout
                         android:id="@+id/prices"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_width="100dp"
+                        android:layout_height="100dp"
                         android:background="@drawable/bg_price"
-                        android:minHeight="80dp"
                         android:orientation="vertical"
                         android:padding="16dp"
                         android:visibility="gone"
@@ -128,6 +127,10 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:visibility="gone"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintLeft_toLeftOf="parent"
+                            app:layout_constraintRight_toRightOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"
                             tools:visibility="visible" />
 
                         <TextView
@@ -140,6 +143,23 @@
                             app:layout_constraintTop_toTopOf="parent"
                             tools:text="11.99 usd"
                             tools:visibility="visible" />
+
+                        <ImageButton
+                            android:id="@+id/watch"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:background="?android:attr/selectableItemBackgroundBorderless"
+                            android:contentDescription="@string/app_name"
+                            android:src="@drawable/ic_eye"
+                            android:tint="@color/colorAccent"
+                            app:layout_constraintRight_toRightOf="parent"
+                            app:layout_constraintTop_toBottomOf="@id/pricesLabel" />
+
+                        <android.support.constraint.Group
+                            android:id="@+id/priceGroup"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            app:constraint_referenced_ids="pricesLabel,watch" />
 
                     </android.support.constraint.ConstraintLayout>
 

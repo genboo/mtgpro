@@ -35,6 +35,12 @@ interface CardDao {
     @Delete
     fun delete(item: WishedCard)
 
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    fun insert(item: WatchedCard): Long
+
+    @Delete
+    fun delete(item: WatchedCard)
+
     @Query("SELECT c.*, sc.count FROM CacheCard cc LEFT JOIN Card c ON c.id = cc.card_id LEFT JOIN SavedCard sc ON sc.id = c.id WHERE cc.cache_key = :cacheKey ORDER BY c.numberFormatted LIMIT :limit")
     fun getCachedCards(cacheKey: String, limit: Int): LiveData<List<Card>>
 
@@ -89,5 +95,12 @@ interface CardDao {
 
     @Query("SELECT * FROM Card c WHERE c.`set` = :set AND c.number = :number")
     fun getCardBySetAndNumber(set: String, number: String): Card?
+
+    @Query("SELECT c.id, c.numberFormatted, c.nameOrigin, c.setTitle, c.parent, c.imageUrl, c.name, c.rarity, c.multiverseId, c.number, c.`set`, c.type, c.cmc, c.text, c.flavor, c.manaCost, c.rulesText, c.count, sc.usd price " +
+            "FROM WatchedCard wc " +
+            "LEFT JOIN Card c ON c.id = wc.id " +
+            "LEFT JOIN ScryCard sc ON sc.number = c.number AND sc.`set` = lower(c.`set`) " +
+            "ORDER BY c.setTitle, c.numberFormatted")
+    fun getWatchedCards(): DataSource.Factory<Int, CardWatched>
 
 }

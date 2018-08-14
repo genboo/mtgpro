@@ -19,14 +19,14 @@ import javax.inject.Inject
 
 class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemSelectedListener {
 
-    private lateinit var settingsItemMenu: MenuItem
-
-    private var component: AppComponent? = null
-
     @Inject
     lateinit var navigatorHolder: NavigatorHolder
 
     val navigator by lazy { Navigator(this, supportFragmentManager, R.id.content) }
+
+    private lateinit var settingsItemMenu: MenuItem
+
+    private var component: AppComponent? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -65,14 +65,11 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        if (item.itemId == R.id.nav_settings) {
-            navigator.goToSettings()
+        when (item.itemId) {
+            R.id.nav_settings -> navigator.goToSettings()
+            R.id.nav_watch -> navigator.goToWatch()
         }
         return super.onOptionsItemSelected(item)
-    }
-
-    override fun onBackPressed() {
-        navigator.backTo()
     }
 
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
@@ -86,6 +83,10 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
         return true
     }
 
+    override fun onBackPressed() {
+        navigator.backTo()
+    }
+
     override fun onResume() {
         super.onResume()
         navigatorHolder.setNavigator(navigator)
@@ -95,5 +96,4 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
         navigatorHolder.removeNavigator()
         super.onPause()
     }
-
 }

@@ -75,5 +75,15 @@ constructor(private val appExecutors: AppExecutors,
         return result
     }
 
+    fun updateWatch(id: String, wish: Boolean) {
+        appExecutors.diskIO().execute {
+            if (wish) {
+                cardDao.insert(WatchedCard(id))
+            } else {
+                cardDao.delete(WatchedCard(id))
+            }
+        }
+    }
+
 
 }

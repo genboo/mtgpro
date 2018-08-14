@@ -30,6 +30,7 @@ class Navigator(private val activity: FragmentActivity, fragmentManager: Fragmen
             SCREEN_CARD -> return CardFragment.getInstance(data as String)
             SCREEN_LIBRARY -> return LibraryFragment.getInstance(data as Long)
             SCREEN_SETTINGS -> return SettingsFragment()
+            SCREEN_WATCH -> return WatchFragment()
         }
         return SetsFragment()
     }
@@ -97,6 +98,10 @@ class Navigator(private val activity: FragmentActivity, fragmentManager: Fragmen
         applyCommand(Forward(SCREEN_SETTINGS, null))
     }
 
+    fun goToWatch() {
+        applyCommand(Forward(SCREEN_WATCH, null))
+    }
+
     fun goToImage(id: String, url: String) {
         applyCommand(Forward(SCREEN_IMAGE, arrayOf(id, url)))
     }
@@ -116,6 +121,7 @@ class Navigator(private val activity: FragmentActivity, fragmentManager: Fragmen
         const val SCREEN_SEARCH = "screen_search"
         const val SCREEN_SETTINGS = "screen_settings"
         const val SCREEN_IMAGE = "screen_image"
+        const val SCREEN_WATCH = "screen_watch"
     }
 
 }

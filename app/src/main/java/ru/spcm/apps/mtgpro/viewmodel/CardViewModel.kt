@@ -99,6 +99,10 @@ internal constructor(private val cardRepo: CardRepo,
         cardRepo.updateWish(id, wish)
     }
 
+    fun updateWatch(id: String, wish: Boolean) {
+        cardRepo.updateWatch(id, wish)
+    }
+
     fun addCard(item: LibraryCard) {
         librariesRepo.addCard(item)
     }

@@ -58,4 +58,6 @@ interface AppComponent {
 
     fun inject(fragment: SettingsFragment)
 
+    fun inject(fragment: WatchFragment)
+
 }

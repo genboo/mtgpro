@@ -57,6 +57,11 @@ internal abstract class ViewModelModule {
     internal abstract fun bindSettingsViewModel(viewModel: SettingsViewModel): ViewModel
 
     @Binds
+    @IntoMap
+    @ViewModelKey(WatchViewModel::class)
+    internal abstract fun bindWatchViewModel(viewModel: WatchViewModel): ViewModel
+
+    @Binds
     internal abstract fun bindViewModelFactory(factory: ViewModelFactory): ViewModelProvider.Factory
 
 }
