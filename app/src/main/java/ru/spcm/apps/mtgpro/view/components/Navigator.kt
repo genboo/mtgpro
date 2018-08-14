@@ -28,6 +28,7 @@ class Navigator(private val activity: FragmentActivity, fragmentManager: Fragmen
                     return FullScreenImageFragment.getInstance(data[0] as String, data[1] as String)
                 }
             SCREEN_CARD -> return CardFragment.getInstance(data as String)
+            SCREEN_VOLATILITY -> return PriceVolatilityFragment.getInstance(data as String)
             SCREEN_LIBRARY -> return LibraryFragment.getInstance(data as Long)
             SCREEN_SETTINGS -> return SettingsFragment()
             SCREEN_WATCH -> return WatchFragment()
@@ -102,6 +103,10 @@ class Navigator(private val activity: FragmentActivity, fragmentManager: Fragmen
         applyCommand(Forward(SCREEN_WATCH, null))
     }
 
+    fun goToPriceVolatility(id: String) {
+        applyCommand(Forward(SCREEN_VOLATILITY, id))
+    }
+
     fun goToImage(id: String, url: String) {
         applyCommand(Forward(SCREEN_IMAGE, arrayOf(id, url)))
     }
@@ -122,6 +127,7 @@ class Navigator(private val activity: FragmentActivity, fragmentManager: Fragmen
         const val SCREEN_SETTINGS = "screen_settings"
         const val SCREEN_IMAGE = "screen_image"
         const val SCREEN_WATCH = "screen_watch"
+        const val SCREEN_VOLATILITY = "screen_volatility"
     }
 
 }

@@ -61,6 +61,8 @@ interface AppComponent {
 
     fun inject(fragment: WatchFragment)
 
+    fun inject(fragment: PriceVolatilityFragment)
+
     fun inject(receiver: AlarmReceiver)
 
 }

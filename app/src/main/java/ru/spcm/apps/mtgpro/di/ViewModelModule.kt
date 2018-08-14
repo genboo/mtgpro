@@ -58,6 +58,11 @@ internal abstract class ViewModelModule {
 
     @Binds
     @IntoMap
+    @ViewModelKey(PriceVolatilityViewModel::class)
+    internal abstract fun bindPriceVolatilityViewModel(viewModel: PriceVolatilityViewModel): ViewModel
+
+    @Binds
+    @IntoMap
     @ViewModelKey(WatchViewModel::class)
     internal abstract fun bindWatchViewModel(viewModel: WatchViewModel): ViewModel
 

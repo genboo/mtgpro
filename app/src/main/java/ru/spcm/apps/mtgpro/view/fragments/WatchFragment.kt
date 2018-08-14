@@ -24,7 +24,7 @@ class WatchFragment : BaseFragment() {
         updateToolbar()
 
         val adapter = CardsWatchedListAdapter()
-        adapter.listener = { navigator.goToCard(it.card.id) }
+        adapter.listener = { navigator.goToPriceVolatility(it.card.id) }
         list.layoutManager = LinearLayoutManager(context)
         list.adapter = adapter
 

@@ -29,6 +29,9 @@ class PriceUpdater(private val appExecutors: AppExecutors,
                     }
                     if(price != null) {
                         priceUpdateDao.insert(PriceHistory(item.card.id, price.usd))
+                        if (price.eur == null) {
+                            price.eur = ""
+                        }
                         scryCardDao.insert(price)
                     }
                 }
