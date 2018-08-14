@@ -13,6 +13,7 @@ import ru.spcm.apps.mtgpro.di.modules.DbModule
 import ru.spcm.apps.mtgpro.di.modules.NavigationModule
 import ru.spcm.apps.mtgpro.di.modules.RetrofitModule
 import ru.spcm.apps.mtgpro.di.modules.ScryRetrofitModule
+import ru.spcm.apps.mtgpro.services.AlarmReceiver
 import ru.spcm.apps.mtgpro.view.fragments.*
 
 /**
@@ -59,5 +60,7 @@ interface AppComponent {
     fun inject(fragment: SettingsFragment)
 
     fun inject(fragment: WatchFragment)
+
+    fun inject(receiver: AlarmReceiver)
 
 }

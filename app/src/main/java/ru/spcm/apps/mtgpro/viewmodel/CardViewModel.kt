@@ -8,6 +8,7 @@ import ru.spcm.apps.mtgpro.model.dto.*
 import ru.spcm.apps.mtgpro.model.tools.Resource
 import ru.spcm.apps.mtgpro.repository.CardRepo
 import ru.spcm.apps.mtgpro.repository.LibrariesRepo
+import ru.spcm.apps.mtgpro.repository.PriceRepo
 import ru.spcm.apps.mtgpro.tools.AbsentLiveData
 
 import javax.inject.Inject
@@ -20,7 +21,8 @@ import javax.inject.Inject
 
 class CardViewModel @Inject
 internal constructor(private val cardRepo: CardRepo,
-                     private val librariesRepo: LibrariesRepo) : ViewModel() {
+                     private val librariesRepo: LibrariesRepo,
+                     private val priceRepo: PriceRepo) : ViewModel() {
 
     private val switcher: MutableLiveData<String> = MutableLiveData()
     private val switcherLibraries: MutableLiveData<Boolean> = MutableLiveData()
@@ -80,7 +82,7 @@ internal constructor(private val cardRepo: CardRepo,
     }
 
     fun loadPrices(set: String, number: String): LiveData<Resource<ScryCard>> {
-        return cardRepo.getPrices(set, number)
+        return priceRepo.getPrices(set, number)
     }
 
     fun loadLibraries() {

@@ -19,9 +19,13 @@ class ScryCardBound(appExecutors: AppExecutors,
 
     private var set: String = ""
     private var number: String = ""
+    private var force = true
 
     override fun saveCallResult(data: ScryCard?) {
         if (data != null) {
+            if (data.eur == null) {
+                data.eur = ""
+            }
             scryCardDao.insert(data)
             val cache = Cache(getCacheKey(),
                     Date().time + getCacheTime(cacheDao.getCacheType(type)))
@@ -30,7 +34,7 @@ class ScryCardBound(appExecutors: AppExecutors,
     }
 
     override fun shouldFetch(data: ScryCard?): Boolean {
-        return data == null || checkExpireCache(cacheExpire)
+        return data == null || checkExpireCache(cacheExpire) || force
     }
 
     override fun loadSaved(): LiveData<ScryCard> {

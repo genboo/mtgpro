@@ -46,5 +46,7 @@ abstract class MtgDatabase : RoomDatabase() {
 
     abstract fun scryCardDao(): ScryCardDao
 
+    abstract fun priceUpdateDao(): PriceUpdateDao
+
     abstract fun cacheDao(): CacheDao
 }

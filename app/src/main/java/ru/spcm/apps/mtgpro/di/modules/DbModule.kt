@@ -79,6 +79,12 @@ class DbModule {
         return db.scryCardDao()
     }
 
+    @Provides
+    @Singleton
+    internal fun providePriceUpdateDao(db: MtgDatabase): PriceUpdateDao {
+        return db.priceUpdateDao()
+    }
+
 
     companion object {
         const val DB_NAME = "mtg"
