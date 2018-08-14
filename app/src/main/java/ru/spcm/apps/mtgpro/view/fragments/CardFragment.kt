@@ -167,7 +167,7 @@ class CardFragment : BaseFragment() {
                 stringBuilder.setSpan(RelativeSizeSpan(1.5f), 0, scryCard.usd.length, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
                 pricesLabel.text = stringBuilder
                 priceLoader.fadeOut()
-                pricesLabel.fadeIn()
+                priceGroup.fadeIn()
             } else if (data.status == Status.ERROR) {
                 prices.fadeOut()
                 showSnack(R.string.action_network_error, null)

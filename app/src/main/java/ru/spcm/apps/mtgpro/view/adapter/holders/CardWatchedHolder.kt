@@ -4,6 +4,9 @@ import android.graphics.PorterDuff
 import android.support.v4.content.ContextCompat
 import android.support.v4.view.ViewCompat
 import android.support.v7.widget.RecyclerView
+import android.text.Spannable
+import android.text.SpannableStringBuilder
+import android.text.style.RelativeSizeSpan
 import android.view.View
 import kotlinx.android.synthetic.main.list_item_card_watched.view.*
 import ru.spcm.apps.mtgpro.model.dto.CardWatched
@@ -15,17 +18,19 @@ class CardWatchedHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
     val cardImage: View = itemView.cardImage
 
     fun bind(item: CardWatched) = with(itemView) {
-
         cardName.text = item.card.name
         cardRarity.setColorFilter(ContextCompat.getColor(context, item.card.getSetIconColor()), PorterDuff.Mode.SRC_IN)
         cardRarity.setImageDrawable(context.getDrawable(item.card.getSetIcon()))
         cardSet.text = item.card.setTitle
-        cardPrice.text = String.format(Locale.getDefault(), "%s usd", item.price)
+
+        val price = SpannableStringBuilder(String.format(Locale.getDefault(), "%s usd", item.price))
+        price.setSpan(RelativeSizeSpan(1.3f), 0, item.price.length, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
+        cardPrice.text = price
+
         cardNumber.text = String.format(Locale.getDefault(), "%s %s", item.card.set, item.card.numberFormatted)
 
         ViewCompat.setTransitionName(cardImage, item.card.id)
         cardImage.loadImageFromCache(item.card.imageUrl)
-
     }
 
     fun setListener(listener: View.OnClickListener) {

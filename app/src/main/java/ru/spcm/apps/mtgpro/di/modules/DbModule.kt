@@ -37,7 +37,8 @@ class DbModule {
                         MIGRATION_2_3,
                         MIGRATION_3_4,
                         MIGRATION_4_5,
-                        MIGRATION_5_6
+                        MIGRATION_5_6,
+                        MIGRATION_6_7
                 )
                 .build()
     }
@@ -103,7 +104,6 @@ class DbModule {
                 database.execSQL("DROP TABLE temp_table")
                 database.execSQL("CREATE INDEX index_CacheCard_cache_key ON CacheCard (cache_key)")
                 database.execSQL("CREATE UNIQUE INDEX index_CacheCard_id_cache_key ON CacheCard (card_id, cache_key)")
-
             }
         }
 
@@ -119,6 +119,7 @@ class DbModule {
                 //Добавление таблицы с ценами
                 database.execSQL("CREATE TABLE ScryCard (id TEXT NOT NULL PRIMARY KEY, usd TEXT NOT NULL, eur TEXT NOT NULL, [set] TEXT NOT NULL, number TEXT NOT NULL)")
                 database.execSQL("CREATE INDEX index_ScryCard_set_number ON ScryCard (\"set\", number)")
+
             }
         }
 
@@ -126,6 +127,15 @@ class DbModule {
             override fun migrate(database: SupportSQLiteDatabase) {
                 //Добавление таблицы для слежения
                 database.execSQL("CREATE TABLE WatchedCard ( id TEXT NOT NULL, PRIMARY KEY ( id ))")
+            }
+        }
+
+        private val MIGRATION_6_7 = object : Migration(6, 7) {
+            override fun migrate(database: SupportSQLiteDatabase) {
+                //Добавление таблицы для слежения
+                database.execSQL("CREATE TABLE PriceHistory (id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, date TEXT NOT NULL, card_id TEXT NOT NULL, price TEXT NOT NULL)")
+                database.execSQL("CREATE INDEX index_PriceHistory_date ON PriceHistory (date)")
+                database.execSQL("CREATE UNIQUE INDEX index_PriceHistory_card_id_date ON PriceHistory (card_id,date)")
             }
         }
     }

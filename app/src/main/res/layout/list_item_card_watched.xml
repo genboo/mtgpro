@@ -77,14 +77,12 @@
 
             <TextView
                 android:id="@+id/cardPrice"
-                style="@style/TextView.Hint"
+                style="@style/TextView.Main"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/cardSet"
-                android:layout_marginStart="16dp"
-                android:layout_toEndOf="@id/cardNumber"
+                android:layout_below="@id/cardNumber"
                 android:maxLines="1"
-                tools:text="Кол-во: 10" />
+                tools:text="10 usd" />
         </RelativeLayout>
 
     </android.support.constraint.ConstraintLayout>

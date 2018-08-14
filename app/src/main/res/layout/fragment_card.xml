@@ -138,11 +138,9 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:textSize="12sp"
-                            android:visibility="gone"
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintTop_toTopOf="parent"
-                            tools:text="11.99 usd"
-                            tools:visibility="visible" />
+                            tools:text="11.99 usd" />
 
                         <ImageButton
                             android:id="@+id/watch"
@@ -159,7 +157,9 @@
                             android:id="@+id/priceGroup"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            app:constraint_referenced_ids="pricesLabel,watch" />
+                            android:visibility="gone"
+                            app:constraint_referenced_ids="pricesLabel,watch"
+                            tools:visibility="visible" />
 
                     </android.support.constraint.ConstraintLayout>
 
