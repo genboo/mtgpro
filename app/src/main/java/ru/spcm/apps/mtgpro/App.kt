@@ -37,10 +37,13 @@ class App : Application() {
             timeInMillis = System.currentTimeMillis()
             set(Calendar.HOUR_OF_DAY, 1)
             set(Calendar.MINUTE, 0)
+            if(this.before(Calendar.getInstance())){
+                add(Calendar.DAY_OF_MONTH, 1)
+            }
         }
 
         val alarmIntent = Intent(this, AlarmReceiver::class.java).let { intent ->
-            PendingIntent.getBroadcast(this, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT)
+            PendingIntent.getBroadcast(this, 0, intent, 0)
         }
 
         alarmManager.setInexactRepeating(
