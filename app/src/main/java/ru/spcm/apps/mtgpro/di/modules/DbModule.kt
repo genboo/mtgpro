@@ -38,7 +38,8 @@ class DbModule {
                         MIGRATION_3_4,
                         MIGRATION_4_5,
                         MIGRATION_5_6,
-                        MIGRATION_6_7
+                        MIGRATION_6_7,
+                        MIGRATION_7_8
                 )
                 .build()
     }
@@ -142,6 +143,13 @@ class DbModule {
                 database.execSQL("CREATE TABLE PriceHistory (id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, date TEXT NOT NULL, card_id TEXT NOT NULL, price TEXT NOT NULL)")
                 database.execSQL("CREATE INDEX index_PriceHistory_date ON PriceHistory (date)")
                 database.execSQL("CREATE UNIQUE INDEX index_PriceHistory_card_id_date ON PriceHistory (card_id,date)")
+            }
+        }
+
+        private val MIGRATION_7_8 = object : Migration(7, 8) {
+            override fun migrate(database: SupportSQLiteDatabase) {
+                //Добавление таблицы для слежения
+                database.execSQL("CREATE INDEX index_PriceHistory_card_id ON PriceHistory (card_id)")
             }
         }
     }

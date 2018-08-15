@@ -18,21 +18,25 @@
         android:background="@color/colorBackgroundMain"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-        <android.support.v4.widget.NestedScrollView
+        <ru.spcm.apps.mtgpro.view.components.InterceptedNestedScrollView
             android:id="@+id/mainScroll"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:paddingBottom="?android:attr/actionBarSize">
+            android:layout_height="match_parent">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
 
+                <ru.spcm.apps.mtgpro.view.components.GraphView
+                    android:id="@+id/graph"
+                    android:layout_width="match_parent"
+                    android:layout_height="200dp"
+                    android:padding="16dp" />
+
                 <android.support.constraint.ConstraintLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@drawable/bg_card"
                     android:paddingBottom="16dp">
 
                     <android.support.constraint.Guideline
@@ -46,9 +50,9 @@
                         android:id="@+id/line_right"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:nestedScrollingEnabled="false"
                         android:orientation="vertical"
                         app:layout_constraintGuide_end="16dp" />
-
 
                     <LinearLayout
                         android:id="@+id/imagesBlock"
@@ -57,8 +61,8 @@
                         android:layout_marginTop="16dp"
                         android:orientation="horizontal"
                         app:layout_constraintDimensionRatio="446:311"
-                        app:layout_constraintLeft_toLeftOf="@+id/line_left"
-                        app:layout_constraintRight_toRightOf="@+id/line_right"
+                        app:layout_constraintLeft_toLeftOf="@id/line_left"
+                        app:layout_constraintRight_toRightOf="@id/line_right"
                         app:layout_constraintTop_toTopOf="parent">
 
                         <ImageView
@@ -80,9 +84,19 @@
                             tools:src="@drawable/pic_card_back" />
                     </LinearLayout>
 
+                    <TextView
+                        android:id="@+id/cardName"
+                        style="@style/TextView.Main.Title"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintLeft_toLeftOf="@id/line_left"
+                        app:layout_constraintRight_toRightOf="@id/line_right"
+                        app:layout_constraintTop_toBottomOf="@id/imagesBlock"
+                        tools:text="Карн, Детище Урзы" />
+
                 </android.support.constraint.ConstraintLayout>
             </LinearLayout>
-        </android.support.v4.widget.NestedScrollView>
+        </ru.spcm.apps.mtgpro.view.components.InterceptedNestedScrollView>
     </LinearLayout>
 
 </android.support.design.widget.CoordinatorLayout>

@@ -9,7 +9,7 @@ import java.util.*
 /**
  * Created by gen on 14.08.2018.
  */
-@Entity(indices = [Index("date"), Index(value = ["card_id", "date"], unique = true)])
+@Entity(indices = [Index("date"), Index("card_id"), Index(value = ["card_id", "date"], unique = true)])
 data class PriceHistory(@ColumnInfo(name = "card_id")
                         var cardId: String,
                         val price: String){

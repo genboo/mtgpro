@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import kotlinx.android.synthetic.main.fragment_price_volatility.*
 import ru.spcm.apps.mtgpro.R
 import ru.spcm.apps.mtgpro.model.dto.CardLocal
+import ru.spcm.apps.mtgpro.model.dto.GraphDot
 import ru.spcm.apps.mtgpro.view.components.loadImageFromCache
 import ru.spcm.apps.mtgpro.viewmodel.PriceVolatilityViewModel
 
@@ -27,13 +28,21 @@ class PriceVolatilityFragment : BaseFragment() {
         val viewModel = getViewModel(this, PriceVolatilityViewModel::class.java)
 
         viewModel.getCards().observe(this, Observer { observeCards(it) })
+        viewModel.getData().observe(this, Observer { observeData(it) })
 
-        viewModel.loadCards(args.getString(ARG_ID))
+        viewModel.load(args.getString(ARG_ID))
+    }
+
+    private fun observeData(data: List<GraphDot>?) {
+        if (data != null) {
+            graph.setData(data)
+        }
     }
 
     private fun observeCards(data: List<CardLocal>?) {
         if (data != null) {
             val card = data[0].card
+            cardName.text = card.name
             cardImage.loadImageFromCache(card.imageUrl)
             if (data.size > 1) {
                 val secondCard = data[1].card
