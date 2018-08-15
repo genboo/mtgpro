@@ -91,7 +91,7 @@ class GraphView(context: Context, attrs: AttributeSet) : View(context, attrs) {
         if (data.isNotEmpty()) {
             val daysLineY = paddingTop + paddedHeight.toFloat()
 
-            if(data.size <= 15) {
+            if (data.size <= 15) {
                 monthPaint.color = curveNeutralColor
                 canvas.drawLine(paddingLeft.toFloat() + legendOffset, paddingTop.toFloat(),
                         paddingLeft.toFloat() + legendOffset, daysLineY,
@@ -158,8 +158,8 @@ class GraphView(context: Context, attrs: AttributeSet) : View(context, attrs) {
             }
             canvas.drawText(maxValue.toString(), paddingLeft.toFloat(), maxOffset, minMaxValues)
             canvas.drawText(minValue.toString(), paddingLeft.toFloat(), minOffset, minMaxValues)
-
-
+        } else {
+            canvas.drawText("Пока нечего показывать", width.toFloat() / 2, height.toFloat() / 2, monthPaint)
         }
     }
 
@@ -223,8 +223,10 @@ class GraphView(context: Context, attrs: AttributeSet) : View(context, attrs) {
             }
         }
 
-        topBound = maxValue + (maxValue - minValue) * .15f
-        bottomBound = minValue - (maxValue - minValue) * .15f
+        //15% снизу и сверху плюс небольшой запас, если все значения одинаковые
+        val diff = (maxValue - minValue + .01f) * .15f
+        topBound = maxValue + diff
+        bottomBound = minValue - diff
     }
 
     override fun onLayout(changed: Boolean, left: Int, top: Int, right: Int, bottom: Int) {
