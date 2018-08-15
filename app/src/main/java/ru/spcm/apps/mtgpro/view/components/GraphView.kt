@@ -60,7 +60,7 @@ class GraphView(context: Context, attrs: AttributeSet) : View(context, attrs) {
         selectedPointPaint.textSize = context.resources.getDimensionPixelSize(R.dimen.graph_days_text_size).toFloat()
         selectedPointPaint.style = Paint.Style.STROKE
 
-        selectedPointBackgroundPaint.color = ContextCompat.getColor(context, R.color.colorBackgroundMain)
+        selectedPointBackgroundPaint.color = ContextCompat.getColor(context, android.R.color.white)
         selectedPointBackgroundPaint.style = Paint.Style.FILL
 
         curvePaint.isAntiAlias = true
@@ -183,7 +183,6 @@ class GraphView(context: Context, attrs: AttributeSet) : View(context, attrs) {
 
     override fun performClick(): Boolean {
         super.performClick()
-
         return true
     }
 
@@ -198,7 +197,7 @@ class GraphView(context: Context, attrs: AttributeSet) : View(context, attrs) {
 
     private fun countToOffset(count: Float): Float {
         val offset = (count - bottomBound) * ((paddedHeight - daysTextHeight) / (topBound - bottomBound))
-        return paddingTop + paddedHeight - offset - daysTextHeight
+        return paddingTop + paddedHeight - daysTextHeight - offset
     }
 
     fun setData(data: List<GraphDot>) {
@@ -223,8 +222,9 @@ class GraphView(context: Context, attrs: AttributeSet) : View(context, attrs) {
                 minValue = dot.count
             }
         }
-        topBound = maxValue + maxValue / 3
-        bottomBound = minValue - maxValue / 3
+
+        topBound = maxValue + (maxValue - minValue) * .15f
+        bottomBound = minValue - (maxValue - minValue) * .15f
     }
 
     override fun onLayout(changed: Boolean, left: Int, top: Int, right: Int, bottom: Int) {

@@ -32,7 +32,11 @@
                     android:id="@+id/graph"
                     android:layout_width="match_parent"
                     android:layout_height="200dp"
-                    android:padding="16dp" />
+                    android:background="@drawable/bg_card"
+                    android:paddingBottom="36dp"
+                    android:paddingEnd="16dp"
+                    android:paddingStart="16dp"
+                    android:paddingTop="16dp" />
 
                 <android.support.constraint.ConstraintLayout
                     android:layout_width="match_parent"
