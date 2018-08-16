@@ -28,6 +28,8 @@
     <string name="action_seconds_side_not_found">Вторая сторона не найдена</string>
     <string name="action_network_error">Ошибка получения данных</string>
 
+    <string name="notify_update_complete">Всего обработано карт %d. Обновлено данных для %d карт.</string>
+
     <string name="rules">Правила</string>
     <string name="text">Текст</string>
     <string name="all">Всего</string>

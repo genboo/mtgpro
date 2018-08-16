@@ -1,10 +1,9 @@
 package ru.spcm.apps.mtgpro
 
-import android.app.AlarmManager
-import android.app.Application
-import android.app.PendingIntent
+import android.app.*
 import android.content.Context
 import android.content.Intent
+import android.os.Build
 import com.crashlytics.android.Crashlytics
 import com.squareup.picasso.OkHttp3Downloader
 import com.squareup.picasso.Picasso
@@ -37,7 +36,7 @@ class App : Application() {
             timeInMillis = System.currentTimeMillis()
             set(Calendar.HOUR_OF_DAY, 1)
             set(Calendar.MINUTE, 0)
-            if(this.before(Calendar.getInstance())){
+            if (this.before(Calendar.getInstance())) {
                 add(Calendar.DAY_OF_MONTH, 1)
             }
         }
@@ -51,6 +50,20 @@ class App : Application() {
                 calendar.timeInMillis,
                 AlarmManager.INTERVAL_DAY,
                 alarmIntent)
+
+        if (Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
+            val notificationChannel =
+                    NotificationChannel(NOTIFICATION_CHANNEL_ID, NOTIFICATION_CHANNEL_UPDATE, NotificationManager.IMPORTANCE_DEFAULT)
+            notificationChannel.enableLights(false)
+            notificationChannel.enableVibration(false)
+            val notificationManager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+            notificationManager.createNotificationChannel(notificationChannel)
+        }
+    }
+
+    companion object {
+        const val NOTIFICATION_CHANNEL_UPDATE = "update"
+        const val NOTIFICATION_CHANNEL_ID = "1235554"
     }
 
 }
