@@ -39,7 +39,7 @@ class GraphView(context: Context, attrs: AttributeSet) : View(context, attrs) {
     private val selectedPointBackgroundPaint = Paint()
     private val curvePaint = Paint()
 
-    private var selectedPoint = 0
+    private var selectedPoint = -1
 
     init {
         monthPaint.isAntiAlias = true
@@ -152,12 +152,14 @@ class GraphView(context: Context, attrs: AttributeSet) : View(context, attrs) {
 
             var minOffset = countToOffset(minValue)
             var maxOffset = countToOffset(maxValue)
-            if (maxOffset - minOffset < daysTextHeight) {
+            if (maxOffset - minOffset < daysTextHeight && maxValue != minValue) {
                 maxOffset -= daysTextHeight / 2
                 minOffset += daysTextHeight / 2
             }
             canvas.drawText(maxValue.toString(), paddingLeft.toFloat(), maxOffset, minMaxValues)
-            canvas.drawText(minValue.toString(), paddingLeft.toFloat(), minOffset, minMaxValues)
+            if(maxValue != minValue) {
+                canvas.drawText(minValue.toString(), paddingLeft.toFloat(), minOffset, minMaxValues)
+            }
         } else {
             canvas.drawText("Пока нечего показывать", width.toFloat() / 2, height.toFloat() / 2, monthPaint)
         }
@@ -203,7 +205,9 @@ class GraphView(context: Context, attrs: AttributeSet) : View(context, attrs) {
     fun setData(data: List<GraphDot>) {
         this.data = data
         if (data.isNotEmpty()) {
-            selectedPoint = data.size - 1
+            if(selectedPoint == -1) {
+                selectedPoint = data.size - 1
+            }
             updateMinMaxValue()
             cellWidth = paddedWidth / data.size
             invalidate()

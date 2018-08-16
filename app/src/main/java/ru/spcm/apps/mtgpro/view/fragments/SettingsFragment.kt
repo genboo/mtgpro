@@ -50,11 +50,6 @@ class SettingsFragment : BaseFragment() {
         }
     }
 
-    override fun onPrepareOptionsMenu(menu: Menu) {
-        val item = menu.findItem(R.id.nav_settings)
-        item.isVisible = false
-    }
-
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<String>, grantResults: IntArray) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
         if (requestCode == PermissionsHelper.PERMISSION_REQUEST_CODE_STORAGE && PermissionsHelper.havePermissionStorage(requireContext())) {

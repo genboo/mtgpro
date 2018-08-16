@@ -7,6 +7,7 @@ import android.support.design.widget.FloatingActionButton
 import android.support.design.widget.Snackbar
 import android.support.v4.app.Fragment
 import android.transition.TransitionInflater
+import android.view.Menu
 import android.view.View
 import kotlinx.android.synthetic.main.layout_app_bar_main.*
 import ru.spcm.apps.mtgpro.App
@@ -90,6 +91,17 @@ abstract class BaseFragment : Fragment() {
             appBar.visibility = View.VISIBLE
         }else{
             appBar.visibility = View.GONE
+        }
+    }
+
+    override fun onPrepareOptionsMenu(menu: Menu) {
+        if(this is SettingsFragment
+                || this is WatchFragment
+                || this is PriceVolatilityFragment) {
+            val sett = menu.findItem(R.id.nav_settings)
+            sett.isVisible = false
+            val watch = menu.findItem(R.id.nav_watch)
+            watch.isVisible = false
         }
     }
 

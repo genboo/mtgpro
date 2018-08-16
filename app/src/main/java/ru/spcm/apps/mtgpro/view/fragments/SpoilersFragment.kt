@@ -106,7 +106,9 @@ class SpoilersFragment : BaseFragment() {
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
-        outState.putInt("SPAN_COUNT", (list.layoutManager as GridLayoutManager).spanCount)
+        if(list != null) {
+            outState.putInt("SPAN_COUNT", (list.layoutManager as GridLayoutManager).spanCount)
+        }
         super.onSaveInstanceState(outState)
     }
 
