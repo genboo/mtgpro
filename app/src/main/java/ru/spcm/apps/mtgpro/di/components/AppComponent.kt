@@ -65,4 +65,6 @@ interface AppComponent {
 
     fun inject(receiver: AlarmReceiver)
 
+    fun inject(receiver: ReportFragment)
+
 }
