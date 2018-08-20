@@ -6,6 +6,7 @@ import android.arch.persistence.room.OnConflictStrategy
 import android.arch.persistence.room.Query
 import ru.spcm.apps.mtgpro.model.dto.CardWatched
 import ru.spcm.apps.mtgpro.model.dto.PriceHistory
+import java.util.*
 
 @Dao
 interface PriceUpdateDao {
@@ -20,5 +21,9 @@ interface PriceUpdateDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insert(item: PriceHistory)
+
+    @Query("SELECT * FROM PriceHistory ph WHERE ph.card_id = :cardId  AND date < :date  ORDER BY ph.date DESC LIMIT 1 ")
+    fun getLastPrice(cardId: String, date: Date): PriceHistory?
+
 
 }

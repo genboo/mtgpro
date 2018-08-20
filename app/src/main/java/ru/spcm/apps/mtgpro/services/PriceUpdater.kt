@@ -4,22 +4,34 @@ import android.arch.lifecycle.LiveData
 import android.arch.lifecycle.MutableLiveData
 import ru.spcm.apps.mtgpro.model.api.ScryCardApi
 import ru.spcm.apps.mtgpro.model.db.dao.PriceUpdateDao
+import ru.spcm.apps.mtgpro.model.db.dao.ReportDao
 import ru.spcm.apps.mtgpro.model.db.dao.ScryCardDao
 import ru.spcm.apps.mtgpro.model.dto.PriceHistory
+import ru.spcm.apps.mtgpro.model.dto.Report
 import ru.spcm.apps.mtgpro.model.dto.ScryCard
 import ru.spcm.apps.mtgpro.tools.AppExecutors
 import ru.spcm.apps.mtgpro.tools.Logger
 import java.io.IOException
+import java.text.DecimalFormat
+import java.text.DecimalFormatSymbols
+import java.util.*
 
 class PriceUpdater(private val appExecutors: AppExecutors,
                    private val priceUpdateDao: PriceUpdateDao,
                    private val scryCardDao: ScryCardDao,
+                   private val reportDao: ReportDao,
                    private val scryCardApi: ScryCardApi) {
 
     fun update(): LiveData<UpdateResult> {
         val result = MutableLiveData<UpdateResult>()
         appExecutors.networkIO().execute {
+            val now = Date()
+            val symbols = DecimalFormatSymbols()
+            symbols.decimalSeparator = '.'
+            val diffFormatter = DecimalFormat("###.##", symbols)
+
             val watchedCards = priceUpdateDao.getWatchedCardsList()
+            reportDao.clear()
 
             var updateCounter = 0
             watchedCards.forEach { item ->
@@ -34,12 +46,24 @@ class PriceUpdater(private val appExecutors: AppExecutors,
                         price = getPrice(item.card.set, number ?: "")
                     }
                     if (price != null) {
+                        val lastPrice = priceUpdateDao.getLastPrice(item.card.id, now)
                         priceUpdateDao.insert(PriceHistory(item.card.id, price.usd))
                         if (price.eur == null) {
                             price.eur = ""
                         }
                         scryCardDao.insert(price)
+
+                        if (lastPrice == null) {
+                            reportDao.insert(Report(item.card.id, "0.0"))
+                        } else {
+                            val diff = price.usd.toFloat() - lastPrice.price.toFloat()
+                            reportDao.insert(Report(item.card.id, diffFormatter.format(diff)))
+                        }
+
                         updateCounter++
+                    }
+                    if (updateCounter % 10 == 0) {
+                        Thread.sleep(5 * 1000)
                     }
                 }
             }

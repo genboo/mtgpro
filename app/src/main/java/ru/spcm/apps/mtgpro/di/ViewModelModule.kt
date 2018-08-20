@@ -63,6 +63,11 @@ internal abstract class ViewModelModule {
 
     @Binds
     @IntoMap
+    @ViewModelKey(ReportViewModel::class)
+    internal abstract fun bindReportViewModel(viewModel: ReportViewModel): ViewModel
+
+    @Binds
+    @IntoMap
     @ViewModelKey(WatchViewModel::class)
     internal abstract fun bindWatchViewModel(viewModel: WatchViewModel): ViewModel
 

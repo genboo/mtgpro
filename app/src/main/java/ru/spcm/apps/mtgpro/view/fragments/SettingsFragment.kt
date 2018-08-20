@@ -1,9 +1,11 @@
 package ru.spcm.apps.mtgpro.view.fragments
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.*
 import kotlinx.android.synthetic.main.fragment_settings.*
 import ru.spcm.apps.mtgpro.R
+import ru.spcm.apps.mtgpro.services.AlarmReceiver
 import ru.spcm.apps.mtgpro.tools.PermissionsHelper
 import ru.spcm.apps.mtgpro.view.activities.MainActivity
 import ru.spcm.apps.mtgpro.view.components.slideIn
@@ -29,13 +31,19 @@ class SettingsFragment : BaseFragment() {
         updateToolbar()
 
         val viewModel = getViewModel(this, SettingsViewModel::class.java)
-        saveBackup.setOnClickListener { _ -> saveBackup(viewModel) }
-        restoreBackup.setOnClickListener { _ -> restoreBackup(viewModel) }
+        saveBackup.setOnClickListener { saveBackup(viewModel) }
+        restoreBackup.setOnClickListener { restoreBackup(viewModel) }
+        updateWatchedPrices.setOnClickListener { updateWatchedPrices() }
         if (!PermissionsHelper.havePermissionStorage(requireContext())) {
             PermissionsHelper.requestLocationPermissions(this)
             saveBackup.isEnabled = false
             restoreBackup.isEnabled = false
         }
+    }
+
+    private fun updateWatchedPrices() {
+        val intent = Intent(requireContext(), AlarmReceiver::class.java)
+        activity?.sendBroadcast(intent)
     }
 
     private fun saveBackup(viewModel: SettingsViewModel) {

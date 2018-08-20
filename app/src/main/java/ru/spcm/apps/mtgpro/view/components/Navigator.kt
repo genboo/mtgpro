@@ -32,6 +32,7 @@ class Navigator(private val activity: FragmentActivity, fragmentManager: Fragmen
             SCREEN_LIBRARY -> return LibraryFragment.getInstance(data as Long)
             SCREEN_SETTINGS -> return SettingsFragment()
             SCREEN_WATCH -> return WatchFragment()
+            SCREEN_REPORT -> return ReportFragment()
         }
         return SetsFragment()
     }
@@ -99,6 +100,10 @@ class Navigator(private val activity: FragmentActivity, fragmentManager: Fragmen
         applyCommand(Forward(SCREEN_SETTINGS, null))
     }
 
+    fun goToReport() {
+        applyCommand(Forward(SCREEN_REPORT, null))
+    }
+
     fun goToWatch() {
         applyCommand(Forward(SCREEN_WATCH, null))
     }
@@ -128,6 +133,7 @@ class Navigator(private val activity: FragmentActivity, fragmentManager: Fragmen
         const val SCREEN_IMAGE = "screen_image"
         const val SCREEN_WATCH = "screen_watch"
         const val SCREEN_VOLATILITY = "screen_volatility"
+        const val SCREEN_REPORT = "screen_report"
     }
 
 }

@@ -1,5 +1,6 @@
 package ru.spcm.apps.mtgpro.view.activities
 
+import android.content.Intent
 import android.os.Bundle
 import android.support.design.widget.BottomNavigationView
 import android.support.design.widget.FloatingActionButton
@@ -11,6 +12,7 @@ import kotlinx.android.synthetic.main.activity_main.*
 import ru.spcm.apps.mtgpro.App
 import ru.spcm.apps.mtgpro.R
 import ru.spcm.apps.mtgpro.di.components.AppComponent
+import ru.spcm.apps.mtgpro.services.AlarmReceiver
 import ru.spcm.apps.mtgpro.view.components.BottomNavigationViewHelper
 import ru.spcm.apps.mtgpro.view.components.Navigator
 import ru.terrakok.cicerone.NavigatorHolder
@@ -58,6 +60,12 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
         return bottomMenu
     }
 
+    override fun onNewIntent(intent: Intent) {
+        when(intent.getStringExtra(AlarmReceiver.LAUNCH_FRAGMENT)){
+            AlarmReceiver.LAUNCH_FRAGMENT_REPORT -> navigator.goToReport()
+        }
+    }
+
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         menuInflater.inflate(R.menu.main_menu, menu)
         settingsItemMenu = menu.findItem(R.id.nav_settings)
@@ -68,6 +76,7 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
         when (item.itemId) {
             R.id.nav_settings -> navigator.goToSettings()
             R.id.nav_watch -> navigator.goToWatch()
+            R.id.nav_report -> navigator.goToReport()
         }
         return super.onOptionsItemSelected(item)
     }

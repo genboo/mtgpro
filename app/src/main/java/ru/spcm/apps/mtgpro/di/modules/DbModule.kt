@@ -39,7 +39,8 @@ class DbModule {
                         MIGRATION_4_5,
                         MIGRATION_5_6,
                         MIGRATION_6_7,
-                        MIGRATION_7_8
+                        MIGRATION_7_8,
+                        MIGRATION_8_9
                 )
                 .build()
     }
@@ -84,6 +85,12 @@ class DbModule {
     @Singleton
     internal fun providePriceUpdateDao(db: MtgDatabase): PriceUpdateDao {
         return db.priceUpdateDao()
+    }
+
+    @Provides
+    @Singleton
+    internal fun provideReportDao(db: MtgDatabase): ReportDao {
+        return db.reportDao()
     }
 
 
@@ -150,6 +157,18 @@ class DbModule {
             override fun migrate(database: SupportSQLiteDatabase) {
                 //Добавление таблицы для слежения
                 database.execSQL("CREATE INDEX index_PriceHistory_card_id ON PriceHistory (card_id)")
+            }
+        }
+
+        private val MIGRATION_8_9 = object : Migration(8, 9) {
+            override fun migrate(database: SupportSQLiteDatabase) {
+                //Добавление таблицы отчета
+                database.execSQL("CREATE TABLE Report (id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, card_id TEXT NOT NULL, diff TEXT NOT NULL)")
+                database.execSQL("CREATE INDEX index_Report_card_id ON Report (card_id)")
+
+                //Настройки
+                database.execSQL("CREATE TABLE Setting (type  TEXT NOT NULL, value TEXT NOT NULL, PRIMARY KEY (type))")
+
             }
         }
     }

@@ -12,6 +12,7 @@ import ru.spcm.apps.mtgpro.R
 import ru.spcm.apps.mtgpro.di.components.AppComponent
 import ru.spcm.apps.mtgpro.model.api.ScryCardApi
 import ru.spcm.apps.mtgpro.model.db.dao.PriceUpdateDao
+import ru.spcm.apps.mtgpro.model.db.dao.ReportDao
 import ru.spcm.apps.mtgpro.model.db.dao.ScryCardDao
 import ru.spcm.apps.mtgpro.tools.AppExecutors
 import ru.spcm.apps.mtgpro.view.activities.MainActivity
@@ -29,6 +30,9 @@ class AlarmReceiver : BroadcastReceiver() {
     lateinit var scryCardDao: ScryCardDao
 
     @Inject
+    lateinit var reportDao: ReportDao
+
+    @Inject
     lateinit var scryCardApi: ScryCardApi
 
     var component: AppComponent? = null
@@ -37,31 +41,37 @@ class AlarmReceiver : BroadcastReceiver() {
         component = (context.applicationContext as App).appComponent
         component?.inject(this)
 
-        val viewModel = PriceUpdater(appExecutors, priceUpdateDao, scryCardDao, scryCardApi)
+        val viewModel = PriceUpdater(appExecutors, priceUpdateDao, scryCardDao, reportDao, scryCardApi)
         val updateData = viewModel.update()
         updateData.observeForever(object : Observer<UpdateResult> {
             override fun onChanged(data: UpdateResult?) {
                 updateData.removeObserver(this)
                 if (data != null) {
-                    val message = String.format(context.getString(R.string.notify_update_complete, data.allCount, data.updatedCount))
-                    showNotification(context, context.getString(R.string.app_name), message)
+                    val message = context.getString(R.string.notify_update_complete, data.allCount, data.updatedCount)
+                    showNotification(context, context.getString(R.string.app_name), context.getString(R.string.notify_update_complete_annotation), message)
                 }
             }
         })
     }
 
-    private fun showNotification(context: Context, title: String, message: String) {
+    private fun showNotification(context: Context, title: String, annotation: String, message: String) {
         val intent = Intent(context, MainActivity::class.java)
-
+        intent.putExtra(LAUNCH_FRAGMENT, LAUNCH_FRAGMENT_REPORT)
         val pendingIntent = PendingIntent.getActivity(context, 0, intent, PendingIntent.FLAG_ONE_SHOT)
         val notificationManager = context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
         val builder = NotificationCompat.Builder(context, App.NOTIFICATION_CHANNEL_ID)
                 .setContentTitle(title)
-                .setContentText(message)
+                .setContentText(annotation)
                 .setSmallIcon(R.drawable.ic_black_mana)
                 .setAutoCancel(true)
+                .setStyle(NotificationCompat.BigTextStyle().bigText(message))
                 .setContentIntent(pendingIntent)
         notificationManager.notify(1, builder.build())
+    }
+
+    companion object {
+        const val LAUNCH_FRAGMENT = "launch_fragment"
+        const val LAUNCH_FRAGMENT_REPORT = "launch_fragment_report"
     }
 
 }

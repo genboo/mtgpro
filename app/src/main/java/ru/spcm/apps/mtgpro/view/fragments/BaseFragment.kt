@@ -86,22 +86,17 @@ abstract class BaseFragment : Fragment() {
         }
     }
 
-    fun toggleAppBar(visible: Boolean){
-        if(visible){
-            appBar.visibility = View.VISIBLE
-        }else{
-            appBar.visibility = View.GONE
-        }
-    }
-
     override fun onPrepareOptionsMenu(menu: Menu) {
         if(this is SettingsFragment
                 || this is WatchFragment
+                || this is ReportFragment
                 || this is PriceVolatilityFragment) {
             val sett = menu.findItem(R.id.nav_settings)
             sett.isVisible = false
             val watch = menu.findItem(R.id.nav_watch)
             watch.isVisible = false
+            val report = menu.findItem(R.id.nav_report)
+            report.isVisible = false
         }
     }
 

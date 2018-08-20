@@ -14,6 +14,7 @@
     <string name="menu_toggle">Сетка</string>
     <string name="menu_settings">Настройки</string>
     <string name="menu_watch">Отслеживание</string>
+    <string name="menu_report">Отчет</string>
     <string name="menu_link">Связать</string>
 
     <string name="action_cancel">Отменить</string>
@@ -23,12 +24,14 @@
     <string name="action_add_to_library">Добавить в библиотеку</string>
     <string name="action_make_backup">Сохранить</string>
     <string name="action_restore_backup">Восстановить</string>
+    <string name="action_update">Обновить</string>
     <string name="action_copy_to_clip">Скопировано в буфер обмена</string>
     <string name="action_apply">Применить</string>
     <string name="action_seconds_side_not_found">Вторая сторона не найдена</string>
     <string name="action_network_error">Ошибка получения данных</string>
 
     <string name="notify_update_complete">Всего обработано карт %d. Обновлено данных для %d карт.</string>
+    <string name="notify_update_complete_annotation">Обновление завершено</string>
 
     <string name="rules">Правила</string>
     <string name="text">Текст</string>
@@ -47,6 +50,7 @@
 
     <string name="backup_text">Сохранить базу данных карт на носителе.</string>
     <string name="restore_text">Восстановить базу данных карт с носителя. Все существующие данные будут удалены.</string>
+    <string name="update_watched_prices">Обновить цены.</string>
 
 
     <string name="tag_parent">parent</string>
