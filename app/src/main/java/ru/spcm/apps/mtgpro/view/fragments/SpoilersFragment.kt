@@ -7,6 +7,7 @@ import android.view.*
 import kotlinx.android.synthetic.main.fragment_spoilers.*
 import ru.spcm.apps.mtgpro.R
 import ru.spcm.apps.mtgpro.model.dto.Card
+import ru.spcm.apps.mtgpro.model.dto.Setting
 import ru.spcm.apps.mtgpro.model.tools.Resource
 import ru.spcm.apps.mtgpro.model.tools.Status
 import ru.spcm.apps.mtgpro.repository.bounds.SpoilersBound
@@ -40,7 +41,7 @@ class SpoilersFragment : BaseFragment() {
         viewModel.getSpoilers().observe(this, Observer { observeSpoilers(it) })
 
         val adapter = SpoilersListAdapter(null)
-        val layoutManager = GridLayoutManager(context, viewModel.spanCount)
+        val layoutManager = GridLayoutManager(context, getSettings().getInt(Setting.Type.LIST_COL_SIZE, 3))
         list.layoutManager = layoutManager
         list.adapter = adapter
         list.clearOnScrollListeners()
@@ -100,16 +101,9 @@ class SpoilersFragment : BaseFragment() {
             }
             layoutManager.spanCount = spanCount
             val viewModel = getViewModel(this, SpoilersViewModel::class.java)
-            viewModel.spanCount = spanCount
+            viewModel.updateSetting(Setting.Type.LIST_COL_SIZE, spanCount)
         }
         return super.onOptionsItemSelected(item)
-    }
-
-    override fun onSaveInstanceState(outState: Bundle) {
-        if(list != null) {
-            outState.putInt("SPAN_COUNT", (list.layoutManager as GridLayoutManager).spanCount)
-        }
-        super.onSaveInstanceState(outState)
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
@@ -127,7 +121,6 @@ class SpoilersFragment : BaseFragment() {
 
     companion object {
 
-        private const val SPAN_COUNT = "span_count"
         private const val ARG_SET = "set"
         private const val ARG_NAME = "name"
 

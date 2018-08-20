@@ -21,6 +21,7 @@ import ru.spcm.apps.mtgpro.model.dto.Set
     WatchedCard::class,
     Set::class,
     Reprint::class,
+    Setting::class,
     Type::class,
     Color::class,
     Supertype::class,
@@ -52,6 +53,8 @@ abstract class MtgDatabase : RoomDatabase() {
     abstract fun priceUpdateDao(): PriceUpdateDao
 
     abstract fun reportDao(): ReportDao
+
+    abstract fun settingsDao(): SettingsDao
 
     abstract fun cacheDao(): CacheDao
 }

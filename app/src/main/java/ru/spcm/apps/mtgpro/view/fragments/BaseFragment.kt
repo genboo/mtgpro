@@ -14,6 +14,7 @@ import ru.spcm.apps.mtgpro.App
 import ru.spcm.apps.mtgpro.view.activities.MainActivity
 import ru.spcm.apps.mtgpro.R
 import ru.spcm.apps.mtgpro.di.components.AppComponent
+import ru.spcm.apps.mtgpro.tools.Settings
 import ru.spcm.apps.mtgpro.view.components.Navigator
 import javax.inject.Inject
 
@@ -77,6 +78,10 @@ abstract class BaseFragment : Fragment() {
         return (activity as MainActivity).getFab()
     }
 
+    fun getSettings(): Settings {
+        return (activity as MainActivity).getSettings()
+    }
+
     fun toggleBottomMenu(visible: Boolean) {
         val bottomMenu = (activity as MainActivity).getBottomMenu()
         if (visible) {
@@ -87,7 +92,7 @@ abstract class BaseFragment : Fragment() {
     }
 
     override fun onPrepareOptionsMenu(menu: Menu) {
-        if(this is SettingsFragment
+        if (this is SettingsFragment
                 || this is WatchFragment
                 || this is ReportFragment
                 || this is PriceVolatilityFragment) {

@@ -93,6 +93,11 @@ class DbModule {
         return db.reportDao()
     }
 
+    @Provides
+    @Singleton
+    internal fun provideSettingsDao(db: MtgDatabase): SettingsDao {
+        return db.settingsDao()
+    }
 
     companion object {
         const val DB_NAME = "mtg"

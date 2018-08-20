@@ -1,5 +1,8 @@
 package ru.spcm.apps.mtgpro.view.activities
 
+import android.arch.lifecycle.Observer
+import android.arch.lifecycle.ViewModelProvider
+import android.arch.lifecycle.ViewModelProviders
 import android.content.Intent
 import android.os.Bundle
 import android.support.design.widget.BottomNavigationView
@@ -12,9 +15,12 @@ import kotlinx.android.synthetic.main.activity_main.*
 import ru.spcm.apps.mtgpro.App
 import ru.spcm.apps.mtgpro.R
 import ru.spcm.apps.mtgpro.di.components.AppComponent
+import ru.spcm.apps.mtgpro.model.dto.Setting
 import ru.spcm.apps.mtgpro.services.AlarmReceiver
+import ru.spcm.apps.mtgpro.tools.Settings
 import ru.spcm.apps.mtgpro.view.components.BottomNavigationViewHelper
 import ru.spcm.apps.mtgpro.view.components.Navigator
+import ru.spcm.apps.mtgpro.viewmodel.MainViewModel
 import ru.terrakok.cicerone.NavigatorHolder
 import javax.inject.Inject
 
@@ -23,6 +29,11 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
 
     @Inject
     lateinit var navigatorHolder: NavigatorHolder
+
+    @Inject
+    lateinit var viewModelFactory: ViewModelProvider.Factory
+
+    private val settings = Settings()
 
     val navigator by lazy { Navigator(this, supportFragmentManager, R.id.content) }
 
@@ -38,6 +49,9 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
             component?.inject(this)
         }
 
+        val viewModel = ViewModelProviders.of(this, viewModelFactory).get(MainViewModel::class.java)
+        viewModel.settings.observe(this, Observer { observeSettings(it) })
+
         bottomMenu.setOnNavigationItemSelectedListener(this)
         if (savedInstanceState == null) {
             navigator.goToCollection()
@@ -48,6 +62,12 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
         BottomNavigationViewHelper.removeShiftMode(bottomMenu)
     }
 
+    private fun observeSettings(data: List<Setting>?) {
+        if (data != null) {
+            settings.updateSettings(data)
+        }
+    }
+
     fun getView(): View {
         return drawerLayout
     }
@@ -56,12 +76,16 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
         return fab
     }
 
+    fun getSettings(): Settings {
+        return settings
+    }
+
     fun getBottomMenu(): BottomNavigationView {
         return bottomMenu
     }
 
     override fun onNewIntent(intent: Intent) {
-        when(intent.getStringExtra(AlarmReceiver.LAUNCH_FRAGMENT)){
+        when (intent.getStringExtra(AlarmReceiver.LAUNCH_FRAGMENT)) {
             AlarmReceiver.LAUNCH_FRAGMENT_REPORT -> navigator.goToReport()
         }
     }
