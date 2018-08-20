@@ -57,7 +57,8 @@ class PriceUpdater(private val appExecutors: AppExecutors,
                             reportDao.insert(Report(item.card.id, "0.0"))
                         } else {
                             val diff = price.usd.toFloat() - lastPrice.price.toFloat()
-                            reportDao.insert(Report(item.card.id, diffFormatter.format(diff)))
+                            val diffString = if (diff == 0f) "0.0" else diffFormatter.format(diff)
+                            reportDao.insert(Report(item.card.id, diffString))
                         }
 
                         updateCounter++

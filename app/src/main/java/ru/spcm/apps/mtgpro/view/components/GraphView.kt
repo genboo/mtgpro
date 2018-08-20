@@ -41,6 +41,13 @@ class GraphView(context: Context, attrs: AttributeSet) : View(context, attrs) {
 
     private var selectedPoint = -1
 
+    private var isCubicCurve = true
+        set(value) {
+            field = value
+            invalidate()
+        }
+    private var isLegendClick = false
+
     init {
         monthPaint.isAntiAlias = true
         monthPaint.color = ContextCompat.getColor(context, R.color.colorAccent)
@@ -91,77 +98,90 @@ class GraphView(context: Context, attrs: AttributeSet) : View(context, attrs) {
         if (data.isNotEmpty()) {
             val daysLineY = paddingTop + paddedHeight.toFloat()
 
-            if (data.size <= 15) {
-                monthPaint.color = curveNeutralColor
-                canvas.drawLine(paddingLeft.toFloat() + legendOffset, paddingTop.toFloat(),
-                        paddingLeft.toFloat() + legendOffset, daysLineY,
-                        monthPaint)
-                monthPaint.color = selectedPointPaint.color
-            }
+            drawDecors(canvas, daysLineY)
+            drawCurve(canvas)
+            drawDaysAndPointers(canvas, daysLineY)
 
-            canvas.drawLine(paddingLeft.toFloat(), daysLineY - daysTextHeight,
-                    paddingLeft + paddedWidth.toFloat() + legendOffset, daysLineY - daysTextHeight,
-                    monthPaint)
-
-            var col = 1
-            var prevX = 0f
-            var prevY = 0f
-            data.forEach { dot ->
-                val x = paddingLeft.toFloat() + legendOffset + col * cellWidth - cellWidth / 2
-                val y = countToOffset(dot.count)
-                curvePath.reset()
-                if (col == 1) {
-                    curvePath.moveTo(x, y)
-                } else {
-                    curvePath.moveTo(prevX, prevY)
-                    curvePath.cubicTo(prevX + cellWidth / 2, prevY, prevX + cellWidth / 2, y, x, y)
-                    curvePaint.color = when {
-                        (prevY > y) -> curvePositiveColor
-                        (prevY < y) -> curveNegativeColor
-                        else -> curveNeutralColor
-                    }
-                }
-                canvas.drawPath(curvePath, curvePaint)
-                col++
-                prevX = x
-                prevY = y
-            }
-
-            col = 1
-            data.forEach { dot ->
-                val x = paddingLeft.toFloat() + legendOffset + col * cellWidth - cellWidth / 2
-                val y = countToOffset(dot.count)
-
-                if (data.size > 15 && (col == 1 || col == data.size - 1 || col % 5 == 0) && col + 1 != data.size - 1 || data.size <= 15) {
-                    val day = dot.date.substringAfterLast("-")
-                    canvas.drawText(day, x, daysLineY, monthPaint)
-                }
-
-                if (col - 1 == selectedPoint) {
-                    canvas.drawCircle(x, y, countSelectedRadius, selectedPointBackgroundPaint)
-                    canvas.drawCircle(x, y, countSelectedRadius, selectedPointPaint)
-                    canvas.drawText(dot.count.toString(), x, y - daysTextHeight, monthPaint)
-                } else {
-                    canvas.drawCircle(x, y, countRadius, monthPaint)
-                }
-
-                col++
-                prevX = x
-                prevY = y
-            }
-
-            var minOffset = countToOffset(minValue)
-            var maxOffset = countToOffset(maxValue)
-            if (maxOffset - minOffset < daysTextHeight && maxValue != minValue) {
-                maxOffset -= daysTextHeight / 2
-                minOffset += daysTextHeight / 2
-            }
-            canvas.drawText(maxValue.toString(), paddingLeft.toFloat(), maxOffset, minMaxValues)
-            if(maxValue != minValue) {
-                canvas.drawText(minValue.toString(), paddingLeft.toFloat(), minOffset, minMaxValues)
-            }
         } else {
             canvas.drawText("Пока нечего показывать", width.toFloat() / 2, height.toFloat() / 2, monthPaint)
+        }
+    }
+
+    private fun drawDecors(canvas: Canvas, daysLineY: Float) {
+        //Вертикальная линия между графом и минимальным\максимальным значениями
+        if (data.size <= 15) {
+            monthPaint.color = curveNeutralColor
+            canvas.drawLine(paddingLeft.toFloat() + legendOffset, paddingTop.toFloat(),
+                    paddingLeft.toFloat() + legendOffset, daysLineY,
+                    monthPaint)
+            monthPaint.color = selectedPointPaint.color
+        }
+
+        //Горизонтальная линия над днями
+        canvas.drawLine(paddingLeft.toFloat(), daysLineY - daysTextHeight,
+                paddingLeft + paddedWidth.toFloat() + legendOffset, daysLineY - daysTextHeight,
+                monthPaint)
+
+        //Минимальное/максимальное знаячения
+        var minOffset = countToOffset(minValue)
+        var maxOffset = countToOffset(maxValue)
+        if (maxOffset - minOffset < daysTextHeight && maxValue != minValue) {
+            maxOffset -= daysTextHeight / 2
+            minOffset += daysTextHeight / 2
+        }
+        canvas.drawText(maxValue.toString(), paddingLeft.toFloat(), maxOffset, minMaxValues)
+        if (maxValue != minValue) {
+            canvas.drawText(minValue.toString(), paddingLeft.toFloat(), minOffset, minMaxValues)
+        }
+    }
+
+    private fun drawCurve(canvas: Canvas) {
+        var prevX = 0f
+        var prevY = 0f
+        for (i in 1..data.size) {
+            val dot = data[i - 1]
+            val x = paddingLeft.toFloat() + legendOffset + i * cellWidth - cellWidth / 2
+            val y = countToOffset(dot.count)
+            curvePath.reset()
+            if (i == 1) {
+                curvePath.moveTo(x, y)
+            } else {
+                curvePath.moveTo(prevX, prevY)
+                if (isCubicCurve) {
+                    curvePath.cubicTo(prevX + cellWidth / 2, prevY, prevX + cellWidth / 2, y, x, y)
+                } else {
+                    curvePath.lineTo(x, y)
+                }
+                curvePaint.color = when {
+                    (prevY > y) -> curvePositiveColor
+                    (prevY < y) -> curveNegativeColor
+                    else -> curveNeutralColor
+                }
+            }
+            canvas.drawPath(curvePath, curvePaint)
+            prevX = x
+            prevY = y
+        }
+    }
+
+    private fun drawDaysAndPointers(canvas: Canvas, daysLineY: Float) {
+        for (i in 1..data.size) {
+            val dot = data[i - 1]
+            val x = paddingLeft.toFloat() + legendOffset + i * cellWidth - cellWidth / 2
+            val y = countToOffset(dot.count)
+
+            if (data.size > 15 && (i == 1 || i == data.size - 1 || i % 5 == 0) && i + 1 != data.size - 1 || data.size <= 15) {
+                val day = dot.date.substringAfterLast("-")
+                canvas.drawText(day, x, daysLineY, monthPaint)
+            }
+
+            if (i - 1 == selectedPoint) {
+                canvas.drawCircle(x, y, countSelectedRadius, selectedPointBackgroundPaint)
+                canvas.drawCircle(x, y, countSelectedRadius, selectedPointPaint)
+                canvas.drawText(dot.count.toString(), x, y - daysTextHeight, monthPaint)
+            } else {
+                canvas.drawCircle(x, y, countRadius, monthPaint)
+            }
         }
     }
 
@@ -169,15 +189,30 @@ class GraphView(context: Context, attrs: AttributeSet) : View(context, attrs) {
         val x = (event.x + 0.5f).toInt()
         val action = event.action
         when (action) {
-            MotionEvent.ACTION_MOVE, MotionEvent.ACTION_DOWN -> {
-                val touchedPoint = getNearestPoint(x)
-                if (selectedPoint != touchedPoint) {
-                    selectedPoint = touchedPoint
-                    invalidate()
+            MotionEvent.ACTION_DOWN -> {
+                if (x < paddingLeft + legendOffset) {
+                    isLegendClick = true
+                }
+            }
+            MotionEvent.ACTION_MOVE -> {
+                if (!isLegendClick) {
+                    val touchedPoint = getNearestPoint(x)
+                    if (selectedPoint != touchedPoint) {
+                        selectedPoint = touchedPoint
+                        invalidate()
+                    }
                 }
             }
             MotionEvent.ACTION_UP -> {
+                if (isLegendClick) {
+                    isLegendClick = false
+                    isCubicCurve != isCubicCurve
+                    invalidate()
+                }
                 performClick()
+            }
+            MotionEvent.ACTION_CANCEL -> {
+                isLegendClick = false
             }
         }
         return true
@@ -205,7 +240,7 @@ class GraphView(context: Context, attrs: AttributeSet) : View(context, attrs) {
     fun setData(data: List<GraphDot>) {
         this.data = data
         if (data.isNotEmpty()) {
-            if(selectedPoint == -1) {
+            if (selectedPoint == -1) {
                 selectedPoint = data.size - 1
             }
             updateMinMaxValue()

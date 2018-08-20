@@ -14,7 +14,7 @@ class ReportHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         cardName.text = item.name
         cardDiff.text = item.diff
         when {
-            item.diff == "0.0" -> cardDiff.setTextColor(ContextCompat.getColor(cardDiff.context, R.color.colorNoColor))
+            item.diff.toFloat() == 0f -> cardDiff.setTextColor(ContextCompat.getColor(cardDiff.context, R.color.colorNoColor))
             item.diff.toFloat() < 0 -> cardDiff.setTextColor(ContextCompat.getColor(cardDiff.context, R.color.colorRed))
             else -> cardDiff.setTextColor(ContextCompat.getColor(cardDiff.context, R.color.colorGreen))
         }
