@@ -206,7 +206,7 @@ class GraphView(context: Context, attrs: AttributeSet) : View(context, attrs) {
             MotionEvent.ACTION_UP -> {
                 if (isLegendClick) {
                     isLegendClick = false
-                    isCubicCurve != isCubicCurve
+                    isCubicCurve = !isCubicCurve
                     invalidate()
                 }
                 performClick()
