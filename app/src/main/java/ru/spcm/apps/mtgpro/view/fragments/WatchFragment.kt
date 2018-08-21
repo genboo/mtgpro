@@ -33,16 +33,6 @@ class WatchFragment : BaseFragment() {
         viewModel.cards.observe(this, Observer { adapter.submitList(it) })
     }
 
-    override fun onResume() {
-        super.onResume()
-        toggleBottomMenu(false)
-    }
-
-    override fun onPause() {
-        super.onPause()
-        toggleBottomMenu(true)
-    }
-
     override fun inject() {
         component?.inject(this)
     }
