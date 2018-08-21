@@ -12,11 +12,6 @@
         android:title="@string/menu_spoilers" />
 
     <item
-        android:id="@+id/nav_libraries"
-        android:icon="@drawable/ic_cards"
-        android:title="@string/menu_libraries" />
-
-    <item
         android:id="@+id/nav_wish_list"
         android:icon="@drawable/ic_heart_outline"
         android:title="@string/menu_wish" />
@@ -25,5 +20,10 @@
         android:id="@+id/nav_search"
         android:icon="@drawable/ic_magnify"
         android:title="@string/menu_search" />
+
+    <item
+        android:id="@+id/nav_more"
+        android:icon="@drawable/ic_dots_vertical"
+        android:title="@string/menu_more" />
 
 </menu>

@@ -91,20 +91,6 @@ abstract class BaseFragment : Fragment() {
         }
     }
 
-    override fun onPrepareOptionsMenu(menu: Menu) {
-        if (this is SettingsFragment
-                || this is WatchFragment
-                || this is ReportFragment
-                || this is PriceVolatilityFragment) {
-            val sett = menu.findItem(R.id.nav_settings)
-            sett.isVisible = false
-            val watch = menu.findItem(R.id.nav_watch)
-            watch.isVisible = false
-            val report = menu.findItem(R.id.nav_report)
-            report.isVisible = false
-        }
-    }
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {

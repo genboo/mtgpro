@@ -33,6 +33,7 @@ class Navigator(private val activity: FragmentActivity, fragmentManager: Fragmen
             SCREEN_SETTINGS -> return SettingsFragment()
             SCREEN_WATCH -> return WatchFragment()
             SCREEN_REPORT -> return ReportFragment()
+            SCREEN_MORE -> return MoreFragment()
         }
         return SetsFragment()
     }
@@ -73,11 +74,15 @@ class Navigator(private val activity: FragmentActivity, fragmentManager: Fragmen
     }
 
     fun goToLibraries() {
-        applyCommands(arrayOf(BackTo(null), Replace(SCREEN_LIBRARIES, "")))
+        applyCommand(Forward(SCREEN_LIBRARIES, ""))
     }
 
     fun goToSearch() {
         applyCommands(arrayOf(BackTo(null), Replace(SCREEN_SEARCH, "")))
+    }
+
+    fun goToMore() {
+        applyCommands(arrayOf(BackTo(null), Replace(SCREEN_MORE, "")))
     }
 
     fun goToSearch(search: String) {
@@ -134,6 +139,7 @@ class Navigator(private val activity: FragmentActivity, fragmentManager: Fragmen
         const val SCREEN_WATCH = "screen_watch"
         const val SCREEN_VOLATILITY = "screen_volatility"
         const val SCREEN_REPORT = "screen_report"
+        const val SCREEN_MORE = "screen_more"
     }
 
 }
