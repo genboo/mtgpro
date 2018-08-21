@@ -14,7 +14,7 @@ interface ReportDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insert(item: Report)
 
-    @Query("SELECT c.id, c.name, c.imageUrl, r.diff FROM Report r LEFT JOIN Card c ON r.card_id = c.id")
+    @Query("SELECT c.id, c.name, c.imageUrl, r.diff, (SELECT price FROM PriceHistory pc WHERE pc.card_id = c.id ORDER BY date DESC) as price FROM Report r LEFT JOIN Card c ON r.card_id = c.id")
     fun getReport(): LiveData<List<ReportCard>>
 
     @Query("DELETE FROM Report")

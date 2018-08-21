@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
 <android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -7,53 +8,65 @@
     android:layout_marginBottom="2dp"
     android:layout_marginLeft="4dp"
     android:layout_marginRight="4dp"
-    android:layout_marginTop="2dp"
+    android:layout_marginTop="4dp"
     android:clickable="true"
     android:focusable="true"
     app:cardCornerRadius="5dp"
-    app:cardElevation="2dp">
+    app:cardElevation="2dp"
+    tools:layout_width="180dp">
 
     <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:foreground="?android:attr/selectableItemBackgroundBorderless">
+        android:foreground="?android:attr/selectableItemBackgroundBorderless"
+        android:paddingBottom="8dp">
+
+        <android.support.constraint.Guideline
+            android:id="@+id/left"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_begin="8dp" />
+
+        <android.support.constraint.Guideline
+            android:id="@+id/right"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_end="8dp" />
 
         <ImageView
             android:id="@+id/cardImage"
-            android:layout_width="96dp"
+            android:layout_width="0dp"
             android:layout_height="0dp"
             android:contentDescription="@string/app_name"
+            android:scaleType="centerCrop"
             android:src="@drawable/pic_card_back"
-            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintDimensionRatio="223:311"
             app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <RelativeLayout
+        <TextView
+            android:id="@+id/cardViol"
+            style="@style/TextView.Price"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            app:layout_constraintLeft_toLeftOf="@id/left"
+            app:layout_constraintTop_toBottomOf="@id/cardImage"
+            tools:text="0.2" />
+
+        <TextView
+            android:id="@+id/cardPrice"
+            style="@style/TextView.Price"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:padding="8dp"
-            app:layout_constraintLeft_toRightOf="@id/cardImage"
-            app:layout_constraintRight_toRightOf="parent">
-
-            <TextView
-                android:id="@+id/cardName"
-                style="@style/TextView.Main.Title"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:ellipsize="end"
-                android:maxLines="2"
-                tools:text="Аватара пробуждающегося солнца" />
-
-            <TextView
-                android:id="@+id/cardDiff"
-                style="@style/TextView.Main.Title"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/cardName"
-                android:maxLines="1"
-                tools:text="- 1.2" />
-        </RelativeLayout>
+            android:gravity="end"
+            app:layout_constraintLeft_toRightOf="@id/cardViol"
+            app:layout_constraintRight_toRightOf="@id/right"
+            app:layout_constraintTop_toTopOf="@id/cardViol"
+            tools:text="10.1 usd" />
 
     </android.support.constraint.ConstraintLayout>
 

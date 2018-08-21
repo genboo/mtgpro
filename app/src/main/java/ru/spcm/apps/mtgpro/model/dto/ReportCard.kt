@@ -12,6 +12,8 @@ class ReportCard {
 
     var name: String = ""
 
+    var price: String = ""
+
     var imageUrl: String = ""
 
 }

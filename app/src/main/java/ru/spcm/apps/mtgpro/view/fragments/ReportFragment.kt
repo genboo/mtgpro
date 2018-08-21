@@ -2,6 +2,7 @@ package ru.spcm.apps.mtgpro.view.fragments
 
 import android.arch.lifecycle.Observer
 import android.os.Bundle
+import android.support.v7.widget.GridLayoutManager
 import android.support.v7.widget.LinearLayoutManager
 import android.view.LayoutInflater
 import android.view.View
@@ -29,7 +30,7 @@ class ReportFragment : BaseFragment() {
         viewModel.report.observe(this, Observer { observeReport(it) })
 
         val adapter = ReportListAdapter(null)
-        list.layoutManager = LinearLayoutManager(requireContext())
+        list.layoutManager = GridLayoutManager(requireContext(), 3)
         list.adapter = adapter
 
         adapter.setOnItemClickListener { _, item, _ -> navigator.goToPriceVolatility(item.id) }
