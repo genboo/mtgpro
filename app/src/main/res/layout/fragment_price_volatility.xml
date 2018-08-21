@@ -34,7 +34,7 @@
                     android:id="@+id/graph"
                     android:layout_width="match_parent"
                     android:layout_height="200dp"
-                    android:background="@drawable/bg_card"
+                    android:background="@drawable/bg_shadow"
                     android:paddingBottom="36dp"
                     android:paddingEnd="16dp"
                     android:paddingStart="16dp"
