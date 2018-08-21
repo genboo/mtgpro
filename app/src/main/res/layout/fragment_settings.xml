@@ -1,9 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.design.widget.CoordinatorLayout
-    android:id="@+id/main_coordinator_layout"
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main_coordinator_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/colorBackgroundMain"
@@ -12,19 +11,21 @@
     <include
         layout="@layout/layout_app_bar_main"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content" />
 
     <android.support.v4.widget.NestedScrollView
         android:id="@+id/main"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:clipToPadding="false"
+        android:paddingBottom="?android:attr/actionBarSize"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingBottom="?android:attr/actionBarSize"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:paddingBottom="?android:attr/actionBarSize">
 
             <android.support.v7.widget.CardView
                 android:layout_width="match_parent"
@@ -42,7 +43,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="4dp"
-                        android:text="@string/backup_text"/>
+                        android:text="@string/backup_text" />
 
                     <Button
                         android:id="@+id/saveBackup"
@@ -50,7 +51,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/action_make_backup"
-                        android:textColor="@color/colorAccent"/>
+                        android:textColor="@color/colorAccent" />
 
                 </LinearLayout>
             </android.support.v7.widget.CardView>
@@ -71,7 +72,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="4dp"
-                        android:text="@string/restore_text"/>
+                        android:text="@string/restore_text" />
 
                     <Button
                         android:id="@+id/restoreBackup"
@@ -79,7 +80,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/action_restore_backup"
-                        android:textColor="@color/colorAccent"/>
+                        android:textColor="@color/colorAccent" />
 
                 </LinearLayout>
             </android.support.v7.widget.CardView>
@@ -100,7 +101,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="4dp"
-                        android:text="@string/update_watched_prices"/>
+                        android:text="@string/update_watched_prices" />
 
                     <Button
                         android:id="@+id/updateWatchedPrices"
@@ -108,7 +109,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/action_update"
-                        android:textColor="@color/colorAccent"/>
+                        android:textColor="@color/colorAccent" />
 
                 </LinearLayout>
             </android.support.v7.widget.CardView>
