@@ -63,7 +63,13 @@ class PriceUpdater(private val appExecutors: AppExecutors,
 
                         updateCounter++
                     }
-                    if (updateCounter % 10 == 0) {
+                    if (updateCounter % 10 == 0 && updateCounter < watchedCards.size) {
+                        appExecutors.mainThread().execute {
+                            val data = UpdateResult()
+                            data.allCount = watchedCards.size
+                            data.currentCard = updateCounter
+                            result.postValue(data)
+                        }
                         Thread.sleep(5 * 1000)
                     }
                 }

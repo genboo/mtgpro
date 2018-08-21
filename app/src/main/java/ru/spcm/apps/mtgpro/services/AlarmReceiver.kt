@@ -1,5 +1,6 @@
 package ru.spcm.apps.mtgpro.services
 
+import android.app.Notification
 import android.app.NotificationManager
 import android.app.PendingIntent
 import android.arch.lifecycle.Observer
@@ -41,20 +42,30 @@ class AlarmReceiver : BroadcastReceiver() {
         component = (context.applicationContext as App).appComponent
         component?.inject(this)
 
+        showNotification(context, context.getString(R.string.app_name),
+                context.getString(R.string.notify_update_notification),
+                context.getString(R.string.notify_update_notification),
+                true)
+
         val viewModel = PriceUpdater(appExecutors, priceUpdateDao, scryCardDao, reportDao, scryCardApi)
         val updateData = viewModel.update()
         updateData.observeForever(object : Observer<UpdateResult> {
             override fun onChanged(data: UpdateResult?) {
-                updateData.removeObserver(this)
                 if (data != null) {
-                    val message = context.getString(R.string.notify_update_complete, data.allCount, data.updatedCount)
-                    showNotification(context, context.getString(R.string.app_name), context.getString(R.string.notify_update_complete_annotation), message)
+                    if(data.currentCard == 0) {
+                        updateData.removeObserver(this)
+                        val message = context.getString(R.string.notify_update_complete, data.allCount, data.updatedCount)
+                        showNotification(context, context.getString(R.string.app_name), context.getString(R.string.notify_update_complete_annotation), message)
+                    }else{
+                        val message = context.getString(R.string.notify_update_progress, data.currentCard, data.allCount)
+                        showNotification(context, context.getString(R.string.app_name), context.getString(R.string.notify_update_progress_annotation), message)
+                    }
                 }
             }
         })
     }
 
-    private fun showNotification(context: Context, title: String, annotation: String, message: String) {
+    private fun showNotification(context: Context, title: String, annotation: String, message: String, permanent: Boolean = false) {
         val intent = Intent(context, MainActivity::class.java)
         intent.putExtra(LAUNCH_FRAGMENT, LAUNCH_FRAGMENT_REPORT)
         val pendingIntent = PendingIntent.getActivity(context, 0, intent, PendingIntent.FLAG_ONE_SHOT)
@@ -66,7 +77,11 @@ class AlarmReceiver : BroadcastReceiver() {
                 .setAutoCancel(true)
                 .setStyle(NotificationCompat.BigTextStyle().bigText(message))
                 .setContentIntent(pendingIntent)
-        notificationManager.notify(1, builder.build())
+        val notification = builder.build()
+        if (permanent) {
+            notification.flags = notification.flags or Notification.FLAG_NO_CLEAR
+        }
+        notificationManager.notify(1, notification)
     }
 
     companion object {

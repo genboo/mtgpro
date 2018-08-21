@@ -32,7 +32,10 @@
     <string name="action_network_error">Ошибка получения данных</string>
 
     <string name="notify_update_complete">Всего обработано карт %d. Обновлено данных для %d карт.</string>
+    <string name="notify_update_progress">Обработано карт %d из %d.</string>
     <string name="notify_update_complete_annotation">Обновление завершено</string>
+    <string name="notify_update_progress_annotation">Обновление в процессе</string>
+    <string name="notify_update_notification">Обновление началось</string>
 
     <string name="rules">Правила</string>
     <string name="text">Текст</string>
