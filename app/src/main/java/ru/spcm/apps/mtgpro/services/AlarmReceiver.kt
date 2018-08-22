@@ -58,7 +58,7 @@ class AlarmReceiver : BroadcastReceiver() {
                         showNotification(context, context.getString(R.string.app_name), context.getString(R.string.notify_update_complete_annotation), message)
                     } else {
                         val message = context.getString(R.string.notify_update_progress, data.currentCard, data.allCount)
-                        showNotification(context, context.getString(R.string.app_name), context.getString(R.string.notify_update_progress_annotation), message)
+                        showNotification(context, context.getString(R.string.app_name), context.getString(R.string.notify_update_progress_annotation), message, true)
                     }
                 }
             }
@@ -78,6 +78,9 @@ class AlarmReceiver : BroadcastReceiver() {
                 .setAutoCancel(true)
                 .setStyle(NotificationCompat.BigTextStyle().bigText(message))
                 .setContentIntent(pendingIntent)
+        if (permanent) {
+            builder.setOngoing(true)
+        }
         val notification = builder.build()
         if (permanent) {
             notification.flags = notification.flags or Notification.FLAG_NO_CLEAR

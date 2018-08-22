@@ -147,6 +147,8 @@ class CardFragment : BaseFragment() {
                 priceLoader.fadeOut()
                 priceGroup.fadeIn()
             } else if (data.status == Status.ERROR) {
+                priceLoader.fadeOut()
+                loadPrices.fadeIn()
                 showSnack(R.string.action_network_error, null)
             }
         }
