@@ -129,7 +129,7 @@ data class Card(@PrimaryKey @NonNull var id: String) {
         if (rulings != null) {
             val textRules = StringBuilder()
             for (rule in rulings) {
-                textRules.append(rule.text).append("\n\n")
+                textRules.append(rule.text).append("\n")
             }
             rulesText = textRules.toString()
         }
