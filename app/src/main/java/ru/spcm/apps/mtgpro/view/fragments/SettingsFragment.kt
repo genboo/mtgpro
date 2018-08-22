@@ -50,7 +50,7 @@ class SettingsFragment : BaseFragment() {
 
     private fun updateWatchedPrices() {
         val intent = Intent(requireContext(), AlarmReceiver::class.java)
-        intent.putExtra("force", true)
+        intent.putExtra(AlarmReceiver.FORCE, true)
         activity?.sendBroadcast(intent)
     }
 

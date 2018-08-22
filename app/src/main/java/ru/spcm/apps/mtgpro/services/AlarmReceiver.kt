@@ -11,7 +11,6 @@ import android.support.v4.app.NotificationCompat
 import ru.spcm.apps.mtgpro.App
 import ru.spcm.apps.mtgpro.R
 import ru.spcm.apps.mtgpro.di.components.AppComponent
-import ru.spcm.apps.mtgpro.repository.BackupRepo
 import ru.spcm.apps.mtgpro.view.activities.MainActivity
 import javax.inject.Inject
 
@@ -28,7 +27,7 @@ class AlarmReceiver : BroadcastReceiver() {
     override fun onReceive(context: Context, intent: Intent) {
         component = (context.applicationContext as App).appComponent
         component?.inject(this)
-        if (!intent.getBooleanExtra("force", false)) {
+        if (!intent.getBooleanExtra(FORCE, false)) {
             backupSaver.backup(context)
         }
 
@@ -80,6 +79,7 @@ class AlarmReceiver : BroadcastReceiver() {
     companion object {
         const val LAUNCH_FRAGMENT = "launch_fragment"
         const val LAUNCH_FRAGMENT_REPORT = "launch_fragment_report"
+        const val FORCE = "force"
     }
 
 }
