@@ -52,11 +52,11 @@ class AlarmReceiver : BroadcastReceiver() {
         updateData.observeForever(object : Observer<UpdateResult> {
             override fun onChanged(data: UpdateResult?) {
                 if (data != null) {
-                    if(data.currentCard == 0) {
+                    if (data.currentCard == 0) {
                         updateData.removeObserver(this)
                         val message = context.getString(R.string.notify_update_complete, data.allCount, data.updatedCount)
                         showNotification(context, context.getString(R.string.app_name), context.getString(R.string.notify_update_complete_annotation), message)
-                    }else{
+                    } else {
                         val message = context.getString(R.string.notify_update_progress, data.currentCard, data.allCount)
                         showNotification(context, context.getString(R.string.app_name), context.getString(R.string.notify_update_progress_annotation), message)
                     }
@@ -73,6 +73,7 @@ class AlarmReceiver : BroadcastReceiver() {
         val builder = NotificationCompat.Builder(context, App.NOTIFICATION_CHANNEL_ID)
                 .setContentTitle(title)
                 .setContentText(annotation)
+                .setVibrate(null)
                 .setSmallIcon(R.drawable.ic_black_mana)
                 .setAutoCancel(true)
                 .setStyle(NotificationCompat.BigTextStyle().bigText(message))

@@ -98,4 +98,12 @@
         <item name="android:textColor">@android:color/white</item>
     </style>
 
+    <style name="ImageButton.Card" parent="Widget.AppCompat.ImageButton">
+        <item name="android:background">?android:attr/selectableItemBackgroundBorderless</item>
+        <item name="android:layout_width">38dp</item>
+        <item name="android:layout_height">38dp</item>
+        <item name="android:tint">@color/colorAccent</item>
+        <item name="android:padding">4dp</item>
+    </style>
+
 </resources>

@@ -1,10 +1,6 @@
 package ru.spcm.apps.mtgpro.view.fragments
 
 import android.arch.lifecycle.Observer
-import android.content.ClipData
-import android.content.ClipboardManager
-import android.content.Context
-import android.graphics.PorterDuff
 import android.os.Bundle
 import android.os.Handler
 import android.support.v4.content.ContextCompat
@@ -81,21 +77,9 @@ class CardFragment : BaseFragment() {
 
         addToLibrary.setOnClickListener { addDialog.show() }
 
-        cardName.setOnClickListener { _ ->
-            val clipboard = requireActivity().getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
-            val clip = ClipData.newPlainText("multivers id", cardName.tag.toString())
-            clipboard.primaryClip = clip
-            showSnack(R.string.action_copy_to_clip, null)
-        }
-
         loadPrices.setOnClickListener { _ ->
-            prices.slideIn(Gravity.END)
             viewModel.loadPrices(card.set, card.number
                     ?: "").observe(this, Observer { observerPrices(it) })
-        }
-
-        prices.setOnClickListener {
-            prices.slideOut(Gravity.END)
         }
 
         initAddToLibraryDialog(viewModel)
@@ -108,18 +92,11 @@ class CardFragment : BaseFragment() {
             updateTitle(firstCard.card.name)
             cardImage.loadImageFromCache(firstCard.card.imageUrl)
             cardImage.setOnClickListener { navigator.goToImage(firstCard.card.id, firstCard.card.imageUrl) }
-            cardName.text = firstCard.card.name
-            cardName.tag = firstCard.card.id
-            cardRarity.setColorFilter(ContextCompat.getColor(requireContext(), firstCard.card.getSetIconColor()), PorterDuff.Mode.SRC_IN)
-            cardRarity.setImageDrawable(resources.getDrawable(firstCard.card.getSetIcon(), requireContext().theme))
-            cardNumber.text = String.format("%s %s", firstCard.card.set, firstCard.card.numberFormatted)
-            cardManaCost.text =
-                    OracleReplacer.getText(firstCard.card.manaCost ?: "", requireActivity())
-
-            cardText.setOnClickListener { cardOracle.toggle() }
-            cardOracle.text = OracleReplacer.getText(firstCard.card.text
-                    ?: "", requireActivity())
-            cardOracle.setExpandListener(ExpandListener(cardOracleArrow))
+            var text = firstCard.card.text
+            if (firstCard.card.flavor != null) {
+                text += "\n" + "<i>" + firstCard.card.flavor + "</i>"
+            }
+            cardOracle.text = OracleReplacer.getText(text ?: "", requireActivity())
 
             cardRulesTitle.setOnClickListener { cardRules.toggle() }
             cardRules.text = OracleReplacer.getText(firstCard.card.rulesText
@@ -137,8 +114,8 @@ class CardFragment : BaseFragment() {
                 val secondCard = data[1]
                 cardImageSecond.loadImageFromCache(secondCard.card.imageUrl)
                 cardImageSecond.setOnClickListener { navigator.goToImage(secondCard.card.id, secondCard.card.imageUrl) }
-                cardOracle.text = OracleReplacer.getText(firstCard.card.text + "\n\n"
-                        + secondCard.card.name + "\n\n"
+                cardOracle.text = OracleReplacer.getText(firstCard.card.text + "\n"
+                        + secondCard.card.name + "\n"
                         + secondCard.card.text, requireActivity())
             }
 
@@ -160,6 +137,7 @@ class CardFragment : BaseFragment() {
         if (data != null) {
             if (data.status == Status.LOADING) {
                 priceLoader.fadeIn()
+                loadPrices.fadeOut()
             } else if (data.status == Status.SUCCESS && data.data != null) {
                 val scryCard: ScryCard = data.data
                 val stringBuilder = SpannableStringBuilder()
@@ -169,7 +147,6 @@ class CardFragment : BaseFragment() {
                 priceLoader.fadeOut()
                 priceGroup.fadeIn()
             } else if (data.status == Status.ERROR) {
-                prices.fadeOut()
                 showSnack(R.string.action_network_error, null)
             }
         }
