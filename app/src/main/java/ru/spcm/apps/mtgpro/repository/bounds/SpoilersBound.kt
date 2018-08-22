@@ -69,7 +69,7 @@ class SpoilersBound(appExecutors: AppExecutors,
     companion object {
         private const val METHOD = "spoilers"
         val TYPE: String = Card::class.java.simpleName + "::" + SpoilersBound.METHOD
-        const val EXPIRE: Int = 1000 * 60 * 60 * 24 * 24
+        const val EXPIRE: Long = 1000 * 60 * 60 * 24 * 90L
         const val PAGES_SIZE = 21
     }
 

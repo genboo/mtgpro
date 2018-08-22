@@ -27,7 +27,7 @@ constructor(appExecutors: AppExecutors) : NetworkBound<R, Q>(appExecutors) {
     }
 
     @WorkerThread
-    fun getCacheTime(cacheTime: CacheTime?): Int {
+    fun getCacheTime(cacheTime: CacheTime?): Long {
         return cacheTime?.time ?: DEFAULT_CACHE_TIME
     }
 
@@ -39,7 +39,7 @@ constructor(appExecutors: AppExecutors) : NetworkBound<R, Q>(appExecutors) {
     protected abstract fun loadCacheTime(): LiveData<Cache>
 
     companion object {
-        private const val DEFAULT_CACHE_TIME = 15 * 24 * 60 * 60 * 1000
+        private const val DEFAULT_CACHE_TIME = 15 * 24 * 60 * 60 * 1000L
     }
 
 }

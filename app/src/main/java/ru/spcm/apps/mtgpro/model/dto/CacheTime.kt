@@ -9,4 +9,4 @@ import android.arch.persistence.room.PrimaryKey
 data class CacheTime(@PrimaryKey
                      @ColumnInfo(name = "cache_type")
                      val cacheType: String,
-                     val time: Int)
+                     val time: Long)

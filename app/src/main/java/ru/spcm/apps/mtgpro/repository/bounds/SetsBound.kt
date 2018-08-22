@@ -57,7 +57,7 @@ class SetsBound(appExecutors: AppExecutors,
 
     companion object {
         private const val METHOD = "sets"
-        const val EXPIRE: Int = 1000 * 60 * 60 * 24 * 24
+        const val EXPIRE: Long = 1000 * 60 * 60 * 24 * 30L
         val TYPE: String = Set::class.java.simpleName + "::" + METHOD
     }
 

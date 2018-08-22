@@ -62,7 +62,7 @@ class ScryCardBound(appExecutors: AppExecutors,
     companion object {
         private const val METHOD = "price"
         val TYPE: String = ScryCard::class.java.simpleName + "::" + ScryCardBound.METHOD
-        const val EXPIRE: Int = 1000 * 60 * 60 * 24
+        const val EXPIRE: Long = 1000 * 60 * 60 * 24
     }
 
 }

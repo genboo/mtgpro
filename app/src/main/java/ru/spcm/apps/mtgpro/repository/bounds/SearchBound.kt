@@ -93,7 +93,7 @@ class SearchBound(appExecutors: AppExecutors,
     companion object {
         private const val METHOD = "search"
         val TYPE: String = Card::class.java.simpleName + "::" + SearchBound.METHOD
-        const val EXPIRE: Int = 1000 * 60 * 10
+        const val EXPIRE: Long = 1000 * 60 * 10
     }
 
 }
