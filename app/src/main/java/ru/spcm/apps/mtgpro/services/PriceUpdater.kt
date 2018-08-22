@@ -15,12 +15,14 @@ import java.io.IOException
 import java.text.DecimalFormat
 import java.text.DecimalFormatSymbols
 import java.util.*
+import javax.inject.Inject
 
-class PriceUpdater(private val appExecutors: AppExecutors,
-                   private val priceUpdateDao: PriceUpdateDao,
-                   private val scryCardDao: ScryCardDao,
-                   private val reportDao: ReportDao,
-                   private val scryCardApi: ScryCardApi) {
+class PriceUpdater @Inject
+constructor(private val appExecutors: AppExecutors,
+            private val priceUpdateDao: PriceUpdateDao,
+            private val scryCardDao: ScryCardDao,
+            private val reportDao: ReportDao,
+            private val scryCardApi: ScryCardApi) {
 
     fun update(): LiveData<UpdateResult> {
         val result = MutableLiveData<UpdateResult>()

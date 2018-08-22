@@ -11,44 +11,33 @@ import android.support.v4.app.NotificationCompat
 import ru.spcm.apps.mtgpro.App
 import ru.spcm.apps.mtgpro.R
 import ru.spcm.apps.mtgpro.di.components.AppComponent
-import ru.spcm.apps.mtgpro.model.api.ScryCardApi
-import ru.spcm.apps.mtgpro.model.db.dao.PriceUpdateDao
-import ru.spcm.apps.mtgpro.model.db.dao.ReportDao
-import ru.spcm.apps.mtgpro.model.db.dao.ScryCardDao
-import ru.spcm.apps.mtgpro.tools.AppExecutors
+import ru.spcm.apps.mtgpro.repository.BackupRepo
 import ru.spcm.apps.mtgpro.view.activities.MainActivity
 import javax.inject.Inject
 
 class AlarmReceiver : BroadcastReceiver() {
 
     @Inject
-    lateinit var appExecutors: AppExecutors
+    lateinit var controller: PriceUpdater
 
     @Inject
-    lateinit var priceUpdateDao: PriceUpdateDao
-
-    @Inject
-    lateinit var scryCardDao: ScryCardDao
-
-    @Inject
-    lateinit var reportDao: ReportDao
-
-    @Inject
-    lateinit var scryCardApi: ScryCardApi
+    lateinit var backupSaver: BackupSaver
 
     var component: AppComponent? = null
 
     override fun onReceive(context: Context, intent: Intent) {
         component = (context.applicationContext as App).appComponent
         component?.inject(this)
+        if (!intent.getBooleanExtra("force", false)) {
+            backupSaver.backup(context)
+        }
 
         showNotification(context, context.getString(R.string.app_name),
                 context.getString(R.string.notify_update_notification),
                 context.getString(R.string.notify_update_notification),
                 true)
 
-        val viewModel = PriceUpdater(appExecutors, priceUpdateDao, scryCardDao, reportDao, scryCardApi)
-        val updateData = viewModel.update()
+        val updateData = controller.update()
         updateData.observeForever(object : Observer<UpdateResult> {
             override fun onChanged(data: UpdateResult?) {
                 if (data != null) {

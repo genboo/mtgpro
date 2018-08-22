@@ -16,4 +16,7 @@ interface SettingsDao {
     @Query("SELECT * FROM Setting")
     fun getSettings(): LiveData<List<Setting>>
 
+    @Query("SELECT * FROM Setting s WHERE s.type = :type")
+    fun getSetting(type: Setting.Type): Setting?
+
 }

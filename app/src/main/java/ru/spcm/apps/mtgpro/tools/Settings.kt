@@ -14,6 +14,10 @@ class Settings {
         return settings[key]?.toInt() ?: default
     }
 
+    fun getBoolean(key: Setting.Type, default: Boolean): Boolean {
+        return settings[key]?.toBoolean() ?: default
+    }
+
     fun updateSettings(data: List<Setting>) {
         data.forEach {
             settings[it.type] = it.value
