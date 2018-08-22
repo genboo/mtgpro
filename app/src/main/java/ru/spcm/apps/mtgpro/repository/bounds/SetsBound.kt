@@ -15,7 +15,7 @@ class SetsBound(appExecutors: AppExecutors,
                 private val setsDao: SetsDao,
                 private val cacheDao: CacheDao) : CachedNetworkBound<List<Set>, List<Set>>(appExecutors) {
 
-    private val type: String = Set::class.java.simpleName + "::" + METHOD
+
     private var force = false
 
     override fun saveCallResult(data: List<Set>?) {
@@ -25,7 +25,7 @@ class SetsBound(appExecutors: AppExecutors,
                 setsDao.insert(it)
             }
             val cache = Cache(cacheKey,
-                    Date().time + getCacheTime(cacheDao.getCacheType(type)))
+                    Date().time + getCacheTime(cacheDao.getCacheType(TYPE)))
             cacheDao.insert(cache)
         }
     }
@@ -52,11 +52,13 @@ class SetsBound(appExecutors: AppExecutors,
     }
 
     private fun getCacheKey(): String {
-        return type
+        return TYPE
     }
 
     companion object {
         private const val METHOD = "sets"
+        const val EXPIRE: Int = 1000 * 60 * 60 * 24 * 24
+        val TYPE: String = Set::class.java.simpleName + "::" + METHOD
     }
 
 }

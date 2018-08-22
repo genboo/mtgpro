@@ -3,6 +3,7 @@ package ru.spcm.apps.mtgpro.viewmodel
 import android.arch.lifecycle.LiveData
 import android.arch.lifecycle.ViewModel
 import ru.spcm.apps.mtgpro.model.dto.Setting
+import ru.spcm.apps.mtgpro.repository.CacheTypeRepo
 import ru.spcm.apps.mtgpro.repository.SettingsRepo
 
 import javax.inject.Inject
@@ -14,10 +15,12 @@ import javax.inject.Inject
  */
 
 class MainViewModel @Inject
-internal constructor(private val settingsRepo: SettingsRepo) : ViewModel() {
+internal constructor(settingsRepo: SettingsRepo, private val cacheTypeRepo: CacheTypeRepo) : ViewModel() {
 
     val settings: LiveData<List<Setting>> = settingsRepo.getSettings()
 
-
+    fun updateCacheType(){
+        cacheTypeRepo.updateCacheType()
+    }
 
 }

@@ -16,7 +16,7 @@ class SpoilersBound(appExecutors: AppExecutors,
                     private val additionalInfoCardDao: AdditionalInfoCardDao,
                     private val cacheDao: CacheDao) : CachedNetworkBound<List<Card>, List<Card>>(appExecutors) {
 
-    private val type: String = Card::class.java.simpleName + "::" + SpoilersBound.METHOD
+
     private var set: String = ""
     private var limit: Int = 0
 
@@ -35,7 +35,7 @@ class SpoilersBound(appExecutors: AppExecutors,
                 additionalInfoCardDao.updateAdditionInfo(card)
             }
             val cache = Cache(cacheKey,
-                    Date().time + getCacheTime(cacheDao.getCacheType(type)))
+                    Date().time + getCacheTime(cacheDao.getCacheType(TYPE)))
             cacheDao.insert(cache)
         }
     }
@@ -53,11 +53,11 @@ class SpoilersBound(appExecutors: AppExecutors,
     }
 
     private fun getCacheKey(): String {
-        return type + set + limit
+        return TYPE + set + limit
     }
 
     private fun getSaveKey(): String {
-        return type + set
+        return TYPE + set
     }
 
     fun setParams(set: String, offset: Int): SpoilersBound {
@@ -68,6 +68,8 @@ class SpoilersBound(appExecutors: AppExecutors,
 
     companion object {
         private const val METHOD = "spoilers"
+        val TYPE: String = Card::class.java.simpleName + "::" + SpoilersBound.METHOD
+        const val EXPIRE: Int = 1000 * 60 * 60 * 24 * 24
         const val PAGES_SIZE = 21
     }
 

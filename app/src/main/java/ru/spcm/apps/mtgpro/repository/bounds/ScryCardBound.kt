@@ -15,7 +15,7 @@ class ScryCardBound(appExecutors: AppExecutors,
                     private val cacheDao: CacheDao,
                     private val scryCardDao: ScryCardDao) : CachedNetworkBound<ScryCard, ScryCard>(appExecutors) {
 
-    private val type: String = ScryCard::class.java.simpleName + "::" + ScryCardBound.METHOD
+
 
     private var set: String = ""
     private var number: String = ""
@@ -28,7 +28,7 @@ class ScryCardBound(appExecutors: AppExecutors,
             }
             scryCardDao.insert(data)
             val cache = Cache(getCacheKey(),
-                    Date().time + getCacheTime(cacheDao.getCacheType(type)))
+                    Date().time + getCacheTime(cacheDao.getCacheType(TYPE)))
             cacheDao.insert(cache)
         }
     }
@@ -50,7 +50,7 @@ class ScryCardBound(appExecutors: AppExecutors,
     }
 
     private fun getCacheKey(): String {
-        return type + set + number
+        return TYPE + set + number
     }
 
     fun setParams(set: String, number: String): ScryCardBound {
@@ -61,6 +61,8 @@ class ScryCardBound(appExecutors: AppExecutors,
 
     companion object {
         private const val METHOD = "price"
+        val TYPE: String = ScryCard::class.java.simpleName + "::" + ScryCardBound.METHOD
+        const val EXPIRE: Int = 1000 * 60 * 60 * 24
     }
 
 }

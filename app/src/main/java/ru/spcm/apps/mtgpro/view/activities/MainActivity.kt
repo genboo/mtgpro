@@ -48,6 +48,7 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
 
         val viewModel = ViewModelProviders.of(this, viewModelFactory).get(MainViewModel::class.java)
         viewModel.settings.observe(this, Observer { observeSettings(it) })
+        viewModel.updateCacheType()
 
         bottomMenu.setOnNavigationItemSelectedListener(this)
         if (savedInstanceState == null) {

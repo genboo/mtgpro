@@ -16,7 +16,6 @@ class SearchBound(appExecutors: AppExecutors,
                   private val additionalInfoCardDao: AdditionalInfoCardDao,
                   private val cacheDao: CacheDao) : CachedNetworkBound<List<Card>, List<Card>>(appExecutors) {
 
-    private val type: String = Card::class.java.simpleName + "::" + SearchBound.METHOD
     private var searchString: String = ""
     private var language: String? = "russian"
     private var set: String = ""
@@ -37,7 +36,7 @@ class SearchBound(appExecutors: AppExecutors,
                 additionalInfoCardDao.updateAdditionInfo(card)
             }
             val cache = Cache(cacheKey,
-                    Date().time + getCacheTime(cacheDao.getCacheType(type)))
+                    Date().time + getCacheTime(cacheDao.getCacheType(TYPE)))
             cacheDao.insert(cache)
         }
     }
@@ -60,7 +59,7 @@ class SearchBound(appExecutors: AppExecutors,
     }
 
     private fun getCacheKey(): String {
-        return type + searchString
+        return TYPE + searchString
     }
 
     fun setParams(search: String): SearchBound {
@@ -93,6 +92,8 @@ class SearchBound(appExecutors: AppExecutors,
 
     companion object {
         private const val METHOD = "search"
+        val TYPE: String = Card::class.java.simpleName + "::" + SearchBound.METHOD
+        const val EXPIRE: Int = 1000 * 60 * 10
     }
 
 }
