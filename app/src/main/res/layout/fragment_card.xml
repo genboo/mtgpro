@@ -91,6 +91,13 @@
                         app:layout_constraintWidth_percent=".5"
                         tools:text="Оракл текст\nВторая строка продолжающаяся" />
 
+                    <android.support.constraint.Barrier
+                        android:id="@+id/contentBarrier"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:barrierDirection="bottom"
+                        app:constraint_referenced_ids="cardOracle,imagesBlock" />
+
                     <ImageButton
                         android:id="@+id/addToWish"
                         style="@style/ImageButton.Card"
@@ -98,7 +105,16 @@
                         android:contentDescription="@string/app_name"
                         android:src="@drawable/ic_heart_outline"
                         app:layout_constraintLeft_toLeftOf="@id/line_left"
-                        app:layout_constraintTop_toBottomOf="@id/imagesBlock" />
+                        app:layout_constraintTop_toBottomOf="@id/contentBarrier" />
+
+                    <TextView
+                        android:id="@+id/cardNumber"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintBottom_toBottomOf="@id/addToWish"
+                        app:layout_constraintLeft_toRightOf="@id/addToWish"
+                        app:layout_constraintTop_toTopOf="@id/addToWish"
+                        tools:text="XLN 022" />
 
                     <ImageButton
                         android:id="@+id/loadPrices"
@@ -106,7 +122,7 @@
                         android:contentDescription="@string/app_name"
                         android:scaleType="fitCenter"
                         android:src="@drawable/ic_currency_usd"
-                        app:layout_constraintRight_toRightOf="@id/imagesBlock"
+                        app:layout_constraintRight_toRightOf="@id/line_right"
                         app:layout_constraintTop_toTopOf="@id/addToWish" />
 
                     <TextView
@@ -124,7 +140,7 @@
                         style="@style/ImageButton.Card"
                         android:contentDescription="@string/app_name"
                         android:src="@drawable/ic_eye"
-                        app:layout_constraintRight_toRightOf="@id/imagesBlock"
+                        app:layout_constraintRight_toRightOf="@id/line_right"
                         app:layout_constraintTop_toTopOf="@id/addToWish" />
 
                     <android.support.constraint.Group
@@ -141,15 +157,9 @@
                         android:layout_height="38dp"
                         android:padding="4dp"
                         android:visibility="gone"
-                        app:layout_constraintRight_toRightOf="@id/imagesBlock"
+                        app:layout_constraintRight_toRightOf="@id/line_right"
                         app:layout_constraintTop_toTopOf="@id/addToWish" />
 
-                    <android.support.constraint.Barrier
-                        android:id="@+id/contentBarrier"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        app:barrierDirection="bottom"
-                        app:constraint_referenced_ids="cardOracle,addToWish" />
 
                     <android.support.v7.widget.RecyclerView
                         android:id="@+id/reprints"
@@ -160,7 +170,7 @@
                         android:orientation="horizontal"
                         app:layout_constraintLeft_toLeftOf="parent"
                         app:layout_constraintRight_toRightOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/contentBarrier"
+                        app:layout_constraintTop_toBottomOf="@+id/addToWish"
                         tools:listitem="@layout/list_item_reprint" />
                 </android.support.constraint.ConstraintLayout>
 
@@ -200,8 +210,8 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="8dp"
-                        android:lineSpacingExtra="1dp"
                         android:maxLines="0"
+                        android:textColor="@color/colorTextMain"
                         app:layout_constraintLeft_toLeftOf="parent"
                         app:layout_constraintRight_toRightOf="parent"
                         app:layout_constraintTop_toBottomOf="@id/cardRulesTitle"

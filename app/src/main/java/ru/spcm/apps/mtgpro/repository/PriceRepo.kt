@@ -25,6 +25,10 @@ constructor(private val appExecutors: AppExecutors,
                 .asLiveData()
     }
 
+    fun getPricesFromCache(set: String, number: String): LiveData<ScryCard> {
+        return scryCardDao.getPrices(set.toLowerCase(), number.replace("a", "").replace("b", ""))
+    }
+
     fun getData(id: String, from: Date, to: Date): LiveData<List<GraphDot>> {
         return scryCardDao.getData(id, from, to)
     }

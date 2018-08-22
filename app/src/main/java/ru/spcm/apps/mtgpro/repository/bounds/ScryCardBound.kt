@@ -19,7 +19,7 @@ class ScryCardBound(appExecutors: AppExecutors,
 
     private var set: String = ""
     private var number: String = ""
-    private var force = true
+    private var force = false
 
     override fun saveCallResult(data: ScryCard?) {
         if (data != null) {

@@ -1,5 +1,6 @@
 package ru.spcm.apps.mtgpro.view.fragments
 
+import android.arch.lifecycle.MutableLiveData
 import android.arch.lifecycle.Observer
 import android.os.Bundle
 import android.os.Handler
@@ -34,7 +35,7 @@ class CardFragment : BaseFragment() {
 
     private lateinit var addDialog: AlertDialog
     private lateinit var librarySelector: Spinner
-    private var cardLoaded = false
+    private var cardLoaded = MutableLiveData<Boolean>()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
@@ -53,6 +54,8 @@ class CardFragment : BaseFragment() {
         viewModel.getWish().observe(this, Observer { observeWish(it) })
         viewModel.getLibraries().observe(this, Observer { observeLibraries(it) })
         viewModel.getLibrariesByCard().observe(this, Observer { observeLibrariesByCard(viewModel, it) })
+        viewModel.getPrices().observe(this, Observer { if (it != null) updatePrice(it) })
+
         viewModel.loadCard(args.getString(ARG_ID))
         mainBlock.postDelayed({ viewModel.loadLibraries() }, 200)
 
@@ -77,14 +80,24 @@ class CardFragment : BaseFragment() {
 
         addToLibrary.setOnClickListener { addDialog.show() }
 
+        cardLoaded.observe(this, Observer { loaded ->
+            if (loaded == true) {
+                viewModel.loadPricesFromCache(card.set, card.number ?: "")
+            }
+        })
+
         loadPrices.setOnClickListener { _ ->
-            viewModel.loadPrices(card.set, card.number
-                    ?: "").observe(this, Observer { observerPrices(it) })
+            viewModel.loadPrices(card.set, card.number ?: "")
+                    .observe(this, Observer { observerPrices(it) })
+        }
+
+        pricesLabel.setOnClickListener { _ ->
+            viewModel.loadPrices(card.set, card.number ?: "")
+                    .observe(this, Observer { observerPrices(it) })
         }
 
         initAddToLibraryDialog(viewModel)
     }
-
 
     private fun observeCards(data: List<CardLocal>?) {
         if (data != null && data.isNotEmpty()) {
@@ -92,6 +105,9 @@ class CardFragment : BaseFragment() {
             updateTitle(firstCard.card.name)
             cardImage.loadImageFromCache(firstCard.card.imageUrl)
             cardImage.setOnClickListener { navigator.goToImage(firstCard.card.id, firstCard.card.imageUrl) }
+
+            cardNumber.text = String.format("%s %s", firstCard.card.set, firstCard.card.numberFormatted)
+
             var text = firstCard.card.text
             if (firstCard.card.flavor != null) {
                 text += "\n" + "<i>" + firstCard.card.flavor + "</i>"
@@ -108,7 +124,7 @@ class CardFragment : BaseFragment() {
             (reprints.adapter as ReprintListAdapter).setItems(firstCard.reprints)
 
             card = firstCard.card
-            cardLoaded = true
+            cardLoaded.postValue(true)
 
             if (data.size > 1) {
                 val secondCard = data[1]
@@ -138,20 +154,25 @@ class CardFragment : BaseFragment() {
             if (data.status == Status.LOADING) {
                 priceLoader.fadeIn()
                 loadPrices.fadeOut()
+                priceGroup.fadeOut()
             } else if (data.status == Status.SUCCESS && data.data != null) {
-                val scryCard: ScryCard = data.data
-                val stringBuilder = SpannableStringBuilder()
-                stringBuilder.append(scryCard.usd).append(" ").append("usd")
-                stringBuilder.setSpan(RelativeSizeSpan(1.5f), 0, scryCard.usd.length, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
-                pricesLabel.text = stringBuilder
+                updatePrice(data.data)
                 priceLoader.fadeOut()
-                priceGroup.fadeIn()
             } else if (data.status == Status.ERROR) {
                 priceLoader.fadeOut()
                 loadPrices.fadeIn()
                 showSnack(R.string.action_network_error, null)
             }
         }
+    }
+
+    private fun updatePrice(scryCard: ScryCard) {
+        val stringBuilder = SpannableStringBuilder()
+        stringBuilder.append(scryCard.usd).append(" ").append("usd")
+        stringBuilder.setSpan(RelativeSizeSpan(1.5f), 0, scryCard.usd.length, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
+        pricesLabel.text = stringBuilder
+        loadPrices.fadeOut()
+        priceGroup.fadeIn()
     }
 
     private fun observeLibraries(data: List<LibraryInfo>?) {
@@ -205,7 +226,7 @@ class CardFragment : BaseFragment() {
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        if (item.itemId == R.id.nav_link && cardLoaded) {
+        if (item.itemId == R.id.nav_link && cardLoaded.value == true) {
             val viewModel = getViewModel(this, CardViewModel::class.java)
             viewModel.findAndUpdateSecondSide(card.id).observe(this, Observer {
                 if (it != null && it) {

@@ -51,10 +51,10 @@ interface CardDao {
     @Query("SELECT c.* FROM Card c WHERE c.multiverseId = :mid")
     fun getCards(mid: String): LiveData<List<Card>>
 
-    @Query("SELECT c.id, c.numberFormatted, c.nameOrigin, c.setTitle, c.parent, c.imageUrl, c.name, c.rarity, c.multiverseId, c.number, c.`set`, c.type, c.cmc, c.text, c.flavor, c.manaCost, c.rulesText, sc.count FROM SavedCard sc LEFT JOIN Card c ON c.id = sc.id ORDER BY c.setTitle, c.numberFormatted")
+    @Query("SELECT c.id, c.numberFormatted, c.nameOrigin, c.setTitle, sc.parent, c.imageUrl, c.name, c.rarity, c.multiverseId, c.number, c.`set`, c.type, c.cmc, c.text, c.flavor, c.manaCost, c.rulesText, sc.count FROM SavedCard sc LEFT JOIN Card c ON c.id = sc.id WHERE sc.parent = '' ORDER BY c.setTitle, c.numberFormatted")
     fun getAllCards(): DataSource.Factory<Int, Card>
 
-    @Query("SELECT c.id, c.numberFormatted, c.nameOrigin, c.setTitle, c.parent, c.imageUrl, c.name, c.rarity, c.multiverseId, c.number, c.`set`, c.type, c.cmc, c.text, c.flavor, c.manaCost, c.rulesText, sc.count FROM SavedCard sc " +
+    @Query("SELECT c.id, c.numberFormatted, c.nameOrigin, c.setTitle, sc.parent, c.imageUrl, c.name, c.rarity, c.multiverseId, c.number, c.`set`, c.type, c.cmc, c.text, c.flavor, c.manaCost, c.rulesText, sc.count FROM SavedCard sc " +
             "LEFT JOIN Card c ON c.id = sc.id " +
             "LEFT JOIN Type type ON c.id = type.card_id " +
             "LEFT JOIN Subtype sub ON c.id = sub.card_id " +
@@ -65,6 +65,7 @@ interface CardDao {
             "    AND (col.color IN (:colors) OR col.color is null) " +
             "    AND c.rarity IN (:rarities) " +
             "    AND c.`set` IN (:sets) " +
+            "    AND sc.parent = '' "+
             "GROUP BY c.id " +
             "ORDER BY c.setTitle, c.numberFormatted")
     fun getFilteredCards(types: Array<String>, subtypes: Array<String>, colors: Array<String>,

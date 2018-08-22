@@ -25,11 +25,13 @@ internal constructor(private val cardRepo: CardRepo,
                      private val priceRepo: PriceRepo) : ViewModel() {
 
     private val switcher: MutableLiveData<String> = MutableLiveData()
+    private val switcherPrice: MutableLiveData<PriceParams> = MutableLiveData()
     private val switcherLibraries: MutableLiveData<Boolean> = MutableLiveData()
     private var cards: LiveData<List<CardLocal>>
     private var libraries: LiveData<List<LibraryInfo>>
     private var librariesByCard: LiveData<List<LibraryInfo>>
     private var wish: LiveData<WishedCard>
+    private var prices: LiveData<ScryCard>
 
     init {
         cards = Transformations.switchMap(switcher) {
@@ -59,6 +61,14 @@ internal constructor(private val cardRepo: CardRepo,
             }
             return@switchMap librariesRepo.getLibrariesByCard(it)
         }
+
+        prices = Transformations.switchMap(switcherPrice) {
+            if (it == null) {
+                return@switchMap AbsentLiveData.create<ScryCard>()
+
+            }
+            return@switchMap priceRepo.getPricesFromCache(it.set, it.number)
+        }
     }
 
     fun getCards(): LiveData<List<CardLocal>> {
@@ -85,6 +95,15 @@ internal constructor(private val cardRepo: CardRepo,
         return priceRepo.getPrices(set, number)
     }
 
+    fun getPrices(): LiveData<ScryCard> {
+        return prices
+    }
+
+    fun loadPricesFromCache(set: String, number: String) {
+        val params = PriceParams(set, number)
+        switcherPrice.postValue(params)
+    }
+
     fun loadLibraries() {
         switcherLibraries.postValue(true)
     }
@@ -109,8 +128,9 @@ internal constructor(private val cardRepo: CardRepo,
         librariesRepo.addCard(item)
     }
 
-
     fun findAndUpdateSecondSide(id: String): LiveData<Boolean> {
         return cardRepo.findAndUpdateSecondSide(id)
     }
+
+    data class PriceParams(var set: String, var number: String)
 }
