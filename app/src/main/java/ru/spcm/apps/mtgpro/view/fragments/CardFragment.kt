@@ -98,7 +98,7 @@ class CardFragment : BaseFragment() {
                     .observe(this, Observer { observerPrices(it) })
         }
 
-        val adapterImages = FlipPagerAdapter(childFragmentManager, null)
+        val adapterImages = FlipPagerAdapter(requireFragmentManager(), null)
         viewPager.adapter = adapterImages
         viewPager.setPageTransformer(true, FlipPageTransform())
         initAddToLibraryDialog(viewModel)
