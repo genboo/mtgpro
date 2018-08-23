@@ -85,7 +85,6 @@
                         android:paddingEnd="0dp"
                         android:paddingStart="4dp"
                         android:textSize="12sp"
-
                         app:layout_constraintRight_toRightOf="@id/line_right"
                         app:layout_constraintTop_toTopOf="parent"
                         app:layout_constraintWidth_percent=".5"
@@ -139,7 +138,7 @@
                         android:id="@+id/watch"
                         style="@style/ImageButton.Card"
                         android:contentDescription="@string/app_name"
-                        android:src="@drawable/ic_eye"
+                        android:src="@drawable/ic_eye_plus"
                         app:layout_constraintRight_toRightOf="@id/line_right"
                         app:layout_constraintTop_toTopOf="@id/addToWish" />
 

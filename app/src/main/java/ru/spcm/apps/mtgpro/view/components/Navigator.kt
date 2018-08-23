@@ -50,9 +50,9 @@ class Navigator(private val activity: FragmentActivity, fragmentManager: Fragmen
                                                    currentFragment: Fragment?,
                                                    nextFragment: Fragment?,
                                                    fragmentTransaction: FragmentTransaction) {
-        if (command is Replace) {
+        if (command is Replace || nextFragment is FullScreenImageFragment) {
             fragmentTransaction.setCustomAnimations(android.R.anim.fade_in,
-                    android.R.anim.fade_out)
+                    android.R.anim.fade_out, android.R.anim.fade_in, android.R.anim.fade_out)
         } else {
             fragmentTransaction.setCustomAnimations(R.anim.slide_in_right,
                     R.anim.slide_out_left,

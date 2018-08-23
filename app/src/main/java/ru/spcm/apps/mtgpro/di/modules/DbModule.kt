@@ -40,7 +40,8 @@ class DbModule {
                         MIGRATION_5_6,
                         MIGRATION_6_7,
                         MIGRATION_7_8,
-                        MIGRATION_8_9
+                        MIGRATION_8_9,
+                        MIGRATION_9_10
                 )
                 .build()
     }
@@ -173,7 +174,15 @@ class DbModule {
 
                 //Настройки
                 database.execSQL("CREATE TABLE Setting (type  TEXT NOT NULL, value TEXT NOT NULL, PRIMARY KEY (type))")
+            }
+        }
 
+        private val MIGRATION_9_10 = object : Migration(9, 10) {
+            override fun migrate(database: SupportSQLiteDatabase) {
+                //Добавление настроек слежения
+                database.execSQL("ALTER TABLE WatchedCard ADD COLUMN observe INTEGER NOT NULL DEFAULT (0)")
+                database.execSQL("ALTER TABLE WatchedCard ADD COLUMN top REAL NOT NULL  DEFAULT (0)")
+                database.execSQL("ALTER TABLE WatchedCard ADD COLUMN bottom REAL NOT NULL  DEFAULT (0)")
             }
         }
     }

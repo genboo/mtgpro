@@ -11,6 +11,7 @@ import ru.spcm.apps.mtgpro.model.dto.Report
 import ru.spcm.apps.mtgpro.model.dto.ScryCard
 import ru.spcm.apps.mtgpro.tools.AppExecutors
 import ru.spcm.apps.mtgpro.tools.Logger
+import ru.spcm.apps.mtgpro.tools.format
 import java.io.IOException
 import java.text.DecimalFormat
 import java.text.DecimalFormatSymbols
@@ -28,10 +29,6 @@ constructor(private val appExecutors: AppExecutors,
         val result = MutableLiveData<UpdateResult>()
         appExecutors.networkIO().execute {
             val now = Date()
-            val symbols = DecimalFormatSymbols()
-            symbols.decimalSeparator = '.'
-            val diffFormatter = DecimalFormat("###.##", symbols)
-
             val watchedCards = priceUpdateDao.getWatchedCardsList()
             reportDao.clear()
 
@@ -59,7 +56,7 @@ constructor(private val appExecutors: AppExecutors,
                             reportDao.insert(Report(item.card.id, "0.0"))
                         } else {
                             val diff = price.usd.toFloat() - lastPrice.price.toFloat()
-                            val diffString = if (diff == 0f) "0.0" else diffFormatter.format(diff)
+                            val diffString = if (diff == 0f) "0.0" else diff.format()
                             reportDao.insert(Report(item.card.id, diffString))
                         }
 

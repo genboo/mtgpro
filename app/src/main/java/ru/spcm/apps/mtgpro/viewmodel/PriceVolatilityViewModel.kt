@@ -4,7 +4,7 @@ import android.arch.lifecycle.LiveData
 import android.arch.lifecycle.MutableLiveData
 import android.arch.lifecycle.Transformations
 import android.arch.lifecycle.ViewModel
-import ru.spcm.apps.mtgpro.model.dto.CardLocal
+import ru.spcm.apps.mtgpro.model.dto.CardObserved
 import ru.spcm.apps.mtgpro.model.dto.GraphDot
 import ru.spcm.apps.mtgpro.repository.CardRepo
 import ru.spcm.apps.mtgpro.repository.PriceRepo
@@ -24,15 +24,15 @@ internal constructor(private val cardRepo: CardRepo,
                      private val priceRepo: PriceRepo) : ViewModel() {
 
     private val switcher: MutableLiveData<String> = MutableLiveData()
-    private var cards: LiveData<List<CardLocal>>
+    private var cards: LiveData<CardObserved>
     private var data: LiveData<List<GraphDot>>
 
     init {
         cards = Transformations.switchMap(switcher) {
             if (it == null) {
-                return@switchMap AbsentLiveData.create<List<CardLocal>>()
+                return@switchMap AbsentLiveData.create<CardObserved>()
             }
-            return@switchMap cardRepo.getCards(it)
+            return@switchMap cardRepo.getObservedCard(it)
         }
 
         data = Transformations.switchMap(switcher) {
@@ -46,7 +46,7 @@ internal constructor(private val cardRepo: CardRepo,
         }
     }
 
-    fun getCards(): LiveData<List<CardLocal>> {
+    fun getCards(): LiveData<CardObserved> {
         return cards
     }
 
@@ -56,6 +56,10 @@ internal constructor(private val cardRepo: CardRepo,
 
     fun load(id: String) {
         switcher.postValue(id)
+    }
+
+    fun updateObserve(id: String, observe: Boolean, top: Float, bottom: Float) {
+        cardRepo.updateObserve(id, observe, top, bottom)
     }
 
 }

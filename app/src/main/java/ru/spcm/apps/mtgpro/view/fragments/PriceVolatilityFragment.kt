@@ -3,12 +3,11 @@ package ru.spcm.apps.mtgpro.view.fragments
 import android.arch.lifecycle.Observer
 import android.os.Bundle
 import android.view.LayoutInflater
-import android.view.Menu
 import android.view.View
 import android.view.ViewGroup
 import kotlinx.android.synthetic.main.fragment_price_volatility.*
 import ru.spcm.apps.mtgpro.R
-import ru.spcm.apps.mtgpro.model.dto.CardLocal
+import ru.spcm.apps.mtgpro.model.dto.CardObserved
 import ru.spcm.apps.mtgpro.model.dto.GraphDot
 import ru.spcm.apps.mtgpro.view.components.loadImageFromCache
 import ru.spcm.apps.mtgpro.viewmodel.PriceVolatilityViewModel
@@ -29,10 +28,28 @@ class PriceVolatilityFragment : BaseFragment() {
 
         val viewModel = getViewModel(this, PriceVolatilityViewModel::class.java)
 
-        viewModel.getCards().observe(this, Observer { observeCards(it) })
+        viewModel.getCards().observe(this, Observer { observeCard(it) })
         viewModel.getData().observe(this, Observer { observeData(it) })
 
         viewModel.load(args.getString(ARG_ID))
+
+        watchPrice.setOnClickListener { _ ->
+            topEdge.isEnabled = watchPrice.isChecked
+            bottomEdge.isEnabled = watchPrice.isChecked
+            viewModel.updateObserve(args.getString(ARG_ID), watchPrice.isChecked, topEdge.text.toString().toFloat(), bottomEdge.text.toString().toFloat())
+        }
+
+        topEdge.setOnFocusChangeListener{ _, focus ->
+            if(!focus){
+                viewModel.updateObserve(args.getString(ARG_ID), watchPrice.isChecked, topEdge.text.toString().toFloat(), bottomEdge.text.toString().toFloat())
+            }
+        }
+
+        bottomEdge.setOnFocusChangeListener{ _, focus ->
+            if(!focus){
+                viewModel.updateObserve(args.getString(ARG_ID), watchPrice.isChecked, topEdge.text.toString().toFloat(), bottomEdge.text.toString().toFloat())
+            }
+        }
     }
 
     private fun observeData(data: List<GraphDot>?) {
@@ -41,15 +58,20 @@ class PriceVolatilityFragment : BaseFragment() {
         }
     }
 
-    private fun observeCards(data: List<CardLocal>?) {
+    private fun observeCard(data: CardObserved?) {
         if (data != null) {
-            val card = data[0].card
-            cardName.text = card.name
-            cardImage.loadImageFromCache(card.imageUrl)
-            if (data.size > 1) {
-                val secondCard = data[1].card
-                cardImageSecond.loadImageFromCache(secondCard.imageUrl)
+            cardImage.loadImageFromCache(data.imageUrl)
+            cardPrice.text = data.price
+            cardViol.text = data.diff
+            if (data.observe) {
+                watchPrice.isChecked = true
+                topEdge.isEnabled = true
+                bottomEdge.isEnabled = true
             }
+            val top = if (data.top == 0f) data.price else data.top.toString()
+            val bottom = if (data.bottom == 0f) data.price else data.bottom.toString()
+            topEdge.setText(top)
+            bottomEdge.setText(bottom)
         }
     }
 

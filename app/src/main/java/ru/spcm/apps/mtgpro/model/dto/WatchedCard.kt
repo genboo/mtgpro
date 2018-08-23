@@ -9,4 +9,9 @@ import android.support.annotation.NonNull
  */
 @Entity
 data class WatchedCard(@PrimaryKey
-                      @NonNull var id: String)
+                       @NonNull var id: String) {
+
+    var observe: Boolean = false
+    var top: Float = 0f
+    var bottom: Float = 0f
+}

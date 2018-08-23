@@ -38,6 +38,9 @@ interface CardDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insert(item: WatchedCard): Long
 
+    @Update
+    fun update(item: WatchedCard)
+
     @Delete
     fun delete(item: WatchedCard)
 
@@ -65,7 +68,7 @@ interface CardDao {
             "    AND (col.color IN (:colors) OR col.color is null) " +
             "    AND c.rarity IN (:rarities) " +
             "    AND c.`set` IN (:sets) " +
-            "    AND sc.parent = '' "+
+            "    AND sc.parent = '' " +
             "GROUP BY c.id " +
             "ORDER BY c.setTitle, c.numberFormatted")
     fun getFilteredCards(types: Array<String>, subtypes: Array<String>, colors: Array<String>,
@@ -107,4 +110,10 @@ interface CardDao {
             "ORDER BY c.setTitle, c.numberFormatted")
     fun getWatchedCards(): DataSource.Factory<Int, CardWatched>
 
+    @Query("SELECT c.id, c.imageUrl, wc.observe, wc.top, wc.bottom, r.diff, (SELECT price FROM PriceHistory pc WHERE pc.card_id = c.id ORDER BY date DESC) as price " +
+            "FROM WatchedCard wc " +
+            "LEFT JOIN Report r ON r.card_id = wc.id " +
+            "LEFT JOIN Card c ON c.id = wc.id " +
+            "WHERE wc.id = :id")
+    fun getObservedCard(id: String): LiveData<CardObserved>
 }

@@ -15,6 +15,10 @@ constructor(private val appExecutors: AppExecutors,
         return cardDao.getSavedCards(id)
     }
 
+    fun getObservedCard(id: String): LiveData<CardObserved> {
+        return cardDao.getObservedCard(id)
+    }
+
     fun getWish(id: String): LiveData<WishedCard> {
         return cardDao.getWish(id)
     }
@@ -70,5 +74,13 @@ constructor(private val appExecutors: AppExecutors,
         }
     }
 
-
+    fun updateObserve(id: String, observe: Boolean, top: Float, bottom: Float) {
+        appExecutors.diskIO().execute {
+            val watch = WatchedCard(id)
+            watch.observe = observe
+            watch.top = top
+            watch.bottom = bottom
+            cardDao.update(watch)
+        }
+    }
 }

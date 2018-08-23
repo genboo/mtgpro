@@ -62,6 +62,7 @@ class AlarmReceiver : BroadcastReceiver() {
                 .setContentTitle(title)
                 .setContentText(annotation)
                 .setVibrate(null)
+                .setSound(null)
                 .setSmallIcon(R.drawable.ic_black_mana)
                 .setAutoCancel(true)
                 .setStyle(NotificationCompat.BigTextStyle().bigText(message))
