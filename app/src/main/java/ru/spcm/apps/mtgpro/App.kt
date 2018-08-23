@@ -21,6 +21,22 @@ class App : Application() {
 
     override fun onCreate() {
         super.onCreate()
+
+        configurePicasso()
+        configureAlarm()
+
+        Fabric.with(this, Crashlytics())
+        if (Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
+            val notificationChannel =
+                    NotificationChannel(NOTIFICATION_CHANNEL_ID, NOTIFICATION_CHANNEL_UPDATE, NotificationManager.IMPORTANCE_DEFAULT)
+            notificationChannel.enableLights(false)
+            notificationChannel.enableVibration(false)
+            val notificationManager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+            notificationManager.createNotificationChannel(notificationChannel)
+        }
+    }
+
+    private fun configurePicasso(){
         val debug = false
         val picasso = Picasso.Builder(this)
                 .downloader(OkHttp3Downloader(this, 750000000))
@@ -28,8 +44,9 @@ class App : Application() {
                 .loggingEnabled(debug)
                 .build()
         Picasso.setSingletonInstance(picasso)
-        Fabric.with(this, Crashlytics())
+    }
 
+    private fun configureAlarm(){
         val alarmManager = getSystemService(Context.ALARM_SERVICE) as AlarmManager
 
         val calendar = Calendar.getInstance().apply {
@@ -50,15 +67,6 @@ class App : Application() {
                 calendar.timeInMillis,
                 AlarmManager.INTERVAL_DAY,
                 alarmIntent)
-
-        if (Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
-            val notificationChannel =
-                    NotificationChannel(NOTIFICATION_CHANNEL_ID, NOTIFICATION_CHANNEL_UPDATE, NotificationManager.IMPORTANCE_DEFAULT)
-            notificationChannel.enableLights(false)
-            notificationChannel.enableVibration(false)
-            val notificationManager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
-            notificationManager.createNotificationChannel(notificationChannel)
-        }
     }
 
     companion object {

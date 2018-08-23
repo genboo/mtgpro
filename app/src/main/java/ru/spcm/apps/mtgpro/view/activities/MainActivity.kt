@@ -103,8 +103,8 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
         navigator.backTo()
     }
 
-    override fun onResume() {
-        super.onResume()
+    override fun onResumeFragments() {
+        super.onResumeFragments()
         navigatorHolder.setNavigator(navigator)
     }
 
