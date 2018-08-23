@@ -29,8 +29,8 @@ class GraphView(context: Context, attrs: AttributeSet) : View(context, attrs) {
     private var legendOffset = 4f
 
     private val curvePath = Path()
-    private var curvePositiveColor: Int = ContextCompat.getColor(context, R.color.colorGreen)
-    private var curveNegativeColor: Int = ContextCompat.getColor(context, R.color.colorRed)
+    private var curvePositiveColor: Int = ContextCompat.getColor(context, R.color.colorPositive)
+    private var curveNegativeColor: Int = ContextCompat.getColor(context, R.color.colorNegative)
     private var curveNeutralColor: Int = ContextCompat.getColor(context, R.color.colorNoColor)
 
     private val monthPaint = Paint()

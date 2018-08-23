@@ -13,6 +13,7 @@ object OracleReplacer {
     private fun replace(text: String): String =
             if (text.isNotEmpty()) {
                 text
+                        .replace("\n\n", "\n")
                         .replace("\n", "<br/><br/>")
                         .replace("{B}", "<img src=\"ic_b\"/>")
                         .replace("{U}", "<img src=\"ic_u\"/>")

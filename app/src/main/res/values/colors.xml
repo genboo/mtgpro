@@ -11,6 +11,9 @@
     <color name="colorBackgroundMain">#EAF4FF</color>
     <color name="colorBackgroundDark">#000000</color>
 
+    <color name="colorNegative">#D32F2F</color>
+    <color name="colorPositive">#388E3C</color>
+
     <color name="colorRed">#e49977</color>
     <color name="colorWhite">#f8f6d8</color>
     <color name="colorBlack">#bab1ab</color>

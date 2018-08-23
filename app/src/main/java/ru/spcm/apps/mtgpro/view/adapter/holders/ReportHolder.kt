@@ -17,8 +17,8 @@ class ReportHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         cardViol.text = item.diff
         when {
             item.diff.toFloat() == 0f -> cardViol.setTextColor(ContextCompat.getColor(cardViol.context, R.color.colorTextMain))
-            item.diff.toFloat() < 0 -> cardViol.setTextColor(ContextCompat.getColor(cardViol.context, R.color.colorRed))
-            else -> cardViol.setTextColor(ContextCompat.getColor(cardViol.context, R.color.colorGreen))
+            item.diff.toFloat() < 0 -> cardViol.setTextColor(ContextCompat.getColor(cardViol.context, R.color.colorNegative))
+            else -> cardViol.setTextColor(ContextCompat.getColor(cardViol.context, R.color.colorPositive))
         }
 
         val stringBuilder = SpannableStringBuilder()
