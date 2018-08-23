@@ -37,4 +37,8 @@ class CardWatchedHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         itemView.itemBlock?.setOnClickListener(listener)
     }
 
+    fun setDeleteListener(listener: View.OnClickListener) {
+        itemView.delete?.setOnClickListener(listener)
+    }
+
 }

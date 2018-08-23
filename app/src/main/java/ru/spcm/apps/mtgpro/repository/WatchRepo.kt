@@ -3,6 +3,7 @@ package ru.spcm.apps.mtgpro.repository
 import android.arch.paging.DataSource
 import ru.spcm.apps.mtgpro.model.db.dao.CardDao
 import ru.spcm.apps.mtgpro.model.dto.CardWatched
+import ru.spcm.apps.mtgpro.model.dto.WatchedCard
 import ru.spcm.apps.mtgpro.tools.AppExecutors
 import javax.inject.Inject
 
@@ -13,4 +14,11 @@ constructor(private val appExecutors: AppExecutors,
     fun getAllCards(): DataSource.Factory<Int, CardWatched> {
         return cardDao.getWatchedCards()
     }
+
+    fun delete(id: String) {
+        appExecutors.diskIO().execute{
+            cardDao.delete(WatchedCard(id))
+        }
+    }
+
 }

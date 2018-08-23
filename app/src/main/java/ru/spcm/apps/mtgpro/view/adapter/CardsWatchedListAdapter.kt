@@ -17,6 +17,7 @@ import ru.spcm.apps.mtgpro.view.adapter.holders.CardWatchedHolder
 class CardsWatchedListAdapter : PagedListAdapter<CardWatched, CardWatchedHolder>(CardsWatchedDiffItemCallback) {
 
     var listener: (CardWatched) -> Unit = {}
+    var deleteListener: (CardWatched) -> Unit = {}
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CardWatchedHolder {
         val holder = CardWatchedHolder(LayoutInflater.from(parent.context).inflate(R.layout.list_item_card_watched, parent, false))
@@ -24,6 +25,13 @@ class CardsWatchedListAdapter : PagedListAdapter<CardWatched, CardWatchedHolder>
             val card = getItem(holder.adapterPosition)
             if (card != null) {
                 parent.postDelayed({ listener(card) }, 100)
+            }
+        })
+
+        holder.setDeleteListener(View.OnClickListener {
+            val card = getItem(holder.adapterPosition)
+            if (card != null) {
+                deleteListener(card)
             }
         })
         return holder

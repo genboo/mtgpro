@@ -6,7 +6,6 @@ import android.support.v7.widget.LinearLayoutManager
 import android.view.*
 import kotlinx.android.synthetic.main.fragment_watch.*
 import ru.spcm.apps.mtgpro.R
-import ru.spcm.apps.mtgpro.view.adapter.CardsListAdapter
 import ru.spcm.apps.mtgpro.view.adapter.CardsWatchedListAdapter
 import ru.spcm.apps.mtgpro.viewmodel.WatchViewModel
 
@@ -24,12 +23,14 @@ class WatchFragment : BaseFragment() {
         super.onActivityCreated(savedInstanceState)
         updateToolbar()
 
+        val viewModel = getViewModel(this, WatchViewModel::class.java)
+
         val adapter = CardsWatchedListAdapter()
         adapter.listener = { navigator.goToPriceVolatility(it.card.id) }
+        adapter.deleteListener = { viewModel.delete(it.card.id) }
         list.layoutManager = LinearLayoutManager(context)
         list.adapter = adapter
 
-        val viewModel = getViewModel(this, WatchViewModel::class.java)
         viewModel.cards.observe(this, Observer { adapter.submitList(it) })
     }
 
