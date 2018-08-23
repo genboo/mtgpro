@@ -19,6 +19,8 @@ import ru.spcm.apps.mtgpro.model.dto.*
 import ru.spcm.apps.mtgpro.model.tools.Resource
 import ru.spcm.apps.mtgpro.model.tools.Status
 import ru.spcm.apps.mtgpro.tools.OracleReplacer
+import ru.spcm.apps.mtgpro.view.adapter.FlipPagerAdapter
+import ru.spcm.apps.mtgpro.view.adapter.FlipPageTransform
 import ru.spcm.apps.mtgpro.view.adapter.LibrarySelectAdapter
 import ru.spcm.apps.mtgpro.view.adapter.ReprintListAdapter
 import ru.spcm.apps.mtgpro.view.components.*
@@ -96,6 +98,9 @@ class CardFragment : BaseFragment() {
                     .observe(this, Observer { observerPrices(it) })
         }
 
+        val adapterImages = FlipPagerAdapter(childFragmentManager, null)
+        viewPager.adapter = adapterImages
+        viewPager.setPageTransformer(true, FlipPageTransform())
         initAddToLibraryDialog(viewModel)
     }
 
@@ -134,6 +139,7 @@ class CardFragment : BaseFragment() {
                         + secondCard.card.name + "\n"
                         + secondCard.card.text, requireActivity())
             }
+            (viewPager.adapter as FlipPagerAdapter).setItems(data)
 
             mainScroll.visibility = View.VISIBLE
         }
