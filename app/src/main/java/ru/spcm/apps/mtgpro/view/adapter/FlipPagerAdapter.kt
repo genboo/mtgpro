@@ -1,14 +1,22 @@
 package ru.spcm.apps.mtgpro.view.adapter
 
-import android.support.v4.app.Fragment
-import android.support.v4.app.FragmentManager
-import android.support.v4.app.FragmentStatePagerAdapter
+import android.content.Context
+import android.support.v4.view.PagerAdapter
+import android.view.LayoutInflater
+import android.view.View
 import ru.spcm.apps.mtgpro.model.dto.CardLocal
-import ru.spcm.apps.mtgpro.view.fragments.ImageFragment
+import android.widget.LinearLayout
+import android.view.ViewGroup
+import android.widget.ImageView
+import ru.spcm.apps.mtgpro.R
+import ru.spcm.apps.mtgpro.view.components.loadImageFromCache
 
-class FlipPagerAdapter (fm: FragmentManager, items: List<CardLocal>?) : FragmentStatePagerAdapter(fm) {
+
+class FlipPagerAdapter(val context: Context, items: List<CardLocal>?) : PagerAdapter() {
 
     private var items: List<CardLocal>
+    private var inflater: LayoutInflater
+    private var listener: (CardLocal) -> Unit = { }
 
     init {
         if (items == null) {
@@ -16,6 +24,24 @@ class FlipPagerAdapter (fm: FragmentManager, items: List<CardLocal>?) : Fragment
         } else {
             this.items = items
         }
+        inflater = LayoutInflater.from(context)
+    }
+
+    override fun instantiateItem(viewGroup: ViewGroup, position: Int): Any {
+        val view = inflater.inflate(R.layout.fragment_image, viewGroup, false)
+        val imageView = view.findViewById(R.id.cardImage) as ImageView
+        imageView.loadImageFromCache(items[position].card.imageUrl)
+        imageView.setOnClickListener { listener(items[position]) }
+        viewGroup.addView(view)
+        return view
+    }
+
+    override fun destroyItem(container: ViewGroup, position: Int, `object`: Any) {
+        container.removeView(`object` as LinearLayout)
+    }
+
+    override fun isViewFromObject(view: View, `object`: Any): Boolean {
+        return view === `object`
     }
 
     fun setItems(items: List<CardLocal>) {
@@ -23,8 +49,8 @@ class FlipPagerAdapter (fm: FragmentManager, items: List<CardLocal>?) : Fragment
         notifyDataSetChanged()
     }
 
-    override fun getItem(position: Int): Fragment {
-        return ImageFragment.getInstance(items[position].card.imageUrl, items[position].card.id)
+    fun setOnClickListener(listener: (CardLocal) -> Unit = { }) {
+        this.listener = listener
     }
 
     override fun getCount(): Int {

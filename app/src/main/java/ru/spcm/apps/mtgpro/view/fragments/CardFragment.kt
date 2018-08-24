@@ -98,7 +98,8 @@ class CardFragment : BaseFragment() {
                     .observe(this, Observer { observerPrices(it) })
         }
 
-        val adapterImages = FlipPagerAdapter(requireFragmentManager(), null)
+        val adapterImages = FlipPagerAdapter(requireContext(), null)
+        adapterImages.setOnClickListener{navigator.goToImage(it.card.id, it.card.imageUrl)}
         viewPager.adapter = adapterImages
         viewPager.setPageTransformer(true, FlipPageTransform())
         viewPager.setOnPageSelectedListener { switchText(it == 0) }
@@ -110,7 +111,6 @@ class CardFragment : BaseFragment() {
         if (data != null && data.isNotEmpty()) {
             val firstCard = data[0]
             updateTitle(firstCard.card.name)
-//            cardImage.setOnClickListener { navigator.goToImage(firstCard.card.id, firstCard.card.imageUrl) }
 
             cardNumber.text = String.format("%s %s", firstCard.card.set, firstCard.card.numberFormatted)
 
