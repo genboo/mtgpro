@@ -12,7 +12,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 
-    <LinearLayout
+    <FrameLayout
         android:id="@+id/main"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -37,5 +37,5 @@
             android:paddingBottom="?android:attr/actionBarSize"
             tools:listitem="@layout/list_item_spoiler" />
 
-    </LinearLayout>
+    </FrameLayout>
 </android.support.design.widget.CoordinatorLayout>
