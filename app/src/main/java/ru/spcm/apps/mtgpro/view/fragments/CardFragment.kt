@@ -101,15 +101,16 @@ class CardFragment : BaseFragment() {
         val adapterImages = FlipPagerAdapter(requireFragmentManager(), null)
         viewPager.adapter = adapterImages
         viewPager.setPageTransformer(true, FlipPageTransform())
+        viewPager.setOnPageSelectedListener { switchText(it == 0) }
         initAddToLibraryDialog(viewModel)
     }
+
 
     private fun observeCards(data: List<CardLocal>?) {
         if (data != null && data.isNotEmpty()) {
             val firstCard = data[0]
             updateTitle(firstCard.card.name)
-            cardImage.loadImageFromCache(firstCard.card.imageUrl)
-            cardImage.setOnClickListener { navigator.goToImage(firstCard.card.id, firstCard.card.imageUrl) }
+//            cardImage.setOnClickListener { navigator.goToImage(firstCard.card.id, firstCard.card.imageUrl) }
 
             cardNumber.text = String.format("%s %s", firstCard.card.set, firstCard.card.numberFormatted)
 
@@ -133,11 +134,11 @@ class CardFragment : BaseFragment() {
 
             if (data.size > 1) {
                 val secondCard = data[1]
-                cardImageSecond.loadImageFromCache(secondCard.card.imageUrl)
-                cardImageSecond.setOnClickListener { navigator.goToImage(secondCard.card.id, secondCard.card.imageUrl) }
-                cardOracle.text = OracleReplacer.getText(firstCard.card.text + "\n"
-                        + secondCard.card.name + "\n"
-                        + secondCard.card.text, requireActivity())
+                var textSecond = secondCard.card.text
+                if (secondCard.card.flavor != null) {
+                    textSecond += "\n" + "<i>" + secondCard.card.flavor + "</i>"
+                }
+                cardOracleSecond.text = OracleReplacer.getText(textSecond ?: "", requireActivity())
             }
             (viewPager.adapter as FlipPagerAdapter).setItems(data)
 
@@ -208,6 +209,16 @@ class CardFragment : BaseFragment() {
                 }
                 librariesBlock.addView(view)
             }
+        }
+    }
+
+    private fun switchText(faceSide: Boolean) {
+        if (faceSide) {
+            cardOracle.fadeIn()
+            cardOracleSecond.fadeOut()
+        } else {
+            cardOracle.fadeOut()
+            cardOracleSecond.fadeIn()
         }
     }
 

@@ -13,7 +13,7 @@ fun View.fadeIn() {
 
 fun View.fadeOut() {
     TransitionManager.beginDelayedTransition(parent as ViewGroup, Fade())
-    this.visibility = View.GONE
+    this.visibility = View.INVISIBLE
 }
 
 fun View.slideIn(edge: Int) {
@@ -23,7 +23,7 @@ fun View.slideIn(edge: Int) {
 
 fun View.slideOut(edge: Int) {
     TransitionManager.beginDelayedTransition(parent as ViewGroup, Slide(edge))
-    this.visibility = View.GONE
+    this.visibility = View.INVISIBLE
 }
 
 fun View.expand(listener: Transition.TransitionListener? = null) {
