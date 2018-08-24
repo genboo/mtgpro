@@ -2,10 +2,12 @@ package ru.spcm.apps.mtgpro.view.fragments
 
 import android.arch.lifecycle.Observer
 import android.os.Bundle
+import android.support.v4.content.ContextCompat
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import kotlinx.android.synthetic.main.fragment_price_volatility.*
+import kotlinx.android.synthetic.main.list_item_report.view.*
 import ru.spcm.apps.mtgpro.R
 import ru.spcm.apps.mtgpro.model.dto.CardObserved
 import ru.spcm.apps.mtgpro.model.dto.GraphDot
@@ -61,8 +63,13 @@ class PriceVolatilityFragment : BaseFragment() {
     private fun observeCard(data: CardObserved?) {
         if (data != null) {
             cardImage.loadImageFromCache(data.imageUrl)
-            cardPrice.text = getString(R.string.price_usd, data.price)
+            cardPrice.text = getString(R.string.price_usd, data.price ?: "")
             cardViol.text = data.diff
+            when {
+                data.diff.toFloat() == 0f -> cardViol.setTextColor(ContextCompat.getColor(cardViol.context, R.color.colorTextMain))
+                data.diff.toFloat() < 0 -> cardViol.setTextColor(ContextCompat.getColor(cardViol.context, R.color.colorNegative))
+                else -> cardViol.setTextColor(ContextCompat.getColor(cardViol.context, R.color.colorPositive))
+            }
             if (data.observe) {
                 watchPrice.isChecked = true
                 topEdge.isEnabled = true

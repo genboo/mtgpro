@@ -99,7 +99,7 @@ class CardFragment : BaseFragment() {
         }
 
         val adapterImages = FlipPagerAdapter(requireContext(), null)
-        adapterImages.setOnClickListener{navigator.goToImage(it.card.id, it.card.imageUrl)}
+        adapterImages.setOnClickListener { navigator.goToImage(it.card.id, it.card.imageUrl) }
         viewPager.adapter = adapterImages
         viewPager.setPageTransformer(true, FlipPageTransform())
         viewPager.setOnPageSelectedListener { switchText(it == 0) }
@@ -114,11 +114,11 @@ class CardFragment : BaseFragment() {
 
             cardNumber.text = String.format("%s %s", firstCard.card.set, firstCard.card.numberFormatted)
 
-            var text = firstCard.card.text
+            var text: String = firstCard.card.text ?: ""
             if (firstCard.card.flavor != null) {
                 text += "\n" + "<i>" + firstCard.card.flavor + "</i>"
             }
-            cardOracle.text = OracleReplacer.getText(text ?: "", requireActivity())
+            cardOracle.text = OracleReplacer.getText(text, requireActivity())
 
             cardRulesTitle.setOnClickListener { cardRules.toggle() }
             cardRules.text = OracleReplacer.getText(firstCard.card.rulesText
@@ -134,13 +134,16 @@ class CardFragment : BaseFragment() {
 
             if (data.size > 1) {
                 val secondCard = data[1]
-                var textSecond = secondCard.card.text
+                var textSecond = secondCard.card.text ?: ""
                 if (secondCard.card.flavor != null) {
                     textSecond += "\n" + "<i>" + secondCard.card.flavor + "</i>"
                 }
-                cardOracleSecond.text = OracleReplacer.getText(textSecond ?: "", requireActivity())
+                cardOracleSecond.text = OracleReplacer.getText(textSecond, requireActivity())
             }
             (viewPager.adapter as FlipPagerAdapter).setItems(data)
+            if (data.size == 1) {
+                viewPager.isSwipeable = false
+            }
 
             mainScroll.visibility = View.VISIBLE
         }

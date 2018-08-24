@@ -110,7 +110,7 @@ interface CardDao {
             "ORDER BY c.setTitle, c.numberFormatted")
     fun getWatchedCards(): DataSource.Factory<Int, CardWatched>
 
-    @Query("SELECT c.id, c.imageUrl, wc.observe, wc.top, wc.bottom, r.diff, (SELECT price FROM PriceHistory pc WHERE pc.card_id = c.id ORDER BY date DESC) as price " +
+    @Query("SELECT c.id, c.imageUrl, wc.observe, wc.top, wc.bottom, CASE WHEN r.diff IS NULL THEN '0.0' ELSE r.diff END as diff, (SELECT price FROM PriceHistory pc WHERE pc.card_id = c.id ORDER BY date DESC) as price " +
             "FROM WatchedCard wc " +
             "LEFT JOIN Report r ON r.card_id = wc.id " +
             "LEFT JOIN Card c ON c.id = wc.id " +

@@ -8,7 +8,6 @@ import android.util.AttributeSet
 import android.widget.*
 import android.util.TypedValue
 import android.view.Gravity
-import android.view.View
 import ru.spcm.apps.mtgpro.R
 
 
