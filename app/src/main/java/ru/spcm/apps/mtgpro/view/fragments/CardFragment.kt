@@ -174,8 +174,7 @@ class CardFragment : BaseFragment() {
     }
 
     private fun updatePrice(scryCard: ScryCard) {
-        val stringBuilder = SpannableStringBuilder()
-        stringBuilder.append(scryCard.usd).append(" ").append("usd")
+        val stringBuilder = SpannableStringBuilder(getString(R.string.price_usd, scryCard.usd))
         stringBuilder.setSpan(RelativeSizeSpan(1.5f), 0, scryCard.usd.length, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
         pricesLabel.text = stringBuilder
         loadPrices.fadeOut()

@@ -21,8 +21,7 @@ class ReportHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
             else -> cardViol.setTextColor(ContextCompat.getColor(cardViol.context, R.color.colorPositive))
         }
 
-        val stringBuilder = SpannableStringBuilder()
-        stringBuilder.append(item.price).append(" ").append("usd")
+        val stringBuilder = SpannableStringBuilder(cardPrice.context.getString(R.string.price_usd, item.price))
         stringBuilder.setSpan(RelativeSizeSpan(0.8f), item.price.length, stringBuilder.length, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
         cardPrice.text = stringBuilder
 

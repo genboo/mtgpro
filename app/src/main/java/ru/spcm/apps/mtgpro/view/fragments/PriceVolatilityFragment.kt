@@ -61,7 +61,7 @@ class PriceVolatilityFragment : BaseFragment() {
     private fun observeCard(data: CardObserved?) {
         if (data != null) {
             cardImage.loadImageFromCache(data.imageUrl)
-            cardPrice.text = data.price
+            cardPrice.text = getString(R.string.price_usd, data.price)
             cardViol.text = data.diff
             if (data.observe) {
                 watchPrice.isChecked = true
