@@ -2,6 +2,7 @@ package ru.spcm.apps.mtgpro.model.dto
 
 class CardObserved {
 
+    var id = ""
     var diff = ""
     var price: String? = ""
     var imageUrl = ""
