@@ -3,13 +3,12 @@ package ru.spcm.apps.mtgpro.view.fragments
 import android.arch.lifecycle.Observer
 import android.os.Bundle
 import android.support.v7.widget.GridLayoutManager
-import android.support.v7.widget.LinearLayoutManager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import kotlinx.android.synthetic.main.fragment_report.*
 import ru.spcm.apps.mtgpro.R
-import ru.spcm.apps.mtgpro.model.dto.ReportCard
+import ru.spcm.apps.mtgpro.model.dto.CardObserved
 import ru.spcm.apps.mtgpro.view.adapter.ReportListAdapter
 import ru.spcm.apps.mtgpro.viewmodel.ReportViewModel
 
@@ -36,7 +35,7 @@ class ReportFragment : BaseFragment() {
         adapter.setOnItemClickListener { _, item, _ -> navigator.goToPriceVolatility(item.id) }
     }
 
-    private fun observeReport(data: List<ReportCard>?) {
+    private fun observeReport(data: List<CardObserved>?) {
         if (data != null) {
             (list.adapter as ReportListAdapter).setItems(data)
         }

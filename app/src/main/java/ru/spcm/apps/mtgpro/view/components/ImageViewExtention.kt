@@ -10,11 +10,11 @@ import java.lang.Exception
 fun ImageView.loadImageFromCache(image: String) {
     val imageView = this
     //Принудительная загрузка из кэша
-    if(image.isEmpty()){
+    if (image.isEmpty()) {
         Picasso.get()
                 .load(R.drawable.pic_card_back)
                 .into(imageView)
-    }else {
+    } else {
         Picasso.get()
                 .load(image)
                 .networkPolicy(NetworkPolicy.OFFLINE)

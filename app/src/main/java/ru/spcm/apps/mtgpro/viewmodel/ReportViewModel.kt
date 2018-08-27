@@ -3,8 +3,7 @@ package ru.spcm.apps.mtgpro.viewmodel
 import android.arch.lifecycle.LiveData
 import android.arch.lifecycle.ViewModel
 import ru.spcm.apps.mtgpro.model.db.dao.ReportDao
-import ru.spcm.apps.mtgpro.model.dto.ReportCard
-
+import ru.spcm.apps.mtgpro.model.dto.CardObserved
 import javax.inject.Inject
 
 
@@ -16,6 +15,6 @@ import javax.inject.Inject
 class ReportViewModel @Inject
 internal constructor(reportDao: ReportDao) : ViewModel() {
 
-    val report: LiveData<List<ReportCard>> = reportDao.getReport()
+    val report: LiveData<List<CardObserved>> = reportDao.getReport()
 
 }

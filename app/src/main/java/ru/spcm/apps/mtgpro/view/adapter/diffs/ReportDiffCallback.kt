@@ -1,10 +1,10 @@
 package ru.spcm.apps.mtgpro.view.adapter.diffs
 
 import android.support.v7.util.DiffUtil
-import ru.spcm.apps.mtgpro.model.dto.ReportCard
+import ru.spcm.apps.mtgpro.model.dto.CardObserved
 
-class ReportDiffCallback(private val oldList: List<ReportCard>,
-                         private val newList: List<ReportCard>) : DiffUtil.Callback() {
+class ReportDiffCallback(private val oldList: List<CardObserved>,
+                         private val newList: List<CardObserved>) : DiffUtil.Callback() {
 
     override fun getOldListSize(): Int {
         return oldList.size

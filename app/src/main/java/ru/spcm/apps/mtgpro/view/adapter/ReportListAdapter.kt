@@ -5,7 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import ru.spcm.apps.mtgpro.R
-import ru.spcm.apps.mtgpro.model.dto.ReportCard
+import ru.spcm.apps.mtgpro.model.dto.CardObserved
 import ru.spcm.apps.mtgpro.view.adapter.diffs.ReportDiffCallback
 import ru.spcm.apps.mtgpro.view.adapter.holders.ReportHolder
 
@@ -14,7 +14,7 @@ import ru.spcm.apps.mtgpro.view.adapter.holders.ReportHolder
  * Created by gen on 20.08.2018.
  */
 
-class ReportListAdapter(items: List<ReportCard>?) : RecyclerViewAdapter<ReportCard, ReportHolder>(items) {
+class ReportListAdapter(items: List<CardObserved>?) : RecyclerViewAdapter<CardObserved, ReportHolder>(items) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ReportHolder {
         val holder = ReportHolder(LayoutInflater.from(parent.context).inflate(R.layout.list_item_report, parent, false))
@@ -26,7 +26,7 @@ class ReportListAdapter(items: List<ReportCard>?) : RecyclerViewAdapter<ReportCa
         holder.bind(getItem(holder.adapterPosition))
     }
 
-    override fun setItems(items: List<ReportCard>) {
+    override fun setItems(items: List<CardObserved>) {
         val diffs = DiffUtil.calculateDiff(ReportDiffCallback(getItems(), items), !this.getItems().isEmpty())
         super.setItems(items)
         diffs.dispatchUpdatesTo(this)

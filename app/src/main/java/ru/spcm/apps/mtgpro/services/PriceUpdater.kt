@@ -13,8 +13,6 @@ import ru.spcm.apps.mtgpro.tools.AppExecutors
 import ru.spcm.apps.mtgpro.tools.Logger
 import ru.spcm.apps.mtgpro.tools.format
 import java.io.IOException
-import java.text.DecimalFormat
-import java.text.DecimalFormatSymbols
 import java.util.*
 import javax.inject.Inject
 
