@@ -40,15 +40,17 @@ class PriceVolatilityFragment : BaseFragment() {
             viewModel.updateObserve(args.getString(ARG_ID), watchPrice.isChecked, topEdge.text.toString().toFloat(), bottomEdge.text.toString().toFloat())
         }
 
-        topEdge.setOnFocusChangeListener{ _, focus ->
-            if(!focus){
+        topEdge.setOnFocusChangeListener { _, focus ->
+            if (!focus) {
                 viewModel.updateObserve(args.getString(ARG_ID), watchPrice.isChecked, topEdge.text.toString().toFloat(), bottomEdge.text.toString().toFloat())
             }
         }
 
-        bottomEdge.setOnFocusChangeListener{ _, focus ->
-            if(!focus){
-                viewModel.updateObserve(args.getString(ARG_ID), watchPrice.isChecked, topEdge.text.toString().toFloat(), bottomEdge.text.toString().toFloat())
+        bottomEdge.setOnFocusChangeListener { _, focus ->
+            if (!focus) {
+                val top: Float = if (topEdge.text.isEmpty()) 0f else topEdge.text.toString().toFloat()
+                val bottom: Float = if (bottomEdge.text.isEmpty()) 0f else bottomEdge.text.toString().toFloat()
+                viewModel.updateObserve(args.getString(ARG_ID), watchPrice.isChecked, top, bottom)
             }
         }
     }
@@ -78,6 +80,7 @@ class PriceVolatilityFragment : BaseFragment() {
             val bottom = if (data.bottom == 0f) data.price else data.bottom.toString()
             topEdge.setText(top)
             bottomEdge.setText(bottom)
+            cardInfoGroup.visibility = View.VISIBLE
         }
     }
 

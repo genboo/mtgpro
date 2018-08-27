@@ -25,10 +25,11 @@
             android:clipToPadding="false"
             android:paddingBottom="?android:attr/actionBarSize">
 
-            <LinearLayout
+
+            <android.support.constraint.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical">
+                android:paddingBottom="16dp">
 
                 <ru.spcm.apps.mtgpro.view.components.GraphView
                     android:id="@+id/graph"
@@ -40,117 +41,118 @@
                     android:paddingStart="16dp"
                     android:paddingTop="16dp" />
 
-                <android.support.constraint.ConstraintLayout
+                <android.support.constraint.Guideline
+                    android:id="@+id/line_left"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    app:layout_constraintGuide_begin="8dp" />
+
+                <android.support.constraint.Guideline
+                    android:id="@+id/line_right"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:nestedScrollingEnabled="false"
+                    android:orientation="vertical"
+                    app:layout_constraintGuide_end="8dp" />
+
+                <android.support.constraint.Group
+                    android:id="@+id/cardInfoGroup"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:paddingBottom="16dp">
+                    android:visibility="gone"
+                    app:constraint_referenced_ids="cardImage,cardPrice,cardViol,watchPrice,topEdgeLabel,topEdge,bottomEdgeLabel,bottomEdge"
+                    app:layout_constraintTop_toBottomOf="@id/graph" />
 
-                    <android.support.constraint.Guideline
-                        android:id="@+id/line_left"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:orientation="vertical"
-                        app:layout_constraintGuide_begin="8dp" />
+                <ImageView
+                    android:id="@+id/cardImage"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:layout_marginEnd="8dp"
+                    android:layout_marginTop="8dp"
+                    android:contentDescription="@string/app_name"
+                    app:layout_constraintDimensionRatio="163:227"
+                    app:layout_constraintLeft_toLeftOf="@+id/line_left"
+                    app:layout_constraintRight_toLeftOf="@id/watchPrice"
+                    app:layout_constraintTop_toBottomOf="@id/graph"
+                    tools:src="@drawable/pic_card" />
 
-                    <android.support.constraint.Guideline
-                        android:id="@+id/line_right"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:nestedScrollingEnabled="false"
-                        android:orientation="vertical"
-                        app:layout_constraintGuide_end="8dp" />
+                <TextView
+                    android:id="@+id/cardPrice"
+                    style="@style/TextView.Price"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintLeft_toLeftOf="@id/watchPrice"
+                    app:layout_constraintTop_toTopOf="@id/cardImage"
+                    tools:text="10.1 usd" />
 
-                    <ImageView
-                        android:id="@+id/cardImage"
-                        android:layout_width="0dp"
-                        android:layout_height="0dp"
-                        android:layout_marginEnd="8dp"
-                        android:layout_marginTop="8dp"
-                        android:contentDescription="@string/app_name"
-                        app:layout_constraintDimensionRatio="163:227"
-                        app:layout_constraintLeft_toLeftOf="@+id/line_left"
-                        app:layout_constraintRight_toLeftOf="@id/watchPrice"
-                        app:layout_constraintTop_toTopOf="parent"
-                        tools:src="@drawable/pic_card" />
+                <TextView
+                    android:id="@+id/cardViol"
+                    style="@style/TextView.Price"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    app:layout_constraintLeft_toRightOf="@id/cardPrice"
+                    app:layout_constraintRight_toRightOf="@id/line_right"
+                    app:layout_constraintTop_toTopOf="@id/cardPrice"
+                    tools:text="0.2" />
 
+                <android.support.v7.widget.SwitchCompat
+                    android:id="@+id/watchPrice"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:text="@string/price_viol_check"
+                    android:textColor="@color/colorTextMain"
+                    app:layout_constraintRight_toRightOf="@id/line_right"
+                    app:layout_constraintTop_toBottomOf="@id/cardPrice"
+                    app:layout_constraintWidth_percent=".5" />
 
-                    <TextView
-                        android:id="@+id/cardPrice"
-                        style="@style/TextView.Price"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        app:layout_constraintLeft_toLeftOf="@id/watchPrice"
-                        app:layout_constraintTop_toTopOf="@id/cardImage"
-                        tools:text="10.1 usd" />
+                <TextView
+                    android:id="@+id/topEdgeLabel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="8dp"
+                    android:labelFor="@id/topEdge"
+                    android:text="@string/price_viol_top"
+                    app:layout_constraintBottom_toBottomOf="@id/topEdge"
+                    app:layout_constraintRight_toLeftOf="@id/topEdge"
+                    app:layout_constraintTop_toTopOf="@id/topEdge" />
 
-                    <TextView
-                        android:id="@+id/cardViol"
-                        style="@style/TextView.Price"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="8dp"
-                        app:layout_constraintLeft_toRightOf="@id/cardPrice"
-                        app:layout_constraintRight_toRightOf="@id/line_right"
-                        app:layout_constraintTop_toTopOf="@id/cardPrice"
-                        tools:text="0.2" />
+                <EditText
+                    android:id="@+id/topEdge"
+                    android:layout_width="80dp"
+                    android:layout_height="wrap_content"
+                    android:enabled="false"
+                    android:gravity="center_horizontal"
+                    android:inputType="numberDecimal"
+                    app:layout_constraintRight_toRightOf="@id/line_right"
+                    app:layout_constraintTop_toBottomOf="@id/watchPrice"
+                    tools:text="14.3" />
 
-                    <android.support.v7.widget.SwitchCompat
-                        android:id="@+id/watchPrice"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="8dp"
-                        android:text="@string/price_viol_check"
-                        android:textColor="@color/colorTextMain"
-                        app:layout_constraintRight_toRightOf="@id/line_right"
-                        app:layout_constraintTop_toBottomOf="@id/cardPrice"
-                        app:layout_constraintWidth_percent=".5" />
+                <TextView
+                    android:id="@+id/bottomEdgeLabel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="8dp"
+                    android:labelFor="@id/bottomEdge"
+                    android:text="@string/price_viol_bottom"
+                    app:layout_constraintBottom_toBottomOf="@id/bottomEdge"
+                    app:layout_constraintRight_toLeftOf="@id/bottomEdge"
+                    app:layout_constraintTop_toTopOf="@id/bottomEdge" />
 
-                    <TextView
-                        android:id="@+id/topEdgeLabel"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginEnd="8dp"
-                        android:labelFor="@id/topEdge"
-                        android:text="@string/price_viol_top"
-                        app:layout_constraintBottom_toBottomOf="@id/topEdge"
-                        app:layout_constraintRight_toLeftOf="@id/topEdge"
-                        app:layout_constraintTop_toTopOf="@id/topEdge" />
+                <EditText
+                    android:id="@+id/bottomEdge"
+                    android:layout_width="80dp"
+                    android:layout_height="wrap_content"
+                    android:enabled="false"
+                    android:gravity="center_horizontal"
+                    android:inputType="numberDecimal"
+                    app:layout_constraintRight_toRightOf="@id/line_right"
+                    app:layout_constraintTop_toBottomOf="@id/topEdge"
+                    tools:text="12.1" />
 
-                    <EditText
-                        android:id="@+id/topEdge"
-                        android:layout_width="80dp"
-                        android:layout_height="wrap_content"
-                        android:enabled="false"
-                        android:gravity="center_horizontal"
-                        android:inputType="numberDecimal"
-                        app:layout_constraintRight_toRightOf="@id/line_right"
-                        app:layout_constraintTop_toBottomOf="@id/watchPrice"
-                        tools:text="14.3" />
-
-                    <TextView
-                        android:id="@+id/bottomEdgeLabel"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginEnd="8dp"
-                        android:labelFor="@id/bottomEdge"
-                        android:text="@string/price_viol_bottom"
-                        app:layout_constraintBottom_toBottomOf="@id/bottomEdge"
-                        app:layout_constraintRight_toLeftOf="@id/bottomEdge"
-                        app:layout_constraintTop_toTopOf="@id/bottomEdge" />
-
-                    <EditText
-                        android:id="@+id/bottomEdge"
-                        android:layout_width="80dp"
-                        android:layout_height="wrap_content"
-                        android:enabled="false"
-                        android:gravity="center_horizontal"
-                        android:inputType="numberDecimal"
-                        app:layout_constraintRight_toRightOf="@id/line_right"
-                        app:layout_constraintTop_toBottomOf="@id/topEdge"
-                        tools:text="12.1" />
-
-                </android.support.constraint.ConstraintLayout>
-            </LinearLayout>
+            </android.support.constraint.ConstraintLayout>
         </ru.spcm.apps.mtgpro.view.components.InterceptedNestedScrollView>
     </LinearLayout>
 

@@ -39,7 +39,7 @@ constructor(private val appExecutors: AppExecutors,
                         if (price != null) {
                             break
                         }
-                        Thread.sleep(5000)
+                        Thread.sleep(3000)
                         price = getPrice(item.card.set, number ?: "")
                     }
                     if (price != null) {
@@ -67,8 +67,8 @@ constructor(private val appExecutors: AppExecutors,
                             data.currentCard = updateCounter
                             result.postValue(data)
                         }
-                        Thread.sleep(5 * 1000)
                     }
+                    Thread.sleep(500)
                 }
             }
             appExecutors.mainThread().execute {
