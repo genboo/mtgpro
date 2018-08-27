@@ -61,6 +61,8 @@
     <string name="price_viol_bottom">ниже</string>
     <string name="price_usd">%s$</string>
     <string name="price_rub">%s₽</string>
+    <string name="library_card_count">Карт в колоде: %s</string>
+    <string name="library_price">Стоимость колоды: %s$</string>
 
     <string name="tag_parent">parent</string>
     <string name="tag_id">id</string>

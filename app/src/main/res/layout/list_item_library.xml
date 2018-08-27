@@ -35,6 +35,14 @@
             app:layout_constraintTop_toBottomOf="@id/libraryName"
             tools:text="Карт в колоде: 12"/>
 
+        <TextView
+            android:id="@+id/libraryPrice"
+            style="@style/TextView.Main"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/libraryCardsCount"
+            tools:text="Стоимость колоды: 12$"/>
 
     </android.support.constraint.ConstraintLayout>
 

@@ -7,7 +7,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import kotlinx.android.synthetic.main.fragment_price_volatility.*
-import kotlinx.android.synthetic.main.list_item_report.view.*
 import ru.spcm.apps.mtgpro.R
 import ru.spcm.apps.mtgpro.model.dto.CardObserved
 import ru.spcm.apps.mtgpro.model.dto.GraphDot

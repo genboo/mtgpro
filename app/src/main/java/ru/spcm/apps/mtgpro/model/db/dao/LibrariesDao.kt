@@ -14,7 +14,14 @@ interface LibrariesDao {
     @Update
     fun update(item: Library)
 
-    @Query("SELECT l.*, SUM(lc.count) AS count  FROM Library l LEFT JOIN LibraryCard lc ON lc.library_id = l.id GROUP BY l.id")
+    @Query("SELECT l.*, sum(lc.count) AS count, " +
+            "CASE WHEN SUBSTR(c.number, -1) IN ('a', 'b') THEN SUBSTR(c.number, 1, length(c.number) - 1) ELSE c.number END num, " +
+            "SUM(sc.usd * lc.count) price " +
+            "FROM Library l " +
+            "LEFT JOIN LibraryCard lc ON lc.library_id = l.id " +
+            "LEFT JOIN Card c ON lc.card_id = c.id " +
+            "LEFT JOIN ScryCard sc ON sc.number = num AND sc.`set` = LOWER(c.`set`) " +
+            "GROUP BY l.id")
     fun getLibraries(): LiveData<List<LibraryInfo>>
 
     @Query("SELECT * FROM Library l WHERE l.id = :id")
@@ -51,7 +58,7 @@ interface LibrariesDao {
             "ORDER BY cl.color")
     fun getLibraryColorState(library: Long): LiveData<List<LibraryColorState>>
 
-    @Query("SELECT l.name, lc.library_id as id, lc.count " +
+    @Query("SELECT l.name, lc.library_id as id, lc.count, '' as price " +
             "FROM LibraryCard lc, Library l " +
             "WHERE lc.library_id = l.id AND lc.card_id = :card")
     fun getLibrariesByCard(card: String): LiveData<List<LibraryInfo>>
