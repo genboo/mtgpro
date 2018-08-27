@@ -135,12 +135,12 @@
                         android:layout_height="wrap_content"
                         android:textSize="12sp"
                         app:layout_constraintBottom_toBottomOf="@id/addToWish"
-                        app:layout_constraintRight_toLeftOf="@id/watch"
+                        app:layout_constraintRight_toLeftOf="@id/addToWatch"
                         app:layout_constraintTop_toTopOf="@id/addToWish"
                         tools:text="11.99 usd" />
 
                     <ImageButton
-                        android:id="@+id/watch"
+                        android:id="@+id/addToWatch"
                         style="@style/ImageButton.Card"
                         android:contentDescription="@string/app_name"
                         android:src="@drawable/ic_eye_plus"
@@ -152,7 +152,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:visibility="gone"
-                        app:constraint_referenced_ids="pricesLabel,watch"
+                        app:constraint_referenced_ids="pricesLabel,addToWatch"
                         tools:visibility="visible" />
 
                     <ProgressBar

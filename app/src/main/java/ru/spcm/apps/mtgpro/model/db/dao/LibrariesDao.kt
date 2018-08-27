@@ -16,7 +16,7 @@ interface LibrariesDao {
 
     @Query("SELECT l.*, sum(lc.count) AS count, " +
             "CASE WHEN SUBSTR(c.number, -1) IN ('a', 'b') THEN SUBSTR(c.number, 1, length(c.number) - 1) ELSE c.number END num, " +
-            "SUM(sc.usd * lc.count) price " +
+            "SUM(sc.usd * lc.count) AS price " +
             "FROM Library l " +
             "LEFT JOIN LibraryCard lc ON lc.library_id = l.id " +
             "LEFT JOIN Card c ON lc.card_id = c.id " +

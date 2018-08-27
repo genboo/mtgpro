@@ -3,6 +3,7 @@ package ru.spcm.apps.mtgpro.model.db.dao
 import android.arch.persistence.room.*
 import ru.spcm.apps.mtgpro.model.dto.CardWatched
 import ru.spcm.apps.mtgpro.model.dto.PriceHistory
+import ru.spcm.apps.mtgpro.model.dto.ScryCard
 import java.util.*
 
 @Dao
@@ -23,6 +24,14 @@ interface PriceUpdateDao {
 
     @Query("SELECT * FROM PriceHistory ph WHERE ph.card_id = :cardId  AND date < :date  ORDER BY ph.date DESC LIMIT 1 ")
     fun getLastPrice(cardId: String, date: Date): PriceHistory?
+
+    @SuppressWarnings(RoomWarnings.CURSOR_MISMATCH)
+    @Query("SELECT sc.*, " +
+            "CASE WHEN SUBSTR(c.number, -1) IN ('a', 'b') THEN SUBSTR(c.number, 1, length(c.number) - 1) ELSE c.number END num " +
+            "FROM Card c " +
+            "LEFT JOIN ScryCard sc ON sc.number = num AND sc.`set` = lower(c.`set`) " +
+            "WHERE c.id = :id")
+    fun getPrice(id:String): ScryCard
 
 
 }

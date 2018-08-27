@@ -3,13 +3,15 @@ package ru.spcm.apps.mtgpro.repository
 import android.arch.lifecycle.LiveData
 import android.arch.lifecycle.MutableLiveData
 import ru.spcm.apps.mtgpro.model.db.dao.CardDao
+import ru.spcm.apps.mtgpro.model.db.dao.PriceUpdateDao
 import ru.spcm.apps.mtgpro.model.dto.*
 import ru.spcm.apps.mtgpro.tools.AppExecutors
 import javax.inject.Inject
 
 class CardRepo @Inject
 constructor(private val appExecutors: AppExecutors,
-            private val cardDao: CardDao) {
+            private val cardDao: CardDao,
+            private val priceUpdateDao: PriceUpdateDao) {
 
     fun getCards(id: String): LiveData<List<CardLocal>> {
         return cardDao.getSavedCards(id)
@@ -64,10 +66,12 @@ constructor(private val appExecutors: AppExecutors,
         return result
     }
 
-    fun updateWatch(id: String, wish: Boolean) {
+    fun updateWatch(id: String, watch: Boolean) {
         appExecutors.diskIO().execute {
-            if (wish) {
+            if (watch) {
                 cardDao.insert(WatchedCard(id))
+                val price = priceUpdateDao.getPrice(id)
+                priceUpdateDao.insert(PriceHistory(id, price.usd))
             } else {
                 cardDao.delete(WatchedCard(id))
             }
