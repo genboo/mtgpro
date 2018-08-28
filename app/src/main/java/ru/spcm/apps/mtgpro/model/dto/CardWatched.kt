@@ -7,6 +7,6 @@ class CardWatched {
     @Embedded
     lateinit var card: Card
 
-    lateinit var price: String
+    var price: Float = 0f
 
 }

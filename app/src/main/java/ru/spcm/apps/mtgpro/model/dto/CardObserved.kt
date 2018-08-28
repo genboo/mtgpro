@@ -3,8 +3,8 @@ package ru.spcm.apps.mtgpro.model.dto
 class CardObserved {
 
     var id = ""
-    var diff = ""
-    var price: String? = ""
+    var diff: Float = 0f
+    var price: Float? = 0f
     var imageUrl = ""
     var observe: Boolean = false
     var top: Float = 0f

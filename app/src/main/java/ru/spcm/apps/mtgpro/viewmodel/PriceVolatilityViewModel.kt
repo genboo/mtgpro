@@ -23,7 +23,7 @@ class PriceVolatilityViewModel @Inject
 internal constructor(private val cardRepo: CardRepo,
                      private val priceRepo: PriceRepo) : ViewModel() {
 
-    private val switcher: MutableLiveData<String> = MutableLiveData()
+    private val switcher: MutableLiveData<CardData> = MutableLiveData()
     private var cards: LiveData<CardObserved>
     private var data: LiveData<List<GraphDot>>
 
@@ -32,7 +32,7 @@ internal constructor(private val cardRepo: CardRepo,
             if (it == null) {
                 return@switchMap AbsentLiveData.create<CardObserved>()
             }
-            return@switchMap cardRepo.getObservedCard(it)
+            return@switchMap cardRepo.getObservedCard(it.id, it.valute)
         }
 
         data = Transformations.switchMap(switcher) {
@@ -42,7 +42,7 @@ internal constructor(private val cardRepo: CardRepo,
             val calendar = Calendar.getInstance().apply {
                 set(Calendar.DAY_OF_MONTH, -30)
             }
-            return@switchMap priceRepo.getData(it, calendar.time, Date())
+            return@switchMap priceRepo.getData(it.id, it.valute, calendar.time, Date())
         }
     }
 
@@ -54,12 +54,14 @@ internal constructor(private val cardRepo: CardRepo,
         return data
     }
 
-    fun load(id: String) {
-        switcher.postValue(id)
+    fun load(id: String, valute: Float) {
+        switcher.postValue(CardData(id, valute))
     }
 
     fun updateObserve(id: String, observe: Boolean, top: Float, bottom: Float) {
         cardRepo.updateObserve(id, observe, top, bottom)
     }
+
+    class CardData(var id: String, var valute: Float)
 
 }

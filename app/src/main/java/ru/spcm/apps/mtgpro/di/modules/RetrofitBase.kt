@@ -64,5 +64,6 @@ open class RetrofitBase {
         const val TRY_LIMIT: Int = 3
         const val MTG_API_URL = "https://api.magicthegathering.io"
         const val SCRY_API_URL = "https://api.scryfall.com"
+        const val CBR_API_URL = "https://www.cbr-xml-daily.ru"
     }
 }

@@ -31,7 +31,8 @@ class WatchFragment : BaseFragment() {
         list.layoutManager = LinearLayoutManager(context)
         list.adapter = adapter
 
-        viewModel.cards.observe(this, Observer { adapter.submitList(it) })
+        viewModel.getCards().observe(this, Observer { adapter.submitList(it) })
+        viewModel.loadCards(getSettings().getCurrentValute())
     }
 
     override fun inject() {

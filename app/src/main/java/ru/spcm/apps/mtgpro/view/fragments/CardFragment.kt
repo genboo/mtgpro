@@ -19,6 +19,7 @@ import ru.spcm.apps.mtgpro.model.dto.*
 import ru.spcm.apps.mtgpro.model.tools.Resource
 import ru.spcm.apps.mtgpro.model.tools.Status
 import ru.spcm.apps.mtgpro.tools.OracleReplacer
+import ru.spcm.apps.mtgpro.tools.format
 import ru.spcm.apps.mtgpro.view.adapter.FlipPagerAdapter
 import ru.spcm.apps.mtgpro.view.adapter.FlipPageTransform
 import ru.spcm.apps.mtgpro.view.adapter.LibrarySelectAdapter
@@ -84,7 +85,8 @@ class CardFragment : BaseFragment() {
 
         cardLoaded.observe(this, Observer { loaded ->
             if (loaded == true) {
-                viewModel.loadPricesFromCache(card.set, card.number ?: "")
+                viewModel.loadPricesFromCache(card.set, card.number
+                        ?: "", getSettings().getCurrentValute())
             }
         })
 
@@ -177,8 +179,9 @@ class CardFragment : BaseFragment() {
     }
 
     private fun updatePrice(scryCard: ScryCard) {
-        val stringBuilder = SpannableStringBuilder(getString(R.string.price_usd, scryCard.usd))
-        stringBuilder.setSpan(RelativeSizeSpan(1.5f), 0, scryCard.usd.length, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
+        val price = scryCard.usd.toFloat().format()
+        val stringBuilder = SpannableStringBuilder(getString(R.string.price_rub, price))
+        stringBuilder.setSpan(RelativeSizeSpan(1.5f), 0, price.length, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
         pricesLabel.text = stringBuilder
         loadPrices.fadeOut()
         priceGroup.fadeIn()

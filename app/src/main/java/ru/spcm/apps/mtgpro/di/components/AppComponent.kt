@@ -8,11 +8,8 @@ import javax.inject.Singleton
 import dagger.BindsInstance
 import dagger.Component
 import ru.spcm.apps.mtgpro.di.ViewModelModule
+import ru.spcm.apps.mtgpro.di.modules.*
 import ru.spcm.apps.mtgpro.view.activities.MainActivity
-import ru.spcm.apps.mtgpro.di.modules.DbModule
-import ru.spcm.apps.mtgpro.di.modules.NavigationModule
-import ru.spcm.apps.mtgpro.di.modules.RetrofitModule
-import ru.spcm.apps.mtgpro.di.modules.ScryRetrofitModule
 import ru.spcm.apps.mtgpro.services.AlarmReceiver
 import ru.spcm.apps.mtgpro.view.fragments.*
 
@@ -24,6 +21,7 @@ import ru.spcm.apps.mtgpro.view.fragments.*
     ViewModelModule::class,
     RetrofitModule::class,
     ScryRetrofitModule::class,
+    CbrRetrofitModule::class,
     DbModule::class,
     NavigationModule::class])
 @Singleton

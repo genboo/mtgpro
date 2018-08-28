@@ -56,6 +56,7 @@
     <string name="backup_auto_text">Сохранять базу данных карт на носителе автоматически.</string>
     <string name="restore_text">Восстановить базу данных карт с носителя. Все существующие данные будут удалены.</string>
     <string name="update_watched_prices">Обновить цены</string>
+    <string name="update_valutes">Обновить курс валюты</string>
     <string name="price_viol_check">Следить за ценой</string>
     <string name="price_viol_top">выше</string>
     <string name="price_viol_bottom">ниже</string>

@@ -11,6 +11,7 @@ import android.view.View
 import kotlinx.android.synthetic.main.list_item_card_watched.view.*
 import ru.spcm.apps.mtgpro.R
 import ru.spcm.apps.mtgpro.model.dto.CardWatched
+import ru.spcm.apps.mtgpro.tools.format
 import ru.spcm.apps.mtgpro.view.components.loadImageFromCache
 import java.util.*
 
@@ -24,8 +25,9 @@ class CardWatchedHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         cardRarity.setImageDrawable(context.getDrawable(item.card.getSetIcon()))
         cardSet.text = item.card.setTitle
 
-        val price = SpannableStringBuilder(cardPrice.context.getString(R.string.price_usd, item.price))
-        price.setSpan(RelativeSizeSpan(1.3f), 0, item.price.length, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
+        val priceString = item.price.format()
+        val price = SpannableStringBuilder(cardPrice.context.getString(R.string.price_rub, priceString))
+        price.setSpan(RelativeSizeSpan(1.3f), 0, priceString.length, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
         cardPrice.text = price
 
         cardNumber.text = String.format(Locale.getDefault(), "%s %s", item.card.set, item.card.numberFormatted)

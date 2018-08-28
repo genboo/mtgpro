@@ -17,16 +17,16 @@ import ru.spcm.apps.mtgpro.view.components.loadImageFromCache
 class ReportHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
     fun bind(item: CardObserved) = with(itemView) {
-        cardViol.text = item.diff
+        cardViol.text = item.diff.format()
         when {
-            item.diff.toFloat() == 0f -> cardViol.setTextColor(ContextCompat.getColor(cardViol.context, R.color.colorTextMain))
-            item.diff.toFloat() < 0 -> cardViol.setTextColor(ContextCompat.getColor(cardViol.context, R.color.colorNegative))
+            item.diff == 0f -> cardViol.setTextColor(ContextCompat.getColor(cardViol.context, R.color.colorTextMain))
+            item.diff < 0 -> cardViol.setTextColor(ContextCompat.getColor(cardViol.context, R.color.colorNegative))
             else -> cardViol.setTextColor(ContextCompat.getColor(cardViol.context, R.color.colorPositive))
         }
 
-        val price = item.price?.toFloat() ?: 0f
+        val price = item.price ?: 0f
 
-        val stringBuilder = SpannableStringBuilder(cardPrice.context.getString(R.string.price_usd, price.format()))
+        val stringBuilder = SpannableStringBuilder(cardPrice.context.getString(R.string.price_rub, price.format()))
         stringBuilder.setSpan(RelativeSizeSpan(0.8f),
                 price.format().length,
                 stringBuilder.length,

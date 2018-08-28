@@ -9,6 +9,7 @@ import android.view.ViewGroup
 import kotlinx.android.synthetic.main.fragment_report.*
 import ru.spcm.apps.mtgpro.R
 import ru.spcm.apps.mtgpro.model.dto.CardObserved
+import ru.spcm.apps.mtgpro.model.dto.Setting
 import ru.spcm.apps.mtgpro.view.adapter.ReportListAdapter
 import ru.spcm.apps.mtgpro.viewmodel.ReportViewModel
 
@@ -26,8 +27,8 @@ class ReportFragment : BaseFragment() {
         super.onActivityCreated(savedInstanceState)
         updateToolbar()
         val viewModel = getViewModel(this, ReportViewModel::class.java)
-        viewModel.report.observe(this, Observer { observeReport(it) })
-
+        viewModel.getReport().observe(this, Observer { observeReport(it) })
+        viewModel.loadReport(getSettings().getCurrentValute())
         val adapter = ReportListAdapter(null)
         list.layoutManager = GridLayoutManager(requireContext(), 3)
         list.adapter = adapter

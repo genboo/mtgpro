@@ -102,18 +102,18 @@ interface CardDao {
 
     @SuppressWarnings(RoomWarnings.CURSOR_MISMATCH)
     @Query("SELECT c.id, c.numberFormatted, c.nameOrigin, c.setTitle, c.parent, c.imageUrl, c.name, c.rarity, c.multiverseId, c.number, c.`set`, c.type, c.cmc, c.text, c.flavor, c.manaCost, c.rulesText, c.count, c.number, " +
-            "case when substr(c.number, -1) in ('a', 'b') then substr(c.number, 1, length(c.number) - 1) else c.number end num, " +
-            "CASE WHEN sc.usd IS NULL THEN 0 ELSE sc.usd END price  " +
+            "CASE WHEN SUBSTR(c.number, -1) IN ('a', 'b') THEN SUBSTR(c.number, 1, length(c.number) - 1) ELSE c.number END num, " +
+            "(CASE WHEN sc.usd IS NULL THEN 0 ELSE sc.usd END) * :valute AS price  " +
             "FROM WatchedCard wc " +
             "LEFT JOIN Card c ON c.id = wc.id " +
             "LEFT JOIN ScryCard sc ON sc.number = num AND sc.`set` = lower(c.`set`) " +
             "ORDER BY c.setTitle, c.numberFormatted")
-    fun getWatchedCards(): DataSource.Factory<Int, CardWatched>
+    fun getWatchedCards(valute: Float): DataSource.Factory<Int, CardWatched>
 
-    @Query("SELECT c.id, c.imageUrl, wc.observe, wc.top, wc.bottom, CASE WHEN r.diff IS NULL THEN '0.0' ELSE r.diff END as diff, (SELECT price FROM PriceHistory pc WHERE pc.card_id = c.id ORDER BY date DESC) as price " +
+    @Query("SELECT c.id, c.imageUrl, wc.observe, wc.top * :valute as top , wc.bottom * :valute as bottom, CASE WHEN r.diff IS NULL THEN 0 ELSE r.diff * :valute END as diff, (SELECT price FROM PriceHistory pc WHERE pc.card_id = c.id ORDER BY date DESC) * :valute as price " +
             "FROM WatchedCard wc " +
             "LEFT JOIN Report r ON r.card_id = wc.id " +
             "LEFT JOIN Card c ON c.id = wc.id " +
             "WHERE wc.id = :id")
-    fun getObservedCard(id: String): LiveData<CardObserved>
+    fun getObservedCard(id: String, valute: Float): LiveData<CardObserved>
 }

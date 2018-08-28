@@ -1,9 +1,12 @@
 package ru.spcm.apps.mtgpro.viewmodel
 
 import android.arch.lifecycle.LiveData
+import android.arch.lifecycle.MutableLiveData
+import android.arch.lifecycle.Transformations
 import android.arch.lifecycle.ViewModel
 import ru.spcm.apps.mtgpro.model.db.dao.ReportDao
 import ru.spcm.apps.mtgpro.model.dto.CardObserved
+import ru.spcm.apps.mtgpro.tools.AbsentLiveData
 import javax.inject.Inject
 
 
@@ -15,6 +18,25 @@ import javax.inject.Inject
 class ReportViewModel @Inject
 internal constructor(reportDao: ReportDao) : ViewModel() {
 
-    val report: LiveData<List<CardObserved>> = reportDao.getReport()
+    private val report: LiveData<List<CardObserved>>
+    private val switch: MutableLiveData<Float> = MutableLiveData()
+
+    init {
+        report = Transformations.switchMap(switch) {
+            if (it == null) {
+                return@switchMap AbsentLiveData.create<List<CardObserved>>()
+            }
+            return@switchMap reportDao.getReport(it)
+        }
+    }
+
+    fun getReport(): LiveData<List<CardObserved>> {
+        return report
+    }
+
+    fun loadReport(valute: Float) {
+        switch.postValue(valute)
+    }
+
 
 }

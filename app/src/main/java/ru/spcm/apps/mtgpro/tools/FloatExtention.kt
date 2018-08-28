@@ -6,6 +6,6 @@ import java.text.DecimalFormatSymbols
 fun Float.format(): String {
     val symbols = DecimalFormatSymbols()
     symbols.decimalSeparator = '.'
-    val diffFormatter = DecimalFormat("###.##", symbols)
+    val diffFormatter = DecimalFormat("0.00", symbols)
     return diffFormatter.format(this)
 }

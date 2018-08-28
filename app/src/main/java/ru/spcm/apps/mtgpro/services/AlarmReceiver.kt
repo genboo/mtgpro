@@ -22,14 +22,20 @@ class AlarmReceiver : BroadcastReceiver() {
     @Inject
     lateinit var backupSaver: BackupSaver
 
+    @Inject
+    lateinit var valuteUpdater: ValuteUpdater
+
     var component: AppComponent? = null
 
     override fun onReceive(context: Context, intent: Intent) {
         component = (context.applicationContext as App).appComponent
         component?.inject(this)
+
         if (!intent.getBooleanExtra(FORCE, false)) {
             backupSaver.backup(context)
         }
+
+        valuteUpdater.update()
 
         showNotification(context, context.getString(R.string.app_name),
                 context.getString(R.string.notify_update_notification),
@@ -51,6 +57,7 @@ class AlarmReceiver : BroadcastReceiver() {
                 }
             }
         })
+
     }
 
     private fun showNotification(context: Context, title: String, annotation: String, message: String, permanent: Boolean = false) {
@@ -81,6 +88,7 @@ class AlarmReceiver : BroadcastReceiver() {
         const val LAUNCH_FRAGMENT = "launch_fragment"
         const val LAUNCH_FRAGMENT_REPORT = "launch_fragment_report"
         const val FORCE = "force"
+        const val VALUTE = "valute"
     }
 
 }

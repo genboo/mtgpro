@@ -67,7 +67,7 @@ internal constructor(private val cardRepo: CardRepo,
                 return@switchMap AbsentLiveData.create<ScryCard>()
 
             }
-            return@switchMap priceRepo.getPricesFromCache(it.set, it.number)
+            return@switchMap priceRepo.getPricesFromCache(it.set, it.number, it.valute)
         }
     }
 
@@ -99,8 +99,8 @@ internal constructor(private val cardRepo: CardRepo,
         return prices
     }
 
-    fun loadPricesFromCache(set: String, number: String) {
-        val params = PriceParams(set, number)
+    fun loadPricesFromCache(set: String, number: String, valute: Float) {
+        val params = PriceParams(set, number, valute)
         switcherPrice.postValue(params)
     }
 
@@ -132,5 +132,5 @@ internal constructor(private val cardRepo: CardRepo,
         return cardRepo.findAndUpdateSecondSide(id)
     }
 
-    data class PriceParams(var set: String, var number: String)
+    data class PriceParams(var set: String, var number: String, var valute: Float)
 }

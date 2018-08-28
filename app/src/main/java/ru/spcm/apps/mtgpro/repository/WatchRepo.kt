@@ -11,8 +11,8 @@ class WatchRepo @Inject
 constructor(private val appExecutors: AppExecutors,
             private val cardDao: CardDao) {
 
-    fun getAllCards(): DataSource.Factory<Int, CardWatched> {
-        return cardDao.getWatchedCards()
+    fun getAllCards(valute: Float): DataSource.Factory<Int, CardWatched> {
+        return cardDao.getWatchedCards(valute)
     }
 
     fun delete(id: String) {

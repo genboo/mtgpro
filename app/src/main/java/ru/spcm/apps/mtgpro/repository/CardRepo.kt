@@ -6,6 +6,7 @@ import ru.spcm.apps.mtgpro.model.db.dao.CardDao
 import ru.spcm.apps.mtgpro.model.db.dao.PriceUpdateDao
 import ru.spcm.apps.mtgpro.model.dto.*
 import ru.spcm.apps.mtgpro.tools.AppExecutors
+import ru.spcm.apps.mtgpro.tools.format
 import javax.inject.Inject
 
 class CardRepo @Inject
@@ -17,8 +18,8 @@ constructor(private val appExecutors: AppExecutors,
         return cardDao.getSavedCards(id)
     }
 
-    fun getObservedCard(id: String): LiveData<CardObserved> {
-        return cardDao.getObservedCard(id)
+    fun getObservedCard(id: String, valute: Float): LiveData<CardObserved> {
+        return cardDao.getObservedCard(id, valute)
     }
 
     fun getWish(id: String): LiveData<WishedCard> {
@@ -71,7 +72,7 @@ constructor(private val appExecutors: AppExecutors,
             if (watch) {
                 cardDao.insert(WatchedCard(id))
                 val price = priceUpdateDao.getPrice(id)
-                priceUpdateDao.insert(PriceHistory(id, price.usd))
+                priceUpdateDao.insert(PriceHistory(id, price.usd.format()))
             } else {
                 cardDao.delete(WatchedCard(id))
             }

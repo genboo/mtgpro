@@ -44,7 +44,7 @@ constructor(private val appExecutors: AppExecutors,
                     }
                     if (price != null) {
                         val lastPrice = priceUpdateDao.getLastPrice(item.card.id, now)
-                        priceUpdateDao.insert(PriceHistory(item.card.id, price.usd))
+                        priceUpdateDao.insert(PriceHistory(item.card.id, price.usd.format()))
                         if (price.eur == null) {
                             price.eur = ""
                         }

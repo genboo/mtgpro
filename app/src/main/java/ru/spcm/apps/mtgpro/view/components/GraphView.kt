@@ -10,6 +10,7 @@ import android.view.MotionEvent
 import android.view.View
 import ru.spcm.apps.mtgpro.R
 import ru.spcm.apps.mtgpro.model.dto.GraphDot
+import ru.spcm.apps.mtgpro.tools.format
 
 class GraphView(context: Context, attrs: AttributeSet) : View(context, attrs) {
 
@@ -129,9 +130,9 @@ class GraphView(context: Context, attrs: AttributeSet) : View(context, attrs) {
             maxOffset -= daysTextHeight / 2
             minOffset += daysTextHeight / 2
         }
-        canvas.drawText(maxValue.toString(), paddingLeft.toFloat(), maxOffset, minMaxValues)
+        canvas.drawText(maxValue.format(), paddingLeft.toFloat(), maxOffset, minMaxValues)
         if (maxValue != minValue) {
-            canvas.drawText(minValue.toString(), paddingLeft.toFloat(), minOffset, minMaxValues)
+            canvas.drawText(minValue.format(), paddingLeft.toFloat(), minOffset, minMaxValues)
         }
     }
 
@@ -178,7 +179,7 @@ class GraphView(context: Context, attrs: AttributeSet) : View(context, attrs) {
             if (i - 1 == selectedPoint) {
                 canvas.drawCircle(x, y, countSelectedRadius, selectedPointBackgroundPaint)
                 canvas.drawCircle(x, y, countSelectedRadius, selectedPointPaint)
-                canvas.drawText(dot.count.toString(), x, y - daysTextHeight, monthPaint)
+                canvas.drawText(dot.count.format(), x, y - daysTextHeight, monthPaint)
             } else {
                 canvas.drawCircle(x, y, countRadius, monthPaint)
             }
