@@ -112,7 +112,7 @@ class CardFragment : BaseFragment() {
     private fun observeCards(data: List<CardLocal>?) {
         if (data != null && data.isNotEmpty()) {
             val firstCard = data[0]
-            updateTitle(firstCard.card.name)
+            var title = firstCard.card.name
 
             cardNumber.text = String.format("%s %s", firstCard.card.set, firstCard.card.numberFormatted)
 
@@ -141,12 +141,11 @@ class CardFragment : BaseFragment() {
                     textSecond += "\n" + "<i>" + secondCard.card.flavor + "</i>"
                 }
                 cardOracleSecond.text = OracleReplacer.getText(textSecond, requireActivity())
+                title += " // " + secondCard.card.name
             }
             (viewPager.adapter as FlipPagerAdapter).setItems(data)
-            if (data.size == 1) {
-                viewPager.isSwipeable = false
-            }
-
+            viewPager.isSwipeable = data.size != 1
+            updateTitle(title)
             mainScroll.visibility = View.VISIBLE
         }
     }
