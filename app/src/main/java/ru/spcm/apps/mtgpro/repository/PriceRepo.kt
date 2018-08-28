@@ -18,9 +18,9 @@ constructor(private val appExecutors: AppExecutors,
             private val scryCardDao: ScryCardDao,
             private val cacheDao: CacheDao) {
 
-    fun getPrices(set: String, number: String): LiveData<Resource<ScryCard>> {
+    fun getPrices(set: String, number: String, valute: Float): LiveData<Resource<ScryCard>> {
         return ScryCardBound(appExecutors, scryCardApi, cacheDao, scryCardDao)
-                .setParams(set, number)
+                .setParams(set, number, valute)
                 .create()
                 .asLiveData()
     }

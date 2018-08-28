@@ -29,7 +29,8 @@ class LibrariesFragment : BaseFragment() {
         updateToolbar()
 
         val viewModel = getViewModel(this, LibrariesViewModel::class.java)
-        viewModel.libraries.observe(this, Observer { observeLibraries(it) })
+        viewModel.getLibraries().observe(this, Observer { observeLibraries(it) })
+        viewModel.loadLibraries(getSettings().getCurrentValute())
 
         val adapter = LibrariesListAdapter(null)
         list.layoutManager = LinearLayoutManager(context)

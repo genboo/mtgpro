@@ -10,5 +10,5 @@ class LibraryInfo {
     @ColumnInfo(name = "count")
     var cardsCount: Int = 0
 
-    var price: String? = ""
+    var price: Float? = 0f
 }

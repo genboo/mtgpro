@@ -16,13 +16,13 @@ interface LibrariesDao {
 
     @Query("SELECT l.*, sum(lc.count) AS count, " +
             "CASE WHEN SUBSTR(c.number, -1) IN ('a', 'b') THEN SUBSTR(c.number, 1, length(c.number) - 1) ELSE c.number END num, " +
-            "SUM(sc.usd * lc.count) AS price " +
+            "SUM(sc.usd * lc.count) * :valute AS price " +
             "FROM Library l " +
             "LEFT JOIN LibraryCard lc ON lc.library_id = l.id " +
             "LEFT JOIN Card c ON lc.card_id = c.id " +
             "LEFT JOIN ScryCard sc ON sc.number = num AND sc.`set` = LOWER(c.`set`) " +
             "GROUP BY l.id")
-    fun getLibraries(): LiveData<List<LibraryInfo>>
+    fun getLibraries(valute: Float): LiveData<List<LibraryInfo>>
 
     @Query("SELECT * FROM Library l WHERE l.id = :id")
     fun getLibrary(id: Long): LiveData<Library>

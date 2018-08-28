@@ -26,7 +26,7 @@ internal constructor(private val cardRepo: CardRepo,
 
     private val switcher: MutableLiveData<String> = MutableLiveData()
     private val switcherPrice: MutableLiveData<PriceParams> = MutableLiveData()
-    private val switcherLibraries: MutableLiveData<Boolean> = MutableLiveData()
+    private val switcherLibraries: MutableLiveData<Float> = MutableLiveData()
     private var cards: LiveData<List<CardLocal>>
     private var libraries: LiveData<List<LibraryInfo>>
     private var librariesByCard: LiveData<List<LibraryInfo>>
@@ -49,10 +49,10 @@ internal constructor(private val cardRepo: CardRepo,
         }
 
         libraries = Transformations.switchMap(switcherLibraries) {
-            if (it) {
-                return@switchMap librariesRepo.getLibraries()
+            if (it == null) {
+                return@switchMap AbsentLiveData.create<List<LibraryInfo>>()
             }
-            return@switchMap AbsentLiveData.create<List<LibraryInfo>>()
+            return@switchMap librariesRepo.getLibraries(it)
         }
 
         librariesByCard = Transformations.switchMap(switcher) {
@@ -91,8 +91,8 @@ internal constructor(private val cardRepo: CardRepo,
         switcher.postValue(id)
     }
 
-    fun loadPrices(set: String, number: String): LiveData<Resource<ScryCard>> {
-        return priceRepo.getPrices(set, number)
+    fun loadPrices(set: String, number: String, valute: Float): LiveData<Resource<ScryCard>> {
+        return priceRepo.getPrices(set, number, valute)
     }
 
     fun getPrices(): LiveData<ScryCard> {
@@ -104,8 +104,8 @@ internal constructor(private val cardRepo: CardRepo,
         switcherPrice.postValue(params)
     }
 
-    fun loadLibraries() {
-        switcherLibraries.postValue(true)
+    fun loadLibraries(valute: Float) {
+        switcherLibraries.postValue(valute)
     }
 
     fun updateCard(card: Card) {

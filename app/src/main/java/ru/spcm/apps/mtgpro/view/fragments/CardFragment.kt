@@ -60,7 +60,7 @@ class CardFragment : BaseFragment() {
         viewModel.getPrices().observe(this, Observer { if (it != null) updatePrice(it) })
 
         viewModel.loadCard(args.getString(ARG_ID))
-        mainBlock.postDelayed({ viewModel.loadLibraries() }, 200)
+        mainBlock.postDelayed({ viewModel.loadLibraries(getSettings().getCurrentValute()) }, 200)
 
         val adapter = ReprintListAdapter(null)
         adapter.setOnItemClickListener { _, item, _ -> navigator.goToSearch("s " + item.reprint + " " + card.nameOrigin) }
@@ -91,12 +91,12 @@ class CardFragment : BaseFragment() {
         })
 
         loadPrices.setOnClickListener { _ ->
-            viewModel.loadPrices(card.set, card.number ?: "")
+            viewModel.loadPrices(card.set, card.number ?: "", getSettings().getCurrentValute())
                     .observe(this, Observer { observerPrices(it) })
         }
 
         pricesLabel.setOnClickListener { _ ->
-            viewModel.loadPrices(card.set, card.number ?: "")
+            viewModel.loadPrices(card.set, card.number ?: "", getSettings().getCurrentValute())
                     .observe(this, Observer { observerPrices(it) })
         }
 

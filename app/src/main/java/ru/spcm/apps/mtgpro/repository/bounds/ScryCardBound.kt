@@ -16,9 +16,9 @@ class ScryCardBound(appExecutors: AppExecutors,
                     private val scryCardDao: ScryCardDao) : CachedNetworkBound<ScryCard, ScryCard>(appExecutors) {
 
 
-
     private var set: String = ""
     private var number: String = ""
+    private var valute: Float = 1f
     private var force = false
 
     override fun saveCallResult(data: ScryCard?) {
@@ -38,7 +38,7 @@ class ScryCardBound(appExecutors: AppExecutors,
     }
 
     override fun loadSaved(): LiveData<ScryCard> {
-        return scryCardDao.getPrices(set, number)
+        return scryCardDao.getPrices(set, number, valute)
     }
 
     override fun loadCacheTime(): LiveData<Cache> {
@@ -53,9 +53,10 @@ class ScryCardBound(appExecutors: AppExecutors,
         return TYPE + set + number
     }
 
-    fun setParams(set: String, number: String): ScryCardBound {
+    fun setParams(set: String, number: String, valute: Float): ScryCardBound {
         this.set = set.toLowerCase()
         this.number = number.replace("a", "").replace("b", "")
+        this.valute = valute
         return this
     }
 

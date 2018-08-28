@@ -12,8 +12,8 @@ constructor(private val appExecutors: AppExecutors,
             private val librariesDao: LibrariesDao,
             private val cardDao: CardDao) {
 
-    fun getLibraries(): LiveData<List<LibraryInfo>> {
-        return librariesDao.getLibraries()
+    fun getLibraries(valute: Float): LiveData<List<LibraryInfo>> {
+        return librariesDao.getLibraries(valute)
     }
 
     fun getLibrary(id: Long): LiveData<Library> {

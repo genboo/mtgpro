@@ -17,8 +17,8 @@ interface ScryCardDao {
     @Delete
     fun delete(item: ScryCard)
 
-    @Query("SELECT sc.number, sc.`set`, sc.usd AS usd, sc.eur AS eur, sc.id FROM ScryCard sc WHERE sc.number=:number AND sc.`set`=:set")
-    fun getPrices(set: String, number: String): LiveData<ScryCard>
+    @Query("SELECT sc.number, sc.`set`, sc.usd * :valute AS usd, sc.eur * :valute AS eur, sc.id FROM ScryCard sc WHERE sc.number=:number AND sc.`set`=:set")
+    fun getPrices(set: String, number: String, valute: Float): LiveData<ScryCard>
 
     @Query("SELECT sc.number, sc.`set`, sc.usd * :valute AS usd, sc.eur * :valute AS eur, sc.id FROM ScryCard sc WHERE sc.number=:number AND sc.`set`=:set")
     fun getConvertedPrices(set: String, number: String, valute: Float): LiveData<ScryCard>
