@@ -20,7 +20,7 @@ constructor(private val appExecutors: AppExecutors,
         return librariesDao.getLibrary(id)
     }
 
-    fun getCards(library: Long, valute:Float): LiveData<List<CardForLibrary>> {
+    fun getCards(library: Long, valute: Float): LiveData<List<CardForLibrary>> {
         return cardDao.getCardsInLibrary(library, valute)
     }
 
@@ -42,6 +42,10 @@ constructor(private val appExecutors: AppExecutors,
 
     fun update(item: Library) {
         appExecutors.diskIO().execute { librariesDao.update(item) }
+    }
+
+    fun delete(item: Library) {
+        appExecutors.diskIO().execute { librariesDao.delete(item) }
     }
 
     fun addCard(item: LibraryCard) {

@@ -61,7 +61,8 @@
             android:clickable="true"
             android:contentDescription="@string/app_name"
             android:focusable="true"
-            android:src="@drawable/ic_close"
+            android:src="@drawable/ic_delete"
+            android:tint="@color/colorTextHint"
             app:layout_constraintRight_toRightOf="@id/right"
             app:layout_constraintTop_toTopOf="parent" />
 

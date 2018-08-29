@@ -82,6 +82,12 @@ internal constructor(private val librariesRepo: LibrariesRepo) : ViewModel() {
         data.postValue(data.value)
     }
 
+    fun delete(id: Long) {
+        val lib = Library("")
+        lib.id = id
+        librariesRepo.delete(lib)
+    }
+
 
     class LibraryParams(var id: Long, var valute: Float)
 }

@@ -64,6 +64,20 @@ class LibraryFragment : BaseFragment() {
         }
     }
 
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        if (item.itemId == R.id.nav_delete) {
+            val viewModel = getViewModel(this, LibraryViewModel::class.java)
+            viewModel.delete(args.getLong(ARG_ID))
+            navigator.backTo()
+        }
+        return super.onOptionsItemSelected(item)
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        super.onCreateOptionsMenu(menu, inflater)
+        inflater.inflate(R.menu.library_menu, menu)
+    }
+
     override fun inject() {
         component?.inject(this)
     }
