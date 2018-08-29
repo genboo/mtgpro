@@ -84,12 +84,15 @@ interface CardDao {
     fun getWishedCardsFiltered(sets: Array<String>): LiveData<List<Card>>
 
     @Query("SELECT c.*, lc.count, " +
-            " MIN(t.type) typeSingle " +
+            " MIN(t.type) typeSingle, " +
+            " CASE WHEN SUBSTR(c.number, -1) IN ('a', 'b') THEN SUBSTR(c.number, 1, length(c.number) - 1) ELSE c.number END num, " +
+            " (CASE WHEN sc.usd IS NULL THEN 0 ELSE sc.usd END) * :valute AS price  " +
             " FROM Card c, LibraryCard lc, Type t " +
+            " LEFT JOIN ScryCard sc ON sc.number = num AND sc.`set` = lower(c.`set`) " +
             " WHERE lc.library_id = :library AND lc.card_id = c.id AND t.card_id = c.id " +
             " GROUP BY c.id " +
             " ORDER BY typeSingle, c.setTitle, numberFormatted")
-    fun getCardsInLibrary(library: Long): LiveData<List<CardForLibrary>>
+    fun getCardsInLibrary(library: Long, valute: Float): LiveData<List<CardForLibrary>>
 
     @Query("UPDATE SavedCard SET parent = :parent WHERE id = :id")
     fun updateLink(id: String, parent: String)

@@ -20,6 +20,7 @@ class LibraryViewModel @Inject
 internal constructor(private val librariesRepo: LibrariesRepo) : ViewModel() {
 
     private val switcher = MutableLiveData<Long>()
+    private val switcherCards = MutableLiveData<LibraryParams>()
 
     var cards: LiveData<List<CardForLibrary>>
     var mana: LiveData<List<LibraryManaState>>
@@ -31,11 +32,11 @@ internal constructor(private val librariesRepo: LibrariesRepo) : ViewModel() {
     init {
         data.postValue(LibraryData())
 
-        cards = Transformations.switchMap(switcher) {
+        cards = Transformations.switchMap(switcherCards) {
             if (it == null) {
                 return@switchMap AbsentLiveData.create<List<CardForLibrary>>()
             }
-            return@switchMap librariesRepo.getCards(it)
+            return@switchMap librariesRepo.getCards(it.id, it.valute)
         }
 
         mana = Transformations.switchMap(switcher) {
@@ -61,8 +62,9 @@ internal constructor(private val librariesRepo: LibrariesRepo) : ViewModel() {
 
     }
 
-    fun loadCards(library: Long) {
+    fun loadCards(library: Long, valute: Float) {
         switcher.postValue(library)
+        switcherCards.postValue(LibraryParams(library, valute))
     }
 
     fun setCards(cards: List<CardForLibrary>) {
@@ -80,4 +82,6 @@ internal constructor(private val librariesRepo: LibrariesRepo) : ViewModel() {
         data.postValue(data.value)
     }
 
+
+    class LibraryParams(var id: Long, var valute: Float)
 }

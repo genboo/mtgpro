@@ -13,6 +13,7 @@ import kotlinx.android.synthetic.main.layout_card_header.view.*
 import kotlinx.android.synthetic.main.layout_library_info.view.*
 import kotlinx.android.synthetic.main.list_item_card.view.*
 import ru.spcm.apps.mtgpro.R
+import ru.spcm.apps.mtgpro.tools.format
 import ru.spcm.apps.mtgpro.view.adapter.CardListItem
 import ru.spcm.apps.mtgpro.view.components.loadImage
 import java.util.*
@@ -50,6 +51,13 @@ class CardLibraryHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
                 ViewCompat.setTransitionName(cardImage, card.id)
                 cardImage.loadImage(card.imageUrl)
+
+                if (item.data.price == null) {
+                    cardPrice.visibility = View.GONE
+                } else {
+                    cardPrice.text = cardPrice.context.getString(R.string.price_rub, item.data.price?.format())
+                    cardPrice.visibility = View.VISIBLE
+                }
             }
         }
     }

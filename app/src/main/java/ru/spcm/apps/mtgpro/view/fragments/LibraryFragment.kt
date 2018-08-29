@@ -41,7 +41,7 @@ class LibraryFragment : BaseFragment() {
 
         viewModel.data.observe(this, Observer { observeData(it) })
 
-        viewModel.loadCards(args.getLong(ARG_ID))
+        viewModel.loadCards(args.getLong(ARG_ID), getSettings().getCurrentValute())
 
         val adapter = CardsLibraryListAdapter(null)
         list.layoutManager = LinearLayoutManager(context)
@@ -53,7 +53,7 @@ class LibraryFragment : BaseFragment() {
     }
 
     private fun observeData(data: LibraryData?) {
-        if(data != null && data.isFull()){
+        if (data != null && data.isFull()) {
             (list.adapter as CardsLibraryListAdapter).setData(data)
         }
     }

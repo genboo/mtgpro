@@ -7,4 +7,6 @@ class CardForLibrary() {
     lateinit var card: Card
 
     var typeSingle: String = ""
+
+    var price: Float? = 0f
 }

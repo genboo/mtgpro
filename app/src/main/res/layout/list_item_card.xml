@@ -30,74 +30,97 @@
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <RelativeLayout
+        <android.support.constraint.Guideline
+            android:id="@+id/right"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_end="8dp" />
+
+        <TextView
+            android:id="@+id/cardName"
+            style="@style/TextView.Main.Title"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:padding="8dp"
+            android:layout_marginStart="8dp"
+            android:ellipsize="end"
+            android:maxLines="2"
             app:layout_constraintLeft_toRightOf="@id/cardImage"
-            app:layout_constraintRight_toRightOf="parent">
+            app:layout_constraintRight_toRightOf="@id/right"
+            tools:text="Аватара пробуждающегося солнца" />
 
-            <TextView
-                android:id="@+id/cardName"
-                style="@style/TextView.Main.Title"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:ellipsize="end"
-                android:maxLines="2"
-                tools:text="Аватара пробуждающегося солнца" />
+        <TextView
+            android:id="@+id/cardType"
+            style="@style/TextView.Main"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:ellipsize="end"
+            android:maxLines="2"
+            app:layout_constraintLeft_toLeftOf="@id/cardName"
+            app:layout_constraintRight_toRightOf="@id/right"
+            app:layout_constraintTop_toBottomOf="@id/cardName"
+            tools:text="Creature — Vampire Soldier" />
 
-            <TextView
-                android:id="@+id/cardType"
-                style="@style/TextView.Main"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/cardName"
-                android:ellipsize="end"
-                android:maxLines="2"
-                tools:text="Creature — Vampire Soldier" />
+        <ImageView
+            android:id="@+id/cardRarity"
+            android:layout_width="12dp"
+            android:layout_height="12dp"
+            android:contentDescription="@string/app_name"
+            android:src="@drawable/ic_xln"
+            app:layout_constraintBottom_toBottomOf="@id/cardSet"
+            app:layout_constraintLeft_toLeftOf="@id/cardName"
+            app:layout_constraintTop_toTopOf="@id/cardSet" />
 
-            <TextView
-                android:id="@+id/cardSet"
-                style="@style/TextView.Main"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/cardType"
-                android:layout_toEndOf="@id/cardRarity"
-                android:maxLines="1"
-                tools:text="Ixalan" />
+        <TextView
+            android:id="@+id/cardSet"
+            style="@style/TextView.Main"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="16dp"
+            android:layout_marginStart="4dp"
+            android:layout_marginTop="4dp"
+            android:ellipsize="end"
+            android:maxLines="1"
+            app:layout_constraintLeft_toRightOf="@id/cardRarity"
+            app:layout_constraintRight_toLeftOf="@id/cardCount"
+            app:layout_constraintTop_toBottomOf="@id/cardType"
+            tools:text="Ixalan" />
 
-            <ImageView
-                android:id="@+id/cardRarity"
-                android:layout_width="12dp"
-                android:layout_height="12dp"
-                android:layout_below="@id/cardType"
-                android:layout_marginEnd="4dp"
-                android:layout_marginTop="6dp"
-                android:contentDescription="@string/app_name"
-                android:src="@drawable/ic_xln" />
+        <TextView
+            android:id="@+id/cardCount"
+            style="@style/TextView.Hint"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:maxLines="1"
+            app:layout_constraintRight_toRightOf="@id/right"
+            app:layout_constraintTop_toTopOf="@id/cardSet"
+            tools:text="Кол-во: 10" />
 
-            <TextView
-                android:id="@+id/cardNumber"
-                style="@style/TextView.Hint"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/cardSet"
-                android:maxLines="1"
-                tools:text="XLN 123" />
+        <TextView
+            android:id="@+id/cardNumber"
+            style="@style/TextView.Hint"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:maxLines="1"
+            app:layout_constraintLeft_toLeftOf="@id/cardName"
+            app:layout_constraintTop_toBottomOf="@id/cardSet"
+            tools:text="XLN 123" />
 
-            <TextView
-                android:id="@+id/cardCount"
-                style="@style/TextView.Hint"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/cardSet"
-                android:layout_marginStart="16dp"
-                android:layout_toEndOf="@id/cardNumber"
-                android:maxLines="1"
-                tools:text="Кол-во: 10" />
-        </RelativeLayout>
+        <TextView
+            android:id="@+id/cardPrice"
+            style="@style/TextView.Hint"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:maxLines="1"
+            android:visibility="gone"
+            app:layout_constraintRight_toRightOf="@id/right"
+            app:layout_constraintTop_toBottomOf="@id/cardCount"
+            tools:text="10$"
+            tools:visibility="visible" />
 
     </android.support.constraint.ConstraintLayout>
-
 
 </android.support.v7.widget.CardView>

@@ -20,8 +20,8 @@ constructor(private val appExecutors: AppExecutors,
         return librariesDao.getLibrary(id)
     }
 
-    fun getCards(library: Long): LiveData<List<CardForLibrary>> {
-        return cardDao.getCardsInLibrary(library)
+    fun getCards(library: Long, valute:Float): LiveData<List<CardForLibrary>> {
+        return cardDao.getCardsInLibrary(library, valute)
     }
 
     fun getLibraryManaState(library: Long): LiveData<List<LibraryManaState>> {
