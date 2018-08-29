@@ -10,6 +10,7 @@ data class Setting(@PrimaryKey var type: Type, var value: String = "") {
         LIST_COL_SIZE,
         AUTO_BACKUP,
         VALUTE_USD_RUB,
+        UPDATE_LIBRARY_CARDS_PRICE,
     }
 
 }

@@ -17,7 +17,9 @@ import javax.inject.Inject
 class AlarmReceiver : BroadcastReceiver() {
 
     @Inject
-    lateinit var controller: PriceUpdater
+    lateinit var watchUpdater: WatchedCardsPriceUpdater
+    @Inject
+    lateinit var librariesUpdater: LibrariesCardsPriceUpdater
 
     @Inject
     lateinit var backupSaver: BackupSaver
@@ -37,30 +39,46 @@ class AlarmReceiver : BroadcastReceiver() {
 
         valuteUpdater.update()
 
-        showNotification(context, context.getString(R.string.app_name),
+        showNotification(context, NOTIFY_WATCHED, context.getString(R.string.app_name),
                 context.getString(R.string.notify_update_notification),
                 context.getString(R.string.notify_update_notification),
                 true)
 
-        val updateData = controller.update()
-        updateData.observeForever(object : Observer<UpdateResult> {
+        watchUpdater.result.observeForever(object : Observer<UpdateResult> {
             override fun onChanged(data: UpdateResult?) {
                 if (data != null) {
                     if (data.currentCard == 0) {
-                        updateData.removeObserver(this)
+                        watchUpdater.result.removeObserver(this)
                         val message = context.getString(R.string.notify_update_complete, data.allCount, data.updatedCount)
-                        showNotification(context, context.getString(R.string.app_name), context.getString(R.string.notify_update_complete_annotation), message)
+                        showNotification(context, NOTIFY_WATCHED, context.getString(R.string.app_name), context.getString(R.string.notify_update_complete_annotation), message)
                     } else {
                         val message = context.getString(R.string.notify_update_progress, data.currentCard, data.allCount)
-                        showNotification(context, context.getString(R.string.app_name), context.getString(R.string.notify_update_progress_annotation), message, true)
+                        showNotification(context, NOTIFY_WATCHED, context.getString(R.string.app_name), context.getString(R.string.notify_update_progress_annotation), message, true)
                     }
                 }
             }
         })
+        watchUpdater.update()
+
+        librariesUpdater.result.observeForever(object : Observer<UpdateResult> {
+            override fun onChanged(data: UpdateResult?) {
+                if (data != null) {
+                    if (data.currentCard == 0) {
+                        librariesUpdater.result.removeObserver(this)
+                        val message = context.getString(R.string.notify_update_complete, data.allCount, data.updatedCount)
+                        showNotification(context, NOTIFY_LIBRARIES, context.getString(R.string.app_name), context.getString(R.string.notify_update_complete_annotation), message)
+                    } else {
+                        val message = context.getString(R.string.notify_update_progress, data.currentCard, data.allCount)
+                        showNotification(context, NOTIFY_LIBRARIES, context.getString(R.string.app_name), context.getString(R.string.notify_update_progress_annotation), message, true)
+                    }
+                }
+            }
+        })
+        librariesUpdater.update()
 
     }
 
-    private fun showNotification(context: Context, title: String, annotation: String, message: String, permanent: Boolean = false) {
+    private fun showNotification(context: Context, id: Int, title: String, annotation: String, message: String, permanent: Boolean = false) {
         val intent = Intent(context, MainActivity::class.java)
         intent.putExtra(LAUNCH_FRAGMENT, LAUNCH_FRAGMENT_REPORT)
         val pendingIntent = PendingIntent.getActivity(context, 0, intent, PendingIntent.FLAG_ONE_SHOT)
@@ -81,14 +99,16 @@ class AlarmReceiver : BroadcastReceiver() {
         if (permanent) {
             notification.flags = notification.flags or Notification.FLAG_NO_CLEAR
         }
-        notificationManager.notify(1, notification)
+        notificationManager.notify(id, notification)
     }
 
     companion object {
         const val LAUNCH_FRAGMENT = "launch_fragment"
         const val LAUNCH_FRAGMENT_REPORT = "launch_fragment_report"
         const val FORCE = "force"
-        const val VALUTE = "valute"
+
+        const val NOTIFY_WATCHED = 1
+        const val NOTIFY_LIBRARIES = 2
     }
 
 }

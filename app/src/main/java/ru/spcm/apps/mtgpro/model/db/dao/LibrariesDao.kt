@@ -62,4 +62,7 @@ interface LibrariesDao {
             "FROM LibraryCard lc, Library l " +
             "WHERE lc.library_id = l.id AND lc.card_id = :card")
     fun getLibrariesByCard(card: String): LiveData<List<LibraryInfo>>
+
+    @Query("SELECT c.* FROM LibraryCard lc LEFT JOIN Card c ON lc.card_id = c.id GROUP BY c.id")
+    fun getCardsInAllLibraries(): List<Card>
 }

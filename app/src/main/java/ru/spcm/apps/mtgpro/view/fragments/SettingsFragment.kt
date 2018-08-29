@@ -33,10 +33,12 @@ class SettingsFragment : BaseFragment() {
         saveBackup.setOnClickListener { saveBackup(viewModel) }
         restoreBackup.setOnClickListener { restoreBackup(viewModel) }
         updateWatchedPrices.setOnClickListener { updateWatchedPrices() }
-        updateValutes.setOnClickListener { updateValutes() }
 
         saveBackupAuto.isChecked = getSettings().getBoolean(Setting.Type.AUTO_BACKUP, false)
-        saveBackupAuto.setOnClickListener { switchAutoBackup(viewModel) }
+        saveBackupAuto.setOnClickListener { viewModel.setAutoBackup(saveBackupAuto.isChecked) }
+
+        updateLibraryCardsPrice.isChecked = getSettings().getBoolean(Setting.Type.UPDATE_LIBRARY_CARDS_PRICE, false)
+        updateLibraryCardsPrice.setOnClickListener { viewModel.setUpdateLibraryCardsPrice(updateLibraryCardsPrice.isChecked) }
 
         if (!PermissionsHelper.havePermissionStorage(requireContext())) {
             PermissionsHelper.requestLocationPermissions(this)
@@ -45,19 +47,9 @@ class SettingsFragment : BaseFragment() {
         }
     }
 
-    private fun switchAutoBackup(viewModel: SettingsViewModel) {
-        viewModel.updateAutoBackup(saveBackupAuto.isChecked)
-    }
-
     private fun updateWatchedPrices() {
         val intent = Intent(requireContext(), AlarmReceiver::class.java)
         intent.putExtra(AlarmReceiver.FORCE, true)
-        activity?.sendBroadcast(intent)
-    }
-
-    private fun updateValutes() {
-        val intent = Intent(requireContext(), AlarmReceiver::class.java)
-        intent.putExtra(AlarmReceiver.VALUTE, true)
         activity?.sendBroadcast(intent)
     }
 

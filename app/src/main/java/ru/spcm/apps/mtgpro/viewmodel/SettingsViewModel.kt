@@ -18,8 +18,12 @@ class SettingsViewModel @Inject
 internal constructor(private val backupRepo: BackupRepo,
                      private val settingsRepo: SettingsRepo) : ViewModel() {
 
-    fun updateAutoBackup(flag: Boolean) {
+    fun setAutoBackup(flag: Boolean) {
         settingsRepo.updateSetting(Setting.Type.AUTO_BACKUP, flag.toString())
+    }
+
+    fun setUpdateLibraryCardsPrice(flag: Boolean) {
+        settingsRepo.updateSetting(Setting.Type.UPDATE_LIBRARY_CARDS_PRICE, flag.toString())
     }
 
     fun backup(context: Context): LiveData<Boolean> {

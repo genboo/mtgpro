@@ -32,7 +32,9 @@ class WatchFragment : BaseFragment() {
         list.adapter = adapter
 
         viewModel.getCards().observe(this, Observer { adapter.submitList(it) })
-        viewModel.loadCards(getSettings().getCurrentValute())
+        if(viewModel.getCards().value == null) {
+            viewModel.loadCards(getSettings().getCurrentValute())
+        }
     }
 
     override fun inject() {

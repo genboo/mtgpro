@@ -1,6 +1,5 @@
 package ru.spcm.apps.mtgpro.services
 
-import android.arch.lifecycle.LiveData
 import android.arch.lifecycle.MutableLiveData
 import ru.spcm.apps.mtgpro.model.api.ScryCardApi
 import ru.spcm.apps.mtgpro.model.db.dao.PriceUpdateDao
@@ -16,15 +15,16 @@ import java.io.IOException
 import java.util.*
 import javax.inject.Inject
 
-class PriceUpdater @Inject
+class WatchedCardsPriceUpdater @Inject
 constructor(private val appExecutors: AppExecutors,
             private val priceUpdateDao: PriceUpdateDao,
             private val scryCardDao: ScryCardDao,
             private val reportDao: ReportDao,
             private val scryCardApi: ScryCardApi) {
 
-    fun update(): LiveData<UpdateResult> {
-        val result = MutableLiveData<UpdateResult>()
+    val result = MutableLiveData<UpdateResult>()
+
+    fun update() {
         appExecutors.networkIO().execute {
             val now = Date()
             val watchedCards = priceUpdateDao.getWatchedCardsList()
@@ -57,7 +57,6 @@ constructor(private val appExecutors: AppExecutors,
                             val diffString = if (diff == 0f) "0.0" else diff.format()
                             reportDao.insert(Report(item.card.id, diffString))
                         }
-
                         updateCounter++
                     }
                     if (updateCounter % 10 == 0 && updateCounter < watchedCards.size) {
@@ -78,7 +77,6 @@ constructor(private val appExecutors: AppExecutors,
                 result.postValue(data)
             }
         }
-        return result
     }
 
     private fun getPrice(set: String, number: String): ScryCard? {
