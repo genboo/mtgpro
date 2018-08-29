@@ -43,10 +43,12 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
+            android:layout_marginTop="4dp"
             android:ellipsize="end"
             android:maxLines="2"
             app:layout_constraintLeft_toRightOf="@id/cardImage"
             app:layout_constraintRight_toRightOf="@id/right"
+            app:layout_constraintTop_toTopOf="parent"
             tools:text="Аватара пробуждающегося солнца" />
 
         <TextView
