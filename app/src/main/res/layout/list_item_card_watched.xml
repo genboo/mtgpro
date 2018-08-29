@@ -68,8 +68,8 @@
 
         <ImageView
             android:id="@+id/cardRarity"
-            android:layout_width="16dp"
-            android:layout_height="16dp"
+            android:layout_width="12dp"
+            android:layout_height="12dp"
             android:contentDescription="@string/app_name"
             android:src="@drawable/ic_xln"
             app:layout_constraintBottom_toBottomOf="@id/cardSet"
@@ -81,11 +81,13 @@
             style="@style/TextView.Main"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="8dp"
-            android:layout_marginStart="8dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginStart="4dp"
+            android:layout_marginTop="4dp"
+            android:ellipsize="end"
             android:maxLines="1"
             app:layout_constraintLeft_toRightOf="@id/cardRarity"
-            app:layout_constraintRight_toLeftOf="@id/cardNumber"
+            app:layout_constraintRight_toLeftOf="@id/cardPrice"
             app:layout_constraintTop_toBottomOf="@id/cardName"
             tools:text="Ixalan" />
 
@@ -93,25 +95,23 @@
             android:id="@+id/cardNumber"
             style="@style/TextView.Hint"
             android:layout_width="wrap_content"
-            android:layout_height="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
             android:maxLines="1"
-            app:layout_constraintBottom_toBottomOf="@id/cardSet"
-            app:layout_constraintRight_toRightOf="@id/right"
-            app:layout_constraintTop_toTopOf="@id/cardSet"
+            app:layout_constraintLeft_toLeftOf="@id/cardName"
+            app:layout_constraintTop_toBottomOf="@id/cardSet"
             tools:text="XLN 123" />
 
         <TextView
             android:id="@+id/cardPrice"
             style="@style/TextView.Main"
-            android:layout_width="0dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@id/cardNumber"
-            android:layout_marginBottom="8dp"
             android:maxLines="1"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintLeft_toLeftOf="@id/cardName"
             app:layout_constraintRight_toRightOf="@id/right"
-            tools:text="10 usd" />
+            app:layout_constraintBottom_toBottomOf="@id/cardNumber"
+            tools:text="10$" />
 
     </android.support.constraint.ConstraintLayout>
 
