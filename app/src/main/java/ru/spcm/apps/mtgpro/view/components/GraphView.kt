@@ -194,7 +194,7 @@ class GraphView(context: Context, attrs: AttributeSet) : View(context, attrs) {
                 canvas.drawCircle(x, y, countSelectedRadius, selectedPointPaint)
 
                 val textBounds = Rect()
-                dotsPaint.getTextBounds(dotFormatted, 0, dotFormatted.length, textBounds)
+                monthPaint.getTextBounds(dotFormatted, 0, dotFormatted.length, textBounds)
 
                 val rect = Rect(x.toInt() - textBounds.width() / 2 - cloudPadding,
                         (y - daysTextHeight - textBounds.height()).toInt() - cloudPadding,
@@ -202,7 +202,7 @@ class GraphView(context: Context, attrs: AttributeSet) : View(context, attrs) {
                         (y - daysTextHeight).toInt() + cloudPadding + cloudPadding / 3)
                 drawableCloud?.bounds = rect
                 drawableCloud?.draw(canvas)
-                canvas.drawText(dotFormatted, x, y - daysTextHeight, dotsPaint)
+                canvas.drawText(dotFormatted, x, y - daysTextHeight, monthPaint)
             } else {
                 canvas.drawCircle(x, y, countRadius, dotsPaint)
             }
