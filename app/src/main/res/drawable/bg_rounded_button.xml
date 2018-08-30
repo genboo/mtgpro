@@ -5,20 +5,14 @@
         <shape
             android:shape="rectangle">
             <solid android:color="@color/colorAccent" />
-            <corners android:bottomRightRadius="10dp"
-                android:bottomLeftRadius="10dp"
-                android:topRightRadius="10dp"
-                android:topLeftRadius="10dp"/>
+            <corners android:radius="10dp" />
         </shape>
     </item>
     <item android:state_enabled="false">
         <shape
             android:shape="rectangle">
             <solid android:color="@color/colorDisabled" />
-            <corners android:bottomRightRadius="10dp"
-                android:bottomLeftRadius="10dp"
-                android:topRightRadius="10dp"
-                android:topLeftRadius="10dp"/>
+            <corners android:radius="10dp" />
         </shape>
     </item>
 
