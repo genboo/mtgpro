@@ -17,6 +17,7 @@ interface LibrariesDao {
     @Delete
     fun delete(item: Library)
 
+    @SuppressWarnings(RoomWarnings.CURSOR_MISMATCH)
     @Query("SELECT l.*, sum(lc.count) AS count, " +
             "CASE WHEN SUBSTR(c.number, -1) IN ('a', 'b') THEN SUBSTR(c.number, 1, length(c.number) - 1) ELSE c.number END num, " +
             "SUM(sc.usd * lc.count) * :valute AS price " +

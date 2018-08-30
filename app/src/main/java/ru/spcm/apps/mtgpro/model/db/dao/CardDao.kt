@@ -83,6 +83,7 @@ interface CardDao {
     @Query("SELECT c.*, sc.count FROM WishedCard wc LEFT JOIN Card c ON c.id = wc.id LEFT JOIN SavedCard sc ON sc.id = wc.id WHERE c.`set` IN (:sets) ORDER BY c.setTitle, c.numberFormatted")
     fun getWishedCardsFiltered(sets: Array<String>): LiveData<List<Card>>
 
+    @SuppressWarnings(RoomWarnings.CURSOR_MISMATCH)
     @Query("SELECT c.*, lc.count, " +
             " MIN(t.type) typeSingle, " +
             " CASE WHEN SUBSTR(c.number, -1) IN ('a', 'b') THEN SUBSTR(c.number, 1, length(c.number) - 1) ELSE c.number END num, " +

@@ -4,6 +4,8 @@ import android.content.Context
 import android.graphics.Canvas
 import android.graphics.Paint
 import android.graphics.Path
+import android.graphics.Rect
+import android.graphics.drawable.Drawable
 import android.support.v4.content.ContextCompat
 import android.util.AttributeSet
 import android.view.MotionEvent
@@ -28,6 +30,7 @@ class GraphView(context: Context, attrs: AttributeSet) : View(context, attrs) {
     private var countRadius = 1f
     private var countSelectedRadius = 4f
     private var legendOffset = 4f
+    private var cloudPadding = 4
 
     private val curvePath = Path()
     private var curvePositiveColor: Int = ContextCompat.getColor(context, R.color.colorPositive)
@@ -35,10 +38,13 @@ class GraphView(context: Context, attrs: AttributeSet) : View(context, attrs) {
     private var curveNeutralColor: Int = ContextCompat.getColor(context, R.color.colorNoColor)
 
     private val monthPaint = Paint()
+    private val dotsPaint = Paint()
     private val minMaxValues = Paint()
     private val selectedPointPaint = Paint()
     private val selectedPointBackgroundPaint = Paint()
     private val curvePaint = Paint()
+
+    private var drawableCloud: Drawable? = null
 
     private var selectedPoint = -1
 
@@ -56,6 +62,11 @@ class GraphView(context: Context, attrs: AttributeSet) : View(context, attrs) {
         monthPaint.strokeWidth = context.resources.getDimensionPixelSize(R.dimen.graph_line_width).toFloat()
         monthPaint.textSize = context.resources.getDimensionPixelSize(R.dimen.graph_days_text_size).toFloat()
 
+        dotsPaint.isAntiAlias = true
+        dotsPaint.color = ContextCompat.getColor(context, R.color.colorAccent)
+        dotsPaint.textAlign = Paint.Align.CENTER
+        dotsPaint.strokeWidth = context.resources.getDimensionPixelSize(R.dimen.graph_curve_width).toFloat()
+
         minMaxValues.isAntiAlias = true
         minMaxValues.color = ContextCompat.getColor(context, R.color.colorAccent)
         minMaxValues.textAlign = Paint.Align.LEFT
@@ -72,14 +83,17 @@ class GraphView(context: Context, attrs: AttributeSet) : View(context, attrs) {
         selectedPointBackgroundPaint.style = Paint.Style.FILL
 
         curvePaint.isAntiAlias = true
-        curvePaint.strokeWidth = context.resources.getDimensionPixelSize(R.dimen.graph_line_width).toFloat()
+        curvePaint.strokeWidth = context.resources.getDimensionPixelSize(R.dimen.graph_curve_width).toFloat()
         curvePaint.style = Paint.Style.STROKE
 
         countRadius = context.resources.getDimensionPixelSize(R.dimen.graph_count_radius).toFloat()
         countSelectedRadius = context.resources.getDimensionPixelSize(R.dimen.graph_count_selected_radius).toFloat()
         legendOffset = context.resources.getDimensionPixelSize(R.dimen.graph_legend_offset).toFloat()
+        cloudPadding = context.resources.getDimensionPixelSize(R.dimen.graph_cloud_padding)
 
         daysTextHeight = monthPaint.descent() - monthPaint.ascent()
+
+        drawableCloud = ContextCompat.getDrawable(context, R.drawable.bg_rounded_cloud)
 
         if (isInEditMode) {
             data = arrayListOf(GraphDot("2018-11-01", 1f),
@@ -98,11 +112,9 @@ class GraphView(context: Context, attrs: AttributeSet) : View(context, attrs) {
     override fun onDraw(canvas: Canvas) {
         if (data.isNotEmpty()) {
             val daysLineY = paddingTop + paddedHeight.toFloat()
-
             drawDecors(canvas, daysLineY)
             drawCurve(canvas)
             drawDaysAndPointers(canvas, daysLineY)
-
         } else {
             canvas.drawText("Пока нечего показывать", width.toFloat() / 2, height.toFloat() / 2, monthPaint)
         }
@@ -177,11 +189,22 @@ class GraphView(context: Context, attrs: AttributeSet) : View(context, attrs) {
             }
 
             if (i - 1 == selectedPoint) {
+                val dotFormatted = dot.count.format()
                 canvas.drawCircle(x, y, countSelectedRadius, selectedPointBackgroundPaint)
                 canvas.drawCircle(x, y, countSelectedRadius, selectedPointPaint)
-                canvas.drawText(dot.count.format(), x, y - daysTextHeight, monthPaint)
+
+                val textBounds = Rect()
+                dotsPaint.getTextBounds(dotFormatted, 0, dotFormatted.length, textBounds)
+
+                val rect = Rect(x.toInt() - textBounds.width() / 2 - cloudPadding,
+                        (y - daysTextHeight - textBounds.height()).toInt() - cloudPadding,
+                        x.toInt() + textBounds.width() / 2 + cloudPadding,
+                        (y - daysTextHeight).toInt() + cloudPadding + cloudPadding / 3)
+                drawableCloud?.bounds = rect
+                drawableCloud?.draw(canvas)
+                canvas.drawText(dotFormatted, x, y - daysTextHeight, dotsPaint)
             } else {
-                canvas.drawCircle(x, y, countRadius, monthPaint)
+                canvas.drawCircle(x, y, countRadius, dotsPaint)
             }
         }
     }
@@ -189,19 +212,20 @@ class GraphView(context: Context, attrs: AttributeSet) : View(context, attrs) {
     override fun onTouchEvent(event: MotionEvent): Boolean {
         val x = (event.x + 0.5f).toInt()
         val action = event.action
+        val touchedPoint = getNearestPoint(x)
         when (action) {
             MotionEvent.ACTION_DOWN -> {
                 if (x < paddingLeft + legendOffset) {
                     isLegendClick = true
+                } else if (selectedPoint != touchedPoint) {
+                    selectedPoint = touchedPoint
+                    invalidate()
                 }
             }
             MotionEvent.ACTION_MOVE -> {
-                if (!isLegendClick) {
-                    val touchedPoint = getNearestPoint(x)
-                    if (selectedPoint != touchedPoint) {
-                        selectedPoint = touchedPoint
-                        invalidate()
-                    }
+                if (!isLegendClick && selectedPoint != touchedPoint) {
+                    selectedPoint = touchedPoint
+                    invalidate()
                 }
             }
             MotionEvent.ACTION_UP -> {

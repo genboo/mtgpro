@@ -15,11 +15,8 @@ constructor(private val appExecutors: AppExecutors,
     fun backup(context: Context) {
         appExecutors.diskIO().execute{
             val setting = settingsDao.getSetting(Setting.Type.AUTO_BACKUP)
-            if(setting != null) {
-                val needBackup = setting.value.toBoolean()
-                if (needBackup) {
-                    backupRepo.backup(context)
-                }
+            if(setting != null && setting.value.toBoolean()) {
+                backupRepo.backup(context)
             }
         }
     }
