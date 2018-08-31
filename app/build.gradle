@@ -75,6 +75,7 @@ dependencies {
     implementation "com.android.support:recyclerview-v7:$supportLibVersion"
     implementation "com.android.support:exifinterface:$supportLibVersion"
     implementation "com.android.support.constraint:constraint-layout:$constraintVersion"
+    implementation "com.google.android:flexbox:$flexVersion"
     implementation "android.arch.lifecycle:extensions:$archComponentsVersion"
     implementation "android.arch.persistence.room:runtime:$roomVersion"
     implementation "android.arch.paging:runtime:$pagingVersion"
@@ -85,6 +86,7 @@ dependencies {
     implementation "com.squareup.okhttp3:logging-interceptor:$okHttpVersion"
     implementation "com.squareup.picasso:picasso:$picassoVersion"
     implementation "ru.terrakok.cicerone:cicerone:$ciceroneVersion"
+
 
     debugImplementation "com.squareup.leakcanary:leakcanary-android:$canaryVersion"
     releaseImplementation "com.squareup.leakcanary:leakcanary-android-no-op:$canaryVersion"

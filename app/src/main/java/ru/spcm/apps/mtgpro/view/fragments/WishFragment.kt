@@ -6,12 +6,12 @@ import android.support.v7.widget.GridLayoutManager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.CheckBox
 import kotlinx.android.synthetic.main.fragment_wish.*
 import ru.spcm.apps.mtgpro.R
 import ru.spcm.apps.mtgpro.model.dto.Card
 import ru.spcm.apps.mtgpro.model.dto.SetName
 import ru.spcm.apps.mtgpro.view.adapter.WishListAdapter
+import ru.spcm.apps.mtgpro.view.components.ChipView
 import ru.spcm.apps.mtgpro.viewmodel.WishViewModel
 import java.util.ArrayList
 
@@ -56,7 +56,7 @@ class WishFragment : BaseFragment() {
             itemsBlock.removeAllViews()
             val selectedFilters = viewModel.selectedFilter ?: arrayOf()
             data.forEach {
-                val checkBox = CheckBox(requireContext())
+                val checkBox = ChipView(requireContext())
                 checkBox.text = it.setTitle
                 checkBox.tag = it.set
                 itemsBlock.addView(checkBox)
@@ -92,7 +92,7 @@ class WishFragment : BaseFragment() {
     private fun getSelectedFilters(): Array<String> {
         val selected = ArrayList<String>()
         for (i in 0 until itemsBlock.childCount) {
-            val item: CheckBox = itemsBlock.getChildAt(i) as CheckBox
+            val item: ChipView = itemsBlock.getChildAt(i) as ChipView
             if (item.isChecked) {
                 selected.add(item.tag as String)
             }
