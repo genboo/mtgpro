@@ -2,11 +2,9 @@ package ru.spcm.apps.mtgpro.model.dto
 
 import android.arch.persistence.room.Embedded
 
-class CardForLibrary {
+class CardCollection {
     @Embedded
     lateinit var card: Card
-
-    var typeSingle: String = ""
 
     var price: Float? = 0f
 }

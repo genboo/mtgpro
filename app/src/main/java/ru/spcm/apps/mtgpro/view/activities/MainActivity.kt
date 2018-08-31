@@ -1,5 +1,6 @@
 package ru.spcm.apps.mtgpro.view.activities
 
+import android.arch.lifecycle.MutableLiveData
 import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProvider
 import android.arch.lifecycle.ViewModelProviders
@@ -38,6 +39,8 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
 
     private var component: AppComponent? = null
 
+    private val settingLoaderObserver = MutableLiveData<Boolean>()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -52,8 +55,14 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
 
         bottomMenu.setOnNavigationItemSelectedListener(this)
         if (savedInstanceState == null) {
-            navigator.goToCollection()
-            bottomMenu.selectedItemId = R.id.nav_collection
+            settingLoaderObserver.observe(this, Observer {
+                if (it != null && it) {
+                    settingLoaderObserver.removeObservers(this)
+                    navigator.goToCollection()
+                    bottomMenu.selectedItemId = R.id.nav_collection
+                }
+            })
+
         }
 
         window.setBackgroundDrawable(null)
@@ -63,6 +72,7 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
     private fun observeSettings(data: List<Setting>?) {
         if (data != null) {
             settings.updateSettings(data)
+            settingLoaderObserver.postValue(true)
         }
     }
 

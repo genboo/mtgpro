@@ -1,16 +1,17 @@
 package ru.spcm.apps.mtgpro.view.adapter.diffs
 
 import android.support.v7.util.DiffUtil
-import ru.spcm.apps.mtgpro.model.dto.Card
+import ru.spcm.apps.mtgpro.model.dto.CardCollection
 
-object CardsDiffItemCallback : DiffUtil.ItemCallback<Card>() {
-    override fun areContentsTheSame(oldItem: Card, newItem: Card): Boolean {
-        return oldItem.name == newItem.name
-                && oldItem.set == newItem.set
-                && oldItem.count == newItem.count
+object CardsDiffItemCallback : DiffUtil.ItemCallback<CardCollection>() {
+    override fun areContentsTheSame(oldItem: CardCollection, newItem: CardCollection): Boolean {
+        return oldItem.card.name == newItem.card.name
+                && oldItem.card.set == newItem.card.set
+                && oldItem.card.count == newItem.card.count
+                && oldItem.price == newItem.price
     }
 
-    override fun areItemsTheSame(oldItem: Card, newItem: Card): Boolean {
-        return oldItem.id == newItem.id
+    override fun areItemsTheSame(oldItem: CardCollection, newItem: CardCollection): Boolean {
+        return oldItem.card.id == newItem.card.id
     }
 }

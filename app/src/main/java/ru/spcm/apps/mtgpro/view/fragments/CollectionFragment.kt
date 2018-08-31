@@ -37,13 +37,13 @@ class CollectionFragment : BaseFragment() {
         viewModel.filters.observe(this, Observer { observeFilters(it) })
 
         if(viewModel.cards.value == null) {
-            viewModel.loadCards(viewModel.selectedFilter)
+            viewModel.loadCards(getSettings().getCurrentValute(), viewModel.selectedFilter)
         }
 
         filterApply.setOnClickListener {
             drawerLayout.closeDrawer(GravityCompat.END)
             adapter.submitList(null)
-            viewModel.loadCards((filterList.expandableListAdapter as ExpandableListAdapter).getSelectedItems())
+            viewModel.loadCards(getSettings().getCurrentValute(), (filterList.expandableListAdapter as ExpandableListAdapter).getSelectedItems())
         }
     }
 

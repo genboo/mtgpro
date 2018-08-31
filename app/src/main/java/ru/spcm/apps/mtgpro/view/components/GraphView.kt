@@ -30,6 +30,7 @@ class GraphView(context: Context, attrs: AttributeSet) : View(context, attrs) {
     private var countRadius = 1f
     private var countSelectedRadius = 4f
     private var legendOffset = 4f
+    private var legendOffsetPadding = 4f
     private var cloudPadding = 4
 
     private val curvePath = Path()
@@ -88,7 +89,7 @@ class GraphView(context: Context, attrs: AttributeSet) : View(context, attrs) {
 
         countRadius = context.resources.getDimensionPixelSize(R.dimen.graph_count_radius).toFloat()
         countSelectedRadius = context.resources.getDimensionPixelSize(R.dimen.graph_count_selected_radius).toFloat()
-        legendOffset = context.resources.getDimensionPixelSize(R.dimen.graph_legend_offset).toFloat()
+        legendOffsetPadding = context.resources.getDimensionPixelSize(R.dimen.graph_legend_offset).toFloat()
         cloudPadding = context.resources.getDimensionPixelSize(R.dimen.graph_cloud_padding)
 
         daysTextHeight = monthPaint.descent() - monthPaint.ascent()
@@ -106,6 +107,7 @@ class GraphView(context: Context, attrs: AttributeSet) : View(context, attrs) {
             )
             selectedPoint = data.size - 3
             updateMinMaxValue()
+            updateDimensions()
         }
     }
 
@@ -122,13 +124,12 @@ class GraphView(context: Context, attrs: AttributeSet) : View(context, attrs) {
 
     private fun drawDecors(canvas: Canvas, daysLineY: Float) {
         //Вертикальная линия между графом и минимальным\максимальным значениями
-        if (data.size <= 15) {
-            monthPaint.color = curveNeutralColor
-            canvas.drawLine(paddingLeft.toFloat() + legendOffset, paddingTop.toFloat(),
-                    paddingLeft.toFloat() + legendOffset, daysLineY,
-                    monthPaint)
-            monthPaint.color = selectedPointPaint.color
-        }
+        monthPaint.color = curveNeutralColor
+        canvas.drawLine(paddingLeft.toFloat() + legendOffset, paddingTop.toFloat(),
+                paddingLeft.toFloat() + legendOffset, daysLineY,
+                monthPaint)
+        monthPaint.color = selectedPointPaint.color
+
 
         //Горизонтальная линия над днями
         canvas.drawLine(paddingLeft.toFloat(), daysLineY - daysTextHeight,
@@ -161,7 +162,7 @@ class GraphView(context: Context, attrs: AttributeSet) : View(context, attrs) {
             } else {
                 curvePath.moveTo(prevX, prevY)
                 if (isCubicCurve) {
-                    curvePath.cubicTo(prevX + cellWidth / 2, prevY, prevX + cellWidth / 2, y, x, y)
+                    curvePath.cubicTo(prevX + cellWidth / 2, prevY, x - cellWidth / 2, y, x, y)
                 } else {
                     curvePath.lineTo(x, y)
                 }
@@ -178,6 +179,9 @@ class GraphView(context: Context, attrs: AttributeSet) : View(context, attrs) {
     }
 
     private fun drawDaysAndPointers(canvas: Canvas, daysLineY: Float) {
+        var selectedDot = ""
+        var selectedX = 1f
+        var selectedY = 1f
         for (i in 1..data.size) {
             val dot = data[i - 1]
             val x = paddingLeft.toFloat() + legendOffset + i * cellWidth - cellWidth / 2
@@ -189,24 +193,27 @@ class GraphView(context: Context, attrs: AttributeSet) : View(context, attrs) {
             }
 
             if (i - 1 == selectedPoint) {
-                val dotFormatted = dot.count.format()
-                canvas.drawCircle(x, y, countSelectedRadius, selectedPointBackgroundPaint)
-                canvas.drawCircle(x, y, countSelectedRadius, selectedPointPaint)
-
-                val textBounds = Rect()
-                monthPaint.getTextBounds(dotFormatted, 0, dotFormatted.length, textBounds)
-
-                val rect = Rect(x.toInt() - textBounds.width() / 2 - cloudPadding,
-                        (y - daysTextHeight - textBounds.height()).toInt() - cloudPadding,
-                        x.toInt() + textBounds.width() / 2 + cloudPadding,
-                        (y - daysTextHeight).toInt() + cloudPadding + cloudPadding / 3)
-                drawableCloud?.bounds = rect
-                drawableCloud?.draw(canvas)
-                canvas.drawText(dotFormatted, x, y - daysTextHeight, monthPaint)
+                selectedDot = dot.count.format()
+                selectedX = x
+                selectedY = y
             } else {
                 canvas.drawCircle(x, y, countRadius, dotsPaint)
             }
         }
+
+        canvas.drawCircle(selectedX, selectedY, countSelectedRadius, selectedPointBackgroundPaint)
+        canvas.drawCircle(selectedX, selectedY, countSelectedRadius, selectedPointPaint)
+
+        val textBounds = Rect()
+        monthPaint.getTextBounds(selectedDot, 0, selectedDot.length, textBounds)
+
+        val rect = Rect(selectedX.toInt() - textBounds.width() / 2 - cloudPadding,
+                (selectedY - daysTextHeight - textBounds.height()).toInt() - cloudPadding,
+                selectedX.toInt() + textBounds.width() / 2 + cloudPadding,
+                (selectedY - daysTextHeight).toInt() + cloudPadding + cloudPadding / 3)
+        drawableCloud?.bounds = rect
+        drawableCloud?.draw(canvas)
+        canvas.drawText(selectedDot, selectedX, selectedY - daysTextHeight, monthPaint)
     }
 
     override fun onTouchEvent(event: MotionEvent): Boolean {
@@ -269,9 +276,22 @@ class GraphView(context: Context, attrs: AttributeSet) : View(context, attrs) {
                 selectedPoint = data.size - 1
             }
             updateMinMaxValue()
-            cellWidth = paddedWidth / data.size
+            updateDimensions()
+
             invalidate()
         }
+    }
+
+    private fun updateDimensions() {
+        val maxFormatted = maxValue.format()
+        val textBounds = Rect()
+        monthPaint.getTextBounds(maxFormatted, 0, maxFormatted.length, textBounds)
+        legendOffset = legendOffsetPadding + textBounds.width().toFloat()
+
+        val w = right - left
+        paddedWidth = w - paddingEnd - paddingStart - legendOffset.toInt()
+
+        cellWidth = paddedWidth / data.size
     }
 
     private fun updateMinMaxValue() {

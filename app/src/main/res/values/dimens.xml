@@ -17,7 +17,7 @@
     <dimen name="graph_days_text_size">10sp</dimen>
     <dimen name="graph_count_radius">3dp</dimen>
     <dimen name="graph_count_selected_radius">3dp</dimen>
-    <dimen name="graph_legend_offset">35dp</dimen>
+    <dimen name="graph_legend_offset">4dp</dimen>
     <dimen name="graph_line_width">1dp</dimen>
     <dimen name="graph_curve_width">2dp</dimen>
     <dimen name="graph_cloud_padding">4dp</dimen>

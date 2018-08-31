@@ -1,9 +1,6 @@
 package ru.spcm.apps.mtgpro.model.dto
 
-import android.arch.persistence.room.Entity
-import android.arch.persistence.room.Ignore
-import android.arch.persistence.room.Index
-import android.arch.persistence.room.PrimaryKey
+import android.arch.persistence.room.*
 import android.support.annotation.NonNull
 import com.google.gson.annotations.SerializedName
 import ru.spcm.apps.mtgpro.model.tools.Icons

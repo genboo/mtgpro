@@ -54,11 +54,24 @@ interface CardDao {
     @Query("SELECT c.* FROM Card c WHERE c.multiverseId = :mid")
     fun getCards(mid: String): LiveData<List<Card>>
 
-    @Query("SELECT c.id, c.numberFormatted, c.nameOrigin, c.setTitle, sc.parent, c.imageUrl, c.name, c.rarity, c.multiverseId, c.number, c.`set`, c.type, c.cmc, c.text, c.flavor, c.manaCost, c.rulesText, sc.count FROM SavedCard sc LEFT JOIN Card c ON c.id = sc.id WHERE sc.parent = '' ORDER BY c.setTitle, c.numberFormatted")
-    fun getAllCards(): DataSource.Factory<Int, Card>
-
-    @Query("SELECT c.id, c.numberFormatted, c.nameOrigin, c.setTitle, sc.parent, c.imageUrl, c.name, c.rarity, c.multiverseId, c.number, c.`set`, c.type, c.cmc, c.text, c.flavor, c.manaCost, c.rulesText, sc.count FROM SavedCard sc " +
+    @SuppressWarnings(RoomWarnings.CURSOR_MISMATCH)
+    @Query("SELECT c.id, c.numberFormatted, c.nameOrigin, c.setTitle, sc.parent, c.imageUrl, c.name, c.rarity, c.multiverseId, c.number, c.`set`, c.type, c.cmc, c.text, c.flavor, c.manaCost, c.rulesText, sc.count, " +
+            "CASE WHEN SUBSTR(c.number, -1) IN ('a', 'b') THEN SUBSTR(c.number, 1, length(c.number) - 1) ELSE c.number END num, " +
+            "(CASE WHEN scc.usd IS NULL THEN 0 ELSE scc.usd END) * :valute AS price  " +
+            "FROM SavedCard sc " +
             "LEFT JOIN Card c ON c.id = sc.id " +
+            "LEFT JOIN ScryCard scc ON scc.number = num AND scc.`set` = lower(c.`set`) " +
+            "WHERE sc.parent = '' " +
+            "ORDER BY c.setTitle, c.numberFormatted")
+    fun getAllCards(valute: Float): DataSource.Factory<Int, CardCollection>
+
+    @SuppressWarnings(RoomWarnings.CURSOR_MISMATCH)
+    @Query("SELECT c.id, c.numberFormatted, c.nameOrigin, c.setTitle, sc.parent, c.imageUrl, c.name, c.rarity, c.multiverseId, c.number, c.`set`, c.type, c.cmc, c.text, c.flavor, c.manaCost, c.rulesText, sc.count," +
+            "CASE WHEN SUBSTR(c.number, -1) IN ('a', 'b') THEN SUBSTR(c.number, 1, length(c.number) - 1) ELSE c.number END num, " +
+            "(CASE WHEN scc.usd IS NULL THEN 0 ELSE scc.usd END) * :valute AS price  " +
+            " FROM SavedCard sc " +
+            "LEFT JOIN Card c ON c.id = sc.id " +
+            "LEFT JOIN ScryCard scc ON scc.number = num AND scc.`set` = lower(c.`set`) " +
             "LEFT JOIN Type type ON c.id = type.card_id " +
             "LEFT JOIN Subtype sub ON c.id = sub.card_id " +
             "LEFT JOIN Color col ON col.card_id = c.id " +
@@ -71,8 +84,8 @@ interface CardDao {
             "    AND sc.parent = '' " +
             "GROUP BY c.id " +
             "ORDER BY c.setTitle, c.numberFormatted")
-    fun getFilteredCards(types: Array<String>, subtypes: Array<String>, colors: Array<String>,
-                         rarities: Array<String>, sets: Array<String>): DataSource.Factory<Int, Card>
+    fun getFilteredCards(valute: Float, types: Array<String>, subtypes: Array<String>, colors: Array<String>,
+                         rarities: Array<String>, sets: Array<String>): DataSource.Factory<Int, CardCollection>
 
     @Query("SELECT * FROM WishedCard c WHERE c.id = :id")
     fun getWish(id: String): LiveData<WishedCard>

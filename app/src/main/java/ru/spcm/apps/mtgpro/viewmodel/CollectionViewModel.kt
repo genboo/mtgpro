@@ -6,7 +6,7 @@ import android.arch.lifecycle.Transformations
 import android.arch.lifecycle.ViewModel
 import android.arch.paging.LivePagedListBuilder
 import android.arch.paging.PagedList
-import ru.spcm.apps.mtgpro.model.dto.Card
+import ru.spcm.apps.mtgpro.model.dto.CardCollection
 import ru.spcm.apps.mtgpro.repository.CollectionRepo
 import ru.spcm.apps.mtgpro.model.dto.FilterItem
 import java.util.*
@@ -23,36 +23,36 @@ import kotlin.collections.HashMap
 class CollectionViewModel @Inject
 internal constructor(collectionRepo: CollectionRepo) : ViewModel() {
 
-    val cards: LiveData<PagedList<Card>>
+    val cards: LiveData<PagedList<CardCollection>>
     val filters: LiveData<List<FilterItem>> = collectionRepo.getFilters()
 
-    private val switcher = MutableLiveData<List<FilterItem>>()
+    private val switcher = MutableLiveData<CollectionParams>()
 
     val selectedFilter: List<FilterItem>?
-        get() = switcher.value
+        get() = switcher.value?.filterList
 
     init {
-        cards = Transformations.switchMap(switcher) {
-            if (it == null) {
-                return@switchMap LivePagedListBuilder(collectionRepo.getAllCards(), 20).build()
+        cards = Transformations.switchMap(switcher) { params ->
+            if (params.filterList == null) {
+                return@switchMap LivePagedListBuilder(collectionRepo.getAllCards(params.valute), 20).build()
             }
 
             val selected = HashMap<String, Array<String>>()
-            it.forEach { item ->
+            params.filterList?.forEach { item ->
                 val s = item.options.filter { it.selected == true }
                 val items = ArrayList<String>()
-                if(s.isEmpty()){
-                    item.options.forEach{
+                if (s.isEmpty()) {
+                    item.options.forEach {
                         items.add(it.id)
                     }
-                }else {
+                } else {
                     s.forEach {
                         items.add(it.id)
                     }
                 }
                 selected[item.id] = items.toTypedArray()
             }
-            return@switchMap LivePagedListBuilder(collectionRepo.getFilteredCards(
+            return@switchMap LivePagedListBuilder(collectionRepo.getFilteredCards(params.valute,
                     selected[FilterItem.BLOCK_TYPE] ?: arrayOf(),
                     selected[FilterItem.BLOCK_SUBTYPE] ?: arrayOf(),
                     selected[FilterItem.BLOCK_COLOR] ?: arrayOf(),
@@ -61,8 +61,10 @@ internal constructor(collectionRepo: CollectionRepo) : ViewModel() {
         }
     }
 
-    fun loadCards(filter: List<FilterItem>?) {
-        switcher.postValue(filter)
+    fun loadCards(valute: Float, filter: List<FilterItem>?) {
+        switcher.postValue(CollectionParams(valute, filter))
     }
+
+    class CollectionParams(var valute: Float, var filterList: List<FilterItem>?)
 
 }
