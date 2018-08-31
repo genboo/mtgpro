@@ -152,6 +152,7 @@ class GraphView(context: Context, attrs: AttributeSet) : View(context, attrs) {
     private fun drawCurve(canvas: Canvas) {
         var prevX = 0f
         var prevY = 0f
+        val cubicPart = cellWidth * 2 / 5
         for (i in 1..data.size) {
             val dot = data[i - 1]
             val x = paddingLeft.toFloat() + legendOffset + i * cellWidth - cellWidth / 2
@@ -162,7 +163,7 @@ class GraphView(context: Context, attrs: AttributeSet) : View(context, attrs) {
             } else {
                 curvePath.moveTo(prevX, prevY)
                 if (isCubicCurve) {
-                    curvePath.cubicTo(prevX + cellWidth / 2, prevY, x - cellWidth / 2, y, x, y)
+                    curvePath.cubicTo(prevX + cubicPart, prevY, x - cubicPart, y, x, y)
                 } else {
                     curvePath.lineTo(x, y)
                 }
