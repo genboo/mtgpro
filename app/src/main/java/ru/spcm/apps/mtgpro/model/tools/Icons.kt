@@ -25,7 +25,7 @@ object Icons {
     init {
 
         //Guilds of Ravnica 2018
-        list["GRN"] = R.drawable.ic_bbd
+        list["GRN"] = R.drawable.ic_grn
 
         //Battlebond 2018
         list["BBD"] = R.drawable.ic_bbd
