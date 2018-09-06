@@ -181,6 +181,7 @@ class GraphView(context: Context, attrs: AttributeSet) : View(context, attrs) {
 
     private fun drawDaysAndPointers(canvas: Canvas, daysLineY: Float) {
         var selectedDot = ""
+        var selectedDay = ""
         var selectedX = 1f
         var selectedY = 1f
         for (i in 1..data.size) {
@@ -188,7 +189,7 @@ class GraphView(context: Context, attrs: AttributeSet) : View(context, attrs) {
             val x = paddingLeft.toFloat() + legendOffset + i * cellWidth - cellWidth / 2
             val y = countToOffset(dot.count)
 
-            if (data.size > 15 && (i == 1 || i == data.size - 1 || i % 5 == 0) && i + 1 != data.size - 1 || data.size <= 15) {
+            if (data.size > 15 && (i == 1 || i == data.size || i % 5 == 0) && i + 1 != data.size - 1 || data.size <= 15) {
                 val day = dot.date.substringAfterLast("-")
                 canvas.drawText(day, x, daysLineY, monthPaint)
             }
@@ -197,6 +198,7 @@ class GraphView(context: Context, attrs: AttributeSet) : View(context, attrs) {
                 selectedDot = dot.count.format()
                 selectedX = x
                 selectedY = y
+                selectedDay = dot.date.substringAfterLast("-")
             } else {
                 canvas.drawCircle(x, y, countRadius, dotsPaint)
             }
@@ -215,6 +217,17 @@ class GraphView(context: Context, attrs: AttributeSet) : View(context, attrs) {
         drawableCloud?.bounds = rect
         drawableCloud?.draw(canvas)
         canvas.drawText(selectedDot, selectedX, selectedY - daysTextHeight, monthPaint)
+
+        val textDayBounds = Rect()
+        monthPaint.getTextBounds(selectedDay, 0, selectedDay.length, textDayBounds)
+        val dayRect = Rect(selectedX.toInt() - textDayBounds.width() / 2 - cloudPadding,
+                (daysLineY - textDayBounds.height()).toInt() - cloudPadding,
+                selectedX.toInt() + textDayBounds.width() / 2 + cloudPadding,
+                daysLineY.toInt() + cloudPadding + cloudPadding / 3)
+        drawableCloud?.bounds = dayRect
+        drawableCloud?.draw(canvas)
+
+        canvas.drawText(selectedDay, selectedX, daysLineY, monthPaint)
     }
 
     override fun onTouchEvent(event: MotionEvent): Boolean {

@@ -1,10 +1,8 @@
 package ru.spcm.apps.mtgpro.view.adapter.holders
 
-import android.support.v4.content.ContextCompat
 import android.support.v7.widget.RecyclerView
 import android.view.View
 import kotlinx.android.synthetic.main.list_item_reprint.view.*
-import ru.spcm.apps.mtgpro.R
 import ru.spcm.apps.mtgpro.model.tools.Icons
 
 class ReprintHolder (itemView: View) : RecyclerView.ViewHolder(itemView) {
@@ -13,7 +11,6 @@ class ReprintHolder (itemView: View) : RecyclerView.ViewHolder(itemView) {
         val icon = setName.context.resources
                 .getDrawable(Icons.getIcon(item), setName.context.theme)
         setName.text = item
-        icon.setTint(ContextCompat.getColor(setName.context, R.color.colorTextMain))
         setName.setCompoundDrawablesWithIntrinsicBounds(icon, null, null, null)
     }
 
