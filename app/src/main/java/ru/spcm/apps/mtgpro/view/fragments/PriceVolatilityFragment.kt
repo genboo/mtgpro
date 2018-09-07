@@ -1,6 +1,7 @@
 package ru.spcm.apps.mtgpro.view.fragments
 
 import android.arch.lifecycle.Observer
+import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.support.v4.content.ContextCompat
 import android.view.LayoutInflater
@@ -62,11 +63,17 @@ class PriceVolatilityFragment : BaseFragment() {
         if (data != null) {
             cardImage.loadImageFromCache(data.imageUrl)
             cardPrice.text = getString(R.string.price_rub, data.price?.format() ?: "")
-            cardViol.text = data.diff.format()
+            cardVol.text = data.diff.format()
+            val drawable: Drawable? = when {
+                data.diff > 0 -> ContextCompat.getDrawable(requireContext(), R.drawable.ic_diff_up)
+                data.diff < 0 -> ContextCompat.getDrawable(requireContext(), R.drawable.ic_diff_down)
+                else -> null
+            }
+            cardVol.setCompoundDrawablesWithIntrinsicBounds(drawable, null, null, null)
             when {
-                data.diff == 0f -> cardViol.setTextColor(ContextCompat.getColor(cardViol.context, R.color.colorTextMain))
-                data.diff < 0 -> cardViol.setTextColor(ContextCompat.getColor(cardViol.context, R.color.colorNegative))
-                else -> cardViol.setTextColor(ContextCompat.getColor(cardViol.context, R.color.colorPositive))
+                data.diff == 0f -> cardVol.setTextColor(ContextCompat.getColor(cardVol.context, R.color.colorTextMain))
+                data.diff < 0 -> cardVol.setTextColor(ContextCompat.getColor(cardVol.context, R.color.colorNegative))
+                else -> cardVol.setTextColor(ContextCompat.getColor(cardVol.context, R.color.colorPositive))
             }
             if (data.observe) {
                 watchPrice.isChecked = true

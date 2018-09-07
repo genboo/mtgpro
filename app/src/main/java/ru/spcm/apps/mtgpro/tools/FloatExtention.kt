@@ -9,3 +9,10 @@ fun Float.format(): String {
     val diffFormatter = DecimalFormat("0.00", symbols)
     return diffFormatter.format(this)
 }
+
+fun Float.formatRound():String{
+    val symbols = DecimalFormatSymbols()
+    symbols.decimalSeparator = '.'
+    val diffFormatter = DecimalFormat("0", symbols)
+    return diffFormatter.format(this)
+}
