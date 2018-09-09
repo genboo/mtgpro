@@ -86,43 +86,43 @@ class Navigator(private val activity: FragmentActivity, fragmentManager: Fragmen
     }
 
     fun goToSearch(search: String) {
-        applyCommand(Forward(SCREEN_SEARCH, search))
+        applyCommands(arrayOf(Forward(SCREEN_SEARCH, search)))
     }
 
     fun goToSpoilers(set: String, name: String) {
-        applyCommand(Forward(SCREEN_SPOILERS, arrayOf(set, name)))
+        applyCommands(arrayOf(Forward(SCREEN_SPOILERS, arrayOf(set, name))))
     }
 
     fun goToCard(id: String) {
-        applyCommand(Forward(SCREEN_CARD, id))
+        applyCommands(arrayOf(Forward(SCREEN_CARD, id)))
     }
 
     fun goToLibrary(id: Long) {
-        applyCommand(Forward(SCREEN_LIBRARY, id))
+        applyCommands(arrayOf(Forward(SCREEN_LIBRARY, id)))
     }
 
     fun goToSettings() {
-        applyCommand(Forward(SCREEN_SETTINGS, null))
+        applyCommands(arrayOf(Forward(SCREEN_SETTINGS, null)))
     }
 
     fun goToReport() {
-        applyCommand(Forward(SCREEN_REPORT, null))
+        applyCommands(arrayOf(Forward(SCREEN_REPORT, null)))
     }
 
     fun goToWatch() {
-        applyCommand(Forward(SCREEN_WATCH, null))
+        applyCommands(arrayOf(Forward(SCREEN_WATCH, null)))
     }
 
     fun goToPriceVolatility(id: String) {
-        applyCommand(Forward(SCREEN_VOLATILITY, id))
+        applyCommands(arrayOf(Forward(SCREEN_VOLATILITY, id)))
     }
 
     fun goToImage(id: String, url: String) {
-        applyCommand(Forward(SCREEN_IMAGE, arrayOf(id, url)))
+        applyCommands(arrayOf(Forward(SCREEN_IMAGE, arrayOf(id, url))))
     }
 
     fun backTo() {
-        applyCommand(Back())
+        applyCommands(arrayOf(Back()))
     }
 
     companion object {
