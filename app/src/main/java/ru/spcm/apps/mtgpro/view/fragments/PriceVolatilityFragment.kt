@@ -62,6 +62,7 @@ class PriceVolatilityFragment : BaseFragment() {
     private fun observeCard(data: CardObserved?) {
         if (data != null) {
             cardImage.loadImageFromCache(data.imageUrl)
+            cardImage.setOnClickListener { navigator.goToCard(data.id) }
             cardPrice.text = getString(R.string.price_rub, data.price?.format() ?: "")
             cardVol.text = data.diff.format()
             val drawable: Drawable? = when {
