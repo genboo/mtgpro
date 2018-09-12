@@ -95,10 +95,6 @@ class SearchFragment : BaseFragment() {
         hintBlock.visibility = View.GONE
     }
 
-    override fun inject() {
-        component?.inject(this)
-    }
-
     override fun getTitle(): String {
         return ""
     }

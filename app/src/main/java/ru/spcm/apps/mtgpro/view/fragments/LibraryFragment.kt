@@ -78,10 +78,6 @@ class LibraryFragment : BaseFragment() {
         inflater.inflate(R.menu.library_menu, menu)
     }
 
-    override fun inject() {
-        component?.inject(this)
-    }
-
     override fun getTitle(): String {
         return ""
     }

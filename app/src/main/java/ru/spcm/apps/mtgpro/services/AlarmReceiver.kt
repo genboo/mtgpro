@@ -27,7 +27,7 @@ class AlarmReceiver : BroadcastReceiver() {
     @Inject
     lateinit var valuteUpdater: ValuteUpdater
 
-    var component: AppComponent? = null
+    private var component: AppComponent? = null
 
     override fun onReceive(context: Context, intent: Intent) {
         component = (context.applicationContext as App).appComponent

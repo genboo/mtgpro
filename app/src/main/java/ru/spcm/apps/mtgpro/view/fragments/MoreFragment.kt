@@ -27,11 +27,6 @@ class MoreFragment : BaseFragment() {
 
     }
 
-
-    override fun inject() {
-
-    }
-
     override fun getTitle(): String {
         return "Еще"
     }

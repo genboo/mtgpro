@@ -58,7 +58,7 @@ abstract class BaseFragment : Fragment() {
     protected fun initFragment() {
         if (component == null) {
             component = (activity?.application as App).appComponent
-            inject()
+            component?.inject(this)
         }
     }
 
@@ -107,8 +107,6 @@ abstract class BaseFragment : Fragment() {
         super.onDestroyView()
         (lifecycle as? LifecycleRegistry)?.handleLifecycleEvent(Lifecycle.Event.ON_DESTROY)
     }
-
-    internal abstract fun inject()
 
     abstract fun getTitle(): String
 }

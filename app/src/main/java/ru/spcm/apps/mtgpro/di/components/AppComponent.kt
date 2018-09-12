@@ -37,32 +37,8 @@ interface AppComponent {
 
     fun inject(activity: MainActivity)
 
-    fun inject(fragment: SetsFragment)
+    fun inject(fragment: BaseFragment)
 
-    fun inject(fragment: SpoilersFragment)
-
-    fun inject(fragment: CardFragment)
-
-    fun inject(fragment: CollectionFragment)
-
-    fun inject(fragment: WishFragment)
-
-    fun inject(fragment: LibrariesFragment)
-
-    fun inject(fragment: LibraryFragment)
-
-    fun inject(fragment: SearchFragment)
-
-    fun inject(fragment: FullScreenImageFragment)
-
-    fun inject(fragment: SettingsFragment)
-
-    fun inject(fragment: WatchFragment)
-
-    fun inject(fragment: PriceVolatilityFragment)
-
-    fun inject(receiver: AlarmReceiver)
-
-    fun inject(receiver: ReportFragment)
+    fun inject(service: AlarmReceiver)
 
 }

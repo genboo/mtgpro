@@ -100,10 +100,6 @@ class WishFragment : BaseFragment() {
         return selected.toTypedArray()
     }
 
-    override fun inject() {
-        component?.inject(this)
-    }
-
     override fun getTitle(): String {
         return "Хочу!"
     }

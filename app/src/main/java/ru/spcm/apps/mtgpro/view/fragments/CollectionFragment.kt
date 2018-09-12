@@ -70,10 +70,6 @@ class CollectionFragment : BaseFragment() {
         inflater.inflate(R.menu.collection_menu, menu)
     }
 
-    override fun inject() {
-        component?.inject(this)
-    }
-
     override fun getTitle(): String {
         return "Коллекция"
     }

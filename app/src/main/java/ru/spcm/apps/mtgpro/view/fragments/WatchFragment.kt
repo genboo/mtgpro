@@ -37,10 +37,6 @@ class WatchFragment : BaseFragment() {
         }
     }
 
-    override fun inject() {
-        component?.inject(this)
-    }
-
     override fun getTitle(): String {
         return "Список отслеживания"
     }

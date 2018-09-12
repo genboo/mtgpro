@@ -42,10 +42,6 @@ class ReportFragment : BaseFragment() {
         }
     }
 
-    override fun inject() {
-        component?.inject(this)
-    }
-
     override fun getTitle(): String {
         return "Отчет"
     }

@@ -265,10 +265,6 @@ class CardFragment : BaseFragment() {
         inflater.inflate(R.menu.card_menu, menu)
     }
 
-    override fun inject() {
-        component?.inject(this)
-    }
-
     override fun getTitle(): String {
         return ""
     }

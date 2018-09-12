@@ -111,10 +111,6 @@ class SpoilersFragment : BaseFragment() {
         inflater.inflate(R.menu.spoilers_menu, menu)
     }
 
-    override fun inject() {
-        component?.inject(this)
-    }
-
     override fun getTitle(): String {
         return args.getString(ARG_NAME)
     }

@@ -24,10 +24,6 @@ class FullScreenImageFragment : BaseFragment() {
         cardImage.setOnClickListener { _ -> navigator.backTo() }
     }
 
-    override fun inject() {
-        component?.inject(this)
-    }
-
     override fun getTitle(): String {
         return ""
     }
