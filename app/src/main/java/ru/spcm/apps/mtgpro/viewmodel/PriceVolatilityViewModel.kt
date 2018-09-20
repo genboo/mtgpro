@@ -40,7 +40,7 @@ internal constructor(private val cardRepo: CardRepo,
                 return@switchMap AbsentLiveData.create<List<GraphDot>>()
             }
             val calendar = Calendar.getInstance().apply {
-                add(Calendar.DAY_OF_MONTH, -30)
+                add(Calendar.DAY_OF_MONTH, -29)
             }
             return@switchMap priceRepo.getData(it.id, it.valute, calendar.time, Date())
         }
