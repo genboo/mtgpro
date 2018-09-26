@@ -19,7 +19,7 @@ class FullScreenImageFragment : BaseFragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        cardImage.loadImageFromCache(args.getString(ARG_URL))
+        cardImage.loadImageFromCache(args.getString(ARG_URL) ?: "")
         close.setOnClickListener { _ -> navigator.backTo() }
         cardImage.setOnClickListener { _ -> navigator.backTo() }
     }

@@ -4,7 +4,7 @@ buildscript {
     }
 
     dependencies {
-        classpath 'io.fabric.tools:gradle:1.24.5'
+        classpath 'io.fabric.tools:gradle:1.25.4'
     }
 }
 apply plugin: 'com.android.application'
@@ -19,8 +19,8 @@ repositories {
 }
 
 android {
-    compileSdkVersion 27
-    buildToolsVersion "27.0.3"
+    compileSdkVersion 28
+    buildToolsVersion '28.0.2'
     dexOptions {
         maxProcessCount 8
         preDexLibraries = false
@@ -29,7 +29,7 @@ android {
     defaultConfig {
         applicationId "ru.spcm.apps.mtgpro"
         minSdkVersion 21
-        targetSdkVersion 27
+        targetSdkVersion 28
         versionCode rootProject.code
         versionName rootProject.ver
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"

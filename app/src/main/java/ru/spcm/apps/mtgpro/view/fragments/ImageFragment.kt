@@ -17,7 +17,7 @@ class ImageFragment : Fragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         val view = inflater.inflate(R.layout.fragment_image, container, false)
         val image = view.findViewById<ImageView>(R.id.cardImage)
-        image.loadImageFromCache(args.getString(ARG_URL))
+        image.loadImageFromCache(args.getString(ARG_URL) ?: "")
         return view
     }
 

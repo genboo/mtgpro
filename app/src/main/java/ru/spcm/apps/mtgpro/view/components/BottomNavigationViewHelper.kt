@@ -18,10 +18,7 @@ object BottomNavigationViewHelper {
             shiftingMode.isAccessible = false
             for (i in 0 until menuView.childCount) {
                 val item = menuView.getChildAt(i) as BottomNavigationItemView
-
-                item.setShiftingMode(false)
-                // set once again checked value, so view will be updated
-
+                item.setShifting(false)
                 item.setChecked(item.itemData.isChecked)
             }
         } catch (e: NoSuchFieldException) {

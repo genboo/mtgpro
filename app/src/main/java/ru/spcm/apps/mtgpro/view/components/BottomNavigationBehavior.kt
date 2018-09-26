@@ -13,7 +13,7 @@ import kotlin.math.min
 class BottomNavigationBehavior<V : View>(context: Context, attrs: AttributeSet) :
         CoordinatorLayout.Behavior<V>(context, attrs) {
 
-    override fun layoutDependsOn(parent: CoordinatorLayout?, child: V, dependency: View?): Boolean {
+    override fun layoutDependsOn(parent: CoordinatorLayout, child: V, dependency: View): Boolean {
         if (dependency is Snackbar.SnackbarLayout) {
             updateSnackbar(child, dependency)
         }

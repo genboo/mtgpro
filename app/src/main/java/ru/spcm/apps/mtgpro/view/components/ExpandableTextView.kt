@@ -177,7 +177,7 @@ class ExpandableTextView @JvmOverloads constructor(context: Context, attrs: Attr
 
         internal var expanded: Boolean = false
 
-        internal constructor(superState: Parcelable) : super(superState)
+        internal constructor(superState: Parcelable?) : super(superState)
 
         private constructor(`in`: Parcel) : super(`in`) {
             expanded = `in`.readInt() == 1
@@ -190,6 +190,8 @@ class ExpandableTextView @JvmOverloads constructor(context: Context, attrs: Attr
 
         companion object {
 
+            @Suppress("unused")
+            @JvmField
             val CREATOR: Parcelable.Creator<SavedState> = object : Parcelable.Creator<SavedState> {
 
                 override fun createFromParcel(`in`: Parcel): SavedState {

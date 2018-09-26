@@ -59,7 +59,7 @@ class CardFragment : BaseFragment() {
         viewModel.getLibrariesByCard().observe(this, Observer { observeLibrariesByCard(viewModel, it) })
         viewModel.getPrices().observe(this, Observer { if (it != null) updatePrice(it) })
 
-        viewModel.loadCard(args.getString(ARG_ID))
+        viewModel.loadCard(args.getString(ARG_ID) ?: "")
         mainBlock.postDelayed({ viewModel.loadLibraries(getSettings().getCurrentValute()) }, 200)
 
         val adapter = ReprintListAdapter(null)

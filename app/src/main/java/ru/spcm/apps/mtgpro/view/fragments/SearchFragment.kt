@@ -51,8 +51,9 @@ class SearchFragment : BaseFragment() {
             return@setOnEditorActionListener handled
         }
 
-        if (args.containsKey(ARG_SEARCH_STRING) && args.getString(ARG_SEARCH_STRING).isNotEmpty()) {
-            viewModel.search(args.getString(ARG_SEARCH_STRING))
+        if (args.containsKey(ARG_SEARCH_STRING) && (args.getString(ARG_SEARCH_STRING)
+                        ?: "").isNotEmpty()) {
+            viewModel.search(args.getString(ARG_SEARCH_STRING) ?: "")
             searchText.setText(args.getString(ARG_SEARCH_STRING))
         }
     }
@@ -66,6 +67,11 @@ class SearchFragment : BaseFragment() {
                 if (data.data == null || data.data.isEmpty()) {
                     showEmpty()
                 } else {
+                    (list.layoutManager as GridLayoutManager).spanCount = when {
+                        (data.data.size <= 2) -> 1
+                        (data.data.size <= 4) -> 2
+                        else -> 3
+                    }
                     val adapter = list.adapter as WishListAdapter
                     adapter.setItems(data.data)
                     showContent()

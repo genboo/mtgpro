@@ -11,8 +11,8 @@ class RecyclerViewScrollListener(private val load: (Int) -> Unit,
 
     override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
         super.onScrolled(recyclerView, dx, dy)
-        val visibleItemCount = recyclerView.layoutManager.childCount
-        val totalItemCount = recyclerView.layoutManager.itemCount
+        val visibleItemCount = recyclerView.layoutManager?.childCount ?: 0
+        val totalItemCount = recyclerView.layoutManager?.itemCount ?: 0 - 1
         val firstVisibleItem = (recyclerView.layoutManager as LinearLayoutManager).findFirstVisibleItemPosition()
 
         if (previousTotal == 0) {

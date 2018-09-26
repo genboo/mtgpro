@@ -30,7 +30,7 @@ object Icons {
         //Battlebond 2018
         list["BBD"] = R.drawable.ic_bbd
 
-        //Dominaria Block 2018
+        //Dominaria 2018
         list["DOM"] = R.drawable.ic_dom
 
         //Ixalan Block 2017-2018

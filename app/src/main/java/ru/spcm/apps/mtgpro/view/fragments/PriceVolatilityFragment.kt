@@ -34,7 +34,7 @@ class PriceVolatilityFragment : BaseFragment() {
         viewModel.getCards().observe(this, Observer { observeCard(it) })
         viewModel.getData().observe(this, Observer { observeData(it) })
 
-        viewModel.load(args.getString(ARG_ID), getSettings().getCurrentValute())
+        viewModel.load(args.getString(ARG_ID) ?: "", getSettings().getCurrentValute())
 
         watchPrice.setOnClickListener { _ ->
             topEdge.isEnabled = watchPrice.isChecked
@@ -50,7 +50,8 @@ class PriceVolatilityFragment : BaseFragment() {
         val top: Float = if (topEdge.text.isEmpty()) 0f else topEdge.text.toString().toFloat()
         val bottom: Float = if (bottomEdge.text.isEmpty()) 0f else bottomEdge.text.toString().toFloat()
         val valute = getSettings().getCurrentValute()
-        viewModel.updateObserve(args.getString(ARG_ID), watchPrice.isChecked, top / valute, bottom / valute)
+        viewModel.updateObserve(args.getString(ARG_ID)
+                ?: "", watchPrice.isChecked, top / valute, bottom / valute)
     }
 
     private fun observeData(data: List<GraphDot>?) {

@@ -90,10 +90,12 @@ class NumberCounterView : LinearLayout {
         addView(plus)
     }
 
-    private fun prepareImageButton(view: ImageButton, drawableResource: Drawable, tintColor: Int, size: Int) {
+    private fun prepareImageButton(view: ImageButton, drawableResource: Drawable?, tintColor: Int, size: Int) {
         val outValue = TypedValue()
         context.theme.resolveAttribute(android.R.attr.selectableItemBackgroundBorderless, outValue, true)
-        DrawableCompat.setTint(drawableResource, tintColor)
+        if (drawableResource != null) {
+            DrawableCompat.setTint(drawableResource, tintColor)
+        }
         with(view) {
             setImageDrawable(drawableResource)
             layoutParams = LayoutParams(size, size)

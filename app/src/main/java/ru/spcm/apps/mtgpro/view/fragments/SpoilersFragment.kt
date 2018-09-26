@@ -35,7 +35,7 @@ class SpoilersFragment : BaseFragment() {
     override fun onActivityCreated(state: Bundle?) {
         super.onActivityCreated(state)
         updateToolbar()
-        val set = args.getString(ARG_SET)
+        val set = args.getString(ARG_SET) ?: ""
 
         val viewModel = getViewModel(this, SpoilersViewModel::class.java)
         viewModel.getSpoilers().observe(this, Observer { observeSpoilers(it) })
@@ -112,7 +112,7 @@ class SpoilersFragment : BaseFragment() {
     }
 
     override fun getTitle(): String {
-        return args.getString(ARG_NAME)
+        return args.getString(ARG_NAME) ?: ""
     }
 
     companion object {
