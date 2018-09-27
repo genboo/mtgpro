@@ -86,11 +86,12 @@ class AlarmReceiver : BroadcastReceiver() {
         val builder = NotificationCompat.Builder(context, App.NOTIFICATION_CHANNEL_ID)
                 .setContentTitle(title)
                 .setContentText(annotation)
-                .setVibrate(longArrayOf(0L))
+                .setVibrate(null)
                 .setSmallIcon(R.drawable.ic_black_mana)
                 .setSound(null)
                 .setAutoCancel(true)
                 .setStyle(NotificationCompat.BigTextStyle().bigText(message))
+                .setDefaults(Notification.DEFAULT_LIGHTS or Notification.DEFAULT_SOUND or Notification.DEFAULT_VIBRATE)
                 .setContentIntent(pendingIntent)
         if (permanent) {
             builder.setOngoing(true)

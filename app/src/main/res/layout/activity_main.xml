@@ -10,9 +10,9 @@
 
     <FrameLayout
         android:id="@+id/content"
-        android:fitsSystemWindows="true"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent"
+        android:fitsSystemWindows="true" />
 
     <android.support.design.widget.BottomNavigationView
         android:id="@+id/bottomMenu"
@@ -22,6 +22,7 @@
         android:background="@color/colorPrimary"
         app:itemIconTint="@color/bottom_nav_item_style"
         app:itemTextColor="@color/bottom_nav_item_style"
+        app:labelVisibilityMode="labeled"
         app:layout_behavior="ru.spcm.apps.mtgpro.view.components.BottomNavigationBehavior"
         app:menu="@menu/bottom_menu" />
 

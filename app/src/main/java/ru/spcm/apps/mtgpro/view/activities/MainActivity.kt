@@ -18,7 +18,6 @@ import ru.spcm.apps.mtgpro.di.components.AppComponent
 import ru.spcm.apps.mtgpro.model.dto.Setting
 import ru.spcm.apps.mtgpro.services.AlarmReceiver
 import ru.spcm.apps.mtgpro.tools.Settings
-import ru.spcm.apps.mtgpro.view.components.BottomNavigationViewHelper
 import ru.spcm.apps.mtgpro.view.components.Navigator
 import ru.spcm.apps.mtgpro.viewmodel.MainViewModel
 import ru.terrakok.cicerone.NavigatorHolder
@@ -66,7 +65,6 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
         }
 
         window.setBackgroundDrawable(null)
-        BottomNavigationViewHelper.removeShiftMode(bottomMenu)
     }
 
     private fun observeSettings(data: List<Setting>?) {
