@@ -26,6 +26,9 @@ class ScryCardBound(appExecutors: AppExecutors,
             if (data.eur == null) {
                 data.eur = ""
             }
+            if (data.usd == null) {
+                data.usd = ""
+            }
             scryCardDao.insert(data)
             val cache = Cache(getCacheKey(),
                     Date().time + getCacheTime(cacheDao.getCacheType(TYPE)))
