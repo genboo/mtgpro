@@ -7,8 +7,8 @@ import android.support.design.widget.FloatingActionButton
 import android.support.design.widget.Snackbar
 import android.support.v4.app.Fragment
 import android.transition.TransitionInflater
-import android.view.Menu
 import android.view.View
+import android.widget.ImageView
 import kotlinx.android.synthetic.main.layout_app_bar_main.*
 import ru.spcm.apps.mtgpro.App
 import ru.spcm.apps.mtgpro.view.activities.MainActivity
@@ -89,6 +89,10 @@ abstract class BaseFragment : Fragment() {
         } else {
             bottomMenu.visibility = View.GONE
         }
+    }
+
+    open fun getSharedImage(): ImageView? {
+        return null
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {

@@ -4,7 +4,8 @@ import android.content.Context
 import android.support.v4.view.ViewPager
 import android.util.AttributeSet
 import android.view.MotionEvent
-
+import android.widget.ImageView
+import ru.spcm.apps.mtgpro.R
 
 
 class CardViewPager(context: Context, attrs: AttributeSet) : ViewPager(context, attrs) {
@@ -26,6 +27,10 @@ class CardViewPager(context: Context, attrs: AttributeSet) : ViewPager(context, 
                 listener(position)
             }
         })
+    }
+
+    fun getImageView(): ImageView {
+        return getChildAt(currentItem).findViewById(R.id.cardImage)
     }
 
     override fun onTouchEvent(event: MotionEvent): Boolean {

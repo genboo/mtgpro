@@ -2,6 +2,7 @@ package ru.spcm.apps.mtgpro.view.adapter
 
 import android.content.Context
 import android.support.v4.view.PagerAdapter
+import android.support.v4.view.ViewCompat
 import android.view.LayoutInflater
 import android.view.View
 import ru.spcm.apps.mtgpro.model.dto.CardLocal
@@ -32,6 +33,7 @@ class FlipPagerAdapter(val context: Context, items: List<CardLocal>?) : PagerAda
         val imageView = view.findViewById(R.id.cardImage) as ImageView
         imageView.loadImageFromCache(items[position].card.imageUrl)
         imageView.setOnClickListener { listener(items[position]) }
+        ViewCompat.setTransitionName(imageView, items[position].card.id)
         viewGroup.addView(view)
         return view
     }

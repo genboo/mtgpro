@@ -1,6 +1,7 @@
 package ru.spcm.apps.mtgpro.view.fragments
 
 import android.os.Bundle
+import android.support.v4.view.ViewCompat
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -19,6 +20,7 @@ class FullScreenImageFragment : BaseFragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
+        ViewCompat.setTransitionName(cardImage, args.getString(ARG_ID))
         cardImage.loadImageFromCache(args.getString(ARG_URL) ?: "")
         close.setOnClickListener { _ -> navigator.backTo() }
         cardImage.setOnClickListener { _ -> navigator.backTo() }

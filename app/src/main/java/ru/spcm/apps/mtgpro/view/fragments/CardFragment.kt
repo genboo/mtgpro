@@ -11,6 +11,7 @@ import android.text.Spannable
 import android.text.SpannableStringBuilder
 import android.text.style.RelativeSizeSpan
 import android.view.*
+import android.widget.ImageView
 import android.widget.Spinner
 import android.widget.TextView
 import kotlinx.android.synthetic.main.fragment_card.*
@@ -244,6 +245,10 @@ class CardFragment : BaseFragment() {
                     showSnack(R.string.action_added, null)
                 }
                 .create()
+    }
+
+    override fun getSharedImage(): ImageView? {
+        return viewPager.getImageView()
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {

@@ -4,6 +4,10 @@ import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentActivity
 import android.support.v4.app.FragmentManager
 import android.support.v4.app.FragmentTransaction
+import android.support.v4.view.ViewCompat
+import android.transition.Fade
+import android.transition.Slide
+import android.view.Gravity
 import ru.spcm.apps.mtgpro.R
 import ru.spcm.apps.mtgpro.view.fragments.*
 import ru.terrakok.cicerone.android.SupportFragmentNavigator
@@ -51,13 +55,17 @@ class Navigator(private val activity: FragmentActivity, fragmentManager: Fragmen
                                                    nextFragment: Fragment?,
                                                    fragmentTransaction: FragmentTransaction) {
         if (command is Replace || nextFragment is FullScreenImageFragment) {
-            fragmentTransaction.setCustomAnimations(android.R.anim.fade_in,
-                    android.R.anim.fade_out, android.R.anim.fade_in, android.R.anim.fade_out)
+            currentFragment?.exitTransition = Fade()
+            nextFragment?.enterTransition = Fade()
         } else {
             fragmentTransaction.setCustomAnimations(R.anim.slide_in_right,
                     R.anim.slide_out_left,
                     R.anim.slide_in_left,
                     R.anim.slide_out_right_2)
+        }
+        val image = (currentFragment as? BaseFragment)?.getSharedImage()
+        if (image != null) {
+            fragmentTransaction.addSharedElement(image, ViewCompat.getTransitionName(image) ?: "")
         }
     }
 
