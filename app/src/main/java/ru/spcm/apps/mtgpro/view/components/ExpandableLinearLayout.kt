@@ -73,7 +73,9 @@ class ExpandableLinearLayout(context: Context, attrs: AttributeSet) : LinearLayo
                     break
                 }
             }
-            group.addView(shadow, index)
+            if(shadow.parent == null) {
+                group.addView(shadow, index)
+            }
             shadow.setOnClickListener { toggle() }
         }
     }

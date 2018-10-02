@@ -64,7 +64,6 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
 
         }
 
-        window.setBackgroundDrawable(null)
     }
 
     private fun observeSettings(data: List<Setting>?) {
