@@ -106,4 +106,16 @@
         <item name="android:padding">4dp</item>
     </style>
 
+    <style name="BottomMenuActiveText">
+        <item name="android:textStyle">normal</item>
+        <item name="android:textSize">8sp</item>
+        <item name="android:fontFamily">sans-serif-light</item>
+    </style>
+
+    <style name="BottomMenuInactiveText">
+        <item name="android:textStyle">normal</item>
+        <item name="android:textSize">10sp</item>
+        <item name="android:fontFamily">sans-serif-light</item>
+    </style>
+
 </resources>

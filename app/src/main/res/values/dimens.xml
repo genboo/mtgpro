@@ -10,9 +10,9 @@
     <dimen name="counter_button_size">32dp</dimen>
     <dimen name="counter_text_size">18sp</dimen>
     <dimen name="count_size">10sp</dimen>
+    <dimen name="bottom_menu_icon_size">20dp</dimen>
 
     <dimen name="design_bottom_navigation_text_size" tools:override="true">10sp</dimen>
-    <dimen name="design_bottom_navigation_active_text_size" tools:override="true">12sp</dimen>
 
     <dimen name="graph_days_text_size">10sp</dimen>
     <dimen name="graph_count_radius">3dp</dimen>
