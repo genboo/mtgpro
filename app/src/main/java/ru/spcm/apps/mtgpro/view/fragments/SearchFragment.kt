@@ -68,7 +68,6 @@ class SearchFragment : BaseFragment() {
                     showEmpty()
                 } else {
                     (list.layoutManager as GridLayoutManager).spanCount = when {
-                        (data.data.size <= 2) -> 1
                         (data.data.size <= 4) -> 2
                         else -> 3
                     }
