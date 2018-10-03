@@ -6,8 +6,8 @@ import android.support.v4.view.ViewCompat
 import android.view.LayoutInflater
 import android.view.View
 import ru.spcm.apps.mtgpro.model.dto.CardLocal
-import android.widget.LinearLayout
 import android.view.ViewGroup
+import android.widget.FrameLayout
 import android.widget.ImageView
 import ru.spcm.apps.mtgpro.R
 import ru.spcm.apps.mtgpro.view.components.loadImageFromCache
@@ -38,8 +38,8 @@ class FlipPagerAdapter(val context: Context, items: List<CardLocal>?) : PagerAda
         return view
     }
 
-    override fun destroyItem(container: ViewGroup, position: Int, `object`: Any) {
-        container.removeView(`object` as LinearLayout)
+    override fun destroyItem(container: ViewGroup, position: Int, obj: Any) {
+        container.removeView(obj as FrameLayout)
     }
 
     override fun isViewFromObject(view: View, `object`: Any): Boolean {

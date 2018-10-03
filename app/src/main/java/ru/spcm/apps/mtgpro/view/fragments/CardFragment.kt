@@ -101,7 +101,7 @@ class CardFragment : BaseFragment() {
                     .observe(this, Observer { observerPrices(it) })
         }
 
-        val adapterImages = FlipPagerAdapter(requireContext(), null)
+        val adapterImages = FlipPagerAdapter(requireContext(), viewModel.getCards().value)
         adapterImages.setOnClickListener { navigator.goToImage(it.card.id, it.card.imageUrl) }
         viewPager.adapter = adapterImages
         viewPager.setPageTransformer(true, FlipPageTransform())

@@ -35,8 +35,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="@drawable/bg_shadow"
-                    android:paddingBottom="16dp"
-                    android:paddingTop="8dp">
+                    android:paddingTop="8dp"
+                    android:paddingBottom="16dp">
 
                     <android.support.constraint.Guideline
                         android:id="@+id/line_left"
@@ -52,29 +52,22 @@
                         android:orientation="vertical"
                         app:layout_constraintGuide_end="8dp" />
 
-                    <FrameLayout
-                        android:id="@+id/imagesBlock"
+                    <ru.spcm.apps.mtgpro.view.components.CardViewPager
+                        android:id="@+id/viewPager"
                         android:layout_width="0dp"
                         android:layout_height="0dp"
                         android:layout_marginEnd="4dp"
                         app:layout_constraintDimensionRatio="163:227"
                         app:layout_constraintLeft_toLeftOf="@+id/line_left"
                         app:layout_constraintRight_toLeftOf="@id/textBlock"
-                        app:layout_constraintTop_toTopOf="parent">
-
-                        <ru.spcm.apps.mtgpro.view.components.CardViewPager
-                            android:id="@+id/viewPager"
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent" />
-
-                    </FrameLayout>
+                        app:layout_constraintTop_toTopOf="parent" />
 
                     <FrameLayout
                         android:id="@+id/textBlock"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:paddingEnd="0dp"
                         android:paddingStart="4dp"
+                        android:paddingEnd="0dp"
                         app:layout_constraintRight_toRightOf="@id/line_right"
                         app:layout_constraintTop_toTopOf="parent"
                         app:layout_constraintWidth_percent=".5">
@@ -100,7 +93,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         app:barrierDirection="bottom"
-                        app:constraint_referenced_ids="textBlock,imagesBlock" />
+                        app:constraint_referenced_ids="textBlock,viewPager" />
 
                     <ImageButton
                         android:id="@+id/addToWish"
@@ -169,8 +162,8 @@
                         android:id="@+id/reprints"
                         android:layout_width="0dp"
                         android:layout_height="45dp"
-                        android:layout_marginBottom="16dp"
                         android:layout_marginTop="16dp"
+                        android:layout_marginBottom="16dp"
                         android:orientation="horizontal"
                         app:layout_constraintLeft_toLeftOf="parent"
                         app:layout_constraintRight_toRightOf="parent"
@@ -182,18 +175,18 @@
                 <android.support.constraint.ConstraintLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:paddingBottom="8dp"
-                    android:paddingEnd="16dp"
                     android:paddingStart="16dp"
-                    android:paddingTop="8dp">
+                    android:paddingTop="8dp"
+                    android:paddingEnd="16dp"
+                    android:paddingBottom="8dp">
 
                     <TextView
                         android:id="@+id/cardRulesTitle"
                         style="@style/TextView.Main.Title"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_marginEnd="24dp"
                         android:layout_marginTop="16dp"
+                        android:layout_marginEnd="24dp"
                         android:text="@string/rules"
                         app:layout_constraintLeft_toLeftOf="parent"
                         app:layout_constraintRight_toRightOf="parent"
@@ -230,8 +223,8 @@
                     android:layout_marginTop="16dp"
                     android:minHeight="45dp"
                     android:orientation="vertical"
-                    android:paddingEnd="16dp"
-                    android:paddingStart="16dp">
+                    android:paddingStart="16dp"
+                    android:paddingEnd="16dp">
 
                     <android.support.constraint.ConstraintLayout
                         android:layout_width="match_parent"
@@ -272,8 +265,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
-                    android:paddingEnd="16dp"
-                    android:paddingStart="16dp">
+                    android:paddingStart="16dp"
+                    android:paddingEnd="16dp">
 
                 </LinearLayout>
 
@@ -281,9 +274,9 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
-                    android:paddingBottom="16dp"
+                    android:paddingStart="8dp"
                     android:paddingEnd="8dp"
-                    android:paddingStart="8dp">
+                    android:paddingBottom="16dp">
 
                     <TextView
                         android:id="@+id/addToLibrary"
