@@ -19,7 +19,7 @@
             android:background="@android:color/white"
             app:contentScrim="@android:color/white"
             app:expandedTitleTextAppearance="@style/ExpandedTextStyle"
-            app:layout_scrollFlags="scroll|exitUntilCollapsed|snap"
+            app:layout_scrollFlags="scroll|exitUntilCollapsed"
             app:scrimAnimationDuration="200"
             app:titleEnabled="false">
 

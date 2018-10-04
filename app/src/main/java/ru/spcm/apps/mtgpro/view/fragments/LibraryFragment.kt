@@ -11,6 +11,7 @@ import ru.spcm.apps.mtgpro.model.dto.CardForLibrary
 import ru.spcm.apps.mtgpro.model.dto.Library
 import ru.spcm.apps.mtgpro.model.dto.LibraryData
 import ru.spcm.apps.mtgpro.view.adapter.CardsLibraryListAdapter
+import ru.spcm.apps.mtgpro.view.components.HeaderItemDecoration
 import ru.spcm.apps.mtgpro.viewmodel.LibraryViewModel
 
 /**
@@ -51,6 +52,8 @@ class LibraryFragment : BaseFragment() {
         adapter.setOnItemClickListener { _, item, _ ->
             navigator.goToCard(item.data?.card?.id ?: "")
         }
+
+        list.addItemDecoration(HeaderItemDecoration(adapter))
     }
 
     private fun observeCards(data: List<CardForLibrary>?) {
