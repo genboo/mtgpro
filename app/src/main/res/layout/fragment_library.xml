@@ -16,8 +16,7 @@
         <android.support.design.widget.CollapsingToolbarLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@android:color/white"
-            app:contentScrim="@android:color/white"
+            app:contentScrim="@android:color/transparent"
             app:expandedTitleTextAppearance="@style/ExpandedTextStyle"
             app:layout_scrollFlags="scroll|exitUntilCollapsed"
             app:scrimAnimationDuration="200"
@@ -63,7 +62,6 @@
             android:id="@+id/list"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@color/colorBackgroundMain"
             android:clipToPadding="false"
             android:paddingBottom="?android:attr/actionBarSize"
             tools:listitem="@layout/list_item_card" />

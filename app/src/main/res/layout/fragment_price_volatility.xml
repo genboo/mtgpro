@@ -15,7 +15,6 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/colorBackgroundMain"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
         <ru.spcm.apps.mtgpro.view.components.InterceptedNestedScrollView

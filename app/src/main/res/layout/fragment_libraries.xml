@@ -22,7 +22,6 @@
             android:id="@+id/list"
             android:layout_width="0dp"
             android:layout_height="0dp"
-            android:background="@color/colorBackgroundMain"
             android:clipToPadding="false"
             android:paddingBottom="?android:attr/actionBarSize"
             app:layout_constraintBottom_toBottomOf="parent"
