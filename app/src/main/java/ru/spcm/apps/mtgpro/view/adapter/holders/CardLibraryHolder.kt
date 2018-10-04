@@ -10,7 +10,6 @@ import android.text.style.ForegroundColorSpan
 import android.text.style.RelativeSizeSpan
 import android.view.View
 import kotlinx.android.synthetic.main.layout_card_header.view.*
-import kotlinx.android.synthetic.main.layout_library_info.view.*
 import kotlinx.android.synthetic.main.list_item_card.view.*
 import ru.spcm.apps.mtgpro.R
 import ru.spcm.apps.mtgpro.tools.format
@@ -25,10 +24,6 @@ class CardLibraryHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
     fun bind(item: CardListItem) = with(itemView) {
 
         when {
-            item.colorState != null -> {
-                libraryState.setData(item.manaState ?: arrayListOf(), item.colorState
-                        ?: arrayListOf())
-            }
             item.data == null -> {
                 headerName.text = item.title
             }

@@ -67,11 +67,6 @@ internal constructor(private val librariesRepo: LibrariesRepo) : ViewModel() {
         switcherCards.postValue(LibraryParams(library, valute))
     }
 
-    fun setCards(cards: List<CardForLibrary>) {
-        data.value?.cards = cards
-        data.postValue(data.value)
-    }
-
     fun setManaState(states: List<LibraryManaState>) {
         data.value?.manaState = states
         data.postValue(data.value)

@@ -100,8 +100,7 @@ internal constructor(private val cardRepo: CardRepo,
     }
 
     fun loadPricesFromCache(set: String, number: String, valute: Float) {
-        val params = PriceParams(set, number, valute)
-        switcherPrice.postValue(params)
+        switcherPrice.postValue(PriceParams(set, number, valute))
     }
 
     fun loadLibraries(valute: Float) {

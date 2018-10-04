@@ -5,7 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import ru.spcm.apps.mtgpro.R
-import ru.spcm.apps.mtgpro.model.dto.LibraryData
+import ru.spcm.apps.mtgpro.model.dto.CardForLibrary
 import ru.spcm.apps.mtgpro.view.adapter.diffs.CardsListDiffCallback
 import ru.spcm.apps.mtgpro.view.adapter.holders.CardLibraryHolder
 import java.util.ArrayList
@@ -19,7 +19,6 @@ class CardsLibraryListAdapter(items: List<CardListItem>?) : RecyclerViewAdapter<
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CardLibraryHolder {
         val holder = when (viewType) {
             TYPE_HEADER -> CardLibraryHolder(LayoutInflater.from(parent.context).inflate(R.layout.layout_card_header, parent, false))
-            TYPE_INFO -> CardLibraryHolder(LayoutInflater.from(parent.context).inflate(R.layout.layout_library_info, parent, false))
             else -> CardLibraryHolder(LayoutInflater.from(parent.context).inflate(R.layout.list_item_card, parent, false))
         }
         holder.setListener(View.OnClickListener { v -> onItemClick(v, holder.adapterPosition) })
@@ -31,23 +30,17 @@ class CardsLibraryListAdapter(items: List<CardListItem>?) : RecyclerViewAdapter<
     }
 
     override fun getItemViewType(position: Int): Int {
-        return if (getItem(position).colorState != null) TYPE_INFO
-        else if (getItem(position).data == null) TYPE_HEADER
+        return if (getItem(position).data == null) TYPE_HEADER
         else TYPE_ITEM
     }
 
-    fun setData(data: LibraryData) {
+    fun setData(data: List<CardForLibrary>) {
         val items = ArrayList<CardListItem>()
-        val states = CardListItem(null, null)
-        states.colorState = data.colorState
-        states.manaState = data.manaState
-        items.add(states)
-        val cards = data.cards ?: arrayListOf()
-        for (i in cards.indices) {
-            if (i == 0 || cards[i - 1].typeSingle != cards[i].typeSingle) {
-                items.add(CardListItem(cards[i].typeSingle, null))
+        for (i in data.indices) {
+            if (i == 0 || data[i - 1].typeSingle != data[i].typeSingle) {
+                items.add(CardListItem(data[i].typeSingle, null))
             }
-            items.add(CardListItem(null, cards[i]))
+            items.add(CardListItem(null, data[i]))
         }
 
         val diffs = DiffUtil.calculateDiff(CardsListDiffCallback(getItems(), items), !getItems().isEmpty())
@@ -58,7 +51,6 @@ class CardsLibraryListAdapter(items: List<CardListItem>?) : RecyclerViewAdapter<
     companion object {
         private const val TYPE_HEADER = 1
         private const val TYPE_ITEM = 2
-        private const val TYPE_INFO = 3
     }
 
 }

@@ -100,7 +100,7 @@
                         style="@style/ImageButton.Card"
                         android:layout_marginTop="8dp"
                         android:contentDescription="@string/app_name"
-                        android:src="@drawable/ic_heart_outline"
+                        android:src="@drawable/bg_wish_selector"
                         app:layout_constraintLeft_toLeftOf="@id/line_left"
                         app:layout_constraintTop_toBottomOf="@id/contentBarrier" />
 

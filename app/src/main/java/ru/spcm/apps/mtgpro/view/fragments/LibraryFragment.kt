@@ -7,6 +7,7 @@ import android.view.*
 import kotlinx.android.synthetic.main.fragment_library.*
 import ru.spcm.apps.mtgpro.R
 import ru.spcm.apps.mtgpro.model.dto.Card
+import ru.spcm.apps.mtgpro.model.dto.CardForLibrary
 import ru.spcm.apps.mtgpro.model.dto.Library
 import ru.spcm.apps.mtgpro.model.dto.LibraryData
 import ru.spcm.apps.mtgpro.view.adapter.CardsLibraryListAdapter
@@ -34,7 +35,7 @@ class LibraryFragment : BaseFragment() {
         updateToolbar()
 
         val viewModel = getViewModel(this, LibraryViewModel::class.java)
-        viewModel.cards.observe(this, Observer { viewModel.setCards(it ?: arrayListOf()) })
+        viewModel.cards.observe(this, Observer { observeCards(it) })
         viewModel.mana.observe(this, Observer { viewModel.setManaState(it ?: arrayListOf()) })
         viewModel.colors.observe(this, Observer { viewModel.setColorState(it ?: arrayListOf()) })
         viewModel.library.observe(this, Observer { observeLibrary(it) })
@@ -52,9 +53,15 @@ class LibraryFragment : BaseFragment() {
         }
     }
 
+    private fun observeCards(data: List<CardForLibrary>?) {
+        if (data != null) {
+            (list.adapter as CardsLibraryListAdapter).setData(data)
+        }
+    }
+
     private fun observeData(data: LibraryData?) {
         if (data != null && data.isFull()) {
-            (list.adapter as CardsLibraryListAdapter).setData(data)
+            libraryState.setData(data.manaState, data.colorState)
         }
     }
 

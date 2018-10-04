@@ -4,7 +4,6 @@ import android.arch.lifecycle.MutableLiveData
 import android.arch.lifecycle.Observer
 import android.os.Bundle
 import android.os.Handler
-import android.support.v4.content.ContextCompat
 import android.support.v7.app.AlertDialog
 import android.support.v7.widget.LinearLayoutManager
 import android.text.Spannable
@@ -79,7 +78,7 @@ class CardFragment : BaseFragment() {
             handler.postDelayed(task, 1000)
         }
 
-        addToWish.setOnClickListener { viewModel.updateWish(card.id, it.tag as Boolean) }
+        addToWish.setOnClickListener { viewModel.updateWish(card.id, !it.isSelected) }
         addToWatch.setOnClickListener { viewModel.updateWatch(card.id, true) }
 
         addToLibrary.setOnClickListener { addDialog.show() }
@@ -152,13 +151,7 @@ class CardFragment : BaseFragment() {
     }
 
     private fun observeWish(data: WishedCard?) {
-        if (data == null) {
-            addToWish.setImageDrawable(ContextCompat.getDrawable(requireContext(), R.drawable.ic_heart_outline))
-            addToWish.tag = true
-        } else {
-            addToWish.setImageDrawable(ContextCompat.getDrawable(requireContext(), R.drawable.ic_heart))
-            addToWish.tag = false
-        }
+        addToWish.isSelected = data != null
     }
 
     private fun observerPrices(data: Resource<ScryCard>?) {

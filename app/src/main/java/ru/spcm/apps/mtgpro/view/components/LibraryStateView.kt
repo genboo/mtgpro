@@ -178,9 +178,13 @@ class LibraryStateView(context: Context, attrs: AttributeSet) : View(context, at
         }
     }
 
-    fun setData(manaState: List<LibraryManaState>, colorState: List<LibraryColorState>) {
-        mManaState = manaState
-        mColorState = colorState
+    fun setData(manaState: List<LibraryManaState>?, colorState: List<LibraryColorState>?) {
+        if(manaState != null) {
+            mManaState = manaState
+        }
+        if(colorState != null) {
+            mColorState = colorState
+        }
         invalidate()
     }
 

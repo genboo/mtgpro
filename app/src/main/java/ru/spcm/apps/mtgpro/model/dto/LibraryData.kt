@@ -6,6 +6,6 @@ class LibraryData{
     var colorState: List<LibraryColorState>? = null
 
     fun isFull(): Boolean {
-        return cards != null && manaState != null && colorState != null
+        return manaState != null && colorState != null
     }
 }

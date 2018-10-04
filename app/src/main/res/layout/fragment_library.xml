@@ -1,16 +1,57 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.design.widget.CoordinatorLayout
-    android:id="@+id/mainBlock"
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mainBlock"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <include
-        layout="@layout/layout_app_bar_main"
+    <android.support.design.widget.AppBarLayout
+        android:id="@+id/appBar"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content"
+        android:background="@android:color/transparent"
+        android:theme="@style/AppTheme.Main.ActionBar">
+
+        <android.support.design.widget.CollapsingToolbarLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@android:color/white"
+            app:contentScrim="@android:color/white"
+            app:expandedTitleTextAppearance="@style/ExpandedTextStyle"
+            app:layout_scrollFlags="scroll|exitUntilCollapsed|snap"
+            app:scrimAnimationDuration="200"
+            app:titleEnabled="false">
+
+            <ru.spcm.apps.mtgpro.view.components.LibraryStateView
+                android:id="@+id/libraryState"
+                android:layout_width="match_parent"
+                android:layout_height="150dp"
+                android:layout_marginTop="32dp"
+                android:paddingStart="32dp"
+                android:paddingTop="?android:attr/actionBarSize"
+                android:paddingEnd="32dp"
+                android:paddingBottom="16dp"
+                app:color="@color/colorTextHint"
+                app:colorCreatures="@color/rarityUncommon"
+                app:colorGraphSize="42dp"
+                app:colorGraphStrokeWidth="12dp"
+                app:layout_collapseMode="parallax"
+                app:layout_collapseParallaxMultiplier="1"
+                app:manaColWidth="24dp"
+                app:manaGraphMargin="8dp" />
+
+            <android.support.v7.widget.Toolbar
+                android:id="@+id/toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="?android:attr/actionBarSize"
+                android:background="@android:color/white"
+                android:theme="@style/AppTheme.Main.ActionBar"
+                app:layout_collapseMode="pin"
+                app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
+
+        </android.support.design.widget.CollapsingToolbarLayout>
+    </android.support.design.widget.AppBarLayout>
 
     <FrameLayout
         android:id="@+id/main"
@@ -25,7 +66,7 @@
             android:background="@color/colorBackgroundMain"
             android:clipToPadding="false"
             android:paddingBottom="?android:attr/actionBarSize"
-            tools:listitem="@layout/list_item_card"/>
+            tools:listitem="@layout/list_item_card" />
 
     </FrameLayout>
 </android.support.design.widget.CoordinatorLayout>
