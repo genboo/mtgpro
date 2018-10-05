@@ -11,10 +11,10 @@ import ru.spcm.apps.mtgpro.model.dto.SetName
  */
 @Dao
 interface SetsDao {
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    @Insert(onConflict = OnConflictStrategy.IGNORE)
     fun insert(item: Set): Long
 
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    @Insert(onConflict = OnConflictStrategy.IGNORE)
     fun insert(list: List<Set>)
 
     @Delete
@@ -26,9 +26,12 @@ interface SetsDao {
     @Query("DELETE FROM `Set`")
     fun clear()
 
-    @Query ("SELECT * FROM `Set` ORDER BY releaseDate DESC")
-    fun getSets() : LiveData<List<Set>>
+    @Query("SELECT * FROM `Set` ORDER BY archive ASC, releaseDate DESC")
+    fun getSets(): LiveData<List<Set>>
+
+    @Query("SELECT * FROM `Set` WHERE code = :code")
+    fun getSet(code: String): LiveData<Set>
 
     @Query("SELECT c.`set`, c.setTitle FROM Card c, WishedCard w WHERE c.id = w.id GROUP BY c.`set` ORDER BY c.setTitle")
-    fun getWishedSetNames():LiveData<List<SetName>>
+    fun getWishedSetNames(): LiveData<List<SetName>>
 }

@@ -8,9 +8,11 @@ import android.arch.lifecycle.ViewModel
 import ru.spcm.apps.mtgpro.model.dto.Card
 import ru.spcm.apps.mtgpro.model.dto.Setting
 import ru.spcm.apps.mtgpro.model.tools.Resource
+import ru.spcm.apps.mtgpro.repository.SetsRepo
 import ru.spcm.apps.mtgpro.repository.SettingsRepo
 import ru.spcm.apps.mtgpro.repository.SpoilersRepo
 import ru.spcm.apps.mtgpro.tools.AbsentLiveData
+import ru.spcm.apps.mtgpro.model.dto.Set
 
 import javax.inject.Inject
 
@@ -22,10 +24,12 @@ import javax.inject.Inject
 
 class SpoilersViewModel @Inject
 internal constructor(private val spoilersRepo: SpoilersRepo,
-                     private val settingsRepo: SettingsRepo) : ViewModel() {
+                     private val settingsRepo: SettingsRepo,
+                     private val setsRepo: SetsRepo) : ViewModel() {
 
     private val switcher: MutableLiveData<Params> = MutableLiveData()
-    private var cards: LiveData<Resource<List<Card>>>
+    var cards: LiveData<Resource<List<Card>>>
+    var set: LiveData<Set>
 
     init {
         cards = Transformations.switchMap(switcher) {
@@ -34,10 +38,13 @@ internal constructor(private val spoilersRepo: SpoilersRepo,
             }
             return@switchMap spoilersRepo.getSpoilers(it.set, it.limit)
         }
-    }
 
-    fun getSpoilers(): LiveData<Resource<List<Card>>> {
-        return cards
+        set = Transformations.switchMap(switcher) {
+            if (it == null) {
+                return@switchMap AbsentLiveData.create<Set>()
+            }
+            return@switchMap setsRepo.getSet(it.set)
+        }
     }
 
     fun loadSpoilers(set: String, limit: Int) {
@@ -46,6 +53,10 @@ internal constructor(private val spoilersRepo: SpoilersRepo,
 
     fun updateSetting(type: Setting.Type, value: Int) {
         settingsRepo.updateSetting(type, value.toString())
+    }
+
+    fun toggleArchive(set: Set) {
+        setsRepo.toggleArchive(set)
     }
 
     private inner class Params(val set: String, val limit: Int)

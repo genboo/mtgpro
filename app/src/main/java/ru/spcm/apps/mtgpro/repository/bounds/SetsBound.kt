@@ -21,9 +21,7 @@ class SetsBound(appExecutors: AppExecutors,
     override fun saveCallResult(data: List<Set>?) {
         if (data != null) {
             val cacheKey = getCacheKey()
-            data.forEach { it ->
-                setsDao.insert(it)
-            }
+            setsDao.insert(data)
             val cache = Cache(cacheKey,
                     Date().time + getCacheTime(cacheDao.getCacheType(TYPE)))
             cacheDao.insert(cache)

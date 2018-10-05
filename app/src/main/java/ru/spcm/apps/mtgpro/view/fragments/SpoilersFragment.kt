@@ -7,6 +7,7 @@ import android.view.*
 import kotlinx.android.synthetic.main.fragment_spoilers.*
 import ru.spcm.apps.mtgpro.R
 import ru.spcm.apps.mtgpro.model.dto.Card
+import ru.spcm.apps.mtgpro.model.dto.Set
 import ru.spcm.apps.mtgpro.model.dto.Setting
 import ru.spcm.apps.mtgpro.model.tools.Resource
 import ru.spcm.apps.mtgpro.model.tools.Status
@@ -24,6 +25,8 @@ import ru.spcm.apps.mtgpro.viewmodel.SpoilersViewModel
 
 class SpoilersFragment : BaseFragment() {
 
+    private var set: Set? = null
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
         val view = inflater.inflate(R.layout.fragment_spoilers, container, false)
@@ -38,7 +41,8 @@ class SpoilersFragment : BaseFragment() {
         val set = args.getString(ARG_SET) ?: ""
 
         val viewModel = getViewModel(this, SpoilersViewModel::class.java)
-        viewModel.getSpoilers().observe(this, Observer { observeSpoilers(it) })
+        viewModel.cards.observe(this, Observer { observeSpoilers(it) })
+        viewModel.set.observe(this, Observer { observeSet(it) })
 
         val adapter = SpoilersListAdapter(null)
         val layoutManager = GridLayoutManager(context, getSettings().getInt(Setting.Type.LIST_COL_SIZE, 3))
@@ -62,6 +66,10 @@ class SpoilersFragment : BaseFragment() {
         }
 
         adapter.setOnItemClickListener { _, item, _ -> navigator.goToCard(item.id) }
+    }
+
+    private fun observeSet(data: Set?) {
+        set = data
     }
 
     private fun observeSpoilers(data: Resource<List<Card>>?) {
@@ -92,17 +100,33 @@ class SpoilersFragment : BaseFragment() {
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        if (item.itemId == R.id.nav_toggle_list) {
-            val layoutManager = list.layoutManager as GridLayoutManager
-            val spanCount = when (layoutManager.spanCount) {
-                3 -> 2
-                2 -> 1
-                else -> 3
+
+        when (item.itemId) {
+            R.id.nav_toggle_list -> {
+                val layoutManager = list.layoutManager as GridLayoutManager
+                val spanCount = when (layoutManager.spanCount) {
+                    3 -> 2
+                    2 -> 1
+                    else -> 3
+                }
+                layoutManager.spanCount = spanCount
+                val viewModel = getViewModel(this, SpoilersViewModel::class.java)
+                viewModel.updateSetting(Setting.Type.LIST_COL_SIZE, spanCount)
             }
-            layoutManager.spanCount = spanCount
-            val viewModel = getViewModel(this, SpoilersViewModel::class.java)
-            viewModel.updateSetting(Setting.Type.LIST_COL_SIZE, spanCount)
+            R.id.nav_toggle_archive -> {
+                val s = set
+                if (s != null) {
+                    if (s.archive) {
+                        showSnack(R.string.action_from_archive, null)
+                    } else {
+                        showSnack(R.string.action_to_archive, null)
+                    }
+                    val viewModel = getViewModel(this, SpoilersViewModel::class.java)
+                    viewModel.toggleArchive(s)
+                }
+            }
         }
+
         return super.onOptionsItemSelected(item)
     }
 

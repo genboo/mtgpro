@@ -1,11 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
-      xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/nav_toggle_archive"
+        android:icon="@drawable/ic_archive"
+        android:title="@string/menu_toggle"
+        app:showAsAction="ifRoom" />
 
     <item
         android:id="@+id/nav_toggle_list"
         android:icon="@drawable/ic_view_list"
         android:title="@string/menu_toggle"
-        app:showAsAction="always"/>
+        app:showAsAction="always" />
 
 </menu>

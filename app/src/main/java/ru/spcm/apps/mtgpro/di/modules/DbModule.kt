@@ -41,7 +41,8 @@ class DbModule {
                         MIGRATION_6_7,
                         MIGRATION_7_8,
                         MIGRATION_8_9,
-                        MIGRATION_9_10
+                        MIGRATION_9_10,
+                        MIGRATION_10_11
                 )
                 .build()
     }
@@ -183,6 +184,13 @@ class DbModule {
                 database.execSQL("ALTER TABLE WatchedCard ADD COLUMN observe INTEGER NOT NULL DEFAULT (0)")
                 database.execSQL("ALTER TABLE WatchedCard ADD COLUMN top REAL NOT NULL  DEFAULT (0)")
                 database.execSQL("ALTER TABLE WatchedCard ADD COLUMN bottom REAL NOT NULL  DEFAULT (0)")
+            }
+        }
+
+        private val MIGRATION_10_11 = object : Migration(10, 11) {
+            override fun migrate(database: SupportSQLiteDatabase) {
+                //Добавление приоритета сета
+                database.execSQL("ALTER TABLE `Set` ADD COLUMN archive INTEGER NOT NULL DEFAULT (0)")
             }
         }
     }

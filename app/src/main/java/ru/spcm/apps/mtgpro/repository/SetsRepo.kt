@@ -23,4 +23,14 @@ constructor(private val appExecutors: AppExecutors,
                 .asLiveData()
     }
 
+    fun getSet(code: String): LiveData<Set> {
+        return setsDao.getSet(code)
+    }
+
+    fun toggleArchive(set: Set) {
+        appExecutors.diskIO().execute {
+            set.archive = !set.archive
+            setsDao.update(set)
+        }
+    }
 }

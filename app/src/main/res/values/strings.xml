@@ -28,6 +28,8 @@
     <string name="action_apply">Применить</string>
     <string name="action_seconds_side_not_found">Вторая сторона не найдена</string>
     <string name="action_network_error">Ошибка получения данных</string>
+    <string name="action_to_archive">Отправлено в архив</string>
+    <string name="action_from_archive">Убрано из архива</string>
 
     <string name="notify_update_complete">Всего обработано карт %d. Обновлено данных для %d карт.</string>
     <string name="notify_update_progress">Обработано карт %d из %d.</string>
