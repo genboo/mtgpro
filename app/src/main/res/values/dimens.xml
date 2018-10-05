@@ -24,6 +24,6 @@
 
     <dimen name="chip_padding_vertical">2dp</dimen>
     <dimen name="chip_padding_horizontal">6dp</dimen>
-    <dimen name="chip_offset">6dp</dimen>
+    <dimen name="chip_offset">8dp</dimen>
 
 </resources>
