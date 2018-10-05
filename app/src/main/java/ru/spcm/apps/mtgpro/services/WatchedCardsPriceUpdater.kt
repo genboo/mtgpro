@@ -26,55 +26,56 @@ constructor(private val appExecutors: AppExecutors,
 
     fun update() {
         appExecutors.networkIO().execute {
-            val now = Date()
-            val watchedCards = priceUpdateDao.getWatchedCardsList()
-            reportDao.clear()
+            synchronized(appExecutors) {
+                val now = Date()
+                val watchedCards = priceUpdateDao.getWatchedCardsList()
+                reportDao.clear()
 
-            var updateCounter = 0
-            watchedCards.forEach { item ->
-                if (item.card.number != null) {
-                    val number = item.card.number?.replace("a", "")?.replace("b", "")
-                    var price = getPrice(item.card.set, number ?: "")
-                    for (i in 0..9) {
+                var updateCounter = 0
+                watchedCards.forEach { item ->
+                    if (item.card.number != null) {
+                        val number = item.card.number?.replace("a", "")?.replace("b", "")
+                        var price = getPrice(item.card.set, number ?: "")
+                        for (i in 0..9) {
+                            if (price != null) {
+                                break
+                            }
+                            Thread.sleep(3000)
+                            price = getPrice(item.card.set, number ?: "")
+                        }
                         if (price != null) {
-                            break
-                        }
-                        Thread.sleep(3000)
-                        price = getPrice(item.card.set, number ?: "")
-                    }
-                    if (price != null) {
-                        val lastPrice = priceUpdateDao.getLastPrice(item.card.id, now)
-                        priceUpdateDao.insert(PriceHistory(item.card.id, price.usd.format()))
-                        if (price.eur == null) {
-                            price.eur = ""
-                        }
-                        scryCardDao.insert(price)
+                            val lastPrice = priceUpdateDao.getLastPrice(item.card.id, now)
+                            priceUpdateDao.insert(PriceHistory(item.card.id, price.usd.format()))
+                            if (price.eur == null) {
+                                price.eur = ""
+                            }
+                            scryCardDao.insert(price)
 
-                        if (lastPrice == null) {
-                            reportDao.insert(Report(item.card.id, "0.0"))
-                        } else {
-                            val diff = price.usd.toFloat() - lastPrice.price.toFloat()
-                            val diffString = if (diff == 0f) "0.0" else diff.format()
-                            reportDao.insert(Report(item.card.id, diffString))
+                            if (lastPrice == null) {
+                                reportDao.insert(Report(item.card.id, "0.0"))
+                            } else {
+                                val diff = price.usd.toFloat() - lastPrice.price.toFloat()
+                                val diffString = if (diff == 0f) "0.0" else diff.format()
+                                reportDao.insert(Report(item.card.id, diffString))
+                            }
+                            updateCounter++
                         }
-                        updateCounter++
-                    }
-                    if (updateCounter % 10 == 0 && updateCounter < watchedCards.size) {
-                        appExecutors.mainThread().execute {
-                            val data = UpdateResult()
-                            data.allCount = watchedCards.size
-                            data.currentCard = updateCounter
-                            result.postValue(data)
+                        if (updateCounter % 10 == 0 && updateCounter < watchedCards.size) {
+                            appExecutors.mainThread().execute {
+                                val data = UpdateResult()
+                                data.allCount = watchedCards.size
+                                data.currentCard = updateCounter
+                                result.postValue(data)
+                            }
                         }
                     }
-                    Thread.sleep(500)
                 }
-            }
-            appExecutors.mainThread().execute {
-                val data = UpdateResult()
-                data.allCount = watchedCards.size
-                data.updatedCount = updateCounter
-                result.postValue(data)
+                appExecutors.mainThread().execute {
+                    val data = UpdateResult()
+                    data.allCount = watchedCards.size
+                    data.updatedCount = updateCounter
+                    result.postValue(data)
+                }
             }
         }
     }

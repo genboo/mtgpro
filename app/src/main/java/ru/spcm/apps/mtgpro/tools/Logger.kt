@@ -1,6 +1,7 @@
 package ru.spcm.apps.mtgpro.tools
 
 import android.util.Log
+import com.crashlytics.android.Crashlytics
 import ru.spcm.apps.mtgpro.BuildConfig
 
 object Logger {
@@ -10,6 +11,8 @@ object Logger {
     fun e(tag: String, message: String?) {
         if (BuildConfig.DEBUG) {
             Log.e(tag, message)
+        }else{
+            Crashlytics.log(Log.ERROR, tag, message)
         }
     }
 

@@ -23,46 +23,48 @@ constructor(private val appExecutors: AppExecutors,
 
     fun update() {
         appExecutors.networkIO().execute {
-            val setting = settingsDao.getSetting(Setting.Type.UPDATE_LIBRARY_CARDS_PRICE)
-            if (setting != null && setting.value.toBoolean()) {
-                val cards = librariesDao.getCardsInAllLibraries()
-                var updateCounter = 0
-                cards.forEach { item ->
-                    if (item.number != null) {
-                        val number = item.number?.replace("a", "")?.replace("b", "")
-                        var price = getPrice(item.set, number ?: "")
-                        for (i in 0..9) {
+            synchronized(appExecutors) {
+                val setting = settingsDao.getSetting(Setting.Type.UPDATE_LIBRARY_CARDS_PRICE)
+                if (setting != null && setting.value.toBoolean()) {
+                    val cards = librariesDao.getCardsInAllLibraries()
+                    var updateCounter = 0
+                    cards.forEach { item ->
+                        if (item.number != null) {
+                            val number = item.number?.replace("a", "")?.replace("b", "")
+                            var price = getPrice(item.set, number ?: "")
+                            for (i in 0..9) {
+                                if (price != null) {
+                                    break
+                                }
+                                Thread.sleep(3000)
+                                price = getPrice(item.set, number ?: "")
+                            }
                             if (price != null) {
-                                break
+                                if (price.eur == null) {
+                                    price.eur = ""
+                                }
+                                scryCardDao.insert(price)
                             }
-                            Thread.sleep(3000)
-                            price = getPrice(item.set, number ?: "")
+                            updateCounter++
                         }
-                        if (price != null) {
-                            if (price.eur == null) {
-                                price.eur = ""
+
+                        if (updateCounter % 10 == 0 && updateCounter < cards.size) {
+                            appExecutors.mainThread().execute {
+                                val data = UpdateResult()
+                                data.allCount = cards.size
+                                data.currentCard = updateCounter
+                                result.postValue(data)
                             }
-                            scryCardDao.insert(price)
                         }
-                        updateCounter++
+                        Thread.sleep(500)
                     }
 
-                    if (updateCounter % 10 == 0 && updateCounter < cards.size) {
-                        appExecutors.mainThread().execute {
-                            val data = UpdateResult()
-                            data.allCount = cards.size
-                            data.currentCard = updateCounter
-                            result.postValue(data)
-                        }
+                    appExecutors.mainThread().execute {
+                        val data = UpdateResult()
+                        data.allCount = cards.size
+                        data.updatedCount = updateCounter
+                        result.postValue(data)
                     }
-                    Thread.sleep(500)
-                }
-
-                appExecutors.mainThread().execute {
-                    val data = UpdateResult()
-                    data.allCount = cards.size
-                    data.updatedCount = updateCounter
-                    result.postValue(data)
                 }
             }
         }
