@@ -9,6 +9,7 @@ import android.view.ViewGroup
 import kotlinx.android.synthetic.main.fragment_sets.*
 import ru.spcm.apps.mtgpro.R
 import ru.spcm.apps.mtgpro.model.dto.Set
+import ru.spcm.apps.mtgpro.model.dto.Setting
 import ru.spcm.apps.mtgpro.model.tools.Resource
 import ru.spcm.apps.mtgpro.view.adapter.SetsListAdapter
 import ru.spcm.apps.mtgpro.viewmodel.SetsViewModel
@@ -29,13 +30,15 @@ class SetsFragment : BaseFragment() {
         val viewModel = getViewModel(this, SetsViewModel::class.java)
         viewModel.getSets().observe(this, Observer { observeSets(it) })
 
+        val wishArchive = getSettings().getBoolean(Setting.Type.SHOW_SETS_ARCHIVE, false)
+
         val adapter = SetsListAdapter(null)
         adapter.setOnItemClickListener { _, item, _ -> navigator.goToSpoilers(item.code, item.name) }
         list.layoutManager = LinearLayoutManager(context)
         list.adapter = adapter
-        list.postDelayed({ viewModel.loadSets(false) }, 200)
+        list.postDelayed({ viewModel.loadSets(wishArchive, false) }, 200)
 
-        swipeRefresh.setOnRefreshListener { viewModel.loadSets(true) }
+        swipeRefresh.setOnRefreshListener { viewModel.loadSets(wishArchive, true) }
     }
 
     private fun observeSets(data: Resource<List<Set>>?) {

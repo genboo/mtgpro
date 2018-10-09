@@ -17,6 +17,7 @@ class SetsBound(appExecutors: AppExecutors,
 
 
     private var force = false
+    private var withArchive = false
 
     override fun saveCallResult(data: List<Set>?) {
         if (data != null) {
@@ -33,6 +34,9 @@ class SetsBound(appExecutors: AppExecutors,
     }
 
     override fun loadSaved(): LiveData<List<Set>> {
+        if (withArchive) {
+            return setsDao.getSetsWithArchive()
+        }
         return setsDao.getSets()
     }
 
@@ -42,6 +46,11 @@ class SetsBound(appExecutors: AppExecutors,
 
     fun setForce(flag: Boolean): SetsBound {
         force = flag
+        return this
+    }
+
+    fun setWithArchive(flag: Boolean): SetsBound {
+        withArchive = flag
         return this
     }
 

@@ -40,6 +40,9 @@ class SettingsFragment : BaseFragment() {
         updateLibraryCardsPrice.isChecked = getSettings().getBoolean(Setting.Type.UPDATE_LIBRARY_CARDS_PRICE, false)
         updateLibraryCardsPrice.setOnClickListener { viewModel.setUpdateLibraryCardsPrice(updateLibraryCardsPrice.isChecked) }
 
+        showArchivedSets.isChecked = getSettings().getBoolean(Setting.Type.SHOW_SETS_ARCHIVE, false)
+        showArchivedSets.setOnClickListener { viewModel.setShowArchivedSets(showArchivedSets.isChecked) }
+
         if (!PermissionsHelper.havePermissionStorage(requireContext())) {
             PermissionsHelper.requestLocationPermissions(this)
             saveBackup.isEnabled = false

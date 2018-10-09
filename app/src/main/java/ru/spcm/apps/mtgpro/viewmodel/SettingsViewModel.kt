@@ -26,6 +26,10 @@ internal constructor(private val backupRepo: BackupRepo,
         settingsRepo.updateSetting(Setting.Type.UPDATE_LIBRARY_CARDS_PRICE, flag.toString())
     }
 
+    fun setShowArchivedSets(flag: Boolean) {
+        settingsRepo.updateSetting(Setting.Type.SHOW_SETS_ARCHIVE, flag.toString())
+    }
+
     fun backup(context: Context): LiveData<Boolean> {
         return backupRepo.backup(context)
     }

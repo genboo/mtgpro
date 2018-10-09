@@ -11,6 +11,7 @@ data class Setting(@PrimaryKey var type: Type, var value: String = "") {
         AUTO_BACKUP,
         VALUTE_USD_RUB,
         UPDATE_LIBRARY_CARDS_PRICE,
+        SHOW_SETS_ARCHIVE,
     }
 
 }

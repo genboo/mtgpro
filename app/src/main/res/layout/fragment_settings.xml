@@ -52,6 +52,15 @@
                         android:text="@string/update_library_cards_price"
                         android:textColor="@color/colorTextMain" />
 
+
+                    <android.support.v7.widget.SwitchCompat
+                        android:layout_marginTop="16dp"
+                        android:id="@+id/showArchivedSets"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/show_set_with_archive"
+                        android:textColor="@color/colorTextMain" />
+
                 </LinearLayout>
             </android.support.v7.widget.CardView>
 

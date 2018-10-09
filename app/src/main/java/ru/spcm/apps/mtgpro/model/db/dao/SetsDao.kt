@@ -26,8 +26,11 @@ interface SetsDao {
     @Query("DELETE FROM `Set`")
     fun clear()
 
-    @Query("SELECT * FROM `Set` ORDER BY archive ASC, releaseDate DESC")
+    @Query("SELECT * FROM `Set` WHERE archive = 0 ORDER BY archive ASC, releaseDate DESC")
     fun getSets(): LiveData<List<Set>>
+
+    @Query("SELECT * FROM `Set` ORDER BY archive ASC, releaseDate DESC")
+    fun getSetsWithArchive(): LiveData<List<Set>>
 
     @Query("SELECT * FROM `Set` WHERE code = :code")
     fun getSet(code: String): LiveData<Set>
