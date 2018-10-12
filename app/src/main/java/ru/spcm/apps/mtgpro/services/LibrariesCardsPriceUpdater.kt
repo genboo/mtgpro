@@ -40,9 +40,7 @@ constructor(private val appExecutors: AppExecutors,
                                 price = getPrice(item.set, number ?: "")
                             }
                             if (price != null) {
-                                if (price.eur == null) {
-                                    price.eur = ""
-                                }
+                                price.prepare()
                                 scryCardDao.insert(price)
                             }
                             updateCounter++

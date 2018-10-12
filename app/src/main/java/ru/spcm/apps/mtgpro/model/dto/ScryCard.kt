@@ -15,4 +15,17 @@ data class ScryCard(@PrimaryKey var id: String) {
 
     @SerializedName("collector_number")
     var number: String = ""
+
+
+    fun prepare(){
+        if (eur == null) {
+            eur = ""
+        }
+        if (usd == null) {
+            usd = ""
+        }
+
+        usd = usd.replace("$", "")
+        eur = eur.replace("€", "")
+    }
 }
