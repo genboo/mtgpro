@@ -57,8 +57,7 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
             settingLoaderObserver.observe(this, Observer {
                 if (it != null && it) {
                     settingLoaderObserver.removeObservers(this)
-                    navigator.goToCollection()
-                    bottomMenu.selectedItemId = R.id.nav_collection
+                    bottomMenu.selectedItemId = R.id.nav_sets
                 }
             })
 
