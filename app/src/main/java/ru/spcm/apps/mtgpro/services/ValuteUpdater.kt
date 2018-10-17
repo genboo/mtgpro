@@ -13,10 +13,12 @@ constructor(private val appExecutors: AppExecutors,
 
     fun update() {
         appExecutors.networkIO().execute {
-            val valuteList = valuteApi.getValutes().execute().body()
-            val usd = valuteList?.usd
-            if (usd != null) {
-                settingsDao.insert(Setting(Setting.Type.VALUTE_USD_RUB, usd.value))
+            synchronized(appExecutors) {
+                val valuteList = valuteApi.getValutes().execute().body()
+                val usd = valuteList?.usd
+                if (usd != null) {
+                    settingsDao.insert(Setting(Setting.Type.VALUTE_USD_RUB, usd.value))
+                }
             }
         }
     }
