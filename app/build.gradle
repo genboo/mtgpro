@@ -20,7 +20,7 @@ repositories {
 
 android {
     compileSdkVersion 28
-    buildToolsVersion '28.0.2'
+    buildToolsVersion '28.0.3'
     dexOptions {
         maxProcessCount 8
         preDexLibraries = false
