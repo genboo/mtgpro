@@ -127,7 +127,11 @@ interface CardDao {
             "ORDER BY c.setTitle, c.numberFormatted")
     fun getWatchedCards(valute: Float): DataSource.Factory<Int, CardWatched>
 
-    @Query("SELECT c.id, c.imageUrl, wc.observe, wc.top * :valute as top , wc.bottom * :valute as bottom, CASE WHEN r.diff IS NULL THEN 0 ELSE r.diff * :valute END as diff, (SELECT price FROM PriceHistory pc WHERE pc.card_id = c.id ORDER BY date DESC) * :valute as price " +
+    @Query("SELECT c.id, c.imageUrl, wc.observe, wc.top * :valute as top , wc.bottom * :valute as bottom, " +
+            "CASE WHEN r.diff IS NULL THEN 0 ELSE r.diff * :valute END as diff, " +
+            "(SELECT price FROM PriceHistory pc WHERE pc.card_id = c.id ORDER BY date DESC) * :valute as price, " +
+            "(SELECT MAX(CAST(price AS FLOAT)) AS max FROM PriceHistory pc WHERE pc.card_id = c.id) * :valute as max, " +
+            "(SELECT MIN(CAST(price AS FLOAT)) AS min FROM PriceHistory pc WHERE pc.card_id = c.id) * :valute as min " +
             "FROM WatchedCard wc " +
             "LEFT JOIN Report r ON r.card_id = wc.id " +
             "LEFT JOIN Card c ON c.id = wc.id " +
