@@ -279,6 +279,7 @@ object Icons {
         list["UGL"] = R.drawable.ic_ugl
 
         //Masters
+        list["UMA"] = R.drawable.ic_uma
         list["A25"] = R.drawable.ic_a25
         list["IMA"] = R.drawable.ic_ima
         list["EMA"] = R.drawable.ic_ema
