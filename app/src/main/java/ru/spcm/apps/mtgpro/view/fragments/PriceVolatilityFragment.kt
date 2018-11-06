@@ -87,6 +87,9 @@ class PriceVolatilityFragment : BaseFragment() {
             topEdge.setText(top)
             bottomEdge.setText(bottom)
 
+            cardMaxPrice.text = getString(R.string.price_max_rub, data.max?.format() ?: "")
+            cardMinPrice.text = getString(R.string.price_min_rub, data.min?.format() ?: "")
+
             cardInfoGroup.visibility = View.VISIBLE
         }
     }

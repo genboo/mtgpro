@@ -24,7 +24,6 @@
             android:clipToPadding="false"
             android:paddingBottom="?android:attr/actionBarSize">
 
-
             <android.support.constraint.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -99,6 +98,28 @@
                     tools:drawableStart="@drawable/ic_diff_up"
                     tools:text="0.2" />
 
+                <TextView
+                    android:id="@+id/cardMaxPrice"
+                    style="@style/TextView.Price"
+                    android:layout_marginTop="4dp"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintLeft_toLeftOf="@id/cardPrice"
+                    app:layout_constraintRight_toRightOf="@id/line_right"
+                    app:layout_constraintTop_toBottomOf="@id/cardPrice"
+                    tools:text="Max: 1.5" />
+
+                <TextView
+                    android:id="@+id/cardMinPrice"
+                    style="@style/TextView.Price"
+                    android:layout_marginTop="4dp"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintLeft_toLeftOf="@id/cardPrice"
+                    app:layout_constraintRight_toRightOf="@id/line_right"
+                    app:layout_constraintTop_toBottomOf="@id/cardMaxPrice"
+                    tools:text="Min: 1.5" />
+
                 <android.support.v7.widget.SwitchCompat
                     android:id="@+id/watchPrice"
                     android:layout_width="0dp"
@@ -107,7 +128,7 @@
                     android:text="@string/price_viol_check"
                     android:textColor="@color/colorTextMain"
                     app:layout_constraintRight_toRightOf="@id/line_right"
-                    app:layout_constraintTop_toBottomOf="@id/cardPrice"
+                    app:layout_constraintTop_toBottomOf="@id/cardMinPrice"
                     app:layout_constraintWidth_percent=".5" />
 
                 <TextView

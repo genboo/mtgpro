@@ -31,7 +31,10 @@ interface PriceUpdateDao {
             "FROM Card c " +
             "LEFT JOIN ScryCard sc ON sc.number = num AND sc.`set` = lower(c.`set`) " +
             "WHERE c.id = :id")
-    fun getPrice(id:String): ScryCard
+    fun getPrice(id: String): ScryCard
+
+    @Query("DELETE FROM PriceHistory WHERE price = '0'")
+    fun eraseZeroPrice()
 
 
 }
