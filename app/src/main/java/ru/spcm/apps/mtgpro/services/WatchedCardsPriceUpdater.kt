@@ -27,7 +27,7 @@ constructor(private val appExecutors: AppExecutors,
     fun update() {
         appExecutors.networkIO().execute {
             synchronized(appExecutors) {
-                priceUpdateDao.eraseZeroPrice()
+                priceUpdateDao.deleteBugedPrice()
                 val now = Date()
                 val watchedCards = priceUpdateDao.getWatchedCardsList()
                 reportDao.clear()

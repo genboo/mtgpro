@@ -33,8 +33,8 @@ interface PriceUpdateDao {
             "WHERE c.id = :id")
     fun getPrice(id: String): ScryCard
 
-    @Query("DELETE FROM PriceHistory WHERE price = '0'")
-    fun eraseZeroPrice()
+    @Query("DELETE FROM PriceHistory WHERE id = 14956")
+    fun deleteBugedPrice()
 
 
 }
