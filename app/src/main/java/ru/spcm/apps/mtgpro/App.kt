@@ -5,8 +5,6 @@ import android.content.Context
 import android.content.Intent
 import android.os.Build
 import com.crashlytics.android.Crashlytics
-import com.squareup.picasso.OkHttp3Downloader
-import com.squareup.picasso.Picasso
 import ru.spcm.apps.mtgpro.di.components.DaggerAppComponent
 import io.fabric.sdk.android.Fabric
 import ru.spcm.apps.mtgpro.di.components.AppComponent
@@ -22,7 +20,6 @@ class App : Application() {
     override fun onCreate() {
         super.onCreate()
 
-        configurePicasso()
         configureAlarm()
 
         Fabric.with(this, Crashlytics())
@@ -34,16 +31,6 @@ class App : Application() {
             val notificationManager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
             notificationManager.createNotificationChannel(notificationChannel)
         }
-    }
-
-    private fun configurePicasso(){
-        val debug = false
-        val picasso = Picasso.Builder(this)
-                .downloader(OkHttp3Downloader(this, 750000000))
-                .indicatorsEnabled(debug)
-                .loggingEnabled(debug)
-                .build()
-        Picasso.setSingletonInstance(picasso)
     }
 
     private fun configureAlarm(){

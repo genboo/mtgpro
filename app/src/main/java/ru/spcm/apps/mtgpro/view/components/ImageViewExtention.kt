@@ -1,40 +1,65 @@
 package ru.spcm.apps.mtgpro.view.components
 
+import android.graphics.drawable.Drawable
+import android.os.Handler
 import android.widget.ImageView
-import com.squareup.picasso.Callback
-import com.squareup.picasso.NetworkPolicy
-import com.squareup.picasso.Picasso
+import com.bumptech.glide.load.DataSource
+import com.bumptech.glide.load.engine.GlideException
+import com.bumptech.glide.request.RequestListener
+import com.bumptech.glide.request.target.Target
 import ru.spcm.apps.mtgpro.R
-import java.lang.Exception
+import ru.spcm.apps.mtgpro.tools.GlideApp
 
+/**
+ * Принудительная загрузка изображений из кэша
+ */
+@Suppress("unused")
 fun ImageView.loadImageFromCache(image: String) {
     val imageView = this
-    //Принудительная загрузка из кэша
     if (image.isEmpty()) {
-        Picasso.get()
+        GlideApp
+                .with(context)
                 .load(R.drawable.pic_card_back)
                 .into(imageView)
     } else {
-        Picasso.get()
+        //Принудительная загрузка из кэша
+        val handler = Handler()
+        GlideApp
+                .with(context)
                 .load(image)
-                .networkPolicy(NetworkPolicy.OFFLINE)
                 .placeholder(R.drawable.pic_card_back)
-                .into(imageView, object : Callback {
-                    override fun onSuccess() {
-                        //not used
+                .onlyRetrieveFromCache(true)
+                .listener(object : RequestListener<Drawable> {
+                    override fun onLoadFailed(e: GlideException?, model: Any?,
+                                              target: Target<Drawable>?, isFirstResource: Boolean): Boolean {
+                        handler.post { imageView.loadImage(image) }
+                        return false
                     }
 
-                    override fun onError(ex: Exception) {
-                        //Если в кэше все-таки нет, загружаем из сети
-                        imageView.loadImage(image)
+                    override fun onResourceReady(resource: Drawable?, model: Any?, target: Target<Drawable>?,
+                                                 dataSource: DataSource?, isFirstResource: Boolean): Boolean {
+                        return false
                     }
+
                 })
+                .into(imageView)
     }
 }
 
+/**
+ * Загрузка изображений
+ */
 fun ImageView.loadImage(image: String) {
-    Picasso.get()
-            .load(image)
-            .placeholder(R.drawable.pic_card_back)
-            .into(this)
+    if (image.isEmpty()) {
+        GlideApp
+                .with(context)
+                .load(R.drawable.pic_card_back)
+                .into(this)
+    } else {
+        GlideApp
+                .with(context)
+                .load(image)
+                .placeholder(R.drawable.pic_card_back)
+                .into(this)
+    }
 }
