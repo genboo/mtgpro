@@ -22,22 +22,22 @@ class FullScreenImageFragment : BaseFragment() {
         super.onActivityCreated(savedInstanceState)
         ViewCompat.setTransitionName(cardImage, args.getString(ARG_ID))
         cardImage.loadImageFromCache(args.getString(ARG_URL) ?: "")
-        close.setOnClickListener { _ -> navigator.backTo() }
-        cardImage.setOnClickListener { _ -> navigator.backTo() }
+        close.setOnClickListener { navigator.backTo() }
+        cardImage.setOnClickListener { navigator.backTo() }
     }
 
     override fun getTitle(): String {
         return ""
     }
 
-    override fun onResume() {
-        super.onResume()
-        toggleBottomMenu(false)
+    override fun onStop() {
+        super.onStop()
+        toggleBottomMenu(true)
     }
 
-    override fun onPause() {
-        super.onPause()
-        toggleBottomMenu(true)
+    override fun onStart() {
+        super.onStart()
+        toggleBottomMenu(false)
     }
 
     companion object {
