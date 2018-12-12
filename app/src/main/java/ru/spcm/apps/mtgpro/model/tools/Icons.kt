@@ -24,6 +24,9 @@ object Icons {
 
     init {
 
+        //Ravnica Allegiance 2019
+        list["RNA"] = R.drawable.ic_rna
+
         //Guilds of Ravnica 2018
         list["GRN"] = R.drawable.ic_grn
 
