@@ -44,6 +44,7 @@ object Icons {
         list["HOU"] = R.drawable.ic_hou
         list["AKH"] = R.drawable.ic_akh
         list["MPS_AKH"] = R.drawable.ic_mps_akh
+        list["MP2"] = R.drawable.ic_mps_akh
 
         //Kaladesh Block 2016-2017
         list["AER"] = R.drawable.ic_aer
@@ -189,8 +190,17 @@ object Icons {
         //Signature Spellbook
         list["SS1"] = R.drawable.ic_ss1
 
+        //Mythic Edition
+        list["MED"] = R.drawable.ic_med
+
         //Global Series
         list["GS1"] = R.drawable.ic_gs1
+
+        //M19 Gift Pack
+        list["PGP1"] = R.drawable.ic_m19
+
+        //GRN Guild Kit
+        list["GK1"] = R.drawable.ic_grn
 
         //Early sets
         list["DKM"] = R.drawable.ic_dkm
@@ -283,6 +293,7 @@ object Icons {
 
         //Masters
         list["UMA"] = R.drawable.ic_uma
+        list["PUMA"] = R.drawable.ic_uma
         list["A25"] = R.drawable.ic_a25
         list["IMA"] = R.drawable.ic_ima
         list["EMA"] = R.drawable.ic_ema
@@ -296,7 +307,10 @@ object Icons {
         list["ME4"] = R.drawable.ic_me4
         list["ME3"] = R.drawable.ic_me3
         list["ME2"] = R.drawable.ic_me2
-        list["MED"] = R.drawable.ic_med
+        list["ME1"] = R.drawable.ic_me1
+
+        //MTGA 2018
+        list["ANA"] = R.drawable.ic_ana
 
         //From the vault
         list["V17"] = R.drawable.ic_v17

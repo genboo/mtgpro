@@ -45,7 +45,7 @@ class CardHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         }
 
         ViewCompat.setTransitionName(cardImage, card.id)
-        cardImage.loadImageFromCache(card.imageUrl)
+        cardImage.loadImageFromCache(card.getImage(context.getString(R.string.secondary_image_url)))
 
     }
 

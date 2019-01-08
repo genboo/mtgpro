@@ -73,6 +73,11 @@ data class Card(@PrimaryKey @NonNull var id: String) {
         return Icons.getColor(rarity)
     }
 
+    fun getImage(path: String): String {
+        if (imageUrl == "") return String.format(path, set.toLowerCase(), (number ?: "").toLowerCase())
+        return imageUrl
+    }
+
     fun prepare() {
         if (nameOrigin == null) {
             nameOrigin = name

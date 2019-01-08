@@ -33,7 +33,7 @@ class CardWatchedHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         cardNumber.text = String.format(Locale.getDefault(), "%s %s", item.card.set, item.card.numberFormatted)
 
         ViewCompat.setTransitionName(cardImage, item.card.id)
-        cardImage.loadImageFromCache(item.card.imageUrl)
+        cardImage.loadImageFromCache(item.card.getImage(context.getString(R.string.secondary_image_url)))
     }
 
     fun setListener(listener: View.OnClickListener) {

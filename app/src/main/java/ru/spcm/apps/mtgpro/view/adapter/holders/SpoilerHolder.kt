@@ -6,6 +6,7 @@ import android.support.v7.widget.RecyclerView
 import android.view.View
 import kotlinx.android.synthetic.main.list_item_loading.view.*
 import kotlinx.android.synthetic.main.list_item_spoiler.view.*
+import ru.spcm.apps.mtgpro.R
 import ru.spcm.apps.mtgpro.model.dto.Card
 import ru.spcm.apps.mtgpro.view.components.loadImageFromCache
 
@@ -18,7 +19,7 @@ class SpoilerHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
         cardExists.text = ""
         cardExists.visibility = View.INVISIBLE
-        cardImage.loadImageFromCache(item.imageUrl)
+        cardImage.loadImageFromCache(item.getImage(context.getString(R.string.secondary_image_url)))
 
         if (item.count == 0) {
             cardExists.visibility = View.INVISIBLE

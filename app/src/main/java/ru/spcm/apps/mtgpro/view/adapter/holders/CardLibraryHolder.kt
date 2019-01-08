@@ -15,6 +15,7 @@ import ru.spcm.apps.mtgpro.R
 import ru.spcm.apps.mtgpro.tools.format
 import ru.spcm.apps.mtgpro.view.adapter.CardListItem
 import ru.spcm.apps.mtgpro.view.components.loadImage
+import ru.spcm.apps.mtgpro.view.components.loadImageFromCache
 import java.util.*
 
 class CardLibraryHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
@@ -45,7 +46,7 @@ class CardLibraryHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
                 cardNumber.text = String.format(Locale.getDefault(), "%s %s", card.set, card.numberFormatted)
 
                 ViewCompat.setTransitionName(cardImage, card.id)
-                cardImage.loadImage(card.imageUrl)
+                cardImage.loadImageFromCache(card.getImage(context.getString(R.string.secondary_image_url)))
 
                 if (item.data.price == null) {
                     cardPrice.visibility = View.GONE

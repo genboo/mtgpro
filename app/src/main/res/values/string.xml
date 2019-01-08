@@ -1,0 +1,5 @@
+<resources>
+    <string name="secondary_image_url" translatable="false">https://img.scryfall.com/cards/normal/en/%s/%s.jpg</string>
+
+
+</resources>
