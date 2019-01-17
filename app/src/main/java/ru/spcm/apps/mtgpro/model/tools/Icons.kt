@@ -67,7 +67,7 @@ object Icons {
         list["DTK"] = R.drawable.ic_dtk
         list["FRF"] = R.drawable.ic_frf
         list["KTK"] = R.drawable.ic_ktk
-        list["FRF_UGIN"] = R.drawable.ic_frf
+        list["UGIN"] = R.drawable.ic_frf
 
         //Theros Block 2013-2014
         list["JOU"] = R.drawable.ic_jou
@@ -269,12 +269,12 @@ object Icons {
         list["DDE"] = R.drawable.ic_dde
         list["DDD"] = R.drawable.ic_ddd
         list["DDC"] = R.drawable.ic_ddc
-        list["DD2"] = R.drawable.ic_dd2
+        list["TD2"] = R.drawable.ic_td2
         list["EVG"] = R.drawable.ic_dd1
-        list["DD3_JVC"] = R.drawable.ic_dd2
-        list["DD3_DVD"] = R.drawable.ic_ddc
-        list["DD3_GVL"] = R.drawable.ic_ddd
-        list["DD3_EVG"] = R.drawable.ic_dd1
+        list["JVC"] = R.drawable.ic_dd2
+        list["DVD"] = R.drawable.ic_ddc
+        list["GVL"] = R.drawable.ic_ddd
+        list["DD1"] = R.drawable.ic_dd1
 
         //Casual
         list["GNT"] = R.drawable.ic_gnt
