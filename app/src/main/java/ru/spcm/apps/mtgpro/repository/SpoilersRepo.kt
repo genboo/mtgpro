@@ -18,9 +18,9 @@ constructor(private val appExecutors: AppExecutors,
             private val additionalInfoCardDao: AdditionalInfoCardDao,
             private val cacheDao: CacheDao) {
 
-    fun getSpoilers(set: String, limit: Int): LiveData<Resource<List<Card>>> {
+    fun getSpoilers(set: String, limit: Int, force: Boolean): LiveData<Resource<List<Card>>> {
         return SpoilersBound(appExecutors, cardApi, cardDao, additionalInfoCardDao, cacheDao)
-                .setParams(set, limit)
+                .setParams(set, limit, force)
                 .create()
                 .asLiveData()
     }

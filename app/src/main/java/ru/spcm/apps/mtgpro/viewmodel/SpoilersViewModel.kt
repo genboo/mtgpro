@@ -36,7 +36,7 @@ internal constructor(private val spoilersRepo: SpoilersRepo,
             if (it == null) {
                 return@switchMap AbsentLiveData.create<Resource<List<Card>>>()
             }
-            return@switchMap spoilersRepo.getSpoilers(it.set, it.limit)
+            return@switchMap spoilersRepo.getSpoilers(it.set, it.limit, it.force)
         }
 
         set = Transformations.switchMap(switcher) {
@@ -47,8 +47,8 @@ internal constructor(private val spoilersRepo: SpoilersRepo,
         }
     }
 
-    fun loadSpoilers(set: String, limit: Int) {
-        switcher.postValue(Params(set, limit))
+    fun loadSpoilers(set: String, limit: Int, force: Boolean = false) {
+        switcher.postValue(Params(set, limit, force))
     }
 
     fun updateSetting(type: Setting.Type, value: Int) {
@@ -59,6 +59,6 @@ internal constructor(private val spoilersRepo: SpoilersRepo,
         setsRepo.toggleArchive(set)
     }
 
-    private inner class Params(val set: String, val limit: Int)
+    private inner class Params(val set: String, val limit: Int, val force: Boolean)
 
 }

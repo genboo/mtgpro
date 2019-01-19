@@ -25,7 +25,12 @@ import ru.spcm.apps.mtgpro.viewmodel.SpoilersViewModel
 
 class SpoilersFragment : BaseFragment() {
 
-    private var set: Set? = null
+    private lateinit var set: Set
+    private lateinit var viewModel: SpoilersViewModel
+    private val scrollListener = RecyclerViewScrollListener({ viewModel.loadSpoilers(set.code, it, force) },
+            SpoilersBound.PAGES_SIZE)
+
+    private var force = false
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
@@ -40,22 +45,21 @@ class SpoilersFragment : BaseFragment() {
         updateToolbar()
         val set = args.getString(ARG_SET) ?: ""
 
-        val viewModel = getViewModel(this, SpoilersViewModel::class.java)
-        viewModel.cards.observe(this, Observer { observeSpoilers(it) })
-        viewModel.set.observe(this, Observer { observeSet(it) })
+        viewModel = getViewModel(this, SpoilersViewModel::class.java)
+        viewModel.cards.observe(viewLifecycleOwner, Observer { observeSpoilers(it) })
+        viewModel.set.observe(viewLifecycleOwner, Observer { observeSet(it) })
 
         val adapter = SpoilersListAdapter(null)
         val layoutManager = GridLayoutManager(context, getSettings().getInt(Setting.Type.LIST_COL_SIZE, 3))
         list.layoutManager = layoutManager
         list.adapter = adapter
         list.clearOnScrollListeners()
-        list.addOnScrollListener(RecyclerViewScrollListener({ viewModel.loadSpoilers(set, it) },
-                SpoilersBound.PAGES_SIZE))
+        list.addOnScrollListener(scrollListener)
 
         showProgressBar()
         list.postDelayed({
-            if (adapter.getSize() == 0) {
-                viewModel.loadSpoilers(set, SpoilersBound.PAGES_SIZE)
+            if (viewModel.cards.value == null) {
+                viewModel.loadSpoilers(set, SpoilersBound.PAGES_SIZE, force)
             }
         }, 200)
 
@@ -69,6 +73,7 @@ class SpoilersFragment : BaseFragment() {
     }
 
     private fun observeSet(data: Set?) {
+        if (data == null) return
         set = data
     }
 
@@ -100,7 +105,6 @@ class SpoilersFragment : BaseFragment() {
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-
         when (item.itemId) {
             R.id.nav_toggle_list -> {
                 val layoutManager = list.layoutManager as GridLayoutManager
@@ -110,20 +114,20 @@ class SpoilersFragment : BaseFragment() {
                     else -> 3
                 }
                 layoutManager.spanCount = spanCount
-                val viewModel = getViewModel(this, SpoilersViewModel::class.java)
                 viewModel.updateSetting(Setting.Type.LIST_COL_SIZE, spanCount)
             }
             R.id.nav_toggle_archive -> {
-                val s = set
-                if (s != null) {
-                    if (s.archive) {
-                        showSnack(R.string.action_from_archive, null)
-                    } else {
-                        showSnack(R.string.action_to_archive, null)
-                    }
-                    val viewModel = getViewModel(this, SpoilersViewModel::class.java)
-                    viewModel.toggleArchive(s)
+                if (set.archive) {
+                    showSnack(R.string.action_from_archive, null)
+                } else {
+                    showSnack(R.string.action_to_archive, null)
                 }
+                viewModel.toggleArchive(set)
+            }
+            R.id.nav_reload -> {
+                scrollListener.clear()
+                force = true
+                viewModel.loadSpoilers(set.code, SpoilersBound.PAGES_SIZE, force)
             }
         }
 

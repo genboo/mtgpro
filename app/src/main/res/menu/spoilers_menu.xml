@@ -3,9 +3,15 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item
+        android:id="@+id/nav_reload"
+        android:icon="@drawable/ic_reload"
+        android:title="@string/menu_reload"
+        app:showAsAction="ifRoom" />
+
+    <item
         android:id="@+id/nav_toggle_archive"
         android:icon="@drawable/ic_archive"
-        android:title="@string/menu_toggle"
+        android:title="@string/menu_archive"
         app:showAsAction="ifRoom" />
 
     <item

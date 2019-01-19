@@ -32,6 +32,10 @@ class RecyclerViewScrollListener(private val load: (Int) -> Unit,
         }
     }
 
+    fun clear(){
+        previousTotal = 0
+    }
+
     companion object {
         const val DEFAULT_REACT = 15
     }

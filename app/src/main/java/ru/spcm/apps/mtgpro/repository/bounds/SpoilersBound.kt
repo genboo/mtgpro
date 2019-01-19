@@ -19,6 +19,7 @@ class SpoilersBound(appExecutors: AppExecutors,
 
     private var set: String = ""
     private var limit: Int = 0
+    private var force: Boolean = false
 
     override fun loadCacheTime(): LiveData<Cache> {
         return cacheDao.getCache(getCacheKey())
@@ -41,7 +42,7 @@ class SpoilersBound(appExecutors: AppExecutors,
     }
 
     override fun shouldFetch(data: List<Card>?): Boolean {
-        return data == null || checkExpireCache(cacheExpire)
+        return data == null || force || checkExpireCache(cacheExpire)
     }
 
     override fun loadSaved(): LiveData<List<Card>> {
@@ -60,9 +61,10 @@ class SpoilersBound(appExecutors: AppExecutors,
         return TYPE + set
     }
 
-    fun setParams(set: String, offset: Int): SpoilersBound {
+    fun setParams(set: String, offset: Int, force: Boolean): SpoilersBound {
         this.set = set
         this.limit = offset
+        this.force = force
         return this
     }
 
