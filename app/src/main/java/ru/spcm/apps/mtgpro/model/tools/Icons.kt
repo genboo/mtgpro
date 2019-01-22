@@ -18,7 +18,7 @@ object Icons {
             "Common" to R.color.rarityCommon,
             "Uncommon" to R.color.rarityUncommon,
             "Rare" to R.color.rarityRare,
-            "Mythic Rare" to R.color.rarityMythicRare,
+            "Mythic" to R.color.rarityMythicRare,
             "Special" to R.color.rarityMythicRare
     )
 

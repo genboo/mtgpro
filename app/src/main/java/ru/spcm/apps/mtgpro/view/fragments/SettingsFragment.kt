@@ -34,6 +34,8 @@ class SettingsFragment : BaseFragment() {
         restoreBackup.setOnClickListener { restoreBackup(viewModel) }
         updateWatchedPrices.setOnClickListener { updateWatchedPrices() }
 
+        updateCollection.setOnClickListener { updateCollection() }
+
         saveBackupAuto.isChecked = getSettings().getBoolean(Setting.Type.AUTO_BACKUP, false)
         saveBackupAuto.setOnClickListener { viewModel.setAutoBackup(saveBackupAuto.isChecked) }
 
@@ -48,6 +50,12 @@ class SettingsFragment : BaseFragment() {
             saveBackup.isEnabled = false
             restoreBackup.isEnabled = false
         }
+    }
+
+    private fun updateCollection() {
+        val intent = Intent(requireContext(), AlarmReceiver::class.java)
+        intent.putExtra(AlarmReceiver.CONVERT, true)
+        activity?.sendBroadcast(intent)
     }
 
     private fun updateWatchedPrices() {

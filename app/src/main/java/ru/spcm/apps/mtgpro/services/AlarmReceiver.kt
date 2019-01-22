@@ -26,12 +26,32 @@ class AlarmReceiver : BroadcastReceiver() {
 
     @Inject
     lateinit var valuteUpdater: ValuteUpdater
+    @Inject
+    lateinit var convertCollection: ConvertCollection
 
     private var component: AppComponent? = null
 
     override fun onReceive(context: Context, intent: Intent) {
         component = (context.applicationContext as App).appComponent
         component?.inject(this)
+
+        if (intent.getBooleanExtra(CONVERT, false)) {
+            convertCollection.result.observeForever(object : Observer<Int> {
+                override fun onChanged(data: Int?) {
+                    if (data != null) {
+                        if (data >= 35000) convertCollection.result.removeObserver(this)
+                        val message = context.getString(R.string.notify_convert_progress, data)
+                        showNotification(context, NOTIFY_CONVERT, context.getString(R.string.app_name), message, message, false)
+                    }
+                }
+            })
+            convertCollection.convert(context)
+            showNotification(context, NOTIFY_CONVERT, context.getString(R.string.app_name),
+                    context.getString(R.string.notify_convert_notification),
+                    context.getString(R.string.notify_convert_notification),
+                    true)
+            return
+        }
 
         if (!intent.getBooleanExtra(FORCE, false)) {
             backupSaver.backup(context)
@@ -107,9 +127,11 @@ class AlarmReceiver : BroadcastReceiver() {
         const val LAUNCH_FRAGMENT = "launch_fragment"
         const val LAUNCH_FRAGMENT_REPORT = "launch_fragment_report"
         const val FORCE = "force"
+        const val CONVERT = "convert"
 
         const val NOTIFY_WATCHED = 1
         const val NOTIFY_LIBRARIES = 2
+        const val NOTIFY_CONVERT = 3
     }
 
 }

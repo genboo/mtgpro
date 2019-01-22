@@ -6,13 +6,13 @@
         android:id="@+id/nav_reload"
         android:icon="@drawable/ic_reload"
         android:title="@string/menu_reload"
-        app:showAsAction="ifRoom" />
+        app:showAsAction="always" />
 
     <item
         android:id="@+id/nav_toggle_archive"
         android:icon="@drawable/ic_archive"
         android:title="@string/menu_archive"
-        app:showAsAction="ifRoom" />
+        app:showAsAction="always" />
 
     <item
         android:id="@+id/nav_toggle_list"

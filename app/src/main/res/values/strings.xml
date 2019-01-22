@@ -38,6 +38,8 @@
     <string name="notify_update_complete_annotation">Обновление завершено</string>
     <string name="notify_update_progress_annotation">Обновление в процессе</string>
     <string name="notify_update_notification">Обновление началось</string>
+    <string name="notify_convert_notification">Конвертирование началось</string>
+    <string name="notify_convert_progress">Обработано карт %d.</string>
 
     <string name="rules">Правила</string>
     <string name="text">Текст</string>
@@ -61,6 +63,7 @@
     <string name="restore_text">Восстановить базу данных карт с носителя. Все существующие данные будут удалены.</string>
     <string name="update_watched_prices">Обновить цены</string>
     <string name="update_valutes">Обновить курс валюты</string>
+    <string name="update_collection">Конвертировать коллекцию в новый формат</string>
     <string name="price_viol_check">Следить за ценой</string>
     <string name="price_viol_top">выше</string>
     <string name="price_viol_bottom">ниже</string>
