@@ -1,6 +1,7 @@
 package ru.spcm.apps.mtgpro.model.api
 
 import android.arch.lifecycle.LiveData
+import retrofit2.Call
 
 import retrofit2.http.GET
 import retrofit2.http.Query
@@ -25,6 +26,9 @@ interface CardApi {
 
     @GET("/v1/cards")
     fun getCardsBySet(@Query("set") set: String, @Query("page") page: Int, @Query("pageSize") pages: Int): LiveData<ApiResponse<List<Card>>>
+
+    @GET("/v1/cards")
+    fun getCardsBySetCall(@Query("set") set: String, @Query("page") page: Int, @Query("pageSize") pages: Int): Call<List<Card>>
 
     @GET("/v1/cards")
     fun getCardsByMid(@Query("multiverseid") id: String): LiveData<ApiResponse<List<Card>>>

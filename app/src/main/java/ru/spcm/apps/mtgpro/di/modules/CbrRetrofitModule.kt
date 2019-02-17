@@ -6,6 +6,7 @@ import javax.inject.Singleton
 import dagger.Module
 import dagger.Provides
 import retrofit2.Retrofit
+import ru.spcm.apps.mtgpro.di.NullStringTypeAdapter
 import ru.spcm.apps.mtgpro.model.api.ValuteApi
 import ru.spcm.apps.mtgpro.model.tools.ValuteTypeAdapterFactory
 import javax.inject.Named
@@ -27,7 +28,8 @@ class CbrRetrofitModule : RetrofitBase() {
     @Named("cbr")
     internal fun provideRetrofit(): Retrofit {
         val builder = GsonBuilder()
-        builder.registerTypeAdapterFactory(ValuteTypeAdapterFactory())
+                .registerTypeAdapterFactory(ValuteTypeAdapterFactory())
+                .registerTypeAdapter(String::class.java, NullStringTypeAdapter())
         return getRetrofit(CBR_API_URL, builder)
     }
 

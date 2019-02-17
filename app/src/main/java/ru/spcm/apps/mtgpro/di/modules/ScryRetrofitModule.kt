@@ -6,6 +6,7 @@ import javax.inject.Singleton
 import dagger.Module
 import dagger.Provides
 import retrofit2.Retrofit
+import ru.spcm.apps.mtgpro.di.NullStringTypeAdapter
 import ru.spcm.apps.mtgpro.model.api.ScryCardApi
 import javax.inject.Named
 
@@ -26,6 +27,7 @@ class ScryRetrofitModule : RetrofitBase() {
     @Named("scry")
     internal fun provideRetrofit(): Retrofit {
         val builder = GsonBuilder()
+                .registerTypeAdapter(String::class.java, NullStringTypeAdapter())
         return getRetrofit(SCRY_API_URL, builder)
     }
 

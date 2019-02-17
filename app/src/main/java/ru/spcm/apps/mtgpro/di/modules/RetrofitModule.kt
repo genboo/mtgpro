@@ -6,6 +6,7 @@ import javax.inject.Singleton
 import dagger.Module
 import dagger.Provides
 import retrofit2.Retrofit
+import ru.spcm.apps.mtgpro.di.NullStringTypeAdapter
 import ru.spcm.apps.mtgpro.model.api.CardApi
 import ru.spcm.apps.mtgpro.model.api.SetsApi
 import ru.spcm.apps.mtgpro.model.tools.ResultTypeAdapterFactory
@@ -26,7 +27,8 @@ class RetrofitModule : RetrofitBase() {
     @Provides
     internal fun provideRetrofit(): Retrofit {
         val builder = GsonBuilder()
-        builder.registerTypeAdapterFactory(ResultTypeAdapterFactory())
+                .registerTypeAdapterFactory(ResultTypeAdapterFactory())
+                .registerTypeAdapter(String::class.java, NullStringTypeAdapter())
         return getRetrofit(MTG_API_URL, builder)
     }
 

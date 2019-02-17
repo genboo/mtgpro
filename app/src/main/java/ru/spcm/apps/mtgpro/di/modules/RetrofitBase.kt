@@ -1,7 +1,7 @@
 package ru.spcm.apps.mtgpro.di.modules
 
 import com.google.gson.GsonBuilder
-import okhttp3.OkHttpClient
+import okhttp3.*
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
@@ -31,15 +31,34 @@ open class RetrofitBase {
     private fun setRetryOptions(httpClient: OkHttpClient.Builder) {
         httpClient.addInterceptor { chain ->
             val request = chain.request()
-            var response = chain.proceed(request)
+            var response: Response? = null
             var tryCount = 0
-            while (!response.isSuccessful && tryCount < TRY_LIMIT) {
-                Logger.e("Retry request")
+            var errorMessage = ""
+            while (response == null && tryCount < TRY_LIMIT) {
+                try {
+                    response = chain.proceed(request)
+                    if (response.isSuccessful) {
+                        break
+                    }
+                } catch (ex: Exception) {
+                    Logger.d(ex)
+                    errorMessage = ex.message ?: "Request error"
+                }
+                Logger.d("Retry request")
                 tryCount++
-                response = chain.proceed(request)
             }
-
-            return@addInterceptor response
+            return@addInterceptor response ?: Response
+                    .Builder()
+                    .protocol(Protocol.HTTP_1_1)
+                    .request(request)
+                    .message(errorMessage)
+                    .code(500)
+                    .body(
+                            ResponseBody.create(
+                                    MediaType.parse("text/json"),
+                                    "{\"status\":500, \"error\":\"$errorMessage\"}")
+                    )
+                    .build()
         }
     }
 

@@ -137,4 +137,50 @@ interface CardDao {
             "LEFT JOIN Card c ON c.id = wc.id " +
             "WHERE wc.id = :id")
     fun getObservedCard(id: String, valute: Float): LiveData<CardObserved>
+
+
+    @Query("SELECT c.* FROM Card c JOIN SavedCard sc ON sc.id = c.id WHERE c.`set` = :set AND c.numberFormatted = :number AND c.nameOrigin = :name")
+    fun getCardSaved(set: String, number: String, name: String): Card?
+
+    @Query("UPDATE SavedCard SET id = :id WHERE id = :old")
+    fun updateSaved(id: String, old: String)
+
+    @Query("UPDATE SavedCard SET parent = :parent WHERE parent = :old")
+    fun updateParent(parent: String, old: String)
+
+    @Query("UPDATE Color SET card_id = :id WHERE card_id = :old")
+    fun updateColors(id: String, old: String)
+
+    @Query("UPDATE Subtype SET card_id = :id WHERE card_id = :old")
+    fun updateSubtypes(id: String, old: String)
+
+    @Query("UPDATE Supertype SET card_id = :id WHERE card_id = :old")
+    fun updateSupertypes(id: String, old: String)
+
+    @Query("UPDATE Type SET card_id = :id WHERE card_id = :old")
+    fun updateTypes(id: String, old: String)
+
+    @Query("UPDATE Reprint SET card_id = :id WHERE card_id = :old")
+    fun updateReprints(id: String, old: String)
+
+    @Query("UPDATE WishedCard SET id = :id WHERE id = :old")
+    fun updateWish(id: String, old: String)
+
+    @Query("UPDATE WatchedCard SET id = :id WHERE id = :old")
+    fun updateWatched(id: String, old: String)
+
+    @Query("UPDATE LibraryCard SET card_id = :id WHERE card_id = :old")
+    fun updateLibrary(id: String, old: String)
+
+    @Query("UPDATE Report SET card_id = :id WHERE card_id = :old")
+    fun updateReport(id: String, old: String)
+
+    @Query("DELETE FROM Card WHERE `set` = :set AND numberFormatted = :number AND nameOrigin = :name AND id <> :id")
+    fun clearOld(id: String, set: String, number: String, name: String)
+
+    @Query("DELETE FROM CacheCard")
+    fun clearCached()
+
+    @Query("DELETE FROM Cache")
+    fun clearCache()
 }

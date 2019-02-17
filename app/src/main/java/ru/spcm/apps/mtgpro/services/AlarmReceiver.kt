@@ -38,14 +38,13 @@ class AlarmReceiver : BroadcastReceiver() {
         if (intent.getBooleanExtra(CONVERT, false)) {
             convertCollection.result.observeForever(object : Observer<Int> {
                 override fun onChanged(data: Int?) {
-                    if (data != null) {
-                        if (data >= 35000) convertCollection.result.removeObserver(this)
-                        val message = context.getString(R.string.notify_convert_progress, data)
-                        showNotification(context, NOTIFY_CONVERT, context.getString(R.string.app_name), message, message, false)
-                    }
+                    if (data == null) return
+                    if (data >= 35000) convertCollection.result.removeObserver(this)
+                    val message = context.getString(R.string.notify_convert_progress, data)
+                    showNotification(context, NOTIFY_CONVERT, context.getString(R.string.app_name), message, message, false)
                 }
             })
-            convertCollection.convert(context)
+            convertCollection.convert()
             showNotification(context, NOTIFY_CONVERT, context.getString(R.string.app_name),
                     context.getString(R.string.notify_convert_notification),
                     context.getString(R.string.notify_convert_notification),
