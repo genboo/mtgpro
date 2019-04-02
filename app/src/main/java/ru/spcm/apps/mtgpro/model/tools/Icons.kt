@@ -24,6 +24,9 @@ object Icons {
 
     init {
 
+        //War of Spark 2019
+        list["WAR"] = R.drawable.ic_war
+
         //Ravnica Allegiance 2019
         list["RNA"] = R.drawable.ic_rna
 
@@ -186,6 +189,9 @@ object Icons {
         list["7ED"] = R.drawable.ic_7ed
         list["6ED"] = R.drawable.ic_6ed
         list["5ED"] = R.drawable.ic_5ed
+
+        //Modern Horizons
+        list["MH1"] = R.drawable.ic_mh1
 
         //Signature Spellbook
         list["SS1"] = R.drawable.ic_ss1

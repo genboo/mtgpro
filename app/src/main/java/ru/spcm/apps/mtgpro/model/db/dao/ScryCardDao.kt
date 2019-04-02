@@ -26,4 +26,6 @@ interface ScryCardDao {
     @Query("SELECT ph.date, ph.price * :valute count FROM PriceHistory ph WHERE ph.card_id=:id AND ph.date BETWEEN :from AND :to")
     fun getData(id: String, valute: Float, from: Date, to: Date): LiveData<List<GraphDot>>
 
+    @Query("DELETE FROM ScryCard WHERE usd = ''")
+    fun clearEmpty()
 }

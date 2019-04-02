@@ -31,6 +31,7 @@ constructor(private val appExecutors: AppExecutors,
                 val now = Date()
                 val watchedCards = priceUpdateDao.getWatchedCardsList()
                 reportDao.clear()
+                scryCardDao.clearEmpty()
 
                 var updateCounter = 0
                 watchedCards.forEach { item ->
@@ -50,7 +51,7 @@ constructor(private val appExecutors: AppExecutors,
                             priceUpdateDao.insert(PriceHistory(item.card.id, price.usd.format()))
                             scryCardDao.insert(price)
 
-                            if (lastPrice == null) {
+                            if (lastPrice == null || lastPrice.price.isEmpty()) {
                                 reportDao.insert(Report(item.card.id, "0.0"))
                             } else {
                                 val diff = price.usd.toFloat() - lastPrice.price.toFloat()

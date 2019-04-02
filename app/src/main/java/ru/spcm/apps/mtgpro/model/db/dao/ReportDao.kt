@@ -18,5 +18,4 @@ interface ReportDao {
     @Query("DELETE FROM Report")
     fun clear()
 
-
 }
