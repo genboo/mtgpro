@@ -27,12 +27,12 @@ task clean(type: Delete) {
 
 ext {
     //Version and code
-    ver = '1.1.7'
-    code = 10
+    ver = '1.1.8'
+    code = 11
 
     // App dependencies
     supportLibVersion = '28.0.0'
-    constraintVersion = '2.0.0-alpha3'
+    constraintVersion = '2.0.0-alpha4'
     flexVersion = '1.0.0'
     junitVersion = '4.12'
     archComponentsVersion = "1.1.1"

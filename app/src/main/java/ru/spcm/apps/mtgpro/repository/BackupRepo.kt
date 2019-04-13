@@ -96,7 +96,7 @@ constructor(private val appExecutors: AppExecutors) {
             val backup = File(fullBackupDir, DbModule.DB_NAME)
             val wal = File(fullBackupDir, DbModule.DB_NAME + "-wal")
             val shm = File(fullBackupDir, DbModule.DB_NAME + "-shm")
-            if (backup.exists() && wal.exists()) {
+            if (backup.exists()) {
                 try {
                     val dbFile = context.getDatabasePath(DbModule.DB_NAME)
                     if (!dbFile.exists() && !dbFile.createNewFile()) {
