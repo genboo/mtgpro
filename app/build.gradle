@@ -4,7 +4,7 @@ buildscript {
     }
 
     dependencies {
-        classpath 'io.fabric.tools:gradle:1.26.1'
+        classpath 'io.fabric.tools:gradle:1.27.0'
     }
 }
 apply plugin: 'com.android.application'
@@ -96,7 +96,7 @@ dependencies {
     kapt "android.arch.persistence.room:compiler:$roomVersion"
     kapt "com.google.dagger:dagger-compiler:$daggerVersion"
     kapt "com.github.bumptech.glide:compiler:$glideVersion"
-    androidTestImplementation('com.android.support.test.espresso:espresso-core:3.0.1', {
+    androidTestImplementation("com.android.support.test.espresso:espresso-core:$espressoVersion", {
         exclude group: 'com.android.support', module: 'support-annotations'
         exclude group: 'com.google.code.findbugs', module: 'jsr305'
     })
@@ -108,7 +108,7 @@ dependencies {
     androidTestImplementation "android.arch.core:core-testing:$archComponentsVersion"
     testImplementation "org.mockito:mockito-core:$mockitoVersion"
     androidTestImplementation "org.mockito:mockito-android:$mockitoVersion"
-    implementation('com.crashlytics.sdk.android:crashlytics:2.7.0@aar') {
+    implementation("com.crashlytics.sdk.android:crashlytics:$crashVersion") {
         transitive = true
     }
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"

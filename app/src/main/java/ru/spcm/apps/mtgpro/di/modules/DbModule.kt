@@ -42,7 +42,8 @@ class DbModule {
                         MIGRATION_7_8,
                         MIGRATION_8_9,
                         MIGRATION_9_10,
-                        MIGRATION_10_11
+                        MIGRATION_10_11,
+                        MIGRATION_11_12
                 )
                 .build()
     }
@@ -191,6 +192,43 @@ class DbModule {
             override fun migrate(database: SupportSQLiteDatabase) {
                 //Добавление приоритета сета
                 database.execSQL("ALTER TABLE `Set` ADD COLUMN archive INTEGER NOT NULL DEFAULT (0)")
+            }
+        }
+
+        private val MIGRATION_11_12 = object : Migration(11, 12) {
+            override fun migrate(database: SupportSQLiteDatabase) {
+                //Изменение типа колонки
+                database.execSQL("CREATE TABLE temp_table AS SELECT * FROM Card")
+                database.execSQL("DROP TABLE Card")
+
+                database.execSQL("CREATE TABLE Card (" +
+                        "    name            TEXT    NOT NULL," +
+                        "    multiverseId    TEXT," +
+                        "    imageUrl        TEXT    NOT NULL," +
+                        "    text            TEXT," +
+                        "    flavor          TEXT," +
+                        "    number          TEXT," +
+                        "    numberFormatted TEXT    NOT NULL," +
+                        "    setTitle        TEXT    NOT NULL," +
+                        "    [set]           TEXT    NOT NULL," +
+                        "    type            TEXT    NOT NULL," +
+                        "    manaCost        TEXT," +
+                        "    cmc             INTEGER    NOT NULL," +
+                        "    rarity          TEXT    NOT NULL," +
+                        "    rulesText       TEXT," +
+                        "    count           INTEGER NOT NULL," +
+                        "    parent          TEXT," +
+                        "    id              TEXT    NOT NULL," +
+                        "    nameOrigin      TEXT," +
+                        "    PRIMARY KEY (  id    )" +
+                        ")")
+
+                database.execSQL("CREATE INDEX index_Card_set ON Card ( `set` )")
+                database.execSQL("CREATE INDEX index_Card_multiverseId ON Card (  multiverseId )")
+
+                database.execSQL("INSERT INTO Card (name, multiverseId, imageUrl, text, flavor, number, numberFormatted, setTitle, `set`, type, manaCost, cmc, rarity, rulesText, count, parent, id, nameOrigin) " +
+                        "SELECT name, multiverseId, imageUrl, text, flavor, number, numberFormatted, setTitle, `set`, type, manaCost, cmc, rarity, rulesText, count, parent, id, nameOrigin FROM temp_table")
+                database.execSQL("DROP TABLE temp_table")
             }
         }
     }

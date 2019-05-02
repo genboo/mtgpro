@@ -40,14 +40,14 @@ interface LibrariesDao {
     @Query("SELECT ac.cmc, ac.count count, IFNULL(acr.count, 0) creatures " +
             "FROM (SELECT c.cmc, SUM(lc.count) count " +
             "    FROM Card c, LibraryCard lc " +
-            "    WHERE lc.card_id = c.id AND lc.library_id = :library AND c.cmc > 0 " +
+            "    WHERE lc.card_id = c.id AND lc.library_id = :library AND c.cmc > 0 AND c.cmc <> '0' " +
             "    GROUP BY c.cmc) as ac " +
             "LEFT JOIN " +
             "    (SELECT c.cmc, SUM(lc.count) count " +
             "    FROM Card c, LibraryCard lc, Type t " +
             "    WHERE lc.card_id = c.id " +
             "        AND lc.library_id = :library " +
-            "        AND c.cmc > 0 " +
+            "        AND c.cmc > 0 AND c.cmc <> '0' " +
             "        AND t.card_id = c.id " +
             "        AND t.type = 'Creature' " +
             "    GROUP BY c.cmc) as acr ON ac.cmc = acr.cmc " +
@@ -57,7 +57,7 @@ interface LibrariesDao {
     @Query("SELECT cl.color, SUM(lc.count) count FROM Card c " +
             "LEFT JOIN Color cl ON c.id = cl.card_id " +
             "JOIN LibraryCard lc ON lc.card_id = c.id " +
-            "WHERE lc.library_id = :library AND c.cmc > 0 " +
+            "WHERE lc.library_id = :library AND c.cmc > 0  AND c.cmc <> '0'" +
             "GROUP BY cl.color " +
             "ORDER BY cl.color")
     fun getLibraryColorState(library: Long): LiveData<List<LibraryColorState>>

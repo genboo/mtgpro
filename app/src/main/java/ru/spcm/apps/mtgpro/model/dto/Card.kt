@@ -32,7 +32,7 @@ data class Card(@PrimaryKey @NonNull var id: String) {
 
     var manaCost: String? = ""
 
-    var cmc: String = ""
+    var cmc: Int = 0
 
     var rarity: String = ""
 
