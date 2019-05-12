@@ -120,10 +120,6 @@ data class Card(@PrimaryKey @NonNull var id: String) {
                 }
             }
         }
-
-        if (imageUrl == null) {
-            imageUrl = ""
-        }
     }
 
     private fun prepareRules() {
