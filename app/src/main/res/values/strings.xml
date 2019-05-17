@@ -40,7 +40,7 @@
     <string name="notify_update_progress_annotation">Обновление в процессе</string>
     <string name="notify_update_notification">Обновление началось</string>
     <string name="notify_convert_notification">Конвертирование началось</string>
-    <string name="notify_convert_progress">Обработано сетов %d.</string>
+    <string name="notify_convert_progress">Обработано сетов %d из %d.</string>
 
     <string name="rules">Правила</string>
     <string name="text">Текст</string>

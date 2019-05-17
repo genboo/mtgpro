@@ -45,12 +45,6 @@ interface AdditionalInfoCardDao {
     @Query("DELETE FROM Supertype where card_id = :card")
     fun clearSupertypes(card: String)
 
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insertReprints(item: List<Reprint>)
-
-    @Query("DELETE FROM Reprint where card_id = :card")
-    fun clearReprints(card: String)
-
     @Transaction
     fun updateAdditionInfo(card: Card) {
         clearColors(card.id)
@@ -80,14 +74,6 @@ interface AdditionalInfoCardDao {
             subtypes.add(Subtype(card.id, it))
         }
         insertSubtypes(subtypes)
-
-        clearReprints(card.id)
-        val printings = ArrayList<Reprint>()
-        card.printings?.forEach {
-            printings.add(Reprint(card.id, it))
-        }
-        insertReprints(printings)
-
     }
 
     @Query("SELECT c.`setTitle` as title, c.`set` as id FROM Card c, SavedCard sc WHERE sc.id = c.id GROUP BY c.`set` ORDER BY c.setTitle")

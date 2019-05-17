@@ -25,10 +25,10 @@ interface CardApi {
     fun getCardsByLanguage(@Query("name") name: String, @Query("language") language: String?): LiveData<ApiResponse<List<Card>>>
 
     @GET("/v1/cards")
-    fun getCardsBySet(@Query("set") set: String, @Query("page") page: Int, @Query("pageSize") pages: Int): LiveData<ApiResponse<List<Card>>>
+    fun getCardsBySet(@Query("set") set: String, @Query("page") page: Int, @Query("pageSize") pages: Int, @Query("orderBy") orderBy: String = "number"): LiveData<ApiResponse<List<Card>>>
 
     @GET("/v1/cards")
-    fun getCardsBySetCall(@Query("set") set: String, @Query("page") page: Int, @Query("pageSize") pages: Int): Call<List<Card>>
+    fun getCardsBySetCall(@Query("set") set: String, @Query("page") page: Int, @Query("pageSize") pages: Int, @Query("orderBy") orderBy: String = "number"): Call<List<Card>>
 
     @GET("/v1/cards")
     fun getCardsByMid(@Query("multiverseid") id: String): LiveData<ApiResponse<List<Card>>>

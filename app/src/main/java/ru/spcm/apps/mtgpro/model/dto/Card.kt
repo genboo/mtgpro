@@ -42,6 +42,8 @@ data class Card(@PrimaryKey @NonNull var id: String) {
 
     var parent: String? = ""
 
+    var printings: Array<String>? = null
+
     @Ignore
     private val foreignNames: List<ForeignName>? = null
 
@@ -59,9 +61,6 @@ data class Card(@PrimaryKey @NonNull var id: String) {
 
     @Ignore
     val colors: List<String>? = null
-
-    @Ignore
-    val printings: List<String>? = null
 
     var nameOrigin: String? = null
 
@@ -119,6 +118,10 @@ data class Card(@PrimaryKey @NonNull var id: String) {
                     break
                 }
             }
+        }
+
+        if (imageUrl == null) {
+            imageUrl = ""
         }
     }
 

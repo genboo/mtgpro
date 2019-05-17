@@ -5,19 +5,19 @@ import android.support.v4.view.PagerAdapter
 import android.support.v4.view.ViewCompat
 import android.view.LayoutInflater
 import android.view.View
-import ru.spcm.apps.mtgpro.model.dto.CardLocal
 import android.view.ViewGroup
 import android.widget.FrameLayout
 import android.widget.ImageView
 import ru.spcm.apps.mtgpro.R
+import ru.spcm.apps.mtgpro.model.dto.Card
 import ru.spcm.apps.mtgpro.view.components.loadImageFromCache
 
 
-class FlipPagerAdapter(val context: Context, items: List<CardLocal>?) : PagerAdapter() {
+class FlipPagerAdapter(val context: Context, items: List<Card>?) : PagerAdapter() {
 
-    private var items: List<CardLocal>
+    private var items: List<Card>
     private var inflater: LayoutInflater
-    private var listener: (CardLocal) -> Unit = { }
+    private var listener: (Card) -> Unit = { }
 
     init {
         if (items == null) {
@@ -31,9 +31,9 @@ class FlipPagerAdapter(val context: Context, items: List<CardLocal>?) : PagerAda
     override fun instantiateItem(viewGroup: ViewGroup, position: Int): Any {
         val view = inflater.inflate(R.layout.fragment_image, viewGroup, false)
         val imageView = view.findViewById(R.id.cardImage) as ImageView
-        imageView.loadImageFromCache(items[position].card.imageUrl)
+        imageView.loadImageFromCache(items[position].imageUrl)
         imageView.setOnClickListener { listener(items[position]) }
-        ViewCompat.setTransitionName(imageView, items[position].card.id)
+        ViewCompat.setTransitionName(imageView, items[position].id)
         viewGroup.addView(view)
         return view
     }
@@ -46,12 +46,12 @@ class FlipPagerAdapter(val context: Context, items: List<CardLocal>?) : PagerAda
         return view === `object`
     }
 
-    fun setItems(items: List<CardLocal>) {
+    fun setItems(items: List<Card>) {
         this.items = items
         notifyDataSetChanged()
     }
 
-    fun setOnClickListener(listener: (CardLocal) -> Unit = { }) {
+    fun setOnClickListener(listener: (Card) -> Unit = { }) {
         this.listener = listener
     }
 

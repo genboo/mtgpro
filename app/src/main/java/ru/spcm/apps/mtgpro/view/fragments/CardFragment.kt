@@ -63,7 +63,7 @@ class CardFragment : BaseFragment() {
         mainBlock.postDelayed({ viewModel.loadLibraries(getSettings().getCurrentValute()) }, 200)
 
         val adapter = ReprintListAdapter(null)
-        adapter.setOnItemClickListener { _, item, _ -> navigator.goToSearch("s " + item.reprint + " " + card.nameOrigin) }
+        adapter.setOnItemClickListener { _, item, _ -> navigator.goToSearch("s " + item + " " + card.nameOrigin) }
 
         val manager = LinearLayoutManager(context,
                 LinearLayoutManager.HORIZONTAL, false)
@@ -101,7 +101,7 @@ class CardFragment : BaseFragment() {
         }
 
         val adapterImages = FlipPagerAdapter(requireContext(), viewModel.getCards().value)
-        adapterImages.setOnClickListener { navigator.goToImage(it.card.id, it.card.imageUrl) }
+        adapterImages.setOnClickListener { navigator.goToImage(it.id, it.imageUrl) }
         viewPager.adapter = adapterImages
         viewPager.setPageTransformer(true, FlipPageTransform())
         viewPager.setOnPageSelectedListener { switchText(it == 0) }
@@ -109,39 +109,40 @@ class CardFragment : BaseFragment() {
     }
 
 
-    private fun observeCards(data: List<CardLocal>?) {
+    private fun observeCards(data: List<Card>?) {
         if (data != null && data.isNotEmpty()) {
             val firstCard = data[0]
-            var title = firstCard.card.name
+            var title = firstCard.name
 
-            cardNumber.text = String.format("%s %s", firstCard.card.set, firstCard.card.numberFormatted)
+            cardNumber.text = String.format("%s %s", firstCard.set, firstCard.numberFormatted)
 
-            var text: String = firstCard.card.text ?: ""
-            if (firstCard.card.flavor != null) {
-                text += "\n" + "<i>" + firstCard.card.flavor + "</i>"
+            var text: String = firstCard.text ?: ""
+            if (firstCard.flavor != null) {
+                text += "\n" + "<i>" + firstCard.flavor + "</i>"
             }
             cardOracle.text = OracleReplacer.getText(text, requireActivity())
 
             cardRulesTitle.setOnClickListener { cardRules.toggle() }
-            cardRules.text = OracleReplacer.getText(firstCard.card.rulesText
+            cardRules.text = OracleReplacer.getText(firstCard.rulesText
                     ?: "", requireActivity())
             cardRules.setExpandListener(ExpandListener(cardRulesArrow))
 
-            counterBlock.setCount(firstCard.card.count)
+            counterBlock.setCount(firstCard.count)
 
-            (reprints.adapter as ReprintListAdapter).setItems(firstCard.reprints)
+            firstCard.printings?.let {
+                (reprints.adapter as ReprintListAdapter).setItems(it.toList())
+            }
 
-            card = firstCard.card
             cardLoaded.postValue(true)
-
+            card = firstCard
             if (data.size > 1) {
                 val secondCard = data[1]
-                var textSecond = secondCard.card.text ?: ""
-                if (secondCard.card.flavor != null) {
-                    textSecond += "\n" + "<i>" + secondCard.card.flavor + "</i>"
+                var textSecond = secondCard.text ?: ""
+                if (secondCard.flavor != null) {
+                    textSecond += "\n" + "<i>" + secondCard.flavor + "</i>"
                 }
                 cardOracleSecond.text = OracleReplacer.getText(textSecond, requireActivity())
-                title += " // " + secondCard.card.name
+                title += " // " + secondCard.name
             }
             (viewPager.adapter as FlipPagerAdapter).setItems(data)
             viewPager.isSwipeable = data.size != 1

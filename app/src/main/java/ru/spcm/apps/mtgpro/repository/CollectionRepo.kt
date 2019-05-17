@@ -23,7 +23,7 @@ constructor(private val appExecutors: AppExecutors,
                     FilterOption("Common", "Common"),
                     FilterOption("Uncommon", "Uncommon"),
                     FilterOption("Rare", "Rare"),
-                    FilterOption("Mythic Rare", "Mythic Rare"),
+                    FilterOption("Mythic", "Mythic"),
                     FilterOption("Special", "Special")
             )
         }

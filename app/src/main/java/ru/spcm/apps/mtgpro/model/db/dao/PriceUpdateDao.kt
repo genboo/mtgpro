@@ -11,11 +11,11 @@ interface PriceUpdateDao {
 
     @SuppressWarnings(RoomWarnings.CURSOR_MISMATCH)
     @Query("SELECT c.id, c.numberFormatted, c.nameOrigin, c.setTitle, c.parent, c.imageUrl, c.name, c.rarity, c.multiverseId, c.number, c.`set`, c.type, c.cmc, c.text, c.flavor, c.manaCost, c.rulesText, c.count, c.number, " +
-            "CASE WHEN SUBSTR(c.number, -1) IN ('a', 'b') THEN SUBSTR(c.number, 1, length(c.number) - 1) ELSE c.number END num, " +
             "CASE WHEN sc.usd IS NULL THEN 0 ELSE sc.usd END price  " +
             "FROM WatchedCard wc " +
             "LEFT JOIN Card c ON c.id = wc.id " +
-            "LEFT JOIN ScryCard sc ON sc.number = num AND sc.`set` = lower(c.`set`) " +
+            "LEFT JOIN ScryCard sc ON sc.number = c.number AND sc.`set` = lower(c.`set`) " +
+            "WHERE c.id IS NOT NULL " +
             "ORDER BY c.setTitle, c.numberFormatted")
     fun getWatchedCardsList(): List<CardWatched>
 
@@ -26,10 +26,9 @@ interface PriceUpdateDao {
     fun getLastPrice(cardId: String, date: Date): PriceHistory?
 
     @SuppressWarnings(RoomWarnings.CURSOR_MISMATCH)
-    @Query("SELECT sc.*, " +
-            "CASE WHEN SUBSTR(c.number, -1) IN ('a', 'b') THEN SUBSTR(c.number, 1, length(c.number) - 1) ELSE c.number END num " +
+    @Query("SELECT sc.* " +
             "FROM Card c " +
-            "LEFT JOIN ScryCard sc ON sc.number = num AND sc.`set` = lower(c.`set`) " +
+            "LEFT JOIN ScryCard sc ON sc.number = c.number AND sc.`set` = lower(c.`set`) " +
             "WHERE c.id = :id")
     fun getPrice(id: String): ScryCard
 

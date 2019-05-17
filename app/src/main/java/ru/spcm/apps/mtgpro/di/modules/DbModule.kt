@@ -43,7 +43,8 @@ class DbModule {
                         MIGRATION_8_9,
                         MIGRATION_9_10,
                         MIGRATION_10_11,
-                        MIGRATION_11_12
+                        MIGRATION_11_12,
+                        MIGRATION_12_13
                 )
                 .build()
     }
@@ -229,6 +230,14 @@ class DbModule {
                 database.execSQL("INSERT INTO Card (name, multiverseId, imageUrl, text, flavor, number, numberFormatted, setTitle, `set`, type, manaCost, cmc, rarity, rulesText, count, parent, id, nameOrigin) " +
                         "SELECT name, multiverseId, imageUrl, text, flavor, number, numberFormatted, setTitle, `set`, type, manaCost, cmc, rarity, rulesText, count, parent, id, nameOrigin FROM temp_table")
                 database.execSQL("DROP TABLE temp_table")
+            }
+        }
+
+        private val MIGRATION_12_13 = object : Migration(12, 13) {
+            override fun migrate(database: SupportSQLiteDatabase) {
+                //Добавление приоритета сета
+                database.execSQL("ALTER TABLE `Card` ADD COLUMN printings TEXT")
+                database.execSQL("DROP TABLE Reprint")
             }
         }
     }

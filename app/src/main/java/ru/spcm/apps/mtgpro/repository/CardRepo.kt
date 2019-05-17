@@ -14,7 +14,7 @@ constructor(private val appExecutors: AppExecutors,
             private val cardDao: CardDao,
             private val priceUpdateDao: PriceUpdateDao) {
 
-    fun getCards(id: String): LiveData<List<CardLocal>> {
+    fun getCards(id: String): LiveData<List<Card>> {
         return cardDao.getSavedCards(id)
     }
 

@@ -40,14 +40,17 @@ constructor(private val appExecutors: AppExecutors,
                 val number = card.numberFormatted
                 val oldCard = cardDao.getCardSaved(card.set, number, name) ?: continue
 
-                cardDao.updateSaved(card.id, oldCard.id)
+                try {
+                    cardDao.updateSaved(card.id, oldCard.id)
+                } catch (ex: Exception) {
+                    Logger.e(ex)
+                }
                 cardDao.updateParent(card.id, oldCard.id)
                 cardDao.updateColors(card.id, oldCard.id)
                 cardDao.updateSubtypes(card.id, oldCard.id)
                 cardDao.updateSupertypes(card.id, oldCard.id)
                 cardDao.updateTypes(card.id, oldCard.id)
                 cardDao.updateTypes(card.id, oldCard.id)
-                cardDao.updateReprints(card.id, oldCard.id)
                 cardDao.updateWish(card.id, oldCard.id)
                 cardDao.updateWatched(card.id, oldCard.id)
                 cardDao.updateLibrary(card.id, oldCard.id)
@@ -69,8 +72,8 @@ constructor(private val appExecutors: AppExecutors,
     }
 
     companion object {
-        const val PAGE_SIZE = 30
-        val sets = arrayOf(
+        const val PAGE_SIZE = 100
+                val sets = arrayOf(
                 "RNA", "GRN", "M19", "DOM", "RIX", "XLN",
                 "HOU", "MP2", "AKH", "W17", "AER", "KLD", "MPS",
                 "EMN", "SOI", "OGW", "BFZ", "EXP", "ORI", "DTK", "FRF", "KTK", "M15"

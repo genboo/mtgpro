@@ -40,7 +40,7 @@ class AlarmReceiver : BroadcastReceiver() {
                 override fun onChanged(data: Int?) {
                     if (data == null) return
                     if (data >= 35000) convertCollection.result.removeObserver(this)
-                    val message = context.getString(R.string.notify_convert_progress, data)
+                    val message = context.getString(R.string.notify_convert_progress, data, ConvertCollection.sets.size)
                     showNotification(context, NOTIFY_CONVERT, context.getString(R.string.app_name), message, message, false)
                 }
             })
