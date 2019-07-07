@@ -1,11 +1,11 @@
 package ru.spcm.apps.mtgpro.viewmodel
 
-import android.arch.lifecycle.LiveData
-import android.arch.lifecycle.MutableLiveData
-import android.arch.lifecycle.Transformations
-import android.arch.lifecycle.ViewModel
-import android.arch.paging.LivePagedListBuilder
-import android.arch.paging.PagedList
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.Transformations
+import androidx.lifecycle.ViewModel
+import androidx.paging.LivePagedListBuilder
+import androidx.paging.PagedList
 import ru.spcm.apps.mtgpro.model.dto.CardWatched
 import ru.spcm.apps.mtgpro.repository.WatchRepo
 import ru.spcm.apps.mtgpro.tools.AbsentLiveData

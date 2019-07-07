@@ -1,7 +1,7 @@
 package ru.spcm.apps.mtgpro.model.db.dao
 
 
-import android.arch.persistence.room.*
+import androidx.room.*
 import ru.spcm.apps.mtgpro.model.dto.*
 import ru.spcm.apps.mtgpro.model.dto.FilterOption
 

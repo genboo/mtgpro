@@ -1,6 +1,6 @@
 package ru.spcm.apps.mtgpro.repository.bounds
 
-import android.arch.lifecycle.LiveData
+import androidx.lifecycle.LiveData
 import ru.spcm.apps.mtgpro.model.api.SetsApi
 import ru.spcm.apps.mtgpro.model.db.dao.CacheDao
 import ru.spcm.apps.mtgpro.model.db.dao.SetsDao

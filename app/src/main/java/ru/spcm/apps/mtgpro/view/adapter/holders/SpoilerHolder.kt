@@ -1,8 +1,8 @@
 package ru.spcm.apps.mtgpro.view.adapter.holders
 
 import android.graphics.PorterDuff
-import android.support.v4.content.ContextCompat
-import android.support.v7.widget.RecyclerView
+import androidx.core.content.ContextCompat
+import androidx.recyclerview.widget.RecyclerView
 import android.view.View
 import kotlinx.android.synthetic.main.list_item_loading.view.*
 import kotlinx.android.synthetic.main.list_item_spoiler.view.*

@@ -1,6 +1,6 @@
 package ru.spcm.apps.mtgpro.model.api
 
-import android.arch.lifecycle.LiveData
+import androidx.lifecycle.LiveData
 
 import retrofit2.http.GET
 import ru.spcm.apps.mtgpro.model.tools.ApiResponse

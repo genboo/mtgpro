@@ -176,6 +176,7 @@ object Icons {
         list["HML"] = R.drawable.ic_hml
 
         //Core sets
+        list["M20"] = R.drawable.ic_m20
         list["M19"] = R.drawable.ic_m19
         list["M15"] = R.drawable.ic_m15
         list["M14"] = R.drawable.ic_m14

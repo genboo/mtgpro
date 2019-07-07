@@ -1,6 +1,6 @@
 package ru.spcm.apps.mtgpro.view.adapter.diffs
 
-import android.support.v7.util.DiffUtil
+import androidx.recyclerview.widget.DiffUtil
 import ru.spcm.apps.mtgpro.view.adapter.CardListItem
 
 class CardsListDiffCallback(private val oldList: List<CardListItem>,

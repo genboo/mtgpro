@@ -1,7 +1,7 @@
 package ru.spcm.apps.mtgpro.model.dto
 
-import android.arch.persistence.room.*
-import android.support.annotation.NonNull
+import androidx.room.*
+import androidx.annotation.NonNull
 import com.google.gson.annotations.SerializedName
 import ru.spcm.apps.mtgpro.model.tools.Icons
 

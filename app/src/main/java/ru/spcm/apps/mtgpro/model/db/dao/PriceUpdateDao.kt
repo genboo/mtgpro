@@ -1,6 +1,6 @@
 package ru.spcm.apps.mtgpro.model.db.dao
 
-import android.arch.persistence.room.*
+import androidx.room.*
 import ru.spcm.apps.mtgpro.model.dto.CardWatched
 import ru.spcm.apps.mtgpro.model.dto.PriceHistory
 import ru.spcm.apps.mtgpro.model.dto.ScryCard

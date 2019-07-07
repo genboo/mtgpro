@@ -1,6 +1,6 @@
 package ru.spcm.apps.mtgpro.model.dto
 
-import android.arch.persistence.room.Embedded
+import androidx.room.Embedded
 
 class CardWatched {
 

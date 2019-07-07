@@ -1,9 +1,9 @@
 package ru.spcm.apps.mtgpro.view.fragments
 
-import android.arch.lifecycle.Observer
+import androidx.lifecycle.Observer
 import android.graphics.drawable.Drawable
 import android.os.Bundle
-import android.support.v4.content.ContextCompat
+import androidx.core.content.ContextCompat
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup

@@ -1,8 +1,8 @@
 package ru.spcm.apps.mtgpro.repository.bounds
 
-import android.arch.lifecycle.LiveData
-import android.support.annotation.MainThread
-import android.support.annotation.WorkerThread
+import androidx.lifecycle.LiveData
+import androidx.annotation.MainThread
+import androidx.annotation.WorkerThread
 import ru.spcm.apps.mtgpro.model.dto.Cache
 import ru.spcm.apps.mtgpro.model.dto.CacheTime
 import ru.spcm.apps.mtgpro.tools.AppExecutors

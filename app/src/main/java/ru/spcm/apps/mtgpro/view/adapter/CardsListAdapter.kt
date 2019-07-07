@@ -1,6 +1,6 @@
 package ru.spcm.apps.mtgpro.view.adapter
 
-import android.arch.paging.PagedListAdapter
+import androidx.paging.PagedListAdapter
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup

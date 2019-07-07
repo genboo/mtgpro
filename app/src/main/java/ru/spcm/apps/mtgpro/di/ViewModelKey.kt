@@ -1,6 +1,6 @@
 package ru.spcm.apps.mtgpro.di
 
-import android.arch.lifecycle.ViewModel
+import androidx.lifecycle.ViewModel
 import dagger.MapKey
 import kotlin.annotation.Retention
 import kotlin.annotation.Target

@@ -1,7 +1,7 @@
 package ru.spcm.apps.mtgpro.viewmodel
 
-import android.arch.lifecycle.LiveData
-import android.arch.lifecycle.ViewModel
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.ViewModel
 import ru.spcm.apps.mtgpro.model.dto.Setting
 import ru.spcm.apps.mtgpro.repository.CacheTypeRepo
 import ru.spcm.apps.mtgpro.repository.SettingsRepo

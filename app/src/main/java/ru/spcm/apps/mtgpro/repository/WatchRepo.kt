@@ -1,6 +1,6 @@
 package ru.spcm.apps.mtgpro.repository
 
-import android.arch.paging.DataSource
+import androidx.paging.DataSource
 import ru.spcm.apps.mtgpro.model.db.dao.CardDao
 import ru.spcm.apps.mtgpro.model.dto.CardWatched
 import ru.spcm.apps.mtgpro.model.dto.WatchedCard

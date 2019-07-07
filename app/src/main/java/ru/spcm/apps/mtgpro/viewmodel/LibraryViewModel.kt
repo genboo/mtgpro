@@ -1,9 +1,9 @@
 package ru.spcm.apps.mtgpro.viewmodel
 
-import android.arch.lifecycle.LiveData
-import android.arch.lifecycle.MutableLiveData
-import android.arch.lifecycle.Transformations
-import android.arch.lifecycle.ViewModel
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.Transformations
+import androidx.lifecycle.ViewModel
 import ru.spcm.apps.mtgpro.model.dto.*
 import ru.spcm.apps.mtgpro.repository.LibrariesRepo
 import ru.spcm.apps.mtgpro.tools.AbsentLiveData

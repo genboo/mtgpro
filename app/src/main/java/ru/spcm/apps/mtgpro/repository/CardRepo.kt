@@ -1,7 +1,7 @@
 package ru.spcm.apps.mtgpro.repository
 
-import android.arch.lifecycle.LiveData
-import android.arch.lifecycle.MutableLiveData
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import ru.spcm.apps.mtgpro.model.db.dao.CardDao
 import ru.spcm.apps.mtgpro.model.db.dao.PriceUpdateDao
 import ru.spcm.apps.mtgpro.model.dto.*

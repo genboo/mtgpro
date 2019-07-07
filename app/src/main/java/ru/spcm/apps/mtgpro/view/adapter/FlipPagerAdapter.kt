@@ -1,8 +1,8 @@
 package ru.spcm.apps.mtgpro.view.adapter
 
 import android.content.Context
-import android.support.v4.view.PagerAdapter
-import android.support.v4.view.ViewCompat
+import androidx.viewpager.widget.PagerAdapter
+import androidx.core.view.ViewCompat
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -13,7 +13,7 @@ import ru.spcm.apps.mtgpro.model.dto.Card
 import ru.spcm.apps.mtgpro.view.components.loadImageFromCache
 
 
-class FlipPagerAdapter(val context: Context, items: List<Card>?) : PagerAdapter() {
+class FlipPagerAdapter(val context: Context, items: List<Card>?) : androidx.viewpager.widget.PagerAdapter() {
 
     private var items: List<Card>
     private var inflater: LayoutInflater

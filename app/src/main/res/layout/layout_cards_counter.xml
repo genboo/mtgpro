@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -16,6 +16,7 @@
         app:icon_minus="@drawable/ic_minus"
         app:icon_plus="@drawable/ic_plus"
         app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
         app:size="@dimen/counter_button_size"
         app:text_size="20sp" />
 
@@ -32,4 +33,4 @@
         app:layout_constraintRight_toLeftOf="@+id/counterBlock"
         app:layout_constraintTop_toTopOf="parent"
         tools:text="@string/all" />
-</android.support.constraint.ConstraintLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,6 +1,6 @@
 package ru.spcm.apps.mtgpro.model.dto
 
-import android.arch.persistence.room.*
+import androidx.room.*
 
 @Entity(indices = [
     Index(value = ["library_id", "card_id"], unique = true),

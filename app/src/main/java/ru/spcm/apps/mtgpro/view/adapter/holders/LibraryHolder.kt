@@ -1,6 +1,6 @@
 package ru.spcm.apps.mtgpro.view.adapter.holders
 
-import android.support.v7.widget.RecyclerView
+import androidx.recyclerview.widget.RecyclerView
 import android.view.View
 import kotlinx.android.synthetic.main.list_item_library.view.*
 import ru.spcm.apps.mtgpro.R

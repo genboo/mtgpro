@@ -1,14 +1,14 @@
 package ru.spcm.apps.mtgpro.view.activities
 
-import android.arch.lifecycle.MutableLiveData
-import android.arch.lifecycle.Observer
-import android.arch.lifecycle.ViewModelProvider
-import android.arch.lifecycle.ViewModelProviders
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.ViewModelProviders
 import android.content.Intent
 import android.os.Bundle
-import android.support.design.widget.BottomNavigationView
-import android.support.design.widget.FloatingActionButton
-import android.support.v7.app.AppCompatActivity
+import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.google.android.material.floatingactionbutton.FloatingActionButton
+import androidx.appcompat.app.AppCompatActivity
 import android.view.MenuItem
 import android.view.View
 import kotlinx.android.synthetic.main.activity_main.*
@@ -16,11 +16,11 @@ import ru.spcm.apps.mtgpro.App
 import ru.spcm.apps.mtgpro.R
 import ru.spcm.apps.mtgpro.di.components.AppComponent
 import ru.spcm.apps.mtgpro.model.dto.Setting
+import ru.spcm.apps.mtgpro.navigation.NavigatorHolder
 import ru.spcm.apps.mtgpro.services.AlarmReceiver
 import ru.spcm.apps.mtgpro.tools.Settings
 import ru.spcm.apps.mtgpro.view.components.Navigator
 import ru.spcm.apps.mtgpro.viewmodel.MainViewModel
-import ru.terrakok.cicerone.NavigatorHolder
 import javax.inject.Inject
 
 
@@ -89,6 +89,7 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
     }
 
     override fun onNewIntent(intent: Intent) {
+        super.onNewIntent(intent)
         when (intent.getStringExtra(AlarmReceiver.LAUNCH_FRAGMENT)) {
             AlarmReceiver.LAUNCH_FRAGMENT_REPORT -> navigator.goToReport()
         }
@@ -106,7 +107,7 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
     }
 
     override fun onBackPressed() {
-        navigator.backTo()
+        navigator.comeBack()
     }
 
     override fun onResumeFragments() {

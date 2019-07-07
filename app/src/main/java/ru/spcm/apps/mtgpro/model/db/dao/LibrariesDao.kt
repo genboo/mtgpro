@@ -1,8 +1,8 @@
 package ru.spcm.apps.mtgpro.model.db.dao
 
 
-import android.arch.lifecycle.LiveData
-import android.arch.persistence.room.*
+import androidx.lifecycle.LiveData
+import androidx.room.*
 import ru.spcm.apps.mtgpro.model.dto.*
 
 @Dao

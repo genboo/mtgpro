@@ -1,6 +1,6 @@
 package ru.spcm.apps.mtgpro.repository.bounds
 
-import android.arch.lifecycle.LiveData
+import androidx.lifecycle.LiveData
 import ru.spcm.apps.mtgpro.model.api.ScryCardApi
 import ru.spcm.apps.mtgpro.model.db.dao.CacheDao
 import ru.spcm.apps.mtgpro.model.db.dao.ScryCardDao
@@ -60,7 +60,7 @@ class ScryCardBound(appExecutors: AppExecutors,
 
     companion object {
         private const val METHOD = "price"
-        val TYPE: String = ScryCard::class.java.simpleName + "::" + ScryCardBound.METHOD
+        val TYPE: String = ScryCard::class.java.simpleName + "::" + METHOD
         const val EXPIRE: Long = 1000 * 60 * 60 * 24
     }
 

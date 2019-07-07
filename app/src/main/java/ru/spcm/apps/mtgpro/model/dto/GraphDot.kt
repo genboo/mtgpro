@@ -1,6 +1,6 @@
 package ru.spcm.apps.mtgpro.model.dto
 
-import android.arch.persistence.room.Ignore
+import androidx.room.Ignore
 
 data class GraphDot(var date: String = "",
                     var count: Float = 0f) {

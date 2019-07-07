@@ -1,11 +1,11 @@
 package ru.spcm.apps.mtgpro.view.fragments
 
-import android.arch.lifecycle.*
+import androidx.lifecycle.*
 import android.os.Build
 import android.os.Bundle
-import android.support.design.widget.FloatingActionButton
-import android.support.design.widget.Snackbar
-import android.support.v4.app.Fragment
+import com.google.android.material.floatingactionbutton.FloatingActionButton
+import com.google.android.material.snackbar.Snackbar
+import androidx.fragment.app.Fragment
 import android.transition.TransitionInflater
 import android.view.View
 import android.widget.ImageView

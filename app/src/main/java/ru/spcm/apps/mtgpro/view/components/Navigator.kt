@@ -1,19 +1,18 @@
 package ru.spcm.apps.mtgpro.view.components
 
-import android.support.v4.app.Fragment
-import android.support.v4.app.FragmentActivity
-import android.support.v4.app.FragmentManager
-import android.support.v4.app.FragmentTransaction
-import android.support.v4.view.ViewCompat
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentActivity
+import androidx.fragment.app.FragmentManager
+import androidx.fragment.app.FragmentTransaction
+import androidx.core.view.ViewCompat
 import android.transition.Fade
-import android.transition.Slide
-import android.view.Gravity
+import kotlinx.android.synthetic.main.activity_main.*
 import ru.spcm.apps.mtgpro.R
+import ru.spcm.apps.mtgpro.navigation.android.SupportFragmentNavigator
+import ru.spcm.apps.mtgpro.navigation.commands.*
 import ru.spcm.apps.mtgpro.view.fragments.*
-import ru.terrakok.cicerone.android.SupportFragmentNavigator
-import ru.terrakok.cicerone.commands.*
 
-class Navigator(private val activity: FragmentActivity, fragmentManager: FragmentManager, containerId: Int)
+class Navigator(private val activity: FragmentActivity, private val fragmentManager: FragmentManager, containerId: Int)
     : SupportFragmentNavigator(fragmentManager, containerId) {
 
     override fun createFragment(screenKey: String, data: Any?): Fragment {
@@ -67,6 +66,27 @@ class Navigator(private val activity: FragmentActivity, fragmentManager: Fragmen
         if (image != null) {
             fragmentTransaction.addSharedElement(image, ViewCompat.getTransitionName(image) ?: "")
         }
+    }
+
+
+    /**
+     * Переход назад
+     */
+    fun comeBack() {
+        try {
+            val currentFragment = fragmentManager.fragments.last()
+            if (!localStackCopy.isNullOrEmpty() || isNotBackFragment(currentFragment)) {
+                applyCommands(arrayOf(Back()))
+            } else {
+                activity.bottomMenu.selectedItemId = R.id.nav_sets
+            }
+        } catch (ex: Exception) {
+            activity.bottomMenu.selectedItemId = R.id.nav_sets
+        }
+    }
+
+    private fun isNotBackFragment(currentFragment: Fragment): Boolean {
+        return (currentFragment is SetsFragment)
     }
 
     fun goToCollection() {

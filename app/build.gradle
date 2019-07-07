@@ -4,7 +4,7 @@ buildscript {
     }
 
     dependencies {
-        classpath 'io.fabric.tools:gradle:1.27.0'
+        classpath 'io.fabric.tools:gradle:1.29.0'
     }
 }
 apply plugin: 'com.android.application'
@@ -32,7 +32,7 @@ android {
         targetSdkVersion 28
         versionCode rootProject.code
         versionName rootProject.ver
-        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         setProperty("archivesBaseName", "mtg-$versionName")
     }
     compileOptions {
@@ -69,16 +69,16 @@ dependencies {
     implementation "com.squareup.retrofit2:retrofit:$retrofitVersion"
     implementation "com.squareup.retrofit2:converter-gson:$retrofitVersion"
     implementation fileTree(include: ['*.jar'], dir: 'libs')
-    implementation "com.android.support:appcompat-v7:$supportLibVersion"
-    implementation "com.android.support:design:$supportLibVersion"
-    implementation "com.android.support:cardview-v7:$supportLibVersion"
-    implementation "com.android.support:recyclerview-v7:$supportLibVersion"
-    implementation "com.android.support:exifinterface:$supportLibVersion"
-    implementation "com.android.support.constraint:constraint-layout:$constraintVersion"
+    implementation 'androidx.appcompat:appcompat:1.1.0-rc01'
+    implementation 'com.google.android.material:material:1.1.0-alpha07'
+    implementation 'androidx.cardview:cardview:1.0.0'
+    implementation 'androidx.recyclerview:recyclerview:1.1.0-beta01'
+    implementation 'androidx.exifinterface:exifinterface:1.1.0-beta01'
+    implementation 'androidx.constraintlayout:constraintlayout:2.0.0-beta2'
     implementation "com.google.android:flexbox:$flexVersion"
-    implementation "android.arch.lifecycle:extensions:$archComponentsVersion"
-    implementation "android.arch.persistence.room:runtime:$roomVersion"
-    implementation "android.arch.paging:runtime:$pagingVersion"
+    implementation 'androidx.lifecycle:lifecycle-extensions:2.2.0-alpha02'
+    implementation 'androidx.room:room-runtime:2.1.0'
+    implementation 'androidx.paging:paging-runtime:2.1.0'
     implementation "com.google.dagger:dagger:$daggerVersion"
     implementation "com.google.dagger:dagger-android:$daggerVersion"
     implementation "com.google.dagger:dagger-android-support:$daggerVersion"
@@ -86,27 +86,26 @@ dependencies {
     implementation "com.squareup.okhttp3:logging-interceptor:$okHttpVersion"
     implementation "com.squareup.okio:okio:$okioVersion"
     implementation "com.github.bumptech.glide:glide:$glideVersion"
-    implementation "ru.terrakok.cicerone:cicerone:$ciceroneVersion"
 
 
     debugImplementation "com.squareup.leakcanary:leakcanary-android:$canaryVersion"
     releaseImplementation "com.squareup.leakcanary:leakcanary-android-no-op:$canaryVersion"
     annotationProcessor "com.google.dagger:dagger-android-processor:$daggerVersion"
-    annotationProcessor "android.arch.lifecycle:compiler:$archComponentsVersion"
+    annotationProcessor 'androidx.lifecycle:lifecycle-compiler:2.2.0-alpha02'
     annotationProcessor "com.github.bumptech.glide:compiler:$glideVersion"
-    kapt "android.arch.persistence.room:compiler:$roomVersion"
+    kapt 'androidx.room:room-compiler:2.1.0'
     kapt "com.google.dagger:dagger-compiler:$daggerVersion"
     kapt "com.github.bumptech.glide:compiler:$glideVersion"
-    androidTestImplementation("com.android.support.test.espresso:espresso-core:$espressoVersion", {
+    androidTestImplementation('androidx.test.espresso:espresso-core:3.3.0-alpha01', {
         exclude group: 'com.android.support', module: 'support-annotations'
         exclude group: 'com.google.code.findbugs', module: 'jsr305'
     })
-    androidTestImplementation "com.android.support.test:runner:$testVersion"
-    androidTestImplementation "com.android.support.test:rules:$testVersion"
+    androidTestImplementation 'androidx.test:runner:1.3.0-alpha01'
+    androidTestImplementation 'androidx.test:rules:1.3.0-alpha01'
     testImplementation "junit:junit:$junitVersion"
     testImplementation "com.squareup.okhttp3:mockwebserver:$okHttpVersion"
-    testImplementation "android.arch.core:core-testing:$archComponentsVersion"
-    androidTestImplementation "android.arch.core:core-testing:$archComponentsVersion"
+    testImplementation 'androidx.arch.core:core-testing:2.1.0-rc01'
+    androidTestImplementation 'androidx.arch.core:core-testing:2.1.0-rc01'
     testImplementation "org.mockito:mockito-core:$mockitoVersion"
     androidTestImplementation "org.mockito:mockito-android:$mockitoVersion"
     implementation("com.crashlytics.sdk.android:crashlytics:$crashVersion") {

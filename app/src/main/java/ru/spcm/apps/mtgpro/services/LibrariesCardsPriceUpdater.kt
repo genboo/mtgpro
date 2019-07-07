@@ -1,6 +1,6 @@
 package ru.spcm.apps.mtgpro.services
 
-import android.arch.lifecycle.MutableLiveData
+import androidx.lifecycle.MutableLiveData
 import ru.spcm.apps.mtgpro.model.api.ScryCardApi
 import ru.spcm.apps.mtgpro.model.db.dao.LibrariesDao
 import ru.spcm.apps.mtgpro.model.db.dao.ScryCardDao

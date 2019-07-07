@@ -3,11 +3,11 @@ package ru.spcm.apps.mtgpro.services
 import android.app.Notification
 import android.app.NotificationManager
 import android.app.PendingIntent
-import android.arch.lifecycle.Observer
+import androidx.lifecycle.Observer
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
-import android.support.v4.app.NotificationCompat
+import androidx.core.app.NotificationCompat
 import ru.spcm.apps.mtgpro.App
 import ru.spcm.apps.mtgpro.R
 import ru.spcm.apps.mtgpro.di.components.AppComponent

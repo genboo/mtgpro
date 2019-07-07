@@ -2,20 +2,20 @@ package ru.spcm.apps.mtgpro.view.components
 
 import android.content.Context
 import android.os.Parcelable
-import android.support.v4.view.ViewPager
+import androidx.viewpager.widget.ViewPager
 import android.util.AttributeSet
 import android.view.MotionEvent
 import android.widget.ImageView
 import ru.spcm.apps.mtgpro.R
 
 
-class CardViewPager(context: Context, attrs: AttributeSet) : ViewPager(context, attrs) {
+class CardViewPager(context: Context, attrs: AttributeSet) : androidx.viewpager.widget.ViewPager(context, attrs) {
 
     private var listener: (Int) -> Unit = { _ -> }
     var isSwipeable = true
 
     init {
-        addOnPageChangeListener(object : ViewPager.OnPageChangeListener {
+        addOnPageChangeListener(object : OnPageChangeListener {
             override fun onPageScrollStateChanged(state: Int) {
 
             }

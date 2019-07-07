@@ -1,8 +1,8 @@
 package ru.spcm.apps.mtgpro.view.fragments
 
-import android.arch.lifecycle.Observer
+import androidx.lifecycle.Observer
 import android.os.Bundle
-import android.support.v7.widget.LinearLayoutManager
+import androidx.recyclerview.widget.LinearLayoutManager
 import android.view.*
 import kotlinx.android.synthetic.main.fragment_library.*
 import ru.spcm.apps.mtgpro.R

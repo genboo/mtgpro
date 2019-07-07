@@ -2,9 +2,9 @@ package ru.spcm.apps.mtgpro.di.modules
 
 import dagger.Module
 import dagger.Provides
-import ru.terrakok.cicerone.Cicerone
-import ru.terrakok.cicerone.NavigatorHolder
-import ru.terrakok.cicerone.Router
+import ru.spcm.apps.mtgpro.navigation.Cicerone
+import ru.spcm.apps.mtgpro.navigation.NavigatorHolder
+import ru.spcm.apps.mtgpro.navigation.Router
 import javax.inject.Singleton
 
 @Module

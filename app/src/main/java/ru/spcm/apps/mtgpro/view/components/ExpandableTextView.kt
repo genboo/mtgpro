@@ -7,9 +7,8 @@ import android.animation.ValueAnimator
 import android.content.Context
 import android.os.Parcel
 import android.os.Parcelable
-import android.support.v7.widget.AppCompatTextView
+import androidx.appcompat.widget.AppCompatTextView
 import android.util.AttributeSet
-import android.view.View
 import android.view.ViewGroup
 import android.view.animation.AccelerateDecelerateInterpolator
 import ru.spcm.apps.mtgpro.R
@@ -45,7 +44,7 @@ class ExpandableTextView @JvmOverloads constructor(context: Context, attrs: Attr
     }
 
     override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
-        var heightMeasureSpec = heightMeasureSpec
+        var heightMeasureSpecLoc = heightMeasureSpec
         if (mSavedState != null) {
             mExpanded = mSavedState!!.expanded
             if (mExpanded) {
@@ -55,9 +54,9 @@ class ExpandableTextView @JvmOverloads constructor(context: Context, attrs: Attr
             mSavedState = null
         }
         if (mMaxLines == 0 && !mExpanded && !mAnimating) {
-            heightMeasureSpec = View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.EXACTLY)
+            heightMeasureSpecLoc = MeasureSpec.makeMeasureSpec(0, MeasureSpec.EXACTLY)
         }
-        super.onMeasure(widthMeasureSpec, heightMeasureSpec)
+        super.onMeasure(widthMeasureSpec, heightMeasureSpecLoc)
     }
 
     fun toggle(): Boolean {
@@ -67,16 +66,16 @@ class ExpandableTextView @JvmOverloads constructor(context: Context, attrs: Attr
     fun expand(): Boolean {
         if (!mExpanded && !mAnimating && mMaxLines >= 0) {
             notifyOnExpand()
-            measure(View.MeasureSpec.makeMeasureSpec(measuredWidth, View.MeasureSpec.EXACTLY),
-                    View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED))
+            measure(MeasureSpec.makeMeasureSpec(measuredWidth, MeasureSpec.EXACTLY),
+                    MeasureSpec.makeMeasureSpec(0, MeasureSpec.UNSPECIFIED))
 
             mCollapsedHeight = measuredHeight
             mAnimating = true
 
             maxLines = Integer.MAX_VALUE
 
-            measure(View.MeasureSpec.makeMeasureSpec(measuredWidth, View.MeasureSpec.EXACTLY),
-                    View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED))
+            measure(MeasureSpec.makeMeasureSpec(measuredWidth, MeasureSpec.EXACTLY),
+                    MeasureSpec.makeMeasureSpec(0, MeasureSpec.UNSPECIFIED))
 
             val expandedHeight = measuredHeight
 
@@ -173,7 +172,7 @@ class ExpandableTextView @JvmOverloads constructor(context: Context, attrs: Attr
         mSavedState = state
     }
 
-    private class SavedState : View.BaseSavedState {
+    private class SavedState : BaseSavedState {
 
         internal var expanded: Boolean = false
 

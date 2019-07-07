@@ -1,6 +1,6 @@
 package ru.spcm.apps.mtgpro.tools
 
-import android.arch.lifecycle.LiveData
+import androidx.lifecycle.LiveData
 
 class AbsentLiveData<T> private constructor() : LiveData<T>() {
     init {

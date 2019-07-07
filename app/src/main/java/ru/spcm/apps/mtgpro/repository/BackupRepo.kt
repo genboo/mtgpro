@@ -1,7 +1,7 @@
 package ru.spcm.apps.mtgpro.repository
 
-import android.arch.lifecycle.LiveData
-import android.arch.lifecycle.MutableLiveData
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import android.content.Context
 import android.os.Environment
 import ru.spcm.apps.mtgpro.di.modules.DbModule

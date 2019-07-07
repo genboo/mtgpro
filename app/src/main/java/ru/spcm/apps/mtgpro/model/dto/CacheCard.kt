@@ -1,6 +1,6 @@
 package ru.spcm.apps.mtgpro.model.dto
 
-import android.arch.persistence.room.*
+import androidx.room.*
 
 /**
  * Created by gen on 29.06.2018.
