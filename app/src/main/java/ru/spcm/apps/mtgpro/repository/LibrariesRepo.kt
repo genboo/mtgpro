@@ -1,6 +1,7 @@
 package ru.spcm.apps.mtgpro.repository
 
 import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import ru.spcm.apps.mtgpro.model.db.dao.CardDao
 import ru.spcm.apps.mtgpro.model.db.dao.LibrariesDao
 import ru.spcm.apps.mtgpro.model.dto.*
@@ -13,7 +14,11 @@ constructor(private val appExecutors: AppExecutors,
             private val cardDao: CardDao) {
 
     fun getLibraries(valute: Float): LiveData<List<LibraryInfo>> {
-        return librariesDao.getLibraries(valute)
+        val result = MutableLiveData<List<LibraryInfo>>()
+        appExecutors.diskIO().execute {
+            result.postValue(librariesDao.getLibrariesWithColors(valute))
+        }
+        return result
     }
 
     fun getLibrary(id: Long): LiveData<Library> {

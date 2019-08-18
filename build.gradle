@@ -27,7 +27,7 @@ task clean(type: Delete) {
 
 ext {
     //Version and code
-    ver = '1.1.13'
+    ver = '1.1.14'
     code = 16
 
     // App dependencies

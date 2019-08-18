@@ -1,7 +1,7 @@
 package ru.spcm.apps.mtgpro.tools
 
 import android.annotation.TargetApi
-import android.app.Activity
+import android.content.Context
 import android.graphics.drawable.Drawable
 import android.os.Build
 import android.text.Html
@@ -70,14 +70,14 @@ object OracleReplacer {
 
     @Suppress("deprecation")
     @TargetApi(Build.VERSION_CODES.N)
-    fun getText(text: String, activity: Activity): Spanned = when (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-        true -> Html.fromHtml(replace(text), Html.FROM_HTML_MODE_LEGACY, Html.ImageGetter { getDrawable(it, activity) }, null)
-        else -> Html.fromHtml(replace(text), Html.ImageGetter { getDrawable(it, activity) }, null)
+    fun getText(text: String, context: Context): Spanned = when (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+        true -> Html.fromHtml(replace(text), Html.FROM_HTML_MODE_LEGACY, Html.ImageGetter { getDrawable(it, context) }, null)
+        else -> Html.fromHtml(replace(text), Html.ImageGetter { getDrawable(it, context) }, null)
     }
 
-    private fun getDrawable(source: String, activity: Activity): Drawable {
-        val drawable = activity.resources.getDrawable(activity.resources.getIdentifier(source, "drawable", activity.packageName), activity.theme)
-        val metrics = activity.resources.displayMetrics
+    private fun getDrawable(source: String, context: Context): Drawable {
+        val drawable = context.resources.getDrawable(context.resources.getIdentifier(source, "drawable", context.packageName), context.theme)
+        val metrics = context.resources.displayMetrics
         val px = 16 * (metrics.densityDpi / DisplayMetrics.DENSITY_DEFAULT)
 
         drawable.setBounds(0, 0, px, px)

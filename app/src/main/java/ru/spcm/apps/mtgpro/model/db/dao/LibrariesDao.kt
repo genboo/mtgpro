@@ -18,15 +18,8 @@ interface LibrariesDao {
     fun delete(item: Library)
 
     @SuppressWarnings(RoomWarnings.CURSOR_MISMATCH)
-    @Query("SELECT l.*, sum(lc.count) AS count, " +
-            "CASE WHEN SUBSTR(c.number, -1) IN ('a', 'b') THEN SUBSTR(c.number, 1, length(c.number) - 1) ELSE c.number END num, " +
-            "SUM(sc.usd * lc.count) * :valute AS price " +
-            "FROM Library l " +
-            "LEFT JOIN LibraryCard lc ON lc.library_id = l.id " +
-            "LEFT JOIN Card c ON lc.card_id = c.id " +
-            "LEFT JOIN ScryCard sc ON sc.number = num AND sc.`set` = LOWER(c.`set`) " +
-            "GROUP BY l.id")
-    fun getLibraries(valute: Float): LiveData<List<LibraryInfo>>
+    @Query(QUERY_LIBRARIES)
+    fun getLibraries(valute: Float): List<LibraryInfo>
 
     @Query("SELECT * FROM Library l WHERE l.id = :id")
     fun getLibrary(id: Long): LiveData<Library>
@@ -54,13 +47,11 @@ interface LibrariesDao {
             "GROUP BY ac.cmc")
     fun getLibraryManaState(library: Long): LiveData<List<LibraryManaState>>
 
-    @Query("SELECT cl.color, SUM(lc.count) count FROM Card c " +
-            "LEFT JOIN Color cl ON c.id = cl.card_id " +
-            "JOIN LibraryCard lc ON lc.card_id = c.id " +
-            "WHERE lc.library_id = :library AND c.cmc > 0  AND c.cmc <> '0'" +
-            "GROUP BY cl.color " +
-            "ORDER BY cl.color")
+    @Query(QUERY_COLORS_STATE)
     fun getLibraryColorState(library: Long): LiveData<List<LibraryColorState>>
+
+    @Query(QUERY_COLORS_STATE)
+    fun getLibraryColorStateSync(library: Long): List<LibraryColorState>
 
     @Query("SELECT l.name, lc.library_id as id, lc.count, '' as price " +
             "FROM LibraryCard lc, Library l " +
@@ -69,4 +60,32 @@ interface LibrariesDao {
 
     @Query("SELECT c.* FROM LibraryCard lc LEFT JOIN Card c ON lc.card_id = c.id GROUP BY c.id")
     fun getCardsInAllLibraries(): List<Card>
+
+    @Transaction
+    fun getLibrariesWithColors(valute: Float): List<LibraryInfo> {
+        val libraries = getLibraries(valute)
+            for(i in 0 until libraries.size){
+                val colors = getLibraryColorStateSync(libraries[i].id)
+                libraries[i].colors = colors
+        }
+        return libraries
+    }
+
+    companion object{
+        const val QUERY_LIBRARIES = "SELECT l.*, sum(lc.count) AS count, " +
+                "CASE WHEN SUBSTR(c.number, -1) IN ('a', 'b') THEN SUBSTR(c.number, 1, length(c.number) - 1) ELSE c.number END num, " +
+                "SUM(sc.usd * lc.count) * :valute AS price " +
+                "FROM Library l " +
+                "LEFT JOIN LibraryCard lc ON lc.library_id = l.id " +
+                "LEFT JOIN Card c ON lc.card_id = c.id " +
+                "LEFT JOIN ScryCard sc ON sc.number = num AND sc.`set` = LOWER(c.`set`) " +
+                "GROUP BY l.id"
+
+        const val QUERY_COLORS_STATE = "SELECT cl.color, SUM(lc.count) count FROM Card c " +
+                "LEFT JOIN Color cl ON c.id = cl.card_id " +
+                "JOIN LibraryCard lc ON lc.card_id = c.id " +
+                "WHERE lc.library_id = :library AND c.cmc > 0  AND c.cmc <> '0'" +
+                "GROUP BY cl.color " +
+                "ORDER BY cl.color"
+    }
 }

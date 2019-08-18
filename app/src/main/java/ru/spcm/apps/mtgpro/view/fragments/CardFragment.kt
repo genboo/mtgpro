@@ -120,11 +120,11 @@ class CardFragment : BaseFragment() {
             if (firstCard.flavor != null) {
                 text += "\n" + "<i>" + firstCard.flavor + "</i>"
             }
-            cardOracle.text = OracleReplacer.getText(text, requireActivity())
+            cardOracle.text = OracleReplacer.getText(text, requireContext())
 
             cardRulesTitle.setOnClickListener { cardRules.toggle() }
             cardRules.text = OracleReplacer.getText(firstCard.rulesText
-                    ?: "", requireActivity())
+                    ?: "", requireContext())
             cardRules.setExpandListener(ExpandListener(cardRulesArrow))
 
             counterBlock.setCount(firstCard.count)
@@ -141,7 +141,7 @@ class CardFragment : BaseFragment() {
                 if (secondCard.flavor != null) {
                     textSecond += "\n" + "<i>" + secondCard.flavor + "</i>"
                 }
-                cardOracleSecond.text = OracleReplacer.getText(textSecond, requireActivity())
+                cardOracleSecond.text = OracleReplacer.getText(textSecond, requireContext())
                 title += " // " + secondCard.name
             }
             (viewPager.adapter as FlipPagerAdapter).setItems(data)
