@@ -24,6 +24,9 @@ object Icons {
 
     init {
 
+        //Throne of Eldraine 2019
+        list["ELD"] = R.drawable.ic_eld
+
         //War of Spark 2019
         list["WAR"] = R.drawable.ic_war
 
@@ -245,6 +248,7 @@ object Icons {
         list["S99"] = R.drawable.ic_s99
 
         //Commander
+        list["C19"] = R.drawable.ic_c19
         list["CMA"] = R.drawable.ic_cma
         list["C18"] = R.drawable.ic_c18
         list["C17"] = R.drawable.ic_c17
