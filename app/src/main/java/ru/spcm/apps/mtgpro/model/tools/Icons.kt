@@ -23,6 +23,8 @@ object Icons {
     )
 
     init {
+        //Theros Beyond Death 2020
+        list["THB"] = R.drawable.ic_thb
 
         //Throne of Eldraine 2019
         list["ELD"] = R.drawable.ic_eld

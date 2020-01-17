@@ -3,7 +3,6 @@ package ru.spcm.apps.mtgpro.view.activities
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.ViewModelProviders
 import android.content.Intent
 import android.os.Bundle
 import com.google.android.material.bottomnavigation.BottomNavigationView
@@ -48,7 +47,7 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
             component?.inject(this)
         }
 
-        val viewModel = ViewModelProviders.of(this, viewModelFactory).get(MainViewModel::class.java)
+        val viewModel = ViewModelProvider(this, viewModelFactory).get(MainViewModel::class.java)
         viewModel.settings.observe(this, Observer { observeSettings(it) })
         viewModel.updateCacheType()
 

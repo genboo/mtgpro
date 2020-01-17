@@ -31,7 +31,7 @@ abstract class BaseFragment : Fragment() {
     val navigator: Navigator by lazy { (activity as MainActivity).navigator }
 
     protected fun <T : ViewModel> getViewModel(owner: Fragment, t: Class<T>): T {
-        return ViewModelProviders.of(owner, viewModelFactory).get(t)
+        return ViewModelProvider(owner, viewModelFactory).get(t)
     }
 
     protected fun updateToolbar() {
